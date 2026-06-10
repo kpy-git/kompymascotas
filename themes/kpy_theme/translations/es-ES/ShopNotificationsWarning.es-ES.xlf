@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ShopNotificationsWarning.es-ES.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="622f8d55d42b2861825a7a4e15d2a7fc">
+        <source>To use coupons, you must verify your account.</source>
+        <target>Para poder usar cupones de descuento tienes que verificar tu cuenta</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

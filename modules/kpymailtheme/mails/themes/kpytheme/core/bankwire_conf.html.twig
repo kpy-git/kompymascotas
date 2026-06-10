@@ -1,0 +1,363 @@
+{% extends '@Modules/kpymailtheme/mails/themes/kpytheme/components/layout.html.twig' %}
+
+{% block title %}{{ 'Pago confirmado'|trans({}, 'Emails.Body', locale) }}{% endblock %}
+
+{% block icon %}
+    <div style="text-align:center;margin:0 0 28px 0;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="76" height="76" viewBox="0 0 76 76" fill="none">
+            <circle cx="38" cy="38" r="36" fill="#FFF9E6" stroke="#F4C430" stroke-width="2"></circle>
+            <!-- edificio banco -->
+            <rect x="20" y="38" width="36" height="18" fill="#2C5F7D" rx="1"></rect>
+            <rect x="24" y="42" width="5" height="10" fill="#FFF9E6" opacity="0.9"></rect>
+            <rect x="31" y="42" width="5" height="10" fill="#FFF9E6" opacity="0.9"></rect>
+            <rect x="38" y="42" width="5" height="10" fill="#FFF9E6" opacity="0.9"></rect>
+            <rect x="45" y="42" width="5" height="10" fill="#FFF9E6" opacity="0.9"></rect>
+            <!-- fronton -->
+            <path d="M17 38 L38 24 L59 38 Z" fill="#3d7a9e"></path>
+            <rect x="18" y="36" width="40" height="4" fill="#2C5F7D"></rect>
+            <!-- base -->
+            <rect x="18" y="56" width="40" height="4" rx="1" fill="#2C5F7D"></rect>
+            <!-- check en circulo -->
+            <circle cx="56" cy="54" r="10" fill="#F4C430"></circle>
+            <path d="M52 54 L55 57 L60 50" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <!--[if mso | IE]><tr><td class="" width="604px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:604px;" width="604" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 25px;text-align:center;">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:554px;" ><![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                            <tbody>
+                            <tr>
+                                <td style="vertical-align:top;padding:0;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                        <!-- TITLE BEGINING -->
+                                        <tr>
+                                            <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;padding-top:0;padding-bottom:20px;word-break:break-word;">
+                                                <div style="font-family:Nunito, arial, sans-serif;font-size:20px;font-weight:600;line-height:25px;text-align:{{ align_left }};color:#363A41;">{{ 'Hi {firstname} {lastname},'|trans({}, 'Emails.Body', locale) }}</div>
+                                            </td>
+                                        </tr>
+                                        <!-- TITLE ENDING -->
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+    <!-- BORDER BEGINING -->
+    <!--[if mso | IE]><tr><td class="" width="604px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:604px;" width="604" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 50px 40px;text-align:{{ align_left }};">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:25px;" ><![endif]-->
+                    <div class="mj-column-px-25 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="center" class="left" style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:0;padding-left:0;word-break:break-word;">
+                                    <p style="border-top:solid 3px #505050;font-size:1px;margin:0px auto;width:25px;">
+                                    </p>
+                                    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 3px #505050;font-size:1px;margin:0px auto;width:25px;" role="presentation" width="25px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+  </td></tr></table><![endif]-->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+    <!-- BORDER ENDING -->
+
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 25px 0;text-align:center;">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:554px;" ><![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                            <tbody>
+                            <tr>
+                                <td style="vertical-align:top;padding:0;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                                <div style="font-family:Nunito, arial, sans-serif;font-size:16px;line-height:25px;text-align:{{ align_left }};color:#363A41;">{{ '¡Buenas noticias!'|trans({}, 'Emails.Body', locale)|raw }}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                                <div style="font-family:Nunito, arial, sans-serif;font-size:16px;line-height:25px;text-align:{{ align_left }};color:#363A41;">{{ 'Hemos recibido tu transferencia correctamente. Tu pago ha quedado confirmado y tu pedido ya está en marcha.'|trans({}, 'Emails.Body', locale)|raw }}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                                <div class="order-box">
+                                                    <p>{{ 'Pedido confirmado'|trans({}, 'Emails.Body', locale)|raw }}</p>
+                                                    <div class="order-num">{id_order}</div>
+                                                    <div class="order-amount">{total_paid} €</div>
+                                                </div>
+                                                <div class="hero">
+                                                    <p class="hero-label">{{ 'Pago confirmado'|trans({}, 'Emails.Body', locale)|raw }}</p>
+                                                    <div class="hero-order">{id_order}</div>
+                                                    <div class="hero-amount">{total_paid}</div>
+                                                    <span class="hero-badge">{{ 'Pago aceptado'|trans({}, 'Emails.Body', locale)|raw }}</span>
+                                                </div>
+
+
+                                                <div class="next">
+                                                    <h3>{{ '¿Y ahora qué?'|trans({}, 'Emails.Body', locale)|raw }}</h3>
+                                                    <ul>
+                                                        <li>{{ 'Tu pedido entra en nuestro almacén con los [1]plazos de preparación habituales[/1].'|trans({'[1]': '<span class="label">', '[/1]': '</span>'}, 'Emails.Body', locale)|raw }}</li>
+                                                        <li>{{ 'En cuanto salga, te mandamos un email con el [1]número de seguimiento[/1] para que lo puedas rastrear.'|trans({'[1]': '<span class="label">', '[/1]': '</span>'}, 'Emails.Body', locale)|raw }}</li>
+                                                        <li>{{ 'Si tienes cualquier duda mientras tanto, estamos en [1][email][/1] o en el [2][phone][/2].'|trans({'[phone]': shop_phone, '[email]': shop_email, '[1]': '<a href="mailto:' ~ shop_email ~ '">', '[/1]': '</a>', '[2]': '<span class="label">', '[/2]': '</span>'}, 'Emails.Body', locale)|raw }}</li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        #outlook a {
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        p {
+            display: block;
+            margin: 13px 0;
+        }
+
+    </style>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPNG/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <!--[if lte mso 11]>
+    <style type="text/css">
+        .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]-->
+    <!--[if !mso]><!-->
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700);
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i);
+    </style>
+    <!--<![endif]-->
+    <style type="text/css">
+        @media only screen and (min-width:480px) {
+            .mj-column-per-100 {
+                width: 100% !important;
+                max-width: 100%;
+            }
+
+            .mj-column-px-25 {
+                width: 25px !important;
+                max-width: 25px;
+            }
+        }
+    </style>
+    <style media="screen and (min-width:480px)">
+        .moz-text-html .mj-column-per-100 {
+            width: 100% !important;
+            max-width: 100%;
+        }
+
+        .moz-text-html .mj-column-px-25 {
+            width: 25px !important;
+            max-width: 25px;
+        }
+    </style>
+    <style type="text/css">
+    </style>
+    <style type="text/css">
+        .shadow {
+            box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .label {
+            font-weight: 700;
+        }
+
+        .warning {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        a {
+            color: #25B9D7;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        a.light {
+            font-weight: 400;
+        }
+
+        span.strong {
+            font-weight: 600;
+        }
+
+
+        .next {
+            background-color: #FFF9E6;
+            border-left: 5px solid #F4C430;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 0 0 28px 0;
+        }
+        .next a {
+            color: #FF6B6B;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .next h3 {
+            margin: 0 0 12px 0;
+            font-size: 16px;
+            color: #2C5F7D;
+            font-weight: 700;
+        }
+        .next ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .next ul li {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+            padding: 7px 0 7px 26px;
+            position: relative;
+            border-bottom: 1px dashed #e8d88a;
+        }
+        .next ul li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            top: 7px;
+            color: #F4C430;
+            font-weight: 900;
+            font-size: 15px;
+        }
+        .hero {
+            background: linear-gradient(135deg,#2C5F7D 0%,#3d7a9e 100%);
+            border-radius: 10px;
+            padding: 28px 24px;
+            margin: 0 0 28px 0;
+            text-align: center;
+        }
+        .hero-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 8px 0;
+        }
+        .hero-order {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 6px 0;
+        }
+        .hero-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #F4C430;
+            margin: 0 0 14px 0;
+        }
+        .hero-badge {
+            display: inline-block;
+            background-color: #F4C430;
+            color: #2C5F7D;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 7px 22px;
+            border-radius: 20px;
+        }
+        @media only screen and (max-width: 480px) {
+
+            body,
+            .no-bg {
+                background-color: #fff !important;
+            }
+
+            .left p {
+                text-align: left;
+                display: inline-block
+            }
+        }
+    </style>
+
+{% endblock %}
+
+{% block posdata_message %}
+    {{ 'El peludo que tienes en casa ya huele que algo viene. No le decepciones tardando en abrirlo cuando llegue.'|trans({}, 'Emails.Body', locale)|raw }}
+{% endblock %}

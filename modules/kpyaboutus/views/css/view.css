@@ -1,0 +1,200 @@
+.wrapper {
+    background-color: var(--kpy-color-primary);
+    font-size: 1.125rem;
+}
+
+.page-content {
+    font-family: 'Nunito', sans-serif;
+    padding-inline: 1rem;
+}
+
+h1 {
+    padding: 2rem 0;
+    margin-inline: auto;
+    text-align: center;
+}
+
+h1, h2 {
+    font-weight: 700;
+    font-family: Raleway, sans-serif;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1.25rem;
+    margin-inline: auto;
+}
+
+.paragraph {
+    padding: 6rem 0;
+    background-color: var(--kpy-aboutus-bg, white);
+}
+
+.paragraph-flex, h1, .subtitle {
+    width: min(85%, 950px);
+}
+
+.paragraph-flex {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 4rem;
+    margin-inline: auto;
+}
+
+.bg-yellow {
+    --kpy-aboutus-bg: var(--kpy-color-primary);
+}
+
+.bg-lilac {
+    --kpy-aboutus-bg: var(--kpy-color-secondary-light);
+}
+
+.bg-coral {
+    --kpy-aboutus-bg: #fff3e0;
+}
+
+@media (min-width: 768px) {
+    .paragraph-flex {
+        flex-direction: row;
+    }
+
+    .paragraph-flex > div {
+        width: 50%;
+    }
+}
+
+.paragraph .text {
+    line-height: 1.6;
+}
+
+.img-card {
+    background: white;
+    padding: 1rem;
+    border-radius: var(--kpy-border-radius);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease;
+}
+
+.img-card:hover {
+    transform: rotate(0deg) scale(1.01);
+}
+
+.img-placeholder {
+    width: 100%;
+    height: 480px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-weight: 600;
+    border-radius: var(--kpy-border-radius);
+    text-align: center;
+}
+
+.img-placeholder img {
+    object-fit: cover;
+    height: 480px;
+    width: 100%;
+    padding: 1.5rem;
+
+}
+
+.caption {
+    font-size: var(--kpy-font-size);
+    color: var(--kpy-text-secondary);
+    margin-top: 1rem;
+    text-align: center;
+    font-style: italic;
+}
+
+.dialog-box {
+    background-color: rgba(255,255,255, 0.7);
+    padding: 30px;
+    border-left: 6px solid var(--kpy-color-accent);
+    margin: 30px 0;
+    border-radius: 0 16px 16px 0;
+    font-style: italic;
+    font-size: 1.1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+
+.paragraph-final {
+    text-align: center;
+    width: min(80%, 600px);
+    margin-inline: auto;
+    line-height: 1.8;
+}
+
+.btn-whatsapp {
+    display: inline-block;
+    background-color: #25d366;
+    color: white;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+    transition: all 0.3s ease;
+    margin: 20px 0;
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+}
+
+.boske-promo {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    color: white;
+    padding: 50px;
+    border-radius: 30px;
+    text-align: center;
+    margin-top: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.boske-promo::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: var(--kpy-color-accent);
+    border-radius: 50%;
+    opacity: 0.2;
+}
+
+.boske-promo h3 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.btn-boske {
+    display: inline-block;
+    background-color: var(--kpy-color-accent);
+    color: white;
+    padding: 15px 35px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
+    border: 2px solid var(--kpy-color-accent);
+}
+
+.btn-boske:hover {
+    background-color: transparent;
+    color: var(--kpy-color-accent);
+}
+
+.boske-promo p {
+    color: #ccc;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}

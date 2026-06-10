@@ -1,0 +1,20 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+{reply}
+
+Por favor, no conteste a este correo electrónico, no recibiremos su respuesta. Para responder, por favor utilice el siguiente enlace: {link}
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD:  Si no has sido tú, ignora este email. O si tienes algún peludo en casa pregúntale si ha estado tocando el ordenador.
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

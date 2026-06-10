@@ -1,0 +1,51 @@
+.productos-section {
+    background: #fff;
+}
+
+.prod-tab {
+    font-family: "Nunito", sans-serif;
+    font-size: var(--kpy-font-size);
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 2px solid var(--kpy-text-dark);
+    background: transparent;
+    color: var(--kpy-text-dark);
+    cursor: pointer;
+    transition: all .25s;
+    margin-right: .5rem;
+    min-height: 2rem;
+}
+
+.prod-tab.active, .prod-tab:hover {
+    background: var(--kpy-text-dark);
+    color: #fff;
+}
+
+.prod-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+    .prod-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+}
+
+.prod-card {
+    background: #fff;
+    border-radius: var(--kpy-border-radius);
+    border: 1px solid #eef2f3;
+    overflow: hidden;
+    transition: all .25s ease;
+    position: relative;
+    display: block;
+}
+
+.prod-tab img {
+    width: 1.5rem;
+}

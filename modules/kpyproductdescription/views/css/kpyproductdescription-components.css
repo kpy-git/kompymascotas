@@ -1,0 +1,21 @@
+.product__components-flex {
+    font-size: .875rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.product__component {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem .75rem;
+    color: var(--kpy-text-dark);
+}
+
+.product__component:nth-child(2n) {
+    background-color: var(--bs-gray-100);
+}
+
+.product__component:hover {
+    background-color: var(--kpy-surface);
+}

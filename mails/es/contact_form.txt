@@ -1,0 +1,27 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+Tu mensaje ha llegado bien. Lo hemos recibido y ya está en manos de alguien que lo va a leer de verdad — una persona, no una máquina.
+
+Mensaje recibido
+
+💬 Estamos en ello
+
+✓ Todo correcto
+
+¿Qué pasa ahora?
+
+- Revisamos los mensajes de L-V de 09:00 a 18:00h.
+- Respondemos en un plazo de 24 a 48 horas, aunque lo normal es que lo hagamos el mismo día.
+
+Un saludo,
+El equipo de Kompymascotas
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

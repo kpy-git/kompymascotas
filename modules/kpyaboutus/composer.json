@@ -1,0 +1,18 @@
+{
+    "name": "prestashop/kpyaboutus",
+    "authors": [{
+        "name": "PyM Team"
+    }],
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrestaShop\\Module\\KpyAboutUs\\": "src/"
+        },
+        "config": {
+            "prepend-autoloader": false
+        },
+        "type": "prestashop-module"
+    }
+}

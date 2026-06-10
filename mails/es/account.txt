@@ -1,0 +1,31 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+¡Enhorabuena!
+
+Te acabas de registrar en {shop_name}
+
+Solo falta que confirmes tu email. Ya lo sabemos, es un rollo, pero si no lo haces no te podremos avisar cuando salga tu pedido (y tu perro se quedará esperando).
+[CONFIRMAR EMAIL]({verify_url})
+
+Una vez confirmes, podrás:
+
+✓ Ver tus pedidos sin complicaciones
+✓ Recibir avisos de envío en tiempo real
+✓ Pillar ofertas exclusivas que solo llegan por email
+
+Si decides no confirmar, no pasa nada. Simplemente no nos volverás a ver el pelo.
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD:  Si no has sido tú, ignora este email. O si tienes algún peludo en casa pregúntale si ha estado tocando el ordenador.
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

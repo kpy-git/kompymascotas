@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ShopThemeCustomeraccount.es-ES.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="3b2312b9b08467f944fdf4a9bead4344">
+        <source>%addresses% saved addresses.</source>
+        <target>%addresses% direcciones</target>
+      </trans-unit>
+      <trans-unit id="da4791bc9700aca963b560fcb7db0605">
+        <source>Add first address</source>
+        <target>Añadir mi primera dirección</target>
+      </trans-unit>
+      <trans-unit id="0557fa923dcee4d0f86b1409f5c2167f">
+        <source>Back</source>
+        <target>Atrás</target>
+      </trans-unit>
+      <trans-unit id="914419aa32f04011357d3b604a86d7eb">
+        <source>Carrier</source>
+        <target>Agencia de transporte</target>
+      </trans-unit>
+      <trans-unit id="e122b4a2c2199881adb5fd7f580b811f">
+        <source>Control panel</source>
+        <target>Panel de control</target>
+      </trans-unit>
+      <trans-unit id="6da5b8fe5e218351dd97937a1ba3fa38">
+        <source>Download your invoice</source>
+        <target>Descargar factura</target>
+      </trans-unit>
+      <trans-unit id="091dc935cc66978f0f4120816e29a59f">
+        <source>Hi %name%!</source>
+        <target>Hola %name%!</target>
+      </trans-unit>
+      <trans-unit id="74ecd9234b2a42ca13e775193f391833">
+        <source>My orders</source>
+        <target>Mis pedidos</target>
+      </trans-unit>
+      <trans-unit id="4049d979b8e6b7d78194e96c3208a5a5">
+        <source>Order number</source>
+        <target>Número de pedido</target>
+      </trans-unit>
+      <trans-unit id="f0aaaae189e9c7711931a65ffcd22543">
+        <source>Payment method</source>
+        <target>Método de pago</target>
+      </trans-unit>
+      <trans-unit id="101f2450ccefbd344b37971c5d27f96d">
+        <source>Placed on</source>
+        <target>Realizado en</target>
+      </trans-unit>
+      <trans-unit id="0658919736b66cb6c42518019bf42f1c">
+        <source>Stored personal data</source>
+        <target>Datos personales almacenados</target>
+      </trans-unit>
+      <trans-unit id="dcf3f867b2e726354c58ed4a4c54179e">
+        <source>Telf:</source>
+        <target>Telf:</target>
+      </trans-unit>
+      <trans-unit id="227ac72ffd4f51b45a02f99221031268">
+        <source>You are customer from %date%</source>
+        <target>Eres cliente desde %date%</target>
+      </trans-unit>
+      <trans-unit id="5a31a63fe679d3511b5c41a5b8f82a44">
+        <source>You have %s vouchers</source>
+        <target>Tienes %s cupones</target>
+      </trans-unit>
+      <trans-unit id="ca52540306f65885d516eba97dddd22b">
+        <source>You have no saved addresses.</source>
+        <target>No tienes ninguna dirección guardada</target>
+      </trans-unit>
+      <trans-unit id="f2fc7490cbdb0db5cd6f1a4e7edb0da1">
+        <source>Your account</source>
+        <target>Mi cuenta</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

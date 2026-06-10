@@ -1,0 +1,19 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+Esta es una prueba de email de su tienda.
+Si puede leer esto, significa que ¡la prueba fue completada correctamente!
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD:  Si no has sido tú, ignora este email. O si tienes algún peludo en casa pregúntale si ha estado tocando el ordenador.
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

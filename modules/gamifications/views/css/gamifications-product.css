@@ -1,0 +1,98 @@
+.gamifications-product-points {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: var(--kpy-color-secondary-light);
+    color: var(--kpy-color-secondary-dark);
+    font-size: var(--kpy-font-size-small);
+    padding: .75rem .5rem;
+    gap: .5rem;
+    border-radius: .75rem;
+    font-weight: 500;
+}
+
+.gamifications-product-info {
+    max-width: 1.125rem;
+    height: auto;
+    margin-left: auto;
+    fill: var(--kpy-color-secondary-dark);
+}
+
+.gamifications-product-info:hover {
+    cursor: pointer;
+}
+
+.gamifications-product-logo {
+    width: 1.75rem;
+}
+
+.gamifications-product-dialog {
+    border: unset;
+    border-radius: .75rem;
+    padding: 2rem 3rem;
+    width: min(85%, 700px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    color: var(--kpy-text-dark);
+}
+
+.gamifications-product-dialog h4{
+    margin-bottom: 2rem;
+}
+
+.gamifications-product-dialog-body {
+    font-size: .85rem;
+    padding-inline: 1.5rem;
+}
+
+.gamifications-dialog__title {
+    font-size: .95rem;
+    font-weight: bold;
+    margin-bottom: .5rem;
+}
+
+.gamifications-dialog__subtitle {
+    margin-bottom: unset;
+}
+
+.gamifications-dialog__box {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.gamifications-dialog__box:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+.gamifications-dialog__ico img {
+    max-width: 4rem;
+}
+
+.gamifications-product-dialog a {
+    border-bottom: 1px dashed var(--kpy-text-dark);
+    font-style: italic;
+    font-weight: 500;
+}
+
+.gamifications-product-dialog a:hover {
+    border-bottom: 1px solid var(--kpy-text-dark);
+}
+
+.close-dialog:focus-visible {
+    box-shadow: unset;
+    color: white;
+    background-color: var(--kpy-color-accent);
+    border-color: var(--kpy-color-accent);
+}
+
+.close-dialog:focus-visible:hover {
+    color: var(--kpy-color-primary);
+    background-color: var(--kpy-color-accent-dark);
+}
+
+
+span:has(.gamifications-product-info:hover) {
+    box-shadow: rgba(134, 105, 184, 0.1) 0 30px 90px;
+}

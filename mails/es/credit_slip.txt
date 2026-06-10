@@ -1,0 +1,22 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+Order ID {id_order} - Factura por abono
+
+A credit slip has been generated in your name for order with the reference {id_order}.
+
+Revise este abono y descargue su factura desde nuestra tienda, vaya a la sección [Facturas por abono]({history_url}) de su cuenta de cliente.
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD:  Si no has sido tú, ignora este email. O si tienes algún peludo en casa pregúntale si ha estado tocando el ordenador.
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

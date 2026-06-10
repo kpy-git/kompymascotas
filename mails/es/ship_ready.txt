@@ -1,0 +1,38 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+Listo. Tu pedido está preparado para el envío.
+Estamos a la espera de que {carrier_name} lo suba a su camión rumbo a tu casa. Lo normal es que llegue en 24-48 horas laborables (a veces antes, a veces después, ya sabes como son estas cosas)
+[📍 Ver dónde está mi pedido]({followup})
+
+💡Nota: A veces tarda algunas horas en actualizarse. Ten paciencia, si no te sale nada al hacer clic en el enlace prueba dentro de un rato.
+
+El enlace te lleva al seguimiento directo de la agencia de transporte. Ahí verás:
+
+- Dónde está exactamente tu paquete
+- Cuándo se supone que va a llegar
+- Si puedes cambiar la dirección de entrega o escoger un punto de recogida (por si no estás en casa)
+
+¿No vas a estar para recibirlo?
+
+No pasa nada. Desde el enlace de seguimiento puedes cambiarlo a un punto de recogida cercano (supermercado, gasolinera, etc.). O si tienes portero, puedes dejarlo ahí (dependiendo del transportista).
+
+¿Algo va mal?
+
+Si hay algún problema (retraso en la entrega, dirección incorrecta, o el mensajero se ha perdido), escríbenos a hola@kompymascotas.com o llama al 955 228 677.
+
+Cuanto antes nos lo digas, antes lo arreglamos.
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD:  Si el mensajero no te encuentra, lo normal es que lo intenten 2 veces. Pero estate pendiente del móvil por si te llaman (a veces llaman desde números raros).
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

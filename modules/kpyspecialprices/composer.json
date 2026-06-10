@@ -1,0 +1,18 @@
+{
+    "name": "prestashop/kpyspecialprices",
+    "authors": [{
+        "name": "KPY Team"
+    }],
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrestaShop\\Module\\KpySpecialPrices\\": "src/"
+        },
+        "config": {
+            "prepend-autoloader": false
+        },
+        "type": "prestashop-module"
+    }
+}

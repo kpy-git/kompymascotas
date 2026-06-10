@@ -1,0 +1,91 @@
+.product-miniature .product-miniature__price.kpy-special-price-listing {
+    background-color: var(--kpy-color-primary-dark);
+    border-radius: .25rem;
+    width: fit-content;
+    padding: 0 .3em;
+}
+
+.page-product .product__current-price.kpy-special-price {
+    color: var(--kpy-color-accent);
+}
+
+.kpy-special-price-tag {
+    color: var(--kpy-color-accent);
+    font-weight: bold;
+    font-size: var(--kpy-font-size);
+    display: inline-flex;
+    background-color: var(--kpy-primary-accent);
+    padding: .2rem .5rem;
+    border-radius: .25rem;
+    margin-top: .5rem;
+}
+
+.kpy-special-price-tag img{
+    width: 1rem;
+    margin-right: .5rem;
+}
+
+.kpy-special-price-regular-price {
+    color: var(--kpy-text-secondary);
+    font-size: var(--kpy-font-size-small);
+}
+
+
+.product-flags .kpy-special-price {
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: 0 .3rem;
+    line-height: 1.5;
+    margin: 0 0 0 .5rem;
+    align-self: end;
+}
+
+@layer bs-base {
+    .product-flags .badge:not(.discount).kpy-special-price {
+        background-color: var(--kpy-primary-accent) !important;
+        border: 1px solid var(--kpy-primary-accent) !important;
+        color: var(--kpy-color-accent) !important;
+    }
+}
+
+.badge.kpy-special-price img {
+    width: 1rem;
+}
+
+.kpy-special-price-attribute-tag {
+    background-color: var(--kpy-primary-accent);
+    color: var(--kpy-color-accent);
+    padding: .25rem;
+}
+
+.kpy-special-price-attribute-tag img {
+    width: var(--kpy-font-size);
+}
+
+.kpy-special-price-info {
+    border: 1px solid var(--bs-gray-200);
+    padding: 1.5rem;
+    border-radius: var(--kpy-border-radius);
+    margin-top: 1rem;
+}
+
+.kpy-special-price-info h5 {
+    font-size: 1.125rem;
+}
+
+.kpy-special-price-info img {
+    width: 1.5rem;
+    margin-right: .2rem;
+}
+
+.kpy-special-price-info p {
+    font-size: var(--kpy-font-size-mini);
+    color: var(--kpy-text-secondary);
+}
+
+.kpy-special-price-days-left {
+    font-size: var(--kpy-font-size-small);
+    margin-top: .25rem;
+}

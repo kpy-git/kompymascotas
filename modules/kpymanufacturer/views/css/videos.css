@@ -1,0 +1,69 @@
+.video-section {
+    background: var(--kpy-color-secondary-light);
+}
+
+.scroll-track-wrap {
+    overflow: hidden;
+    position: relative;
+}
+
+.scroll-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
+    cursor: grab;
+}
+
+.video-card {
+    background: #fff;
+    border-radius: var(--kpy-border-radius);
+    overflow: hidden;
+    box-shadow: var(--kpy-shadow-hover);
+    transition: all .25s ease;
+}
+
+.scroll-track .proof-card, .scroll-track .video-card {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+}
+
+.video-card__thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: .5rem;
+    margin-inline: .5rem;
+}
+
+.video-card__body {
+    padding: 18px 20px;
+}
+
+.video-card__title {
+    font-size: var(--kpy-font-size);
+    font-weight: 700;
+    color: var(--kpy-text-dark);
+    margin-bottom: .5rem;
+}
+
+.video-card__desc {
+    font-size: var(--kpy-font-size-small);
+    color: var(--kpy-text-secondary);
+}
+
+.video-overlay-title {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    right: 14px;
+    color: rgba(255,255,255,.7);
+    font-size: .72rem;
+    font-weight: 600;
+    z-index: 1;
+}

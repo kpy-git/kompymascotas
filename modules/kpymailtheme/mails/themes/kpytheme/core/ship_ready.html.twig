@@ -1,0 +1,413 @@
+{% extends '@Modules/kpymailtheme/mails/themes/kpytheme/components/layout.html.twig' %}
+
+{% block title %}{{ 'Preparado para envío'|trans({}, 'Emails.Body', locale) }}{% endblock %}
+
+{% block icon %}
+<div class="icon-section">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+        <!-- Camión -->
+        <rect x="8" y="28" width="35" height="22" rx="2" fill="#2C5F7D"></rect>
+        <rect x="43" y="35" width="20" height="15" rx="2" fill="#2C5F7D"></rect>
+        <path d="M43 35 L43 50 L63 50 L63 42 L55 35 Z" fill="#3d7a9e"></path>
+        <!-- Ventanas -->
+        <rect x="12" y="32" width="8" height="7" rx="1" fill="#FFF9E6"></rect>
+        <rect x="23" y="32" width="8" height="7" rx="1" fill="#FFF9E6"></rect>
+        <rect x="47" y="38" width="10" height="7" rx="1" fill="#FFF9E6"></rect>
+        <!-- Ruedas -->
+        <circle cx="18" cy="50" r="5" fill="#333333"></circle>
+        <circle cx="18" cy="50" r="3" fill="#666666"></circle>
+        <circle cx="53" cy="50" r="5" fill="#333333"></circle>
+        <circle cx="53" cy="50" r="3" fill="#666666"></circle>
+        <!-- Paquete en la parte trasera -->
+        <rect x="14" y="35" width="12" height="10" rx="1" fill="#F4C430" opacity="0.9"></rect>
+        <line x1="17" y1="35" x2="17" y2="45" stroke="#FF6B6B" stroke-width="1.5"></line>
+        <line x1="14" y1="40" x2="26" y2="40" stroke="#FF6B6B" stroke-width="1.5"></line>
+        <!-- Líneas de movimiento -->
+        <line x1="2" y1="32" x2="6" y2="32" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round" opacity="0.6"></line>
+        <line x1="1" y1="38" x2="7" y2="38" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round" opacity="0.6"></line>
+        <line x1="2" y1="44" x2="6" y2="44" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round" opacity="0.6"></line>
+    </svg>
+</div>
+{{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <!--[if mso | IE]><tr><td class="" width="604px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:604px;" width="604" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 25px;text-align:center;">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:554px;" ><![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                            <tbody>
+                            <tr>
+                                <td style="vertical-align:top;padding:0;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                        <!-- TITLE BEGINING -->
+                                        <tr>
+                                            <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;padding-top:0;padding-bottom:20px;word-break:break-word;">
+                                                <div style="font-family:Nunito, arial, sans-serif;font-size:20px;font-weight:600;line-height:25px;text-align:{{ align_left }};color:#363A41;">{{ 'Hi {firstname} {lastname},'|trans({}, 'Emails.Body', locale) }}</div>
+                                            </td>
+                                        </tr>
+                                        <!-- TITLE ENDING -->
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+
+    <!-- BORDER BEGINING -->
+    <!--[if mso | IE]><tr><td class="" width="604px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:604px;" width="604" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 50px 40px;text-align:{{ align_left }};">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:25px;" ><![endif]-->
+                    <div class="mj-column-px-25 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="center" class="left" style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:0;padding-left:0;word-break:break-word;">
+                                    <p style="border-top:solid 3px #505050;font-size:1px;margin:0px auto;width:25px;">
+                                    </p>
+                                    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 3px #505050;font-size:1px;margin:0px auto;width:25px;" role="presentation" width="25px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+  </td></tr></table><![endif]-->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+    <!-- BORDER ENDING -->
+
+    <!-- SUBTITLE BEGINING -->
+    <!--[if mso | IE]><tr><td class="" width="604px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:604px;" width="604" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 25px 0;text-align:center;">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:554px;" ><![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                            <tbody>
+                            <tr>
+                                <td style="vertical-align:top;padding:0;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                                <div style="font-family:Nunito, arial, sans-serif;font-size:16px;line-height:25px;text-align:{{ align_left }};color:#363A41;">{{ 'Listo. Tu pedido está preparado para el envío.'|trans({}, 'Emails.Body', locale)|raw }}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                                <div style="font-family:Nunito, arial, sans-serif;font-size:16px;line-height:25px;text-align:{{ align_left }};color:#363A41;">{{ 'Estamos a la espera de que [1]{carrier_name}[/1] lo suba a su camión rumbo a tu casa. Lo normal es que llegue en [1]24-48 horas laborables[/1] (a veces antes, a veces después, ya sabes como son estas cosas)'|trans({'[1]': '<span class="label">', '[/1]': '</span>'}, 'Emails.Body', locale)|raw }}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
+                                                <a href="{followup}" class="cta-button-large">📍 {{ 'Ver dónde está mi pedido'|trans({}, 'Emails.Body', locale)|raw }}</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+    <!-- BORDER ENDING -->
+
+    <!-- FIRST TEXT BEGINING -->
+    <!--[if mso | IE]><tr><td class="" width="604px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:604px;" width="604" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 25px 20px;text-align:center;">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:554px;" ><![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div class="update-note">
+                                        💡{{ '[1]Nota:[/1] A veces tarda algunas horas en actualizarse. Ten paciencia, si no te sale nada al hacer clic en el enlace prueba dentro de un rato.'|trans({'[1]': '<span class="label">', '[/1]': '</span>'}, 'Emails.Body', locale)|raw }}
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+    <!-- FIRST TEXT ENDING -->
+
+    <!-- FIRST TEXT BEGINING -->
+    <!--[if mso | IE]><tr><td class="" width="604px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:604px;" width="604" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 25px 20px;text-align:center;">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:554px;" ><![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div class="features-box">
+                                        <h3>{{ 'El enlace te lleva al seguimiento directo de la agencia de transporte. Ahí verás:'|trans({}, 'Emails.body', locale) }}</h3>
+                                        <ul class="features-list">
+                                            <li>{{ 'Dónde está exactamente tu paquete'|trans({}, 'Emails.body', locale) }}</li>
+                                            <li>{{ 'Cuándo se supone que va a llegar'|trans({}, 'Emails.body', locale) }}</li>
+                                            <li>{{ 'Si puedes cambiar la dirección de entrega o escoger un punto de recogida (por si no estás en
+                                                casa)'|trans({}, 'Emails.body', locale) }}</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+    <!-- FIRST TEXT ENDING -->
+
+    <!-- FIRST TEXT BEGINING -->
+    <!--[if mso | IE]><tr><td class="" width="604px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:604px;" width="604" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 25px 20px;text-align:center;">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:554px;" ><![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div class="help-section">
+                                        <h3>{{ '¿No vas a estar para recibirlo?'|trans({}, 'Emails.Body', locale) }}</h3>
+                                        <p>{{ 'No pasa nada. Desde el enlace de seguimiento puedes cambiarlo a un punto de recogida cercano (supermercado, gasolinera, etc.). O si tienes portero, puedes dejarlo ahí (dependiendo del transportista).'|trans({}, 'Emails.body', locale) }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+    <!-- FIRST TEXT ENDING -->
+
+    <!-- FIRST TEXT BEGINING -->
+    <!--[if mso | IE]><tr><td class="" width="604px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:604px;" width="604" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:604px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td style="direction:{{ direction }};font-size:0px;padding:0 25px 20px;text-align:center;">
+                    <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:554px;" ><![endif]-->
+                    <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:{{ align_left }};direction:{{ direction }};display:inline-block;vertical-align:top;width:100%;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="{{ align_left }}" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                    <div class="help-section">
+                                        <h3>{{'¿Algo va mal?'|trans({}, 'Emails.Body', locale) }}</h3>
+                                        <p>{{ 'Si hay algún problema (retraso en la entrega, dirección incorrecta, o el mensajero se ha perdido), escríbenos a [1][email][/1] o llama al [2][phone][/2].'|trans({'[1]': '<a href="'~shop_email~'">', '[/1]': '</a>', '[email]': shop_email, '[phone]': shop_phone, '[2]': '<span class="label">', '[/2]': '</span>'}, 'Emails.Body', locale)|raw }}</p>
+                                        <p>{{ 'Cuanto antes nos lo digas, antes lo arreglamos.'|trans({}, 'Emails.Body', locale) }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table></td></tr><![endif]-->
+    <!-- FIRST TEXT ENDING -->
+
+{% block styles %}
+<style type="text/css">
+    #outlook a {
+        padding: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+        border-collapse: collapse;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+    }
+
+    img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+    }
+
+    p {
+        display: block;
+        margin: 13px 0;
+    }
+
+    .cta-button-large {
+        display: inline-block;
+        background-color: #FF6B6B;
+        color: #ffffff !important;
+        text-decoration: none;
+        padding: 18px 45px;
+        border-radius: 10px;
+        font-weight: 700;
+        margin: 20px 0;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 18px;
+        font-family: Nunito, Arial, sans-serif;
+    }
+
+    .help-section {
+        background-color: #FFF9E6;
+        padding: 22px 28px;
+        border-radius: 10px;
+        margin: 0;
+        border-left: 5px solid #F4C430;
+        font-size: 15px;
+        font-family: Nunito, Arial, sans-serif;
+    }
+
+    .help-section a {
+        color: #FF6B6B;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .help-section h3 {
+        margin: 0 0 12px 0;
+        font-size: 18px;
+        color: #2C5F7D;
+        font-weight: bold;
+    }
+    .label {
+         font-weight: bold;
+     }
+
+    .update-note {
+        background-color: #f0f7ff;
+        border-left: 5px solid #4A90E2;
+        padding: 15px 20px;
+        border-radius: 6px;
+        margin: 20px 0;
+        font-size: 14px;
+        color: #666666;
+        line-height: 1.5;
+        font-family: Nunito, Arial, sans-serif;
+    }
+
+    .features-box {
+        background-color: #f8f8f8;
+        padding: 25px 30px;
+        border-radius: 10px;
+        margin: 30px 0;
+        border: 2px solid #e8e8e8;
+        font-family: Nunito, Arial, sans-serif;
+    }
+
+    .features-box h3 {
+        margin: 0 0 18px 0;
+        font-size: 17px;
+        color: #2C5F7D;
+        font-weight: bold;
+    }
+
+    .features-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .features-list li {
+        padding: 10px 0 10px 30px;
+        position: relative;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #333333;
+    }
+
+    .features-list li::before {
+        content: "-";
+        position: absolute;
+        left: 0;
+        top: 10px;
+        color: #FF6B6B;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    </style>
+{% endblock %}
+{% endblock %}
+
+{% block posdata_message %}
+    {{ 'Si el mensajero no te encuentra, lo normal es que lo intenten 2 veces. Pero estate pendiente del móvil por si te llaman (a veces llaman desde números raros).'|trans({}, 'Emails.Body', locale)|raw }}
+{% endblock %}

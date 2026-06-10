@@ -1,0 +1,7 @@
+# https://devdocs.prestashop.com/8/modules/concepts/services/
+services:
+  PrestaShop\Module\KpyProductForm\Form\Modifier\CombinationFormModifier:
+    autowire: true
+    public: true
+    arguments:
+      $formBuilderModifier: '@form.form_builder_modifier'

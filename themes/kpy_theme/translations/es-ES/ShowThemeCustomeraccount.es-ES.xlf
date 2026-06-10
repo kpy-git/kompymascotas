@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ShowThemeCustomeraccount.es-ES.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="4049d979b8e6b7d78194e96c3208a5a5">
+        <source>Order number</source>
+        <target>Nº Pedido</target>
+      </trans-unit>
+      <trans-unit id="f0aaaae189e9c7711931a65ffcd22543">
+        <source>Payment method</source>
+        <target>Forma de pago</target>
+      </trans-unit>
+      <trans-unit id="101f2450ccefbd344b37971c5d27f96d">
+        <source>Placed on</source>
+        <target>Realizado el</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

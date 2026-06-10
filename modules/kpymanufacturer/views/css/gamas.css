@@ -1,0 +1,119 @@
+.tabs-section {
+    background: var(--kpy-color-secondary-light);
+}
+
+.tabs-header {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 40px;
+    padding-top: 48px;
+}
+
+.tab-btn {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: var(--kpy-font-size);
+    font-weight: 700;
+    padding: .5rem 1.5rem;
+    border-radius: 100px;
+    border: 2px solid var(--kpy-text-dark);
+    background: transparent;
+    color: var(--kpy-text-dark);
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background: var(--kpy-text-dark);
+    color: #fff;
+}
+
+.tab-btn img {
+    width: 1.75rem;
+    height: auto;
+}
+
+.tab-content {
+    display: none;
+    padding-bottom: 48px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.gama-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.gama-card {
+    background: #fff;
+    border-radius: var(--kpy-border-radius);
+    padding: 28px 22px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.gama-card:hover {
+    box-shadow: var(--kpy-shadow-hover);
+    border-color: var(--kpy-color-secondary-dark);
+}
+
+.gama-card__icon {
+    margin-bottom: 12px;
+    display: block;
+    max-height: 85px;
+    min-height: 85px;
+}
+
+.gama-card__icon > img {
+    max-height: 100%;
+    width: auto;
+    transition: .35s ease-out;
+}
+
+.gama-card__title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+}
+
+.gama-card__desc {
+    font-size:var(--kpy-font-size);
+    color: var(--kpy-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.gama-card__link {
+    font-size: var(--kpy-font-size);
+    font-weight: 700;
+    color: var(--kpy-color-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+    margin-inline: auto;
+}
+
+.gama-card__link .material-icons {
+    transition: transform .35s ease-out;
+
+}
+
+.gama-card:hover .gama-card__link .material-icons {
+    transform: translateX(1rem);
+}
+
+.gama-card:hover .gama-card__icon img {
+    transform: scale(1.2);
+}

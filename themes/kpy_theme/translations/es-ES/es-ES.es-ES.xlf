@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ModulesWirepaymentAdmin.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="cfc0561623b37471f267aa911092b3ac">
+        <source>If the client chooses to pay by bank wire, the order status will change to 'Waiting for Payment'.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="5fb4bbf993c23848433caf58e6b2816d">
+        <source>That said, you must manually confirm the order upon receiving the bank wire.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="c1be305030739396775edaca9813f77d">
+        <source>This module allows you to accept secure payments by bank wire.</source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

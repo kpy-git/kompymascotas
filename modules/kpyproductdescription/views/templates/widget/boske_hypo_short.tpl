@@ -1,0 +1,5 @@
+<p><strong>La elección de los ingredientes no es casualidad.</strong> Esta dieta utiliza <strong>patata como fuente principal de almidón y proteína deshidratada de pescado blanco</strong> como única fuente proteica animal, lo que reduce significativamente el riesgo de reacciones adversas. Además, incorpora <strong>hidrolizado de pescado</strong>, con péptidos de bajo peso molecular, lo que facilita aún más la tolerancia digestiva.</p>
+
+<p>La fórmula incluye también <strong>aceite de pescado rico en Omega 3</strong>, que contribuye a modular la respuesta inflamatoria y a mejorar la salud de la piel, y <strong>semilla de linaza</strong>, fuente vegetal de Omega 3. Para el equilibrio intestinal, se añaden <strong>inulina</strong> (FOS) y <strong>MOS procedente de levaduras</strong>, que promueven una microbiota sana y refuerzan la barrera inmunológica del intestino.</p>
+
+<p><strong>Cada ingrediente tiene una función clínica concreta</strong>, y todos juntos conforman una dieta de alta tolerancia, ideal para perros con diagnósticos de intolerancia alimentaria o procesos de eliminación.</p>

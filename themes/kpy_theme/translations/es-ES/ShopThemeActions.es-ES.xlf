@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ShopThemeActions.es-ES.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="0b39c5aca15b84b1ad53a94d6b3feb78">
+        <source>Change password</source>
+        <target>Cambiar contraseña</target>
+      </trans-unit>
+      <trans-unit id="f2c12ae14393ffc83551d56f32bb03cc">
+        <source>Price:</source>
+        <target>Precio:</target>
+      </trans-unit>
+      <trans-unit id="3d0d1f906e27800531e054a3b6787b7c">
+        <source>Quantity:</source>
+        <target>Cantidad:</target>
+      </trans-unit>
+      <trans-unit id="4f980ef28e9897873ddbf8b2832b5360">
+        <source>The fields marks with asterisk * are required</source>
+        <target>Los campos marcados con arterisco * son obligatorios</target>
+      </trans-unit>
+      <trans-unit id="0b4db271fc4624853e634ef6882ea8be">
+        <source>View all</source>
+        <target>Ver todos</target>
+      </trans-unit>
+      <trans-unit id="fac8e7847e2fce9df0cbc0e5483c1124">
+        <source>View options</source>
+        <target>Ver opciones</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

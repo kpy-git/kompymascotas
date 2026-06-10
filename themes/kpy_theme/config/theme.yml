@@ -1,0 +1,9 @@
+parent: hummingbird
+name: kpy_theme
+display_name: Kompy theme
+version: 1.0.0
+author:
+  name: "KPY Team"
+  url: "https://kompymascotas.com"
+assets:
+  use_parent_assets: false

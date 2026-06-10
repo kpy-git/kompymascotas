@@ -1,0 +1,7 @@
+<p><strong>Boske Clinical Diet Hepatic</strong> es un alimento húmedo veterinario formulado específicamente para perros con insuficiencia hepática crónica o patologías relacionadas con el hígado. Está desarrollado por expertos veterinarios con el objetivo de ofrecer una nutrición funcional y segura en casos donde el hígado necesita un apoyo adicional y controlado.</p>
+
+<p>Frente a la creencia de que “cualquier comida baja en grasa sirve”, esta fórmula demuestra lo contrario: no basta con reducir ingredientes, <strong>hay que optimizar los que sí están presentes.</strong> Por eso, se <strong>utiliza un nivel moderado de proteínas de altísima calidad y digestibilidad</strong>, que no sobrecargan el hígado pero mantienen la masa muscular.</p>
+
+<p>Además, su aporte elevado de vitaminas y minerales contribuye a <strong>proteger las funciones celulares y favorecer la regeneración hepática</strong>, mientras que el resto de la composición está pensada para reducir el esfuerzo metabólico del organismo.</p>
+
+<p>Muchos tutores piensan que el cambio de alimentación es irrelevante en patologías hepáticas, pero la <strong>dieta es un pilar en la recuperación</strong>. Y en este caso, está diseñada sin cereales, sin ingredientes de relleno y con materias primas naturales de primera calidad.</p>

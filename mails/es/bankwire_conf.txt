@@ -1,0 +1,35 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+¡Buenas noticias!
+Hemos recibido tu transferencia correctamente. Tu pago ha quedado confirmado y tu pedido ya está en marcha.
+
+Pedido confirmado
+
+{id_order}
+{total_paid} €
+
+Pago confirmado
+
+{id_order}
+{total_paid} Pago aceptado
+
+¿Y ahora qué?
+
+- Tu pedido entra en nuestro almacén con los plazos de preparación habituales.
+- En cuanto salga, te mandamos un email con el número de seguimiento para que lo puedas rastrear.
+- Si tienes cualquier duda mientras tanto, estamos en hola@kompymascotas.com o en el 955 228 677.
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD:  El peludo que tienes en casa ya huele que algo viene. No le decepciones tardando en abrirlo cuando llegue.
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

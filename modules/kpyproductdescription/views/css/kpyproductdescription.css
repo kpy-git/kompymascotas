@@ -1,0 +1,467 @@
+.descripcion-general {
+    display: flex;
+    flex-direction: column;
+    font-size: var(--kpy-font-size);
+}
+
+.container-description {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border: 0.15rem solid #3bb29b;
+    border-radius: 1rem;
+    margin: 10px;
+    background-color: #ebf7f5;
+    color: #232323;
+    max-width: 1310px;
+    margin-bottom: 2rem;
+}
+
+.Info-container-description, .benefits-container-description {
+    padding: 20px;
+}
+
+.colum {
+    flex: 1;
+    margin: 0 10px;
+    width: 30%;
+    float: left;
+}
+
+.colum1, .colum2 {
+    border-right: 0.3rem dotted #3bb29b;
+    padding-right: inherit;
+}
+
+.purple {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #734e7f;
+    margin-bottom: 1em;
+    margin-left: 1rem;
+}
+
+h3 img {
+    margin-right: 10px;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-bottom: 10px;
+    padding: 10px;
+    height: 8em;
+    border-radius: 0.5em;
+}
+
+.colname {
+    font-weight: bold;
+    color: #3bb29b;
+    margin-bottom: 8px;
+}
+
+.colnumber {
+    font-weight: bold;
+    color: #277062;
+    margin-right: 5px;
+}
+
+.benefits-container {
+    clear: both;
+    width: 100%;
+}
+
+.benefits-boxes{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 10px;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.benefit-box {
+    display: inline-block;
+    text-align: center;
+    padding-right: 1em;
+    width: 100px;
+}
+
+.benefit-box:not(:last-child) {
+    border-right: 0.3rem dotted #3bb29b;
+}
+
+.benefit-box img {
+    max-width: 4em;
+    height: auto;
+    display: block;
+    margin: 0 auto 0.5em;
+}
+
+.Opinion-expert {
+    border: 0.15rem solid yellow;
+    border-radius: 1rem;
+    margin: 10px;
+    background-color: #fff4d7;
+    display: flex;
+    flex-direction: row;
+}
+
+.Opinion-expert > * {
+    width: 50%;
+}
+
+.Opinion-expert-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.Opinion-expert-title > p {
+    margin: 0;
+}
+
+.ration_expert_title {
+    display: flex;
+    align-items: end;
+}
+
+.expert-text-box {
+    margin: 2em;
+}
+
+.expert-title {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+
+.Opinion-expert-subtitle {
+    color: #87888a;
+    margin: 0;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.DogCatHeader {
+    text-align: center;
+    margin: 1rem 0 1rem 0;
+}
+
+.DogCatHeader1 {
+    max-width: 98%;
+}
+
+.DogCatHeader2 {
+    max-width: 95%;
+}
+
+hr {
+    background-color: #d9d9d9;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.additional-info-box {
+    display: flex;
+}
+
+.text-additional-info {
+    margin-top: 1rem;
+}
+
+.text-additional-info p {
+    margin-bottom: 2rem;
+}
+
+.additional-info-box > div {
+    width: 50%;
+    margin-inline: 1rem;
+}
+
+.additional-info-box-border-color{
+    --additional-info-box-border-color: #4d4d4d;
+}
+
+.additional-info-box img {
+    max-width: 100%;
+    margin-top: 1em;
+}
+
+.Benefits-key-container {
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
+
+.Benefits-key-tittle {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.Benefits-key-table {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+
+.colum-key {
+    width: 100%;
+    margin-left: 1em;
+    margin-right: 0.5em;
+}
+
+.colum1-key{
+    border-right: 0.3rem dotted var(--colum1-key-color, black);
+    padding-right: 1.5em;
+}
+
+.colum1-key-color {
+    --colum1-key-color: #4d4d4d;
+}
+
+.benefits-key-boxes {
+    display: flex;
+    background-color: var(--benefits-key-boxes-background-color, black);
+    margin-bottom: 15px;
+    border: 0.15rem solid var(--benefits-key-boxes-border-color, black);
+    border-radius: 1rem;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    height: 100px;
+}
+
+.benefits-key-boxes-light {
+    --benefits-key-boxes-background-color: #e6e6e6;
+    --benefits-key-boxes-border-color: #e6e6e6;
+}
+
+.benefits-key-boxes-chicken-adult {
+    --benefits-key-boxes-background-color: #ffd939;
+    --benefits-key-boxes-border-color: #ffd939;
+}
+
+.benefits-key-boxes-chicken-mini {
+    --benefits-key-boxes-background-color: #ffcc83;
+    --benefits-key-boxes-border-color: #ffcc83;
+}
+
+.benefits-key-boxes-chicken-puppy {
+    --benefits-key-boxes-background-color: #ffec7b;
+    --benefits-key-boxes-border-color: #ffec7b;
+}
+
+.benefits-key-boxes-salmon {
+    --benefits-key-boxes-background-color: #d4f9f5;
+    --benefits-key-boxes-border-color: #d4f9f5;
+}
+
+.benefits-key-boxes-grainfreechicken {
+    --benefits-key-boxes-background-color: #ffffae;
+    --benefits-key-boxes-border-color: #ffffae;
+}
+
+.benefits-key-boxes-cdproducts {
+    --benefits-key-boxes-background-color: #eef2ff;
+    --benefits-key-boxes-border-color: #eef2ff;
+}
+
+.benefits-key-boxes-salmonlata{
+    --benefits-key-boxes-background-color: #d4f9f5;
+    --benefits-key-boxes-border-color: #d4f9f5;
+}
+
+.benefits-key-boxes-pollolata{
+    --benefits-key-boxes-background-color: #f9f7e1;
+    --benefits-key-boxes-border-color: #f9f7e1;
+}
+
+.benefits-key-boxes img {
+    display: block;
+}
+
+.benefit-text {
+    margin: 2em;
+    color: var(--benefit-text-color, black);
+}
+
+.benefit-text-light {
+    --benefit-text-color: black;
+}
+
+.benefit-text-chicken {
+    --benefit-text-color: #373869;
+}
+
+.benefit-text-salmon {
+    --benefit-text-color: #373869;
+}
+
+.ingredients-boxes {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.ingredients {
+    font-weight: bold;
+    color: #e84253;
+    text-align: center;
+    padding: 1rem;
+}
+
+.ingredients-tittle {
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem;
+}
+
+.color-title-other-products {
+    font-weight: bold;
+    color: #e84253;
+}
+
+.listguion li {
+    list-style: none;
+}
+
+.listguion li:before {
+    content: "-";
+}
+
+.ingredient-box img {
+    width: 400px;
+}
+
+.product-faq .title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 3rem 0 1.5rem 0;
+    color: #734e7f;
+}
+
+.product-faq-item {
+    border-radius: .25rem;
+    border: 1px solid #eee;
+    background-color: var(--bs-gray-100);
+    padding: 1rem 1.5rem;
+    transition: max-height .2s ease;
+    margin-bottom: 1.15rem;
+}
+
+.product-faq-item:hover {
+    border-color: var(--bs-gray-400);
+    background-color: var(--bs-gray-200);
+}
+
+.product-faq-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+
+summary:hover {
+    cursor: pointer;
+}
+summary {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--kpy-text-dark);
+}
+
+.product-faq-answer {
+    padding: .5rem 1rem;
+}
+
+summary::marker {
+    color: var(--kpy-text-primary);
+    font-size: 1.25rem;
+}
+
+.name-subtitle {
+    display: block;
+    font-size: var(--kpy-font-size);
+    color: var(--kpy-text-secondary);
+}
+
+.product__description {
+    font-size: var(--kpy-font-size-small);
+    line-height: 1.6;
+}
+
+.product-description img {
+    max-width: 100%;
+}
+
+@media(max-width: 960px) {
+    .colum > div {
+        border: none !important;
+        height: auto;
+    }
+    .colum {
+        border-right: 0;
+        width: 100%;
+        margin-bottom: 2px;
+        margin-right: 0.5em;
+        padding-right: 0;
+    }
+
+    .additional-info-box > div {
+        width: 90%;
+    }
+    .additional-info-box {
+        flex-direction: column;
+        text-align: center;
+
+        border-bottom: 0.2rem dotted var(--additional-info-box-border-color, black);
+    }
+    .Benefits-key-table {
+        flex-wrap: wrap;
+    }
+    .colum1-key {
+        border: none!important;
+        padding-right: 0!important;
+    }
+    .benefits-key-boxes {
+        height: auto;
+        padding: unset;
+    }
+    .ingredient-box img {
+        width: 350px;
+    }
+    .Opinion-expert {
+        flex-direction: column;
+    }
+    .Opinion-expert > * {
+        width: 100%;
+    }
+    .Opinion-expert-img img {
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 1rem;
+    }
+    .expert-text-box {
+        padding: 1rem;
+        margin: 0;
+    }
+    .product-faq-icon {
+        right: 0;
+    }
+}
+
+.question {
+    margin-top: 1rem;
+    color: #734e7f;
+    font-size: 1.165rem;
+}
+
+.question + .answer {
+    padding: 0 1.25rem 1rem 1.25rem;
+}

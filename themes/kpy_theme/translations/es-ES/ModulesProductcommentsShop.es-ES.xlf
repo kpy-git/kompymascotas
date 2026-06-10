@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ModulesProductcommentsShop.es-ES.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="b2b02752bbe148573fe544159072fd62">
+        <source>Deja tu opinión</source>
+        <target>Deja tu opinión</target>
+      </trans-unit>
+      <trans-unit id="3718b83ff486d60dda1ed00466f45aa4">
+        <source>Did you find this helpful?</source>
+        <target>¿Te resultó útil?</target>
+      </trans-unit>
+      <trans-unit id="08c7d6f84301ee7d0aab0a5f67edc419">
+        <source>No customer reviews for the moment.</source>
+        <target>No hay ninguna valoración </target>
+      </trans-unit>
+      <trans-unit id="679d1d67dad6a3df0f8188a939c321e6">
+        <source>Please choose a rating for your review.</source>
+        <target>Por favor selecciona una puntuación.</target>
+      </trans-unit>
+      <trans-unit id="b0e34b92ce3d4073d645119d68c5d551">
+        <source>Review sent</source>
+        <target>Valoración enviada</target>
+      </trans-unit>
+      <trans-unit id="101d699ab80f40c7110be34095759b08">
+        <source>Sorry, your review cannot be posted.</source>
+        <target>Lo sentimos, tu opinión no pudo ser publicada.</target>
+      </trans-unit>
+      <trans-unit id="7099420adac38666d27f5fe8f5c30f6a">
+        <source>Te costará un minuto, ayudarás a la gente a decidirse.</source>
+        <target>Te costará un minuto, ayudarás a la gente a decidirse.</target>
+      </trans-unit>
+      <trans-unit id="b78a3223503896721cca1303f776159b">
+        <source>Title</source>
+        <target>título</target>
+      </trans-unit>
+      <trans-unit id="a9bdc8fe507a16f99a91a9530637894f">
+        <source>View all customer reviews</source>
+        <target>Ver las opiniones de los clientes</target>
+      </trans-unit>
+      <trans-unit id="7966126831926ad29c528b239d69f855">
+        <source>Write your review</source>
+        <target>Escriba tu opinión</target>
+      </trans-unit>
+      <trans-unit id="b20968d9aecd2d075519992e9e2f1ffe">
+        <source>Your comment has been submitted and will be available once approved by a moderator.</source>
+        <target>Tu opinión se ha enviado correctamente, aparecerá una vez sea aprobado por un moderador.</target>
+      </trans-unit>
+      <trans-unit id="221e705c06e231636fdbccfdd14f4d5c">
+        <source>Your name</source>
+        <target>Tu nombre</target>
+      </trans-unit>
+      <trans-unit id="ffe435d2d09dddbaa6927987bc8466a7">
+        <source>Your review cannot be sent</source>
+        <target>tu opinión no pudo ser enviada</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

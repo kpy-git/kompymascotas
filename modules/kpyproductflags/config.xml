@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>kpyproductflags</name>
+    <displayName><![CDATA[Kpy Product Flags]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Handler for products flags]]></description>
+    <author><![CDATA[KPY Team]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>0</need_instance>
+</module>

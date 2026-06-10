@@ -1,0 +1,1 @@
+{"date":"05-05-2026 14:41:53","method":"PrestaShop\\Module\\KpyAquaOrders\\Controller\\AquaOrderController::cancelAquaOperation","error":"SQLSTATE[07002]: [Microsoft][ODBC Driver 18 for SQL Server]COUNT field incorrect or syntax error","sql":"EXEC dbo.sr_WMRSTM_CANCELPE0126 ? ,'C', 1, ?, ?, ?","sql_error":""}

@@ -1,0 +1,1 @@
+<div {if isset($classes)}class="{$classes}"{/if}>{$message}</div>

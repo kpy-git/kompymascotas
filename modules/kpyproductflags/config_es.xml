@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>kpyproductflags</name>
+    <displayName><![CDATA[Kpy Product Flags]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Handler for products flags]]></description>
+    <author><![CDATA[KPY Team]]></author>
+    <tab><![CDATA[front_office_features]]></tab>
+	<confirmUninstall><![CDATA[Are you sure you want to uninstall?]]></confirmUninstall>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
+</module>

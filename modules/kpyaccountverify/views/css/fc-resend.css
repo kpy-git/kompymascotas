@@ -1,0 +1,29 @@
+.account-verify-resend-message {
+    max-width: 800px;
+    padding-inline: 1rem;
+    margin: 4rem auto;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.email {
+    font-weight: 600;
+    font-size: 1.275rem;
+    margin: 4rem auto;
+    background-color: var(--kpy-bg-menu);
+    color: var(--kpy-color-secondary-dark);
+    padding: 1.5rem 4rem;
+    border-radius: var(--kpy-border-radius);
+    text-align: center;
+    max-width: max-content;
+}
+
+.alert {
+    font-size: var(--kpy-font-size);
+}
+
+@media (min-width: 768px) {
+    .account-verify-resend-message {
+        min-height: 40vh;
+    }
+}

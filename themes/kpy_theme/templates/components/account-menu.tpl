@@ -1,0 +1,79 @@
+{**
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *}
+{$componentName = 'account-menu'}
+
+{block name='account_menu'}
+  <div class="{$componentName} d-none d-md-flex">
+    {*<p class="{$componentName}__title mb-4 h4">{l s='My Account' d='Shop.Theme.Customeraccount'}</p>*}
+    <a class="{$componentName}__line{if $urls.current_url === $urls.pages.my_account} active{/if}" id="account__link" href="{$urls.pages.my_account}">
+      <span class="link-item">
+      <i class="material-icons" aria-hidden="true">settings</i>
+        {l s='Control panel' d='Shop.Theme.Customeraccount'}
+      </span>
+    </a>
+
+    <a class="{$componentName}__line{if $urls.current_url === $urls.pages.identity} active{/if}" id="identity__link" href="{$urls.pages.identity}">
+      <span class="link-item">
+        {include file="components/svg-account.tpl" classes="account-menu__icon"}
+        {l s='Information' d='Shop.Theme.Customeraccount'}
+      </span>
+    </a>
+
+
+    <a class="{$componentName}__line{if $urls.current_url === $urls.pages.addresses} active{/if}" id="addresses__link" href="{$urls.pages.addresses}">
+      <span class="link-item">
+        {include file="components/svg-addresses.tpl" classes="account-menu__icon"}
+        {l s='Addresses' d='Shop.Theme.Customeraccount'}
+      </span>
+    </a>
+
+    {if !$configuration.is_catalog}
+      <a class="{$componentName}__line{if $urls.current_url === $urls.pages.history} active{/if}" id="history__link" href="{$urls.pages.history}">
+        <span class="link-item">
+          {include file="components/svg-orders.tpl" classes="account-menu__icon"}
+          {l s='My orders' d='Shop.Theme.Customeraccount'}
+        </span>
+      </a>
+    {/if}
+
+    {*{if !$configuration.is_catalog}
+      <a class="{$componentName}__line{if $urls.current_url === $urls.pages.order_slip} active{/if}" id="order-slips__link" href="{$urls.pages.order_slip}">
+        <span class="link-item">
+          <i class="material-icons" aria-hidden="true">&#xE8B0;</i>
+          {l s='Credit slips' d='Shop.Theme.Customeraccount'}
+        </span>
+      </a>
+    {/if}*}
+
+    {if $configuration.voucher_enabled && !$configuration.is_catalog}
+      <a class="{$componentName}__line{if $urls.current_url === $urls.pages.discount} active{/if}" id="discounts__link" href="{$urls.pages.discount}">
+        <span class="link-item">
+          {include file="components/svg-voucher.tpl" classes="account-menu__icon"}
+          {l s='Vouchers' d='Shop.Theme.Customeraccount'}
+        </span>
+      </a>
+    {/if}
+
+    {if $configuration.return_enabled && !$configuration.is_catalog}
+      <a class="{$componentName}__line{if $urls.current_url === $urls.pages.order_follow} active{/if}" id="returns__link" href="{$urls.pages.order_follow}">
+        <span class="link-item">
+          <i class="material-icons" aria-hidden="true">&#xE860;</i>
+          {l s='Merchandise returns' d='Shop.Theme.Customeraccount'}
+        </span>
+      </a>
+    {/if}
+
+    {block name='display_customer_account_menu'}
+      {hook h='displayCustomerAccountMenu'}
+    {/block}
+
+    {*<a class="{$componentName}__line{if $urls.current_url === $urls.pages.order_follow} active{/if} {$componentName}--signout" id="returns__link" href="{$urls.actions.logout}">
+      <span class="link-item">
+        {include file="components/svg-close-session.tpl" classes="account-menu__icon logout"}
+        {l s='Sign out' d='Shop.Theme.Actions'}
+      </span>
+    </a>*}
+  </div>
+{/block}

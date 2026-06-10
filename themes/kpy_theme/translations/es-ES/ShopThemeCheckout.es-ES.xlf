@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ShopThemeCheckout.es-ES.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="313d7cbfa2b3c25f09d69ad7e40974a7">
+        <source>Billing address differs from shipping address</source>
+        <target>Mi dirección de facturación no es la misma que la de envío</target>
+      </trans-unit>
+      <trans-unit id="c6aec0f3bafcf5986ef1c61ba293c834">
+        <source>Cancellation request</source>
+        <target>Solicitud de cancelación</target>
+      </trans-unit>
+      <trans-unit id="af0f5bdc5be121b9307687aeeae38c17">
+        <source>Delivery address</source>
+        <target>Dirección de entrega</target>
+      </trans-unit>
+      <trans-unit id="601d8c4b9f72fc1862013c19b677a499">
+        <source>Invoice address</source>
+        <target>Dirección de facturación</target>
+      </trans-unit>
+      <trans-unit id="dcc45e759c76c7d2e4c253ef90937ae9">
+        <source>My billing address and sipping address are the same</source>
+        <target>Mi dirección de facturación y de envío son las mismas</target>
+      </trans-unit>
+      <trans-unit id="4049d979b8e6b7d78194e96c3208a5a5">
+        <source>Order number</source>
+        <target>Número de pedido</target>
+      </trans-unit>
+      <trans-unit id="8bd4837a76cf443ab523a51895e23c36">
+        <source>Pay now</source>
+        <target>Pagar ahora</target>
+      </trans-unit>
+      <trans-unit id="bbc8c3f199c22b3951a52bc9821971ee">
+        <source>Unit price:</source>
+        <target>Precio unitario:</target>
+      </trans-unit>
+      <trans-unit id="62e4527becc6017a7d4985a58b3b24cb">
+        <source>Valid until %date%</source>
+        <target>Válido hasta %date%</target>
+      </trans-unit>
+      <trans-unit id="6e9783376d951cfd780e9fdb67a0f02c">
+        <source>View details</source>
+        <target>Ver detalles</target>
+      </trans-unit>
+      <trans-unit id="37ad1e7d9c2a39f56e784ed812be9857">
+        <source>Write a comment for carrier</source>
+        <target>Deja un comentario para la agencia de transporte</target>
+      </trans-unit>
+      <trans-unit id="baa63a898921164abe2d1d532ab27e79">
+        <source>Your Invoice Address</source>
+        <target>Dirección de facturación</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,13 @@
+services:
+  PrestaShop\Module\KpyAquaOrders\ConsoleCommand\UnblockOrdersRelatedCommand:
+    tags:
+      - {name: 'console.command'}
+  PrestaShop\Module\KpyAquaOrders\ConsoleCommand\ForceOrderCommand:
+    tags:
+      - { name: 'console.command' }
+  PrestaShop\Module\KpyAquaOrders\ConsoleCommand\ProcessOutSyncOrdersCommand:
+    tags:
+      - { name: 'console.command' }
+  PrestaShop\Module\KpyAquaOrders\ConsoleCommand\TestConnectionCommand:
+    tags:
+      - { name: 'console.command' }

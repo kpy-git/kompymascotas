@@ -1,0 +1,1 @@
+{$product.description_short nofilter}

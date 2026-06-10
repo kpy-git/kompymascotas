@@ -1,0 +1,623 @@
+{
+  "products": [
+    {
+      "id_product": 7214,
+      "tpl": "boske_chicken_Adult.tpl",
+      "tpl_short": "boske_adult_chicken_short.tpl",
+      "faq": [
+        {
+          "question": "¿Y si no le gusta? Mi perro es muy especial con la comida...",
+          "answer": "Es una de las preocupaciones más habituales. Pero la realidad es que <strong>Boske tiene una palatabilidad muy alta</strong>. ¿Por qué? Porque lleva ingredientes reales: <strong>pollo, pavo y huevo deshidratado</strong>, no subproductos. Muchos dueños nos escriben sorprendidos: “¡Por fin come con ganas!”. Si tu perro ha estado rechazando piensos, <strong>ésta puede ser la diferencia.</strong>"
+        },
+        {
+          "question": "¿Por qué es más barato que otras marcas “premium”? ¿Dónde está el truco?",
+          "answer": "Buena pregunta. Y la respuesta es sencilla: <strong>no pagas marca, pagas contenido</strong>. Boske está hecho en instalaciones que se proveen de granjas y proveedores locales (llamados KM.0) donde no se derrocha en marketing o envases brillantes. Aquí lo que cuenta es <strong>la calidad del ingrediente y el equilibrio de la fórmula.</strong>Cuando comparas etiqueta con etiqueta, te das cuenta: <strong>otros piensos cobran más, pero no ofrecen más.</strong>"
+        },
+        {
+          "question": "¿Le sentará bien si tiene digestión delicada?",
+          "answer": "Precisamente para eso se diseñó la fórmula <strong>Low Grain</strong>, con arroz integral como único cereal.Sin maíz, sin trigo, sin soja. Todo pensado para que la digestión sea más fácil, ligera y <strong>con menos riesgos de intolerancias.</strong> Y si tiene el estómago sensible, <strong>notarás la diferencia en las primeras semanas.</strong>"
+        },
+        {
+          "question": "¿Vale para todas las razas? ¿Y si es un perro muy activo o muy grande?",
+          "answer": "Sí. Boske Adult está formulado para <strong>perros adultos de razas medianas y grandes</strong>, con necesidades reales de energía, proteína y soporte articular. Hay muchos clientes con Pastores Alemanes, Labradores, Teckel, etc. que llevan tiempo usándolo, también muchos criadores lo usan por el buen resultado que da y el precio que tiene. Da igual si es un labrador con energía desbordante o un pastor con años encima: <strong>los ingredientes están equilibrados para dar soporte sin sobrecargar.</strong>"
+        },
+        {
+          "question": "¿Puedo hacer la transición de su pienso actual a Boske sin problemas?",
+          "answer": "Sí, y te lo recomendamos. Solo tienes que hacer una <strong>transición gradual de 5 a 7 días</strong>, mezclando poco a poco el nuevo pienso con el anterior. Es la mejor forma de dejar atrás ingredientes que no aportaban nada… <strong>y empezar a notar cambios de verdad.</strong>"
+        },
+        {
+          "question": "Mi perro tiene picores constantes, ¿puede estar relacionado con el pienso?",
+          "answer": "Más veces de las que imaginas, sí. Muchos piensos incluyen <strong>trigo, maíz, soja o subproductos animales</strong> que pueden provocar reacciones cutáneas, picores o incluso pérdida de pelo. <strong>Boske no lleva ninguno de esos ingredientes</strong>. Su receta está formulada precisamente para reducir este tipo de molestias y, en la mayoría de casos, los picores empiezan a desaparecer en pocas semanas."
+        },
+        {
+          "question": "¿Qué pasa si hace caca blanda o irregular con su pienso actual?",
+          "answer": "Es una señal clara de que <strong>algo en el pienso no le sienta bien</strong>. Puede ser el exceso de cereales, los conservantes, o simplemente una mala digestibilidad. <strong>Boske incluye arroz integral, pulpa de remolacha y proteína animal de alta calidad</strong>, además de probióticos naturales ingredientes que ayudan a regular el tránsito intestinal. <strong>Lo habitual es que las cacas se normalicen en cuestión de días.</strong>"
+        },
+        {
+          "question": "¿Es una buena opción si ha tenido problemas de alergia?",
+          "answer": "Sí. De hecho, se diseñó como alternativa para perros con sensibilidad alimentaria. No lleva trigo, ni maíz, ni soja —tres de los ingredientes que más alergias generan—. Además, su fórmula con <strong>proteína real y baja carga de cereales</strong> ayuda a mantener el sistema inmune fuerte sin sobrecargas innecesarias."
+        },
+        {
+          "question": "Su pelo está sin brillo y pierde mucho... ¿Puede influir el alimento?",
+          "answer": "Muchísimo. Un pelo apagado, opaco o con caída excesiva suele estar vinculado a <strong>falta de ácidos grasos esenciales y proteína de calidad</strong>. Boske incorpora <strong>aceite de pescado, Omega 3, Omega 6 y DHA</strong>, además de proteína animal real, lo que favorece un pelaje más sano, con brillo natural y menos caída."
+        },
+        {
+          "question": "¿Es adecuado si tiene mal aliento o sarro?",
+          "answer": "El mal aliento muchas veces <strong>viene de una digestión deficiente</strong>, no solo de la boca. Un pienso como Boske, que no fermenta en el estómago, ayuda a reducir el olor y mejora el aliento. Además, la croqueta tiene la textura ideal para estimular la masticación, lo que ayuda a mantener una <strong>higiene bucal más saludable.</strong>"
+        },
+        {
+          "question": "¿No será demasiado cambio si lleva años comiendo otra marca?",
+          "answer": "Lo que es un problema no es cambiar… es seguir con un alimento que <strong>no le funciona o no aporta lo que necesita.</strong> Muchos dueños se sorprenden al ver cómo mejora su perro tras años “comiendo bien”. <strong>Solo necesitas hacer una transición correcta y observar los resultados</strong>. Lo demás, lo hace la calidad."
+        }
+      ]
+    },
+    {
+      "id_product": 9208,
+      "tpl": "boske_gato.tpl",
+      "tpl_short": "boske_gato_short.tpl",
+      "faq": [
+        {
+          "question": "¿Y si mi gato es muy selectivo con el sabor?",
+          "answer": "Es una preocupación común, especialmente entre quienes tienen gatos con paladares exigentes. Esta receta incluye <strong>pollo fresco como primer ingrediente y hígado de pollo hidrolizado</strong>, lo que potencia el aroma y la palatabilidad sin aditivos artificiales. La mayoría de gatos lo aceptan desde el primer día, pero siempre recomendamos introducirlo de forma progresiva."
+        },
+        {
+          "question": "¿Este pienso sirve solo para gatos esterilizados?",
+          "answer": "Boske Sterilised Cat ha sido formulado pensando en gatos esterilizados, pero su composición también es adecuada para gatos adultos que necesiten <strong>controlar su peso sin perder vitalidad</strong>. Es bajo en grasa, pero rico en proteína digestible, con un perfil mineral adaptado para proteger el sistema urinario. En gatos no esterilizados con tendencia al sobrepeso o poco activos, también es una buena opción."
+        },
+        {
+          "question": "¿Por qué cambiar de pienso si al mío le va bien con el que toma?",
+          "answer": "'Le va bien' es una frase habitual, pero a veces solo significa que no hay síntomas visibles. Un pienso no adecuado puede ir desgastando poco a poco la salud urinaria, aumentar grasa corporal o alterar el tránsito intestinal sin que lo notemos a corto plazo. Boske ofrece una composición específica para esta etapa, y muchas veces el cambio se nota más en lo que no ocurre: ni infecciones urinarias, ni picos de peso, ni apatía."
+        },
+        {
+          "question": "¿Qué diferencia a Boske de otras marcas más conocidas o caras?",
+          "answer": "No vendemos marca, vendemos formulación. Boske prioriza <strong>proteína de origen animal real</strong> (pollo fresco y deshidratado), utiliza prebióticos naturales y respeta la digestibilidad con ingredientes funcionales. Todo sin conservantes artificiales, sin marketing vacío y sin inflar el precio. No todo lo caro es mejor, y no todo lo barato es sospechoso. Aquí, lo que cuenta es lo que lleva... no lo que cuesta decirlo."
+        },
+        {
+          "question": "¿Le sentará bien si tiene el estómago sensible o hace cacas blandas?",
+          "answer": "Este pienso ha sido desarrollado con una combinación equilibrada de <strong>prebióticos naturales, fibra vegetal, extracto de yuca y arroz como cereal principal</strong>, lo que favorece la estabilidad de la flora intestinal y la consistencia de las heces. Muchos clientes que han probado piensos “hiperpremium” con exceso de proteína o bajo contenido en fibra, encuentran aquí el equilibrio digestivo que buscaban."
+        },
+        {
+          "question": "¿Qué pasa si no le gusta y no quiere comérselo?",
+          "answer": "No todos los gatos reaccionan igual ante un cambio de alimentación, y lo entendemos. Por eso en <strong>Boske ofrecemos una garantía de satisfacción</strong>: si tu gato no lo acepta, puedes solicitar la devolución del importe. Preferimos perder una venta antes que forzar una convivencia con un producto que no encaja. Lo importante es que tanto tú como tu gato estéis tranquilos con lo que come."
+        },
+        {
+          "question": "¿Contiene maíz? ¿No es eso malo para los gatos?",
+          "answer": "Sí, contiene una pequeña cantidad de maíz y gluten de maíz, pero en proporciones muy controladas y con una función específica: aportar energía fácilmente digestible y complementar el perfil de aminoácidos.<br />A diferencia de lo que muchos creen, el maíz no es “malo” en sí mismo. Todo depende del papel que juegue dentro de la fórmula. En este caso, no sustituye a la proteína animal (que sigue siendo mayoritaria y de alta calidad), sino que ayuda a que el alimento sea más digestible, estable y saciante, especialmente en gatos esterilizados que tienden a comer con más ansiedad.<br />Para gatos sanos, sin patologías digestivas o alergias concretas, el maíz no solo no es perjudicial: puede tener una función útil en el equilibrio nutricional del alimento."
+        },
+        {
+          "question": "¿Por qué es más barato que otras marcas “premium”?",
+          "answer": "Porque en lugar de invertir en campañas de marca masiva, Boske invierte en el producto. No hay intermediarios de más, ni distribución encarecida, ni envases de diseño innecesario. La calidad está en el interior del saco. Y si lo comparas ingrediente por ingrediente con marcas que duplican su precio, verás que no hay tanto misterio... solo márgenes diferentes."
+        },
+        {
+          "question": "¿Sirve también para gatos mayores o seniors?",
+          "answer": "Sí, y de hecho es una muy buena opción para gatos senior que ya no necesitan tanto aporte calórico pero sí una digestión fácil y una fórmula que proteja su sistema urinario. El contenido de <strong>L-carnitina, la proteína altamente digestible y los niveles controlados de fósforo</strong> hacen de esta receta una alternativa segura y equilibrada también para gatos de edad avanzada."
+        },
+        {
+          "question": "¿Este pienso ayuda a prevenir problemas urinarios?",
+          "answer": "Está formulado específicamente para ello. Control del pH urinario, ajuste mineral (fósforo, magnesio, sodio) y la inclusión de <strong>DL-metionina</strong>, que ayuda a acidificar la orina de forma natural, hacen de Boske una fórmula adecuada para la prevención de cistitis o cristales urinarios, muy comunes en gatos esterilizados."
+        }
+      ]
+    },
+    {
+      "id_product": 8299,
+      "tpl": "boske_grainfree_salmon.tpl",
+      "tpl_short": "boske_grainfree_salmon_short.tpl",
+      "faq": [
+        {
+          "question": "¿Este pienso es adecuado para perros con alergias o intolerancias?",
+          "answer": "Sí, esta fórmula ha sido desarrollada específicamente <strong>sin cereales ni alérgenos comunes</strong> como el trigo, la soja o el maíz. Es un <strong>pienso monoproteico</strong>, lo que significa que solo incluye una fuente de proteína animal (salmón), algo fundamental en perros con digestiones delicadas o historial alérgico."
+        },
+        {
+          "question": "¿Contiene suficiente proteína si no lleva carne de varios tipos?",
+          "answer": "Más no siempre es mejor. Boske Grain Free Salmón está formulado con <strong>salmón fresco como primer ingrediente</strong> y proteína deshidratada de salmón. Esto asegura un perfil proteico completo, de alta digestibilidad y con <strong>aminoácidos esenciales bien equilibrados.</strong> Es una proteína limpia, sin mezclas ni subproductos, lo que favorece una mejor asimilación."
+        },
+        {
+          "question": "¿Y si mi perro tiene el estómago sensible o hace cacas blandas?",
+          "answer": "La combinación de <strong>probióticos naturales, pulpa de remolacha, vegetales frescos y la ausencia de cereales</strong> hace que este pienso sea bien tolerado por perros con digestiones delicadas. En muchos casos, los cambios se notan rápidamente en la consistencia de las heces, la frecuencia y la calidad digestiva general."
+        },{
+          "question": "¿Por qué cuesta más que otros piensos?",
+          "answer": "Porque la calidad también se nota en el interior del saco. El uso de <strong>ingredientes frescos, proteína monoproteica y formulación sin cereales</strong> eleva el coste de producción, pero también mejora la biodisponibilidad, la digestión y el estado general del perro. Lo que parece más caro, suele salir más rentable cuando ves que tu perro mejora sin necesitar suplementos ni tratamientos paralelos."
+        },
+        {
+          "question": "¿Hace falta complementar con aceite de salmón o suplementos si ya uso este pienso?",
+          "answer": "No. Este pienso ya contiene una <strong>proporción óptima de Omega 3, 6 y DHA</strong> a través del salmón, el aceite de pescado y la linaza. Está formulado para cubrir esas necesidades de forma equilibrada. Añadir suplementos externos podría incluso romper ese equilibrio si no están justificados clínicamente."
+        },
+        {
+          "question": "¿Mi perro no tiene alergias… entonces no necesita un pienso sin cereales?",
+          "answer": "No hace falta tener una alergia diagnosticada para beneficiarse de un alimento sin cereales. Muchos perros presentan síntomas leves —digestión irregular, picor ocasional, pelaje apagado— que no parecen un “problema” pero que mejoran al eliminar ciertos ingredientes. Este tipo de fórmula ayuda a mantener la salud a largo plazo, <strong>aunque el problema aún no haya dado la cara.</strong>"
+        },
+        {
+          "question": "¿Y si mi perro es muy activo? ¿Este pienso se queda corto en energía?",
+          "answer": "En absoluto. La energía no viene solo de los cereales. En esta receta, la fuente principal es <strong>la proteína animal y las grasas de calidad</strong> como el aceite de pescado y la linaza. Proporciona <strong>energía limpia y sostenida</strong>, ideal tanto para perros activos como para quienes necesitan rendimiento físico sin sobrepeso."
+        },
+        {
+          "question": "¿Los piensos Grain Free no son una moda?",
+          "answer": "No lo son si están bien formulados. La clave no está solo en eliminar el grano, sino <strong>qué se pone en su lugar.</strong> Hay piensos sin cereales que abusan de la patata o los guisantes, generando un desequilibrio. En este caso, la composición está equilibrada y construida con sentido: <strong>más carne, menos relleno, mejor digestión.</strong>"
+        },{
+          "question": "¿Qué diferencia real hay con un “pienso natural” con cereales?",
+          "answer": "El término “natural” no siempre significa “mejor”. Boske Grain Free Salmón es natural, sí, pero también <strong>funcional</strong>: carne fresca, sin subproductos, sin cereales que puedan causar inflamación, y con un perfil graso diseñado para mejorar piel, pelo y articulaciones. No se trata solo de lo que tiene… sino también de <strong>todo lo que no arrastra.</strong>"
+        },
+        {
+          "question": "¿Cómo sé si está funcionando? ¿Qué debería notar?",
+          "answer": "Lo notarás más en lo cotidiano que en lo espectacular: <strong>heces más firmes, menos gases, mejor olor corporal, pelaje más brillante y más energía sin hiperactividad.</strong> A veces el mejor resultado es que deja de tener pequeñas molestias que antes dabas por normales. Eso también es salud."
+        }
+      ]
+    },
+    {
+      "id_product": 8300,
+      "tpl": "boske_light.tpl",
+      "tpl_short": "boske_light_short.tpl",
+      "faq": [
+        {
+          "question": "¿Va a pasar hambre si cambio a un pienso light?",
+          "answer": "No. El hambre no lo marca la báscula del saco, lo marca la calidad de lo que come. Boske Light & Fit está formulado con <strong>fuentes naturales de fibra</strong> que ayudan a generar saciedad sin inflamar, y con <strong>L-carnitina</strong> para favorecer el metabolismo de las grasas. Comerá menos cantidad, pero se sentirá igual o más lleno. <strong>Y con energía más estable.</strong>"
+        },
+        {
+          "question": "¿Qué pasa si tiene sobrepeso, pero también es mayor?",
+          "answer": "Entonces es justo el perfil para el que se ha diseñado este pienso.<br />Boske Light & Fit no solo baja calorías: incluye <strong>glucosamina, condroitina, EPA y DHA</strong>, que ayudan a proteger articulaciones, músculos, cerebro y piel.<br /> Es una opción ideal cuando se busca <strong>ligereza sin perder soporte nutricional.</strong>"
+        },
+        {
+          "question": "¿Y si está acostumbrado a un pienso más comercial? ¿Le gustará?",
+          "answer": "Boske no es un pienso disfrazado. No lleva saborizantes ni harinas misteriosas. Pero usa <strong>pollo real, huevo entero y vegetales frescos</strong>, y eso se nota desde el primer cuenco.<br >En la mayoría de casos, el cambio de sabor no es un problema. Es un alivio."
+        },
+        {
+          "question": "¿Es mejor esto que darle menos cantidad del pienso que ya toma?",
+          "answer": "Sí. Darle menos de un pienso no adaptado es como apagar el fuego bajando la luz. Sí, consume menos calorías, pero también menos nutrientes, menos proteína y menos soporte. Boske está equilibrado para mantener su salud con menos calorías, pero sin que su cuerpo lo note como una carencia."
+        },
+        {
+          "question": "¿Tendré que cambiar otra vez si pierde peso?",
+          "answer": "No necesariamente. Boske Light & Fit está pensado para ser sostenible en el tiempo. Una vez alcance su peso ideal, puedes ajustar la ración diaria y seguir con él, especialmente si es un perro senior o tiene una actividad baja.<br /><strong>No es una dieta de paso. Es una alimentación que respeta su nueva etapa.</strong>"
+        },
+        {
+          "question": "¿Tiene digestión lenta últimamente? ¿Este pienso puede ayudar?",
+          "answer": "Sí. Muchos perros mayores o con sobrepeso empiezan a mostrar digestiones más pesadas, gases o inapetencia.<br />Boske Light & Fit está formulado con <strong>arroz integral como único cereal</strong>, junto a ingredientes como <strong>pulpa de remolacha y garrofa</strong>, que favorecen una digestión suave, regular y sin fermentaciones.<br /><strong>No hace milagros, pero sí elimina muchos de los causantes silenciosos del malestar.</strong>"
+        },
+        {
+          "question": "¿Se le cae mucho el pelo? ¿Puede mejorar con la alimentación?",
+          "answer": "En muchos casos, sí. Un pelo apagado o con caída excesiva suele ser consecuencia de una dieta pobre en <strong>grasas esenciales</strong> o de baja calidad proteica.<br />Boske aporta <strong>EPA, DHA, Omega 3 y 6</strong>, además de <strong>aceite de pescado y linaza</strong>, que ayudan a recuperar la salud de la piel y el pelaje desde dentro.<br /><strong>No es cosmético. Es nutricional.</strong>"
+        },
+        {
+          "question": "¿Hará buenas cacas o se le soltarán?",
+          "answer": "Una de las mejoras más comunes tras el cambio a Boske es la <strong>normalización del tránsito intestinal.</strong><br/> Gracias a la fibra natural, al arroz como base y a la calidad proteica, las cacas tienden a ser <strong>firmes, regulares y sin olores agresivos.</strong><br />No hace falta más volumen para tener mejores digestiones. Hace falta más lógica."
+        },
+        {
+          "question": "¿Puedo mezclarlo con comida húmeda?",
+          "answer": "Sí, aunque no es necesario. Boske Light está pensado para ser un alimento completo y equilibrado por sí solo. Si te ayuda a mejorar la aceptación o a adaptar la transición, puedes mezclarlo con una comida húmeda natural y sin azúcares añadidos. <br />Pero si se lo das solo, <strong>sabes que ya tiene todo lo que necesita.</strong>"
+        },
+        {
+          "question": "¿Y si sigo dudando? ¿Y si luego no me convence?",
+          "answer": "Boske Light no es para quien compra por impulso o etiqueta. Es para quien <strong>compara, entiende y elige con criterio.</strong> Si aún dudas, quizá es porque estás acostumbrado a productos que prometen mucho y entregan poco.<br />Por eso, <strong>la marca ofrece una garantía de satisfacción.</strong> Porque no quiere clientes desconfiados.<br />Quiere perros sanos. Y dueños que noten la diferencia sin tener que justificarla."
+        }
+      ]
+    },
+    {
+      "id_product": 7215,
+      "tpl": "boske_puppy.tpl",
+      "tpl_short": "boske_puppy_short.tpl",
+      "faq": [
+        {
+          "question": "¿Y si no le gusta? ¿Y si lo rechaza?",
+          "answer": "Es una preocupación comprensible. Muchos cachorros vienen de piensos industriales con sabores artificiales, y les cuesta adaptarse a un alimento natural y honesto.<br />Boske está formulado con pollo, huevo y verdura fresca, no necesita disfrazarse. Tiene un perfil natural que a la mayoría de cachorros les encanta desde el primer cuenco.<br />Y si no le gusta, al menos sabrás que no es porque sea comida de baja calidad con saborizantes que engañan."
+        },
+        {
+          "question": "Mi cachorro tiene diarrea frecuente… ¿puede ayudar este pienso?",
+          "answer": "Sí. De hecho, es una de las razones por las que muchos veterinarios y dueños lo eligen. Las cacas blandas, los gases o el olor fuerte son signos de una digestión sobrecargada o ingredientes mal tolerados.<br />Boske contiene arroz integral como único cereal (nada de trigo o maíz), pulpa de remolacha, garrofa y otros ingredientes que favorecen la estabilidad digestiva.<br />En la mayoría de los casos, el cambio se nota en pocos días."
+        },
+        {
+          "question": "¿Es seguro cambiar de pienso si acaba de llegar a casa?",
+          "answer": "Sí. Siempre que se haga la transición correctamente, cambiar a mejor nunca es un error.<br />Siete días mezclando poco a poco el pienso anterior con Boske es suficiente. Cuanto antes empiece con un alimento formulado con criterio, mejor para su salud a largo plazo."
+        },
+        {
+          "question": "Tiene picores o se rasca mucho. ¿Puede venir del pienso?",
+          "answer": "Puede que sí. Muchos piensos incluyen trigo, maíz, soja o subproductos animales que no solo no aportan, sino que generan inflamación, alergias o intolerancias.<br />Boske elimina todo eso. Es un pienso limpio, directo, con ingredientes que ayudan a calmar el sistema digestivo y reducir reacciones cutáneas desde el interior."
+        },
+        {
+          "question": "¿Un pienso Low Grain es adecuado para cachorros?",
+          "answer": "Sí. Porque Low Grain no significa “sin energía”, significa “sin cereales innecesarios”. Boske contiene arroz integral, fácil de digerir, y lo acompaña con proteínas de alta calidad, verdura y frutas. No sobrecarga al cachorro. Le da lo que necesita, sin exceso."
+        },
+        {
+          "question": "¿Vale para razas pequeñas? ¿Y si mi cachorro es de raza grande?",
+          "answer": "Sí. Boske Puppy & Junior está diseñado para cachorros de cualquier tamaño.<br />Solo varía la cantidad diaria, pero la fórmula está equilibrada para dar soporte a su crecimiento en todas las fases.<br />Y su croqueta, de 0,8 cm, está pensada para que puedan masticarla sin dificultad, sea cual sea su tamaño."
+        },
+        {
+          "question": "Estoy usando otro pienso más conocido. ¿Merece la pena cambiar?",
+          "answer": "Depende de lo que estés buscando.<br />Si te interesa seguir comprando por marca, por costumbre o porque alguien te lo recomendó sin mirar el etiquetado, quizás Boske no es para ti. <br/>Boske no compite con la publicidad, compite con lo que hay dentro del saco.<br />Si eres de los que <strong>leen etiquetas y comparan ingredientes con sentido</strong>, aquí vas a encontrar una diferencia real."
+        },
+        {
+          "question": "¿Ofrecen garantía de satisfacción?",
+          "answer": "Sí, porque estamos seguros de lo que hacemos.<br />Boske no se sostiene sobre una promesa comercial, sino sobre resultados. Si después de probarlo tu cachorro no lo acepta o no le sienta bien, <strong>la marca garantiza la devolución.</strong><br /> No buscamos clientes indecisos. Buscamos cachorros sanos y dueños tranquilos. Y si eso significa que algunos prefieren otra marca, está bien. Boske no es para todos. Es para quienes saben lo que están buscando."
+        }
+      ]
+    },
+    {
+      "id_product": 8852,
+      "tpl": "boske_mini.tpl",
+      "tpl_short": "boske_mini_short.tpl",
+      "faq": [
+        {
+          "question": "¿Y si a mi perro no le gusta Boske Mini? ¿Puedo recuperar mi dinero?",
+          "answer": "Sabemos que cambiar de pienso puede generar dudas, y no queremos que corras ningún riesgo. <strong>Por eso, ofrecemos una garantía del 100% de satisfacción o te devolvemos el dinero</strong>.<br />Si tu perro no se adapta a Boske Mini, tienes <strong>14 días para devolver el saco y te reembolsamos el importe</strong>. Sin preguntas, sin letra pequeña.<br />Estamos tan seguros de la calidad y palatabilidad de Boske Mini que podemos ofrecerte esta garantía con total tranquilidad. <strong>Porque cuando un producto es bueno, no hay que obligar a nadie a quedárselo.</strong><br /><strong>Prueba Boske Mini sin miedo. O tu perro lo disfruta, o te devolvemos el dinero. Así de fácil.</strong>"
+        },
+        {
+          "question": "¿En qué se diferencia Boske Mini de otros piensos \"premium\"?",
+          "answer": "La diferencia está en la calidad y en lo que de verdad aporta a tu perro. <strong>Boske Mini usa proteínas reales</strong> (pollo, pavo y huevo entero deshidratado) en lugar de harinas de carne de dudosa procedencia. Además, está formulado con <strong>arroz integral</strong>, un cereal digestivo que evita alergias, mientras que muchos otros piensos usan <strong>trigo, maíz o soja</strong>, que pueden causar problemas digestivos y cutáneos. También contiene <strong>glucosamina y condroitina</strong> para proteger las articulaciones, algo que pocos piensos incluyen en su versión para razas mini.<br/>Si buscas más <strong>carne real, menos rellenos y beneficios visibles en su salud</strong>, Boske Mini es la mejor elección."
+        },
+        {
+          "question": "¿Es cierto que los perros necesitan una dieta libre de cereales?",
+          "answer": "No necesariamente. <strong>No todos los cereales son iguales</strong>. El problema está en el trigo, el maíz y la soja, que se usan como rellenos baratos y pueden causar alergias e inflamación. <strong>Boske Mini no contiene ninguno de estos ingredientes</strong>, pero sí incorpora <strong>arroz integral</strong>, un cereal altamente digestible que proporciona energía sostenida y ayuda a regular la digestión sin causar molestias."
+        },
+        {
+          "question": "Mi perro se cansa rápido del pienso, ¿Boske Mini le gustará?",
+          "answer": "Si tu perro deja de comer su pienso actual, probablemente sea porque <strong>no tiene suficiente sabor natural</strong> y contiene más aditivos que ingredientes reales. <strong>Boske Mini tiene una alta palatabilidad</strong> gracias a su mezcla de proteínas de calidad y aceites naturales, lo que hace que los perros lo disfruten sin necesidad de saborizantes artificiales.<br />Además, <strong>su tamaño de croqueta (1 cm) y textura agradable</strong> están diseñados para que los perros pequeños lo mastiquen con facilidad, mejorando la experiencia en cada comida."
+        },
+        {
+          "question": "¿Boske Mini ayuda a mantener un pelo brillante y una piel sana?",
+          "answer": "Sí, y mucho. Su fórmula contiene <strong>Omega 3, Omega 6 y aceite de pescado</strong>, que son esenciales para la salud de la piel y el pelaje. Muchos dueños notan que su perro tiene <strong>menos picores, menos caspa y un pelo más brillante</strong> después de unas semanas de alimentación con Boske Mini. Además, la <strong>Vitamina E y la manzana</strong> en su composición actúan como antioxidantes naturales, protegiendo la piel desde dentro."
+        },
+        {
+          "question": "Mi perro es muy quisquilloso con la comida, ¿cómo sé que Boske Mini le gustará?",
+          "answer": "Sabemos lo frustrante que puede ser gastar dinero en un pienso 'de calidad' solo para ver cómo tu perro lo olfatea y se aleja sin probarlo. Muchos perros pequeños son <strong>especialmente selectivos con su comida</strong>, pero esto no es solo cuestión de capricho: a menudo, <strong>los piensos convencionales contienen exceso de harinas, aditivos artificiales y conservantes</strong>, lo que altera su sabor natural y hace que los perros los rechacen con el tiempo.<br /><strong>Boske Mini está formulado con ingredientes naturales y proteínas reales</strong>, sin saborizantes artificiales que disfrazan la falta de calidad. Su <strong>alto contenido en carne de pollo y pavo</strong>, junto con aceites naturales, hace que el alimento sea <strong>altamente palatable</strong> y más atractivo para los perros de apetito exigente.<br />Además, el <strong>tamaño de croqueta de 1 cm y su textura crujiente</strong> están diseñados para que los perros pequeños lo mastiquen con facilidad y disfruten más de cada bocado. Muchos dueños han notado que <strong>sus perros devoran Boske Mini desde el primer día, incluso aquellos que antes rechazaban otros piensos</strong>.<br/>Si tu perro se ha vuelto quisquilloso con la comida, es posible que no sea culpa suya, sino de lo que le has estado dando. <strong>Prueba Boske Mini y comprueba la diferencia</strong>"
+        },
+        {
+          "question": "Mi perro tiene digestiones pesadas y flatulencias, ¿Boske Mini puede ayudarle?",
+          "answer": "Sí. Muchos problemas digestivos en perros pequeños están relacionados con ingredientes difíciles de procesar, como <strong>el trigo, el maíz y la soja</strong>, presentes en muchos piensos convencionales. <strong>Boske Mini no contiene ninguno de estos ingredientes.</strong><br/>En su lugar, incluye <strong>arroz integral</strong>, que es altamente digestible y ayuda a regular el tránsito intestinal, y <strong>pulpa de remolacha</strong>, que actúa como prebiótico natural, promoviendo una flora intestinal saludable. Esto reduce los gases, mejora la absorción de nutrientes y facilita digestiones más ligeras."
+        },
+        {
+          "question": "Mi perro es muy activo, ¿Boske Mini le dará suficiente energía?",
+          "answer": "Absolutamente. Los perros pequeños tienen un metabolismo rápido y necesitan una alimentación que les proporcione <strong>energía sostenida sin provocar altibajos. Boske Mini está diseñado para cubrir estas necesidades</strong>, gracias a su equilibrio entre proteínas de calidad y carbohidratos de digestión lenta como el arroz integral.<br />Además, los ácidos grasos Omega 3 y Omega 6 mejoran la función celular, lo que se traduce en <strong>más vitalidad, mayor resistencia y un sistema inmune fuerte</strong>"
+        },
+        {
+          "question": "¿Boske Mini puede ayudar a prevenir problemas articulares en mi perro pequeño?",
+          "answer": "Sí, y es un punto clave a destacar. Muchos dueños de perros pequeños creen que los problemas articulares solo afectan a perros grandes, pero la realidad es que las razas mini son muy propensas a la <strong>luxación de rótula y el desgaste de cartílago</strong> con el tiempo.<br /><strong>Boske Mini contiene glucosamina y condroitina</strong>, que ayudan a mantener las articulaciones en buen estado, protegiéndolas del desgaste y favoreciendo la regeneración del cartílago. Alimentar a tu perro con un pienso que cuida sus articulaciones <strong>desde joven es una inversión en su calidad de vida a largo plazo</strong>"
+        },
+        {
+          "question": "¿Es verdad que un buen pienso puede mejorar el comportamiento de mi perro?",
+          "answer": "Sí. La alimentación influye directamente en el comportamiento de tu perro. <strong>Cuando un perro no recibe los nutrientes adecuados, puede sentirse más irritable, apático o ansioso</strong>.<br /><strong>Boske Mini</strong> proporciona <strong>proteínas de alta calidad</strong> que mantienen estables los niveles de glucosa, evitando picos de energía seguidos de bajones. Además, el <strong>DHA (ácido graso esencial)</strong> mejora la función cognitiva y la concentración, ayudando a que tu perro esté más equilibrado y responda mejor al adiestramiento.<br />Un perro bien alimentado no solo está más sano, sino que <strong>se siente mejor, aprende más rápido y disfruta más de su día a día</strong>"
+        },
+        {
+          "question": "Mi perro tiene la piel seca y se rasca mucho, ¿Boske Mini puede ayudarle?",
+          "answer": "Sí. La piel seca y los picores suelen ser señales de <strong>deficiencia en ácidos grasos esenciales</strong> o de una reacción a ingredientes inadecuados en su dieta.<br /><strong>Boske Mini contiene Omega 3 y Omega 6, además de aceite de pescado, que nutren la piel desde dentro, reducen la inflamación y evitan la sequedad</strong>. Además, la vitamina E y la manzana actúan como antioxidantes naturales, fortaleciendo la barrera cutánea. En pocas semanas, muchos dueños notan que su perro <strong>se rasca menos y su pelaje se ve más fuerte y brillante.</strong>"
+        },
+        {
+          "question": "Si Boske Mini es tan bueno, ¿por qué es más barato que marcas como Royal Canin, Hill’s o Acana?",
+          "answer": "La diferencia de precio no está en la calidad, sino en <strong>dónde va realmente tu dinero</strong>. Muchas marcas <strong>inflan sus precios por marketing y distribución</strong>, no por la calidad del producto. En <strong>Boske Mini</strong>, apostamos por una fórmula premium sin gastar millones en campañas publicitarias, embajadores famosos o packaging de lujo. En lugar de eso, <strong>invertimos en ingredientes reales y en una producción eficiente</strong>, eliminando intermediarios innecesarios que encarecen el producto.<br />Mientras otras marcas priorizan su imagen y márgenes de ganancia, <strong>nosotros priorizamos lo que de verdad importa: que tu perro coma mejor por un precio justo</strong>.<br/><strong>Más calidad en el saco. Menos sobrecostes en la etiqueta. Por eso, Boske Mini puede competir con las grandes marcas ofreciendo un producto superior a un precio más accesible.</strong>"
+        }
+      ]
+    },
+    {
+      "id_product": 8516,
+      "tpl": "boske_gf_chicken.tpl",
+      "tpl_short": "boske_gf_chicken_short.tpl",
+      "faq": [
+        {
+          "question": "¿Por qué este pienso solo lleva pollo? ¿No es mejor mezclar varias carnes?",
+          "answer": "En realidad, no. Utilizar una única fuente de proteína animal —en este caso, <strong>pollo fresco de alto valor biológico</strong>— tiene una ventaja muy clara: <strong>mejora la tolerancia digestiva</strong> y reduce el riesgo de alergias o sensibilidades. Además, cuando la carne es de calidad, como en esta receta, no hace falta mezclar. Lo que suma es lo que aporta, no la cantidad de nombres."
+        },
+        {
+          "question": "¿Mi perro no tiene alergias, entonces este pienso también le sirve?",
+          "answer": "Sí. No es un pienso exclusivo para perros con alergias. El hecho de que no contenga cereales ni alérgenos comunes <strong>mejora la digestibilidad general</strong>, incluso en perros sanos. Muchos dueños notan cambios positivos en la piel, las heces o el nivel de energía sin saber que había un problema previo. A veces, lo que no vemos... también cuenta."
+        },
+        {
+          "question": "¿Es fácil de digerir si tiene tanta proteína?",
+          "answer": "La clave no es cuánta proteína tiene, sino <strong>de dónde viene.</strong> El pollo fresco es una de las carnes más fáciles de asimilar por el sistema digestivo del perro. En esta receta, se combina con vegetales funcionales y prebióticos naturales, lo que permite una digestión ligera y un aprovechamiento óptimo de los nutrientes. <strong>Más digestión real, menos volumen en las heces.</strong>"
+        },
+        {
+          "question": "¿Por qué no tiene cereales? ¿No son necesarios?",
+          "answer": "No, no lo son. El perro puede obtener energía perfectamente de otras fuentes más adecuadas, como proteínas animales y grasas saludables. Aquí no hay trigo, maíz ni cebada, ingredientes que en muchos perros provocan inflamación, alergias o digestiones pesadas. <strong>Grain Free no es una moda si está bien formulado. Es una mejora funcional.</strong>"
+        },
+        {
+          "question": "¿Y si no le gusta? ¿Puedo devolverlo?",
+          "answer": "Sí. Sabemos que cada perro tiene sus preferencias, por eso en Boske ofrecemos <strong>garantía de satisfacción</strong>. Si tras una transición correcta tu perro no lo acepta, puedes gestionar la devolución sin complicaciones. Preferimos que el producto esté donde se valora, no forzar una venta donde no encaja."
+        },
+        {
+          "question": "¿Qué pasa si mi perro tiene sobrepeso? ¿Este pienso es demasiado calórico?",
+          "answer": "No. Aunque contiene pollo fresco, la fórmula está <strong>equilibrada en calorías y grasas</strong>, y no incorpora ingredientes que disparen el índice glucémico como el maíz o la patata en exceso. Además, al ser más digestible y saciante, ayuda a controlar la ansiedad por la comida. Muchos perros pierden peso <strong>sin pasar hambre</strong>, simplemente porque comen mejor y quedan bien saciados."
+        },
+        {
+          "question": "¿En qué se diferencia este pienso de otros grain free del supermercado?",
+          "answer": "En que no está pensado para parecer natural, sino para <strong>serlo de verdad.</strong> Aquí no hay rellenos disfrazados de “superalimentos”, ni subproductos, ni proteínas vegetales como base. El <strong>pollo fresco está en primer lugar</strong>, y cada ingrediente está ahí por una razón, no para abaratar la etiqueta. Si comparas composición y no diseño, la diferencia es clara."
+        },
+        {
+          "question": "¿Puedo dárselo a un perro esterilizado o senior?",
+          "answer": "Sí, aunque no sea una receta específica para esas etapas, <strong>la ausencia de cereales, la digestibilidad y el control de grasas</strong> la hacen apta para muchos perros adultos esterilizados o mayores, siempre que no tengan necesidades clínicas concretas. Consulta siempre con tu veterinario, pero nutricionalmente es una base sólida."
+        },
+        {
+          "question": "¿Es verdad que todos los grain free llevan demasiada patata o guisante?",
+          "answer": "No todos. En muchos sí ocurre, porque eliminar cereales sin criterio obliga a rellenar con almidones de bajo valor nutricional. Esta receta, en cambio, <strong>prioriza la carne fresca</strong> y mantiene los vegetales como lo que deben ser: una ayuda, no un sustituto. Por eso se nota la diferencia en energía, pelaje, heces y apetito."
+        },
+        {
+          "question": "¿Qué debería notar si empiezo a usar este pienso?",
+          "answer": "Lo notarás más en lo cotidiano: <strong>heces más firmes, menos gases, mejor olor corporal, un pelaje más brillante y un perro que no deja el cuenco lleno.</strong> Es un pienso que nutre y respeta. Y cuando la nutrición está bien hecha, no hace falta que lo diga el envase... lo dice el perro."
+        }
+      ]
+    },
+    {
+      "id_product": 8854,
+      "tpl": "boske_gastro.tpl",
+      "tpl_short": "boske_gastro_short.tpl",
+      "faq": []
+    },
+    {
+      "id_product": 9026,
+      "tpl": "boske_hypo.tpl",
+      "tpl_short": "boske_hypo_short.tpl",
+      "faq": [
+        {
+          "question": "¿Es solo para perros con alergias diagnosticadas?",
+          "answer": "No. Aunque está diseñada para ayudar en tratamientos veterinarios, <strong>también es válida para perros con síntomas persistentes sin diagnóstico cerrado</strong>: picores, diarrea, heces blandas, vómitos ocasionales tras las comidas, pérdida de pelo, etc.<br />Muchos tutores llegan a esta dieta después de haber probado varias marcas sin éxito. A veces no hace falta un diagnóstico confirmado para empezar a notar mejoras."
+        },
+        {
+          "question": "¿Tiene ingredientes artificiales, colorantes o subproductos?",
+          "answer": "No. Y eso es una de las grandes diferencias de Boske. A pesar de ser una dieta veterinaria, <strong>está formulada con ingredientes naturales, sin colorantes ni conservantes artificiales.</strong> No encontrarás harinas animales genéricas, ni cereales como relleno, ni aditivos innecesarios.<br />Es una de las <strong>pocas dietas clínicas que combina naturalidad y respaldo veterinario.</strong>"
+        },
+        {
+          "question": "¿Cómo sabré si está funcionando?",
+          "answer": "<p>Dependerá del motivo por el que la inicias, pero hay señales claras:</p><ul><li>Si tu perro tenía diarrea, notarás <strong>heces más firmes y regulares en pocos días.</strong></li><li>Si sufría picores o se lamía constantemente, verás una <strong>reducción en la inflamación y el rascado progresivo.</strong></li><li>Si tenía molestias digestivas, comenzará a <strong>aceptar mejor la comida, sin vómitos ni inapetencia.</strong></li></ul><p>La clave es observar la evolución. Y en muchos casos, la mejoría llega antes de lo esperado.</p>"
+        },
+        {
+          "question": "¿Qué pasa si no le gusta o no le sienta bien?",
+          "answer": "Sabemos que cambiar de alimento, sobre todo en perros sensibles, genera dudas. Por eso, si tras una transición correcta el perro no lo tolera, <strong>puedes acogerte a la garantía de satisfacción</strong>. Pero si hay una reacción extraña o no esperada, lo más responsable es consultarlo con tu veterinario: no todos los síntomas se deben solo a la comida."
+        },
+        {
+          "question": "¿Esto es un pienso hipoalergénico “real” o solo le han puesto ese nombre?",
+          "answer": "Buena pregunta. Muchos piensos se etiquetan como “hipoalergénicos”, pero siguen incluyendo múltiples proteínas animales, cereales con gluten o ingredientes potencialmente reactivos.<br /><strong>Boske Clinical Diet Hypoallergenic está formulado como una dieta veterinaria completa</strong>, con una <strong>única fuente proteica</strong> (pescado blanco), <strong>un solo almidón principal</strong> (patata) y sin alérgenos comunes. Esto lo convierte en una herramienta real, útil y segura en casos de alergias alimentarias comprobadas o sospechadas."
+        },
+        {
+          "question": "¿En qué se diferencia de marcas como Royal Canin Hypoallergenic o Hills Z/D?",
+          "answer": "La principal diferencia es que aquí <strong>el valor se pone en los ingredientes</strong>, no en el marketing.<br />Boske Clinical Diet está formulado por veterinarios clínicos, con <strong>inversión real en materias primas</strong>, no en campañas. Mientras otros usan hidrolizados de origen genérico, Boske utiliza <strong>pescado blanco deshidratado y proteínas bien identificadas</strong>, sin conservantes artificiales ni subproductos.<br />Y lo más importante: a <strong>un precio justo</strong>, sin intermediarios ni márgenes inflados por distribución."
+        },
+        {
+          "question": "¿Durante cuánto tiempo debería mantener a mi perro con este pienso?",
+          "answer": "Eso depende del caso. En dietas de eliminación, el protocolo suele ser de <strong>8 a 12 semanas</strong> bajo supervisión veterinaria.<br />En perros con <strong>alergias crónicas confirmadas</strong>, puede mantenerse como dieta permanente, ya que cumple todos los requisitos nutricionales.<br />No está pensada como un “rescate temporal”: es una <strong>dieta clínica completa y equilibrada para el día a día.</strong>"
+        },
+        {
+          "question": "¿Puede ayudar con problemas de piel además de digestivos?",
+          "answer": "Sí. De hecho, muchos perros que muestran picores, descamación o pérdida de pelo <strong>no tienen un problema cutáneo primario</strong>, sino una respuesta inflamatoria provocada por la alimentación.<br /> El uso de <strong>Omega 3, Omega 6, aceite de pescado y linaza</strong> en esta fórmula ayuda a modular esa respuesta y a <strong>reconstruir la barrera cutánea desde dentro</strong>. En perros con dermatitis alimentaria, la mejora puede ser notable."
+        },
+        {
+          "question": "¿Qué pasa si mi veterinario me ha mandado otra marca?",
+          "answer": "Es normal. Muchos veterinarios trabajan con las grandes marcas porque son las más conocidas, no necesariamente las mejores.<br />Pero si lees etiquetas, comparas ingredientes y tienes criterio, <strong>verás que Boske está a la altura —o por encima— en formulación clínica</strong>, con el valor añadido de usar ingredientes naturales.<br />Si tu veterinario está abierto al diálogo, muéstrale la composición. Muchos agradecen opciones reales con evidencia detrás."
+        },
+        {
+          "question": "¿Y si mi perro nunca ha tenido alergias pero quiero prevenir problemas?",
+          "answer": "Una buena elección. Muchos perros sensibles no tienen aún un diagnóstico claro, pero <strong>presentan síntomas intermitentes</strong>: diarreas esporádicas, rascado leve, gases, vómitos ocasionales. Boske Clinical Diet Hypoallergenic puede utilizarse como dieta preventiva o transitoria, para estabilizar al perro mientras se aclaran causas.<br /><strong>Prevenir siempre será más barato y más saludable que tratar.</strong>"
+        }
+      ]
+    },
+    {
+      "id_product": 8295,
+      "tpl": "boske_Lata_Salmon.tpl",
+      "tpl_short": "default_short.tpl",
+      "faq": [
+        {
+          "question": "",
+          "answer": ""
+        },
+        {
+          "question": "",
+          "answer": ""
+        },
+        {
+          "question": "",
+          "answer": ""
+        },
+        {
+          "question": "",
+          "answer": ""
+        },
+        {
+          "question": "",
+          "answer": ""
+        },
+        {
+          "question": "",
+          "answer": ""
+        },
+        {
+          "question": "",
+          "answer": ""
+        },
+        {
+          "question": "",
+          "answer": ""
+        },
+        {
+          "question": "",
+          "answer": ""
+        },
+        {
+          "question": "",
+          "answer": ""
+        }
+      ]
+    },
+    {
+      "id_product": 8808,
+      "tpl": "boske_lata_diabetic.tpl",
+      "tpl_short": "boske_lata_diabetic_short.tpl",
+      "faq": [
+        {
+          "question": "¿Puedo usar este alimento como única comida para mi perro con diabetes?",
+          "answer": "Sí. <strong>Boske Clinical Diet Diabetic</strong> es un alimento <strong>completo y equilibrado</strong>, formulado específicamente para perros con diabetes mellitus. No necesita complementos ni mezclas adicionales para cubrir las necesidades nutricionales del animal. La fórmula ya contempla todo lo necesario para mantener su energía, masa muscular y salud digestiva sin provocar picos glucémicos."
+        },
+        {
+          "question": "¿Es recomendable mezclarlo con un pienso seco?",
+          "answer": "Puede hacerse, siempre que el <strong>pienso seco sea también específico para perros diabéticos.</strong> Hay varias soluciones que pueden ir bien, que comparten filosofía, control de índice glucémico y calidad en los ingredientes. Combinar ambos formatos puede facilitar la rutina alimentaria del perro y mejorar la aceptación si es exigente con la textura."
+        },
+        {
+          "question": "¿Este alimento cura la diabetes?",
+          "answer": "No. <strong>La diabetes no se cura con alimentación,</strong> pero una dieta adecuada <strong>sí es imprescindible para controlarla.</strong> La elección de un alimento clínico como este, formulado con proteínas de alta calidad, bajo contenido glucémico y sin azúcares añadidos, permite <strong>mantener estables los niveles de glucosa</strong> y prevenir complicaciones asociadas a la enfermedad."
+        },
+        {
+          "question": "¿Es apto para perros con sobrepeso pero sin diabetes?",
+          "answer": "Sí, en determinados casos. Esta receta también es útil en <strong>perros con obesidad o tendencia al sobrepeso</strong>, ya que la presencia de <strong>L-Carnitina</strong> contribuye al uso eficiente de la grasa corporal. Aun así, siempre se recomienda que lo valore un veterinario si no hay diagnóstico de diabetes."
+        },
+        {
+          "question": "¿Qué pasa si mi perro no lo acepta bien o no le gusta?",
+          "answer": "Sabemos que cada perro es un mundo. Por eso ofrecemos una <strong>garantía del 100% de satisfacción</strong>. Si no lo acepta, gestionamos la recogida del producto. Porque un alimento clínico tiene que ser eficaz, sí, pero también apetecible."
+        },
+        {
+          "question": "¿Qué tipo de proteínas contiene este alimento y por qué son importantes?",
+          "answer": "Contiene proteínas de alta calidad y alto valor biológico. En perros con diabetes, estas proteínas ayudan a <strong>preservar la masa muscular</strong>, algo clave porque la pérdida de músculo es frecuente en estos casos. Además, son fácilmente asimilables, lo que mejora la digestión y el aprovechamiento de nutrientes."
+        },
+        {
+          "question": "¿Tiene azúcares añadidos o cereales?",
+          "answer": "No. Esta fórmula está <strong>completamente libre de azúcares añadidos y de cereales</strong>. Eso elimina uno de los factores de riesgo más comunes en dietas convencionales, evitando subidas inesperadas de glucosa."
+        },
+        {
+          "question": "¿Qué diferencia a esta lata de otros productos que dicen ser “light” o “para diabéticos”?",
+          "answer": "Muchos productos que se presentan como “light” o “saludables” no están formulados por veterinarios ni pensados para el manejo clínico de una enfermedad como la diabetes. <strong>Boske Clinical Diet Diabetic</strong><strong> ha sido <strong>probado y desarrollado en entorno clínico</strong>, con una selección muy controlada de carbohidratos de bajo índice glucémico y suplementado con <strong>L-Carnitina</strong>, algo que no encontrarás en la mayoría de los productos “light”."
+        },
+        {
+          "question": "¿Es necesario adaptar la dosis con este alimento?",
+          "answer": "Sí, y siempre debe hacerse con la ayuda del veterinario. Los perros con diabetes <strong>requieren una pauta alimentaria constante</strong>, tanto en cantidad como en horarios. Aunque el alimento esté diseñado para mantener estables los niveles de azúcar, el equilibrio también depende de las dosis y su relación con la medicación."
+        },
+        {
+          "question": "¿Cuánto tiempo tarda en notarse una mejoría?",
+          "answer": "En la mayoría de los casos, si el alimento se administra correctamente y con supervisión veterinaria, <strong>los resultados pueden comenzar a observarse en pocos días:</strong> más energía, menos picos de glucosa, mejora del tránsito intestinal y un mejor estado general. Pero el seguimiento veterinario es esencial."
+        }
+      ]
+    },
+    {
+      "id_product": 8809,
+      "tpl": "boske_lata_hepatic.tpl",
+      "tpl_short": "boske_lata_hepatic_short.tpl",
+      "faq": [
+        {
+          "question": "¿Qué es Boske Clinical Diet Hepatic y para qué tipo de perros está indicado?",
+          "answer": "Es un alimento húmedo completo formulado para perros con insuficiencia hepática crónica u otras patologías hepáticas. Su composición ayuda a reducir la carga sobre el hígado sin comprometer la nutrición general del animal."
+        },
+        {
+          "question": "¿Qué beneficios aporta a mi perro con problemas hepáticos?",
+          "answer": "Su contenido proteico es moderado pero de alta calidad y digestibilidad, lo que permite cubrir las necesidades del perro sin sobrecargar el hígado. Además, contiene ácidos grasos Omega 3 y antioxidantes naturales que apoyan la función hepática y el sistema inmunológico."
+        },
+        {
+          "question": "¿Puede usarse como alimentación principal o debe combinarse con otro alimento?",
+          "answer": "Puede utilizarse como dieta principal en casos de enfermedad hepática. Sin embargo, en situaciones concretas puede combinarse con Boske Clinical Diet Hepatic en formato seco para facilitar la adaptación o mejorar la palatabilidad, siempre bajo recomendación veterinaria."
+        },
+        {
+          "question": "¿Durante cuánto tiempo se puede administrar esta dieta?",
+          "answer": "Es un alimento apto para la administración prolongada. No obstante, debe realizarse bajo seguimiento veterinario, especialmente en casos donde el estado hepático requiera ajustes nutricionales frecuentes."
+        },
+        {
+          "question": "¿Este producto contiene cereales o ingredientes artificiales?",
+          "answer": "No. Boske Clinical Diet Hepatic está formulado con ingredientes 100% naturales, sin cereales, ni aditivos artificiales. Está desarrollado por veterinarios con enfoque en calidad y digestibilidad."
+        },
+        {
+          "question": "¿Qué diferencia hay entre este alimento y una comida húmeda normal de supermercado?",
+          "answer": "Una comida convencional puede tener ingredientes no aptos para perros con patologías hepáticas: exceso de proteínas de baja calidad, subproductos cárnicos, grasas no controladas o conservantes artificiales.<br /> Boske Clinical Diet Hepatic, en cambio, está diseñado clínicamente por veterinarios y formulado con proteínas altamente digestibles, niveles ajustados de cobre y grasa, y un perfil nutricional que no compromete al hígado. No compite en precio con los ultraprocesados, compite en resultados clínicos."
+        },
+        {
+          "question": "¿Por qué no basta con un pienso seco hepático y ya?",
+          "answer": "Muchos tutores creen que con cambiar a un pienso hepático seco ya están cubriendo el problema. Pero en perros con síntomas agudos, convalecientes o pérdida de apetito, la comida húmeda es más digestible, palatable y ayuda a mantener la hidratación. Además, en algunos casos, el perro no tiene energía ni para masticar, y obligarlo a comer pienso solo agrava el problema. Las latas como Boske Hepatic permiten que el perro se alimente mejor en esas fases críticas."
+        },
+        {
+          "question": "¿Mi perro no tiene diagnóstico firme, solo sospecha hepática… ¿puedo dárselo igualmente?",
+          "answer": "Sí, y de hecho es una buena decisión preventiva. No estás dando un fármaco, estás ajustando la nutrición para facilitar el trabajo del hígado. Si más adelante se confirma una patología hepática, tu perro ya habrá estado alimentándose de forma adecuada. Si no se confirma, tampoco habrás causado ningún perjuicio; es un alimento completo, equilibrado y seguro."
+        },
+        {
+          "question": "¿Tiene suficiente proteína si mi perro es activo o de raza grande?",
+          "answer": "Sí, aunque muchas personas creen que una dieta hepática tiene “poca proteína”, la clave no es la cantidad, sino la calidad y digestibilidad. Boske Hepatic usa proteínas seleccionadas de alto valor biológico, que el organismo asimila sin esfuerzo, por lo que incluso un perro activo puede mantenerse con buena masa muscular si está bien alimentado."
+        },
+        {
+          "question": "¿Puedo mezclarlo con un pienso seco para hepatopatías? ¿Cuál recomiendan?",
+          "answer": "Sí, de hecho es recomendable en muchos casos. Para perros que no se sacian con la lata o necesitan una textura distinta, combinarlo con un pienso hepático seco permite diversificar la dieta sin comprometer el tratamiento.<br />Recomendamos Boske Clinical Hepatic Seco, formulado con los mismos estándares de calidad y diseñado para complementar la dieta húmeda sin solapamientos nutricionales ni incompatibilidades digestivas."
+        }
+      ]
+    },
+    {
+      "id_product": 8473,
+      "tpl": "boske_lata_gastro.tpl",
+      "tpl_short": "boske_lata_gastro_short.tpl",
+      "faq": [
+        {
+          "question": "¿Este alimento es solo para casos graves o puedo usarlo en molestias digestivas leves?",
+          "answer": "No es necesario esperar a un diagnóstico grave para comenzar a cuidar el sistema digestivo de tu perro. <strong>Boske Clinical Diet Gastrointestinal</strong> está diseñado tanto para tratar trastornos digestivos ya diagnosticados como para <strong>prevenir desequilibrios leves</strong> o recurrentes como gases, diarreas esporádicas o digestiones lentas. Actúa reforzando la flora intestinal, facilitando la digestión y reduciendo inflamaciones internas sin efectos secundarios."
+        },
+        {
+          "question": "¿Durante cuánto tiempo debo darle este alimento a mi perro?",
+          "answer": "No hay una única respuesta. <strong>Depende de la evolución del animal y del consejo del veterinario.</strong> En cuadros agudos (diarreas, vómitos), se puede usar como dieta principal durante varios días o semanas. En casos crónicos, puede mantenerse a largo plazo, ya que es un alimento completo y equilibrado. Lo importante es <strong>observar mejoras claras en el tránsito, la energía y el apetito</strong> del perro."
+        },
+        {
+          "question": "¿Puedo mezclar este alimento húmedo con un pienso seco?",
+          "answer": "Sí, de hecho, es <strong>altamente recomendable</strong> en muchos casos. Una combinación frecuente es mezclar este alimento con <strong>Boske Clinical Diet Gastrointestinal seco</strong>, ya que <strong>comparten la misma filosofía y trabajan de forma complementaria:</strong> la comida húmeda aporta hidratación, digestibilidad y palatabilidad, mientras que el pienso seco refuerza la masticación y regula el tránsito. Eso sí, la mezcla debe ser equilibrada y adaptada a las necesidades del perro."
+        },
+        {
+          "question": "¿Qué pasa si mi perro tiene apetito bajo o se cansa del alimento?",
+          "answer": "Es una situación frecuente en perros con trastornos digestivos. Por eso, la textura en <strong>formato paté de este alimento y su formulación altamente palatable</strong> hacen que sea mejor aceptado que otros productos veterinarios del mercado. Si aún así hay rechazo, se puede <strong>entibiar ligeramente o combinar con el pienso seco de la misma gama</strong> para estimular el apetito sin comprometer el tratamiento nutricional."
+        },
+        {
+          "question": "¿Es una alternativa segura frente a tratamientos farmacológicos?",
+          "answer": "No sustituye a un tratamiento médico cuando este es necesario, pero sí <strong>es un gran complemento e incluso una vía preventiva</strong>. Muchos trastornos digestivos leves o persistentes <strong>pueden controlarse con una alimentación adecuada</strong>, evitando el uso continuado de medicación. Esta fórmula está <strong>probada clínicamente</strong>, y su eficacia se basa en <strong>nutrientes funcionales</strong> como prebióticos, proteínas hidrolizadas y antioxidantes naturales."
+        },
+        {
+          "question": "¿Qué diferencia hay entre Boske Gastrointestinal húmedo y otras dietas veterinarias similares?",
+          "answer": "La principal diferencia está en la <strong>formulación natural, sin cereales ni subproductos</strong>, y en que ha sido desarrollada por veterinarios sin intermediarios ni campañas de marketing. Eso permite invertir directamente en <strong>ingredientes funcionales</strong> (como MOS, XOS o proteínas altamente digestibles), lo que <strong>eleva la calidad sin encarecer el producto</strong>. Además, es de las pocas opciones húmedas con un enfoque clínico real y una <string>digestibilidad optimizada.</string>"
+        },
+        {
+          "question": "¿Este alimento puede ayudar en casos de gastritis crónica?",
+          "answer": "Sí. Muchos perros con gastritis recurrente encuentran alivio gracias a esta fórmula. Al ser una comida <strong>fácil de digerir y con ingredientes que reducen la inflamación del tracto digestivo</strong>, el estómago se irrita menos y mejora la absorción de nutrientes. Además, los <strong>prebióticos y polifenoles naturales</strong> ayudan a reforzar el sistema digestivo a largo plazo."
+        },
+        {
+          "question": "¿Puede este alimento usarse en perros mayores?",
+          "answer": "Totalmente. De hecho, es <strong>especialmente útil en perros senior</strong>, que suelen tener digestiones más lentas, pérdida de apetito o sistemas gastrointestinales más frágiles. Su textura en paté facilita la ingesta incluso en perros con <strong>problemas dentales</strong>, y su fórmula ayuda a evitar carencias sin sobrecargar el organismo."
+        },
+        {
+          "question": "¿Es necesario un periodo de adaptación al introducir esta dieta?",
+          "answer": "Aunque es un alimento diseñado para facilitar la digestión, si el perro viene de una alimentación muy distinta, <strong>puede ser recomendable introducirlo de forma progresiva</strong>. Puedes mezclarlo durante 3-5 días con su comida anterior para que el sistema digestivo se adapte sin molestias."
+        },
+        {
+          "question": "¿Qué beneficios concretos notaré en mi perro al usar esta dieta?",
+          "answer": "Los beneficios suelen aparecer en pocos días:<br>- <storng>Reducción de las diarreas</storng> o heces blandas.<br />- <strong>Menor inflamación o malestar tras las comidas.</strong><br />-Recuperación del apetito.<br />- Mejora en la <strong>calidad del pelaje</strong> (al mejorar absorción y microbiota).<br />- Disminución de gases, vómitos o episodios de rechazo de comida."
+        }
+      ]
+    },
+    {
+      "id_product": 8474,
+      "tpl": "boske_hypo_lata.tpl",
+      "tpl_short": "boske_hypo_lata_short.tpl",
+      "faq": [
+        {
+          "question": "¿Este alimento húmedo es realmente hipoalergénico o solo lo pone en la etiqueta?",
+          "answer": "Sabemos que esta es una duda frecuente. Esta fórmula cumple con los criterios clínicos reales de una dieta hipoalergénica: utiliza una única fuente de proteína animal (conejo) y elimina ingredientes comúnmente asociados a reacciones adversas como el pollo, el trigo, la soja o los lácteos. Además, está formulado sin cereales, lo que reduce aún más el riesgo de intolerancias digestivas o cutáneas."
+        },
+        {
+          "question": "¿Puedo mezclar esta comida húmeda con pienso seco?",
+          "answer": "Sí, <strong>siempre que el pienso que utilices sea hipoalergénico y con una fuente proteica compatible</strong>. Lo ideal es acompañar esta comida húmeda con un producto como Boske Hypoallergenic, un pienso de pescado blanco formulado para minimizar reacciones adversas.<br />\n            En cualquier caso, asegúrate de que el pienso no contenga cereales ni ingredientes potencialmente alergénicos (como pollo, vacuno o subproductos cárnicos).<br /><strong>No tiene sentido utilizar una comida húmeda hipoalergénica si el pienso arrastra el problema</strong>. La clave es la coherencia: mantener una dieta controlada y funcional."
+        },
+        {
+          "question": "Mi perro no tolera casi nada... ¿cómo saber si este alimento le irá bien?",
+          "answer": "Justo por eso se ha creado esta dieta: para perros con digestión extremadamente delicada o historial de alergias alimentarias. Se han elegido ingredientes altamente digestibles como el conejo, guisantes y aceites saludables. A esto se suma un perfil hipoalergénico clínicamente testado. Si hay un alimento apto para perros \"difíciles\", es este."
+        },
+        {
+          "question": "¿Y si no le gusta o no lo tolera? ¿Perderé el dinero?",
+          "answer": "Sabemos lo frustrante que es probar y fallar una vez más. Por eso ofrecemos una <strong>garantía de satisfacción</strong>: si no se adapta bien o no lo quiere, <strong>te devolvemos el dinero sin preguntas</strong>. Queremos perros sanos y dueños tranquilos, no clientes forzados."
+        },
+        {
+          "question": "¿Por qué usar comida húmeda en lugar de pienso?",
+          "answer": "Porque <strong>no todos los perros toleran bien el pienso seco</strong>, especialmente si tienen problemas digestivos, dentales o baja hidratación. Este alimento tiene una <strong>textura suave</strong>, es más fácil de masticar, y <strong>ayuda a mantener el tracto digestivo en equilibrio</strong>. También aporta agua de forma natural, lo cual es vital en animales con colitis o diarreas frecuentes"
+        },
+        {
+          "question": "¿Por qué conejo y no pollo, salmón o cordero?",
+          "answer": "El conejo es una proteína <strong>poco común en la alimentación diaria de los perros</strong>, lo que lo convierte en una excelente opción para dietas de exclusión. Es <strong>hipoalergénico por naturaleza</strong>, bajo en grasa y muy digerible. Justo lo que necesita un perro con historial de intolerancias alimentarias."
+        },
+        {
+          "question": "¿Por qué debería fiarme de una marca menos conocida que otras del mercado?",
+          "answer": "Entendemos que algunos dueños se sienten más seguros con marcas comerciales conocidas. Pero la pregunta clave es: <strong>¿qué contiene realmente ese producto que conoces tanto?</strong> Boske trabaja con <strong>ingredientes naturales, controlados, con trazabilidad y una formulación pensada por veterinarios expertos</strong>, no por departamentos de marketing. <strong>Nos interesa la salud del perro, no la popularidad.</strong>"
+        },
+        {
+          "question": "Mi perro no tiene diagnóstico, solo tiene diarreas frecuentes. ¿Sirve este producto?",
+          "answer": "Muchos perros <strong>no tienen alergias claras, pero su sistema digestivo está al límite.</strong> En estos casos, una dieta de eliminación suave como esta, <strong>con ingredientes limitados y hipoalergénicos</strong>, puede ayudarte a comprobar si ciertos alimentos son la causa. Es un buen punto de partida cuando hay dudas y malestar persistente."
+        },
+        {
+          "question": "¿Es adecuado para perros senior?",
+          "answer": "Sí, de hecho muchos perros mayores <strong>empiezan a mostrar sensibilidad digestiva y pérdida de apetito.</strong> Esta comida húmeda tiene una textura que facilita la masticación, un sabor muy apetecible y una fórmula que cuida su flora intestinal y su sistema inmune. <strong>No solo es adecuada, es recomendable.</strong>"
+        },
+        {
+          "question": "¿Cuánto tiempo se puede mantener esta dieta?",
+          "answer": "No hay una limitación estricta. Puede utilizarse como <strong>alimentación principal de forma prolongada</strong> siempre que tu veterinario lo vea adecuado. Está formulada para ser completa y equilibrada, no es un parche temporal. Si tu perro está mejor con ella, <strong>no hay motivo para cambiarla a corto plazo.</strong>"
+        }
+      ]
+    }
+  ]
+}

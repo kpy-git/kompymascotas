@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>neftysfarmaconnector</name>
+    <displayName><![CDATA[NeftysFarmaConnector]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Sincronización de stock y pedidos con Neftys Farma]]></description>
+    <author><![CDATA[PyM Team]]></author>
+    <tab><![CDATA['shipping_logistics']]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
+</module>

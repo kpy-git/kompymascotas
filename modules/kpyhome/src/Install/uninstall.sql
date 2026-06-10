@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS `PREFIX_kpy_home_slider_banner`;

@@ -1,0 +1,153 @@
+.new-pet {
+    border: 2px dashed var(--kpy-color-secondary-dark);
+    color: var(--kpy-color-secondary-dark);
+    background-color: white;
+    border-radius: .75rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 0 4px 10px -4px #00000029;
+    text-align: center;
+}
+
+.new-pet:hover {
+    background-color: var(--kpy-bg-menu);
+    border-style: solid;
+    cursor: pointer;
+}
+
+.new-pet.exclusive {
+    width: 100%;
+}
+
+.new-pet .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: .5rem;
+    text-align: center;
+    width: 40%;
+    margin-inline: auto;
+}
+
+.new-pet .material-icons {
+    font-size: 3rem;
+}
+
+.delete-pet {
+    text-align: center;
+}
+
+.delete-pet__actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+    .new-pet {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        padding: 1.5rem;
+    }
+
+    .new-pet.exclusive {
+        margin-right: auto;
+        width: 60%;
+    }
+
+    .new-pet .left {
+        border-right: 1px solid var(--kpy-color-secondary-dark);
+        padding-right: 1rem;
+    }
+}
+
+.icon-title img {
+    width: 50px;
+    margin-right: 1rem;
+}
+
+.pets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+}
+
+.pet-card {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-areas: "icon info" "icon actions";
+    gap: 2rem;
+    padding: 1rem;
+    border: 1px solid var(--bs-gray-300);
+    box-shadow: 0 4px 10px -4px #00000029;
+    border-radius: .75rem;
+    width: 400px;
+}
+
+.pet-card:hover {
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 0 0 3px #e8e8e880, 0 6px 22px -2px #0000001a;
+}
+
+.pet-card .info {
+    grid-area: info;
+    display: flex;
+    flex-direction: column;
+}
+
+.pet-card .icon {
+    grid-area: icon;
+    place-self: start;
+}
+
+.pet-card .icon img {
+    width: 100%;
+    height: auto;
+}
+
+.pet-card .actions {
+    grid-area: actions;
+    place-self: end;
+}
+
+.pet-card .actions a {
+    font-size: var(--kpy-font-size-small);
+    border-bottom: 1px dashed var(--kpy-text-secondary);
+    color: var(--kpy-text-secondary);
+    margin-left: 1rem;
+}
+
+
+.pet-card .actions .edit:hover {
+    color: var(--kpy-text-dark);
+    border-bottom: 1px solid var(--kpy-text-dark);
+}
+
+.pet-card .actions .open-delete:hover {
+    color: var(--kpy-color-accent);
+    border-bottom: 1px solid var(--kpy-color-accent);
+}
+
+dialog.delete-pet {
+    border: unset;
+    border-radius: .75rem;
+    padding: 2rem 3rem;
+    width: min(80%, 500px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    color: var(--kpy-text-dark);
+}
+
+dialog.delete-pet h4 {
+    font-weight: bold;
+}
+
+dialog.delete-pet p {
+    color: var(--kpy-text-secondary);
+}
+
+.delete-pet__actions span {
+    padding-inline: 4rem;
+}

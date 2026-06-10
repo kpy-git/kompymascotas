@@ -1,0 +1,61 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+Perfecto, ya casi está.
+Has elegido pagar por transferencia bancaria. Solo tienes que hacer la transferencia con los datos de aquí abajo y nosotros nos encargamos del resto.
+
+Pedido
+
+{id_order}
+{total_paid} €
+
+📋 Sigue estos pasos:
+
+1
+
+Entra en tu banco y haz la transferencia
+
+Usa los datos bancarios que tienes justo aquí abajo. El importe tiene que coincidir exactamente con el total del pedido.
+
+🏦 Datos bancarios
+
+Banco {bankwire_address}
+Titular de la cuenta {bankwire_owner}
+IBAN {bankwire_details}
+Importe {total_paid}
+Concepto Pedido {id_order}
+2
+
+Pon el número de pedido en el concepto
+
+Esto es importante. Sin el número de pedido en el concepto nos llevará más tiempo localizar tu transferencia y puede retrasar la confirmación.
+
+3
+
+Espera, que nosotros te avisamos
+
+Revisamos los pagos cada día. En cuanto confirmemos tu transferencia, cambiaremos el estado del pedido a «Pago aceptado» y lo pondremos en marcha en nuestro almacén.
+
+🕐 ¿Y después qué?
+
+Una vez aceptado el pago, tu pedido entra en nuestro sistema con los plazos de preparación y envío habituales. Te mandaremos un email cuando salga de nuestro almacén con el número de seguimiento.
+
+💡Nota: Ten en cuenta que las transferencias entre distintas entidades no son inmediatas. Si pasados 3 días desde la realización de la transferencia no ha cambiado el estado del pedido, escíbenos a hola@kompymascotas.com y lo comprobamos.
+
+Si en un plazo de 7 días no has efectuado la transferencia entenderemos que ya no deseas el pedido y lo cancelaremos automáticamente.
+
+Siempre que quieras puedes volver a realizar un nuevo pedido
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD:  Si no has sido tú, ignora este email. O si tienes algún peludo en casa pregúntale si ha estado tocando el ordenador.
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

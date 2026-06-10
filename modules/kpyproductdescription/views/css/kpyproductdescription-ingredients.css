@@ -1,0 +1,5 @@
+.product__ingredients .text {
+    font-size: .875rem;
+    color: var(--kpy-text-dark);
+    line-height: 1.5;
+}

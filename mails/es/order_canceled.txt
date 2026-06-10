@@ -1,0 +1,29 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+Pedido cancelado
+
+#{id_order}
+● Cancelado
+
+💳 Sobre el reembolso
+
+Si te hemos cobrado, el reembolso llegará en 3-5 días laborables (a veces antes, depende del banco puede tardar hasta 14 días).
+
+⚠️ ¿No has sido tú?
+
+Si no lo has cancelado o crees que ha sido un error, escríbenos YA a hola@kompymascotas.com o llama al 955 228 677 para que lo miremos.
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD: Si quieres volver a comprar, nosotros seguiremos ahí. Sin rencores. Si no, te deseamos lo mejor a ti y tu peludo.
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ShopThemeCatalog.es-ES.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="e8f2e6e632b8ffbc5380a1fcca1bc24f">
+        <source>All products of</source>
+        <target>Todos los productos de</target>
+      </trans-unit>
+      <trans-unit id="265adf722f67827fc3d28be7cfde0906">
+        <source>Show full description</source>
+        <target>Mostrar descripción completa</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

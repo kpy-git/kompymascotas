@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS `PREFIX_kpy_product_flag`;
+DROP TABLE IF EXISTS `PREFIX_kpy_flag_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_flag`;

@@ -1,0 +1,107 @@
+.customer-points {
+    background-color: #f0f7ff;
+    border-radius: .75rem;
+    box-shadow: 0 4px 10px -4px #00000029;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    grid-template-areas: "icon title" "icon points";
+    width: min(450px, 100%);
+    margin: 2rem auto 4rem auto;
+}
+
+.customer-points img {
+    max-width: 80%;
+    height: auto;
+    text-align: center;
+    grid-area: icon;
+    place-self: center;
+}
+
+.customer-points .points {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    grid-area: points;
+}
+
+.customer-points h4 {
+    grid-area: title;
+    text-align: center;
+}
+
+.icon-title {
+    width: 50px;
+    margin-right: 1rem;
+}
+
+.cart-rule-content .progress {
+    height: .75rem;
+    background-color: white;
+}
+
+.cart-rule-content .progress-bar {
+    background-color: var(--kpy-text-dark);
+}
+
+.progress-legend {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--kpy-text-dark);
+    margin: .5rem 0;
+}
+
+.reward-gold {
+    --cart-rule-background-color-primary: #ffcc9b;
+    --cart-rule-background-color-secundary: #f1ac66;
+    --cart-rule-border-color: #f4a950;
+}
+
+.reward-silver {
+    --cart-rule-background-color-primary: var(--bs-gray-200);
+    --cart-rule-background-color-secundary: var(--bs-gray-400);
+    --cart-rule-border-color: var(--bs-gray-500)
+}
+
+.reward-gift {
+    --cart-rule-background-color-primary: #e7ddff;
+    --cart-rule-background-color-secundary: var(--kpy-color-secondary-light);
+    --cart-rule-border-color: var(--kpy-color-secondary)
+}
+
+.cart-rule-gift {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem 0;
+    align-content: center;
+    gap: .5rem;
+}
+
+.cart-rule-gift .image-gift {
+    align-self: center;
+}
+.cart-rule-gift img {
+    border: 1px solid var(--cart-rule-border-color);
+    box-shadow: 0 4px 10px -4px #00000029;
+    border-radius: .5rem;
+}
+
+@media (min-width: 768px) {
+    .rewards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .cart-rule-grid:not(.reward-gift) {
+        width: 40%;
+    }
+
+    .reward-gift {
+        width: 100%;
+    }
+
+    .cart-rule-gift {
+        flex-direction: row;
+    }
+}

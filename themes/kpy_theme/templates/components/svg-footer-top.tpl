@@ -1,0 +1,1 @@
+<svg class="footer__top" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 1440 42"><path  fill-rule="evenodd" d="M1440 28v13.5H0V29A9056.14 9056.14 0 0 1 724 0c246.32 0 486.01 9.74 716 28Z" clip-rule="evenodd"></path></svg>

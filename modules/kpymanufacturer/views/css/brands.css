@@ -1,0 +1,117 @@
+body {
+    background-color: var(--kpy-color-cream);
+}
+
+h1 {
+    padding: 2rem 0;
+    font-family: "Raleway", -apple-system, sans-serif;
+    text-shadow: 0 1px 2px rgba(0,0,0,.5);
+    font-weight: 900;
+}
+
+.brands-letters {
+    background-color: var(--kpy-bg-menu);
+    margin-bottom: 2rem;
+    border-radius: var(--kpy-border-radius);
+    border: 1px solid var(--bs-gray-300);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: fit-content;
+    margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+    .brands-letters {
+        display: flex;
+    }
+}
+
+.brand-letter {
+    padding: .75rem;
+    min-width: 45px;
+    min-height: 45px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.125rem;
+    border-radius: var(--kpy-border-radius);
+    font-family: 'Nunito', -apple-system, sans-serif;
+}
+
+.brand-letter:hover {
+    cursor: pointer;
+    background-color: var(--kpy-text-dark);
+    border-color: var(--kpy-text-dark);
+    color: var(--kpy-color-primary);
+}
+
+.brand-letter:not(:last-child) {
+    border-right: unset;
+}
+
+.brand-letter-separator {
+    font-size: 1.125rem;
+    font-weight: bold;
+    border-radius: var(--kpy-border-radius);
+    background-color: var(--kpy-bg-menu);
+    color: var(--kpy-text-dark);
+    border: 1px solid var(--bs-gray-300);
+    padding: .75rem 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.brands-letter-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.brand-image img {
+    max-width: 100px;
+    max-height: 80px;
+}
+
+.brand {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    grid-template-areas: "image name";
+    grid-auto-rows: min(100px);
+}
+
+.brand-image {
+    grid-area: image;
+    place-self: center;
+}
+.brand-name {
+    grid-area: name;
+    place-self: center;
+}
+@media (min-width: 768px) {
+    .brands-letter-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem 2rem;
+    }
+
+    .brand {
+        width: 170px;
+        height: 170px;
+        border-radius: var(--kpy-border-radius);
+        padding: 1rem 0;
+        transition: all .3s ease;
+        background-color: white;
+        border: 1px solid #eee;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 40px;
+        grid-template-areas: "image" "name";
+    }
+
+
+
+    .brand:hover {
+        cursor: pointer;
+        transform: translateY(-5px);
+        border-color: var(--kpy-color-primary-dark);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ModulesKpyhomeAdmin.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="8bbd70637f5975e895c3c38f6643376e">
+        <source>Add content to homepage</source>
+        <target>Add content to homepage</target>
+      </trans-unit>
+      <trans-unit id="876f23178c29dc2552c0b48bf23cd9bd">
+        <source>Are you sure you want to uninstall?</source>
+        <target>Are you sure you want to uninstall?</target>
+      </trans-unit>
+      <trans-unit id="c01c6eeeed4a58eb3d0a8a395d6e5488">
+        <source>Kpy Home</source>
+        <target>Kpy Home</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,18 @@
+{
+    "name": "prestashop/neftysfarmaconnector",
+    "authors": [{
+        "name": "PyM Team"
+    }],
+    "require": {
+        "php": ">=7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrestaShop\\Module\\NeftysFarmaConnector\\": "src/"
+        },
+        "config": {
+            "prepend-autoloader": false
+        },
+        "type": "prestashop-module"
+    }
+}

@@ -1,0 +1,19 @@
+ 
+
+{shop_url}
+
+Hola,
+
+{product} ya está disponible.
+
+¡Buenas noticias, este artículo vuelve a estar en stock!
+Haga clic en el siguiente enlace para visitar la página del producto y realizar su pedido: [{product}]({product_link})
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD: Si no has sido tú, ignora este email. O pregúntale a tu perro si ha estado tocando el ordenador.
+
+Need help?
+hola@kompymascotas.com
+© 2026 ps9.test

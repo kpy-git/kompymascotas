@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS `PREFIX_kpy_pet`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_habitats_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_adquisition_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_diseases_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_disease_relation`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_kinds_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_races_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_habitats_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_adquisition_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_diseases_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_kinds_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_races_lang`;
+DROP TABLE IF EXISTS `PREFIX_kpy_pet_sizes`;

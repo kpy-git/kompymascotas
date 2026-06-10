@@ -1,0 +1,18 @@
+{
+    "name": "prestashop/kpycustomerhistory",
+    "authors": [{
+        "name": "PyM Team"
+    }],
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrestaShop\\Module\\KpyCustomerHistory\\": "src/"
+        },
+        "config": {
+            "prepend-autoloader": false
+        },
+        "type": "prestashop-module"
+    }
+}

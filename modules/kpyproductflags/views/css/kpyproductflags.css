@@ -1,0 +1,16 @@
+.product-flags {
+    padding: 0 .25rem;
+}
+
+.product-flags .badge img {
+    width: 1rem;
+    margin-right: .15rem;
+}
+
+.kpy-product-attribute-flag {
+    padding: .25rem;
+}
+
+.kpy-product-attribute-flag img {
+    width: var(--kpy-font-size);
+}

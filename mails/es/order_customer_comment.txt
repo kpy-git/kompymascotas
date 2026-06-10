@@ -1,0 +1,25 @@
+ 
+
+{shop_url}
+
+Hola,
+
+Mensaje de un cliente
+
+Ha recibido un mensaje respecto al pedido con la referencia: {id_order}.
+Cliente: {firstname} {lastname} ({email})
+
+Mensaje del cliente:
+
+{message}
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD:  Si no has sido tú, ignora este email. O si tienes algún peludo en casa pregúntale si ha estado tocando el ordenador.
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

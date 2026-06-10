@@ -1,0 +1,162 @@
+body {
+    background: #fafafa;
+    color: var(--kpy-text-dark);
+    line-height: 1.5;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+@media (min-width: 768px) {
+    .layout {
+        grid-template-columns: 340px 1fr;
+    }
+    .sidebar {
+        position: sticky;
+        top: calc(10px + var(--kpy-header-height));
+    }
+}
+
+.page-title {
+    font-family: "Raleway", -apple-system, Arial, sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 800;
+    color: var(--kpy-text-dark);
+    margin: 1.5rem 0;
+    letter-spacing: -0.3px;
+}
+
+.sidebar {
+    background: white;
+    border: 1px solid var(--bs-gray-300);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.product-img {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar h3 {
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.sidebar-product-name {
+    font-size: 13px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+.global-score {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.score-num {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--kpy-text-dark);
+}
+
+.score-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.vet-card {
+    background: linear-gradient(135deg, #FFF5D8 0%, #FFF9EC 100%);
+    border: 2px solid var(--kpy-color-primary-dark);
+    border-radius: 20px;
+    padding: 24px 28px;
+    position: relative;
+    overflow: hidden;
+}
+
+.vet-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: var(--kpy-color-primary-dark);
+    border-radius: 20px 0 0 20px;
+}
+
+.vet-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: var(--kpy-color-primary-dark);
+    color: var(--kpy-text-dark);
+    font-size: var(--kpy-font-size);
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: .5em;
+}
+.vet-badge svg {
+    width: 15px;
+    height: 15px;
+}
+.vet-card h4 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: .5rem;
+}
+
+.vet-card p {
+    font-size: var(--kpy-font-size);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.vet-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px dashed #F2C96580;
+    padding-top: 14px;
+}
+
+.vet-avatar {
+    width: 44px;
+    height: 44px;
+    background: var(--kpy-color-secondary-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff;
+    flex-shrink: 0;
+}
+.vet-info strong {
+    display: block;
+    font-size: var(--kpy-font-size);
+    font-weight: 700;
+}
+
+.vet-info span {
+    font-size: var(--kpy-font-size-small);
+    color: var(--kpy-text-secondary);
+    font-weight: 500;
+}

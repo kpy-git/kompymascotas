@@ -1,0 +1,30 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+Ups. El pago no ha terminado de cuajar.
+
+Error de pago
+
+No hemos podido confirmar el pago, asi que el pedido no se ha generado correctamente. No te preocupes, esto tiene solución rápida.
+
+Relájate: no eres tú, es la típica cosa que pasa cuando el banco se pone exquisito.
+
+¿Que hacemos ahora?
+
+- Si quieres, vuelve a intentarlo de nuevo. Elimina todos los productos de tu carrito y vuelve realizar el pago, a veces con un segundo intento ya va.
+- Si el error se repite, escríbenos y lo miramos contigo en el momento.
+- No nos mandes datos de tu tarjeta por email (mejor aún, nunca lo hagas con nadie).
+
+[Contactar con soporte](https://kompymascotas.com/contactenos)
+
+Un saludo,
+El equipo de Kompymascotas
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

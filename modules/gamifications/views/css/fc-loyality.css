@@ -1,0 +1,40 @@
+.loyality h4 {
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.loyality__conditions ul {
+    padding-left: 2rem;
+    list-style: disc;
+}
+
+.loyality li {
+    margin: .3rem 0;
+}
+
+.loyality__header {
+    font-size: 1rem;
+    font-weight: 500;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-content: center;
+    background: var(--kpy-bg-menu);
+    padding: 1rem;
+    border: 2px solid var(--kpy-color-secondary-light);
+    box-shadow: 0 4px 10px -4px #00000029;
+    border-radius: .75rem;
+}
+
+.loyality__header img {
+    width: 250px;
+    place-self: center;
+}
+
+.js-gamifications-referral-url-input {
+    border-radius: .75rem;
+    border: 1px solid var(--bs-gray-300);
+    padding: .5rem;
+    overflow-wrap: break-word;
+    color: var(--bs-gray);
+}

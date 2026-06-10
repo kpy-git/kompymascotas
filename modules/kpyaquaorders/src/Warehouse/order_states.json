@@ -1,0 +1,80 @@
+{
+    "nuevo_pedido": {
+        "estados_asociados": [
+            2,
+            25
+        ]
+    },
+    "cancelar_pedido": {
+        "estados_asociados": [
+            6
+        ]
+    },
+    "solicitud_cancelacion": {
+        "estados_asociados": [
+            19
+        ]
+    },
+    "solicitud_cancelacion_anulada": {
+        "estados_asociados": [
+            20
+        ]
+    },
+    "transmitido_neftys": {
+        "id_order_state": 21
+    },
+    "en_preparacion": {
+        "id_order_state": 26,
+        "estados_asociados": [
+            26
+        ]
+    },
+    "actualizar_pedido": {
+        "id_order_state": 27,
+        "estados_asociados": [
+            27
+        ]
+    },
+    "actualizar_direccion": {
+        "id_order_state": 28,
+        "estados_asociados": [
+            28
+        ]
+    },
+    "actualizar_productos": {
+        "id_order_state": 29,
+        "estados_asociados": [
+            29
+        ]
+    },
+    "renombrar_pedido": {
+        "id_order_state": 30,
+        "estados_asociados": [
+            30
+        ]
+    },
+    "recargo": {
+        "id_order_state": 31,
+        "estados_asociados": [
+            31
+        ]
+    },
+    "eliminar_pedido_para_liberar": {
+        "id_order_state": 32,
+        "estados_asociados": [
+            32
+        ]
+    },
+    "deshacer_preparar": {
+        "id_order_state": 33,
+        "estados_asociados": [
+            33
+        ]
+    },
+    "pendiente_sincronizacion": {
+        "id_order_state": 34,
+        "estados_asociados": [
+            34
+        ]
+    }
+}

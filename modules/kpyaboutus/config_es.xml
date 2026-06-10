@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>kpyaboutus</name>
+    <displayName><![CDATA[Kpy About us]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[Creates new page about us]]></description>
+    <author><![CDATA[PyM Team]]></author>
+    <tab><![CDATA[front_office_features]]></tab>
+	<confirmUninstall><![CDATA[Are you sure you want to uninstall?]]></confirmUninstall>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
+</module>

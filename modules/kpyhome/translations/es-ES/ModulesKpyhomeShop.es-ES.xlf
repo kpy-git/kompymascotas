@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ModulesKpyhomeShop.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="9c82909175f8fa5becfd205a20084851">
+        <source>100% secure payment.</source>
+        <target>Pago 100% seguro</target>
+      </trans-unit>
+      <trans-unit id="49f072aa5ab454008129f12be2a6c921">
+        <source>ALWAYS enjoy up to an additional 8% discount on your scheduled orders</source>
+        <target>Disfruta SIEMPRE de hasta un 8% de descuento adicional en tus pedidos programados</target>
+      </trans-unit>
+      <trans-unit id="9e1d2ed68af64f85b2f43bcdaf704f4d">
+        <source>Autoship</source>
+        <target>Compra recurrente</target>
+      </trans-unit>
+      <trans-unit id="165ec2843bb3776be06bfe7d0aefe234">
+        <source>Based on %s verified reviews</source>
+        <target>Basado en %s opiniones verificadas</target>
+      </trans-unit>
+      <trans-unit id="2273d1167a6212812d95dc8fadbae78e">
+        <source>Customer service</source>
+        <target>Atención al cliente</target>
+      </trans-unit>
+      <trans-unit id="06373a16ad5c2befdc29d9d705ef82b9">
+        <source>Don't like it? Did it arrive broken? We'll refund your money within 48 hours. No weird questions asked.</source>
+        <target>¿No le gusta? ¿Llegó roto? Te devolvemos el dinero en 48h. Sin preguntas raras.</target>
+      </trans-unit>
+      <trans-unit id="456bca08abf3ad78e0d0d1d9016d92a3">
+        <source>Find what your pet needs</source>
+        <target>Encuentra lo mejor para tu perro o gato</target>
+      </trans-unit>
+      <trans-unit id="9efcac6b55de069725a5e9f354c2b5f5">
+        <source>Free shipping from %s€. Mainland Spain in 24/48 hours. Baleares and Canary Islands in 3-5 days. If there is a delay, we will notify you before you hear from the carrier.</source>
+        <target>Gratis desde %s€. Península en 24/48h. Baleares y Canarias en 3-5 días. Si hay retraso, te avisamos antes de que te enteres por el transportista.</target>
+      </trans-unit>
+      <trans-unit id="978648ec6cfc72322cfa9ee4da4115cf">
+        <source>More than 10,000 owners no longer worry about running out of feed</source>
+        <target>Más de 10.000 dueños ya no se preocupan por quedarse sin pienso</target>
+      </trans-unit>
+      <trans-unit id="7ec8379107bca235a49d3749e2f8a6d6">
+        <source>Most recommended by customers</source>
+        <target>Lo más recomendado por clientes</target>
+      </trans-unit>
+      <trans-unit id="2717d2c6cd5a26b859af5d521735d484">
+        <source>No fine print. No surprises.</source>
+        <target>Sin letra pequeña. Sin sorpresas.</target>
+      </trans-unit>
+      <trans-unit id="d1aca319abe49dae9f76c9c44fcf63f3">
+        <source>Returns and refunds</source>
+        <target>Devoluciones y reembolsos</target>
+      </trans-unit>
+      <trans-unit id="5cfdabe5c80498a46fd7d0cf450a0fa0">
+        <source>Shipping and delivery</source>
+        <target>Envío y entregas</target>
+      </trans-unit>
+      <trans-unit id="177c3445e8f6a5f5475eeb31a94434e4">
+        <source>The most searched categories by owners like you</source>
+        <target>Las categorías más buscadas por dueños como tú</target>
+      </trans-unit>
+      <trans-unit id="35c786dea2696929f41daa4feb097523">
+        <source>Top rated</source>
+        <target>Mejor valorados</target>
+      </trans-unit>
+      <trans-unit id="4d263e7f69862cff4bb1ced7f939cca0">
+        <source>Truspilot</source>
+        <target>Truspilot</target>
+      </trans-unit>
+      <trans-unit id="0b4db271fc4624853e634ef6882ea8be">
+        <source>View all</source>
+        <target>Ver todas</target>
+      </trans-unit>
+      <trans-unit id="c61ab4204f572e9b3aa84a040e0dab31">
+        <source>View products</source>
+        <target>Ver productos</target>
+      </trans-unit>
+      <trans-unit id="fcd4b2fa4b0d34a50cd0e0a387963564">
+        <source>We do not store your card details.</source>
+        <target>No guardamos datos de tu tarjeta.</target>
+      </trans-unit>
+      <trans-unit id="6e9cd28326f97b899c3e70551381b3e2">
+        <source>WhatsApp, phone, and email. We respond within two hours, Monday through Friday (9 a.m. to 7 p.m.).</source>
+        <target>WhatsApp, teléfono y email. Respondemos en menos de 2 horas de lunes a viernes (9h-19h).</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ShopFormsLabels.es-ES.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="1625e29c02062efe5dbc42c3efeeebc4">
+        <source>-- please choose --</source>
+        <target>-- por favor, selecciona --</target>
+      </trans-unit>
+      <trans-unit id="8b52f100852659d4d2da5231c5dc909e">
+        <source>If your query is about a product, please copy the link to the product.</source>
+        <target>Si la consulta es sobre un producto, por favor copia el enlace al producto.</target>
+      </trans-unit>
+      <trans-unit id="4049d979b8e6b7d78194e96c3208a5a5">
+        <source>Order number</source>
+        <target>Número de pedido</target>
+      </trans-unit>
+      <trans-unit id="c7892ebbb139886662c6f2fc8c450710">
+        <source>Subject</source>
+        <target>Motivo de la consulta</target>
+      </trans-unit>
+      <trans-unit id="198584454b0ce1101ff5b50323325aa8">
+        <source>Your email address</source>
+        <target>Dirección de correo electrónico</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

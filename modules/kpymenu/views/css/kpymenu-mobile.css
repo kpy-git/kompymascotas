@@ -1,0 +1,216 @@
+.kpy-menu-mobile {
+    position: fixed;
+    top: var(--kpy-menu-mobile-height);
+    left: 0;
+    width: 100vw;
+    opacity: 0;
+    visibility: hidden;
+    height: calc(100dvh - var(--kpy-menu-mobile-height));
+    transition: opacity .5s, visibility .5s;
+    padding: 0;
+    backdrop-filter: blur(2px);
+    background: #2121217f;
+    overscroll-behavior: contain;
+}
+
+.kpy-menu-mobile.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.kpy-menu-mobile h4 {
+    font-weight: bold;
+    text-align: center;
+    padding-top: .75rem;
+    margin: 0;
+    font-size: 1.275rem;
+}
+
+.kpy-menu-mobile__navigation {
+    background-color: white;
+    width: clamp(350px, 70%, 400px);
+    transition: left .4s ease-in-out,
+            transform .2s ease-in-out,
+            visibility .2s ease-in-out;
+    overflow-y: auto;
+    transform: translate(-100%);
+    visibility: hidden;
+    height: 100%;
+    position: fixed;
+    left: -100%;
+}
+
+.kpy-menu-mobile__navigation[aria-hidden="false"] {
+    visibility: visible;
+    left: 0;
+}
+
+.kpy-menu-mobile__navigation ul {
+    padding-inline: 1rem;
+}
+
+.kpy-menu-mobile.active .kpy-menu-mobile__navigation {
+    transform: translate(0);
+    visibility: visible;
+}
+
+.kpy-menu-mobile__element {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: .75rem;
+    padding: .5rem 0;
+}
+.kpy-menu-mobile__element:not(:first-child) {
+    margin-top: .25rem;
+}
+.kpy-menu-mobile__element:not(:last-child) {
+    border-bottom: 2px dashed var(--bs-gray-100);
+    margin-bottom: .25rem;
+}
+
+.kpy-menu-mobile__element-icon {
+    width: 1.765rem;
+    height: auto;
+    fill: var(--kpy-text-dark);
+}
+
+.kpy-menu-mobile__back button{
+    border: 1px solid var(--bs-gray-300);
+    border-radius: .75rem;
+    background-color: var(--kpy-bg-menu);
+    color: var(--kpy-text-dark);
+    font-weight: 500;
+    font-size: .915rem;
+    padding: .35rem 1rem;
+    text-align: left;
+    width: 100%;
+}
+
+.kpy-menu-mobile__back {
+    padding: 1rem;
+}
+
+.kpy-menu-mobile__parent-title {
+    font-weight: bold;
+    color: var(--kpy-color-primary-dark);
+    border-bottom: 1px solid var(--bs-gray-400);
+    padding-bottom: .5rem;
+}
+
+.kpy-menu-mobile-hamburger {
+    align-content: center;
+    margin-inline: auto;
+}
+
+.btn-hamburger {
+    width: 1.765rem;
+}
+
+.kpy-menu-mobile-hamburger span {
+    display: block;
+    width: 100%;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,0.3);
+    border-radius: 3px;
+    height: 3px;
+    background: var(--kpy-text-dark);
+    transition: all .3s;
+    position: relative;
+}
+
+.kpy-menu-mobile-hamburger span + span {
+    margin-top: .35rem;
+}
+
+.hamburger-on span:nth-child(1) {
+    animation: ease 500ms top forwards;
+}
+
+.hamburger-off span:nth-child(1) {
+    animation: ease 500ms top-2 forwards;
+}
+
+.hamburger-on span:nth-child(2) {
+    animation: ease 500ms scaled forwards;
+}
+
+.hamburger-off span:nth-child(2) {
+    animation: ease 500ms scaled-2 forwards;
+}
+
+.hamburger-on  span:nth-child(3) {
+    animation: ease 500ms bottom forwards;
+}
+
+.hamburger-off  span:nth-child(3) {
+    animation: ease 500ms bottom-2 forwards;
+}
+
+@keyframes top {
+    0% {
+        top: 0;
+        transform: rotate(0);
+    }
+    50% {
+        top: .545rem;
+        transform: rotate(0);
+    }
+    100% {
+        top: .545rem;
+        transform: rotate(45deg);
+    }
+}
+
+@keyframes top-2 {
+    0% {
+        top: .545rem;
+        transform: rotate(45deg);
+    }
+    50% {
+        top: .545rem;
+        transform: rotate(0deg);
+    }
+    100% {
+        top: 0;
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes bottom {
+    0% {
+        bottom: 0;
+        transform: rotate(0);
+    }
+    50% {
+        bottom: .545rem;
+        transform: rotate(0);
+    }
+    100% {
+        bottom: .5rem;
+        transform: rotate(135deg);
+    }
+}
+
+@keyframes bottom-2 {
+    0% {
+        bottom: .545rem;
+        transform: rotate(135deg);
+    }
+    50% {
+        bottom: .545rem;
+        transform: rotate(0);
+    }
+    100% {
+        bottom: 0;
+        transform: rotate(0);
+    }
+}
+
+@keyframes scaled {
+    50% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(0);
+    }
+}

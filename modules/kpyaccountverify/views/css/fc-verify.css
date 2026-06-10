@@ -1,0 +1,22 @@
+.verify {
+    text-align: center;
+    margin: 4rem 0;
+}
+
+.verify .icon {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.verify h1 {
+    margin: 0 0 15px 0;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.verify p {
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+

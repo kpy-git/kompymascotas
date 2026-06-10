@@ -1,0 +1,84 @@
+.promos-section {
+    background: #fff;
+}
+
+.slider-container {
+    width: 100%;
+    max-width: 1200px; /* Este es el tope, pero puede ser menor */
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    /* Eliminamos el alto fijo para que dependa de la proporción de la imagen */
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.slide {
+    /* Cada slide ocupará exactamente el 100% del contenedor actual */
+    min-width: 100%;
+    flex-shrink: 0;
+}
+
+.slide img {
+    width: 100%;
+    height: auto; /* Mantiene la proporción original de la imagen */
+    display: block;
+}
+
+/* Botones de navegación */
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    color: var(--kpy-text-dark);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 50px;
+    height: 50px;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background-color: var(--kpy-text-dark);
+    color: white;
+}
+
+.prev-btn { left: 10px; }
+.next-btn { right: 10px; }
+
+/* Opcional: ocultar botones en pantallas muy pequeñas si estorban */
+@media (max-width: 480px) {
+    .prev-btn, .next-btn { padding: 10px; font-size: 14px; }
+}
+
+.slider-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dot.active {
+    background-color: white;
+    transform: scale(1.2); /* Un poco más grande cuando está activo */
+}

@@ -1,0 +1,6 @@
+2026-05-05T15:26:35+02:00	ERROR: No se ha podido encontrar ningún comando para el estado: 34
+2026-05-13T10:39:20+02:00	PrestaShop\Module\KpyAquaOrders\Command\CancellationOrderRequest::exec: El pedido ya no se puede modificar, esta en uso o ya ha sido procesado
+2026-05-13T10:40:14+02:00	PrestaShop\Module\KpyAquaOrders\Command\CancellationOrderRequest::exec: El pedido ya no se puede modificar, esta en uso o ya ha sido procesado
+2026-05-13T11:52:08+02:00	PrestaShop\Module\KpyAquaOrders\Command\CancellationOrderRequest::exec: El pedido ya no se puede modificar, esta en uso o ya ha sido procesado
+2026-05-13T12:04:02+02:00	PrestaShop\Module\KpyAquaOrders\Command\CancellationOrderRequest::exec: El pedido ya no se puede modificar, esta en uso o ya ha sido procesado
+2026-05-13T12:04:35+02:00	PrestaShop\Module\KpyAquaOrders\Command\CancellationOrderRequest::exec: El pedido ya no se puede modificar, esta en uso o ya ha sido procesado

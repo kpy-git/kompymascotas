@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="ModulesKpypetsShop.es-ES.xlf" source-language="es-ES" target-language="es-ES" datatype="plaintext">
+    <body>
+      <trans-unit id="e87ec7f93c608a6b0bb55a24d52cc908">
+        <source>My pets</source>
+        <target>Mis mascotas</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,31 @@
+.shipping-progress {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: .875rem;
+    margin-bottom: 1rem;
+    color: var(--kpy-text-dark);
+    font-weight: 500;
+}
+
+.shipping-progress__message {
+    width: 100%;
+    text-align: center;
+    margin-top: .5rem;
+    margin-bottom: .25rem;
+}
+
+.shipping-progress__limit {
+    padding-inline: .5rem;
+    text-align: center;
+}
+
+.shipping-progress__progress {
+    flex-grow: 1;
+    height: .5rem;
+}
+
+.shipping-progress__progress .progress-bar {
+    background-color: var(--kpy-text-primary);
+}

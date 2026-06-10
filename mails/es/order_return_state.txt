@@ -1,0 +1,22 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+
+Devolución #{id_order_return} - Actualizada
+
+El estado de su devolución #{id_order_return} ha cambiado a: "{state_order_return}".
+
+Siga su pedido y descargue su factura desde nuestra tienda, diríjase a la sección [Historial y detalles de mis pedidos]({history_url}) de su cuenta de cliente.
+
+Un saludo,
+El equipo de Kompymascotas
+
+PD:  Si no has sido tú, ignora este email. O si tienes algún peludo en casa pregúntale si ha estado tocando el ordenador.
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

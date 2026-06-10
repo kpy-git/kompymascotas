@@ -1,0 +1,56 @@
+ 
+
+{shop_url}
+
+Hola {firstname} {lastname},
+Ya está.
+Tu pedido está confirmado y en cola para salir. Aquí abajo tienes todos los detalles por si quieres revisarlos (o simplemente cerrar este email y esperar a que llegue a casa).
+
+Número de pedido: {id_order}
+
+Realizado el {date}
+
+Método de pago: {payment}
+
+{products_txt}
+Productos:  {total_products}
+Descuentos aplicados: {total_discounts}
+Gastos de envío: {total_shipping}
+TOTAL PAGADO: {total_paid}
+
+📦 Agencia de transporte: {carrier}
+
+📍 Dirección de entrega
+
+{delivery_block_txt}
+
+📄 Dirección de facturación
+
+{invoice_block_txt}
+
+¿Y ahora qué?
+
+Pues ahora preparamos tu pedido y en 24-48h lo enviamos. En cuanto salga, te avisamos con el número de seguimiento para que puedas rastrearlo como si fueras el CSI.
+
+¿Algún problema?
+
+Si te has equivocado de producto, dirección o cualquier otra cosa, escríbenos cuanto antes a hola@kompymascotas.com o llama al 955 228 677.
+
+Cuanto antes nos lo digas, más fácil será cambiarlo.
+
+🎉 ¡Has ganado puntos!
+
++{order_points} puntos
+
+Se sumarán a tu cuenta 14 días después de recibir el pedido. Luego podrás usarlos para conseguir descuentos en tu próxima compra. No es mucho, pero algo es algo.
+
+[VER MIS PUNTOS]({gamifications_url})
+
+Un saludo,
+El equipo de Kompymascotas
+
+¿Necesitas ayuda?
+📞 955 228 677
+L-V de 09:00 a 18:00h
+hola@kompymascotas.com
+©2026. kompymascotas.com

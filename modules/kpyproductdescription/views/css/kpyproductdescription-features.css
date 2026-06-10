@@ -1,0 +1,27 @@
+
+
+.product-feature {
+    display: flex;
+    padding: .75rem .5rem;
+    font-size: var(--kpy-font-size-small);
+}
+
+.product-feature:not(:last-child) {
+    border-bottom: 1px dashed var(--kpy-text-dark);
+}
+
+.product-feature:hover {
+    background-color: var(--bs-gray-100);
+}
+
+.product-feature > * {
+    width: 50%;
+}
+
+.product-feature__title {
+    font-size: 400;
+}
+
+.product-feature__value {
+    font-weight: 700;
+}

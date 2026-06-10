@@ -1,0 +1,21 @@
+.product-availability {
+    margin-bottom: 1.5rem;
+}
+
+.product-availability .shipping {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.product-availability .shipping img {
+    margin-right: .5rem;
+    max-height: 20px;
+}
+
+.shipping-tag {
+    color: var(--kpy-text-dark);
+    font-size: var(--kpy-font-size);
+    font-weight: bold;
+}
+

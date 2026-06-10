@@ -1,0 +1,7 @@
+services:
+  PrestaShop\Module\NeftysFarmaConnector\Command\ForceUpdateOrderCommand:
+    tags:
+      - {name: 'console.command'}
+  PrestaShop\Module\NeftysFarmaConnector\Command\TestFtpCommand:
+    tags:
+      - { name: 'console.command' }
