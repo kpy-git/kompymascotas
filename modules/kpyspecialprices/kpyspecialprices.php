@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PrestaShop\Module\KpyProductFlags\Install\Installer;
+use PrestaShop\Module\KpySpecialPrices\Checker\Checker;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -106,14 +107,7 @@ class KpySpecialPrices extends Module
 
     private function hasSpecialPrice(int $id_product, int $id_product_attribute = 0): bool
     {
-        return (int)Db::getInstance()->getValue(
-                "SELECT COUNT(*) 
-                FROM " . _DB_PREFIX_ . "kpy_special_price 
-                WHERE id_product = {$id_product} " .
-                    ($id_product_attribute > 0 ? " AND id_product_attribute = {$id_product_attribute}" : " ") ."
-                    AND NOW() BETWEEN `date_from` AND `expire`
-                    AND id_shop = {$this->context->shop->id}"
-            ) > 0;
+        return Checker::hasSpecialPrice($this->context->shop->id, $id_product, $id_product_attribute);
     }
 
     public function hookActionPresentProductListing(array $params): void
