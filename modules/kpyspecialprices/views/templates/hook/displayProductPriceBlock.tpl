@@ -8,7 +8,13 @@
     </div>
     {if $product.kpy_special_price_days_left <= 7}
         <div class="kpy-special-price-days-left">
-            {l s='Expire in %days% days' sprintf=['%days%' => $product.kpy_special_price_days_left] d='Modules.Kpyspecialprices.Shop'}
+            {if $product.kpy_special_price_days_left == 1}
+                {l s='Expire tomorrow' d='Modules.Kpyspecialprices.Shop'}
+            {elseif $product.kpy_special_price_days_left == 0}
+                {l s='Expire today' d='Modules.Kpyspecialprices.Shop'}
+            {else}
+                {l s='Expire in %days% days' sprintf=['%days%' => $product.kpy_special_price_days_left] d='Modules.Kpyspecialprices.Shop'}
+            {/if}
         </div>
     {/if}
 </div>
