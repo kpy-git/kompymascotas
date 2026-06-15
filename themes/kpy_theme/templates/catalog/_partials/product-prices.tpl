@@ -8,11 +8,11 @@
       <div class="prices__wrapper d-flex flex-column gap-2 mb-4">
         {if $product.has_discount}
           <div class="product__discount">
+          {if $product.kpy_special_price}
             {hook h='displayProductPriceBlock' product=$product type="old_price"}
 
-          {if !$product.kpy_special_price}
+          {else}
             <span class="product__price-regular">{$product.regular_price}</span>
-
             {if $product.discount_type === 'percentage'}
               <span class="product__discount-percentage">
                 <span class="tag-discount">
