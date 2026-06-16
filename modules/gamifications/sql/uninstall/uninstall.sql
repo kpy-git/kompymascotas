@@ -11,3 +11,4 @@ DROP TABLE IF EXISTS `PREFIX_gamifications_customer`;
 DROP TABLE IF EXISTS `PREFIX_gamifications_activity_history`;
 DROP TABLE IF EXISTS `PREFIX_gamifications_referral`;
 DROP TABLE IF EXISTS `PREFIX_gamifications_shopping_point`;
+DROP TABLE IF EXISTS `PREFIX_gamifications_voucher`;

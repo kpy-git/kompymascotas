@@ -98,7 +98,7 @@ class GamificationsActivityHistory extends ObjectModel
 
 
         if($voucher > 0){
-            return $result && Db::getInstance()->insert('pym_gamifications_voucher', [
+            return $result && Db::getInstance()->insert(_DB_PREFIX_ . 'gamifications_voucher', [
                 'id_cart_rule' => $voucher, 
                 'id_gamifications_activity_history' => $activityHistory->id
             ]);

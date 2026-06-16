@@ -58,8 +58,8 @@ class GamificationsShoppingPointActivity
         // se vuelve a activar el vale al cancelar un pedido que tiene una vale de puntos
         if ($order->current_state === 6 
             && ($idCartRule = Db::getInstance()->getValue("SELECT id_cart_rule 
-                FROM ps_pym_gamifications_voucher 
-                WHERE id_cart_rule = (select id_cart_rule FROM ps_order_cart_rule WHERE id_order={$order->id})")) !== false)
+                FROM " . _DB_PREFIX_ . "gamifications_voucher 
+                WHERE id_cart_rule = (select id_cart_rule FROM " . _DB_PREFIX_ . "order_cart_rule WHERE id_order={$order->id})")) !== false)
         {
             Db::getInstance()->update('cart_rule', [
                 'active' => 1,
