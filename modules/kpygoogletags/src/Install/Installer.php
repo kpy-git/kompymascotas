@@ -13,6 +13,9 @@ class Installer
         'displayHeader',
         'displayAfterBodyOpeningTag',
         'displayBeforeBodyClosingTag',
+        'displayProductAdditionalInfo',
+        'displayOrderConfirmation',
+        'displayShoppingCartFooter',
     ];
 
     /**
