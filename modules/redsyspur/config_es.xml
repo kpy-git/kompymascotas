@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>redsyspur</name>
+    <displayName><![CDATA[Pasarela Unificada de Redsys para Prestashop]]></displayName>
+    <version><![CDATA[2.0.0]]></version>
+    <description><![CDATA[Acepta pagos con tarjeta o con Bizum utilizando los servicios de Redsys.]]></description>
+    <author><![CDATA[Redsys Servicios de Procesamiento S.L.]]></author>
+    <tab><![CDATA[payments_gateways]]></tab>
+	<confirmUninstall><![CDATA[Una vez eliminado no podrá aceptar pagos con tarjeta utilizando la pasarela de Redsys. Tenga en cuenta que al eliminar el módulo, se eliminarán los datos de las operaciones que se hayan gestionado con él y no podrás realizar movimientos sobre dichas operaciones desde el módulo. Esto no afecta a las órdenes guardadas en Prestashop ni a la lista de órdenes, sólo a los datos generados por el módulo que permiten confirmar, anular o devolver operaciones desde el Backoffice de Prestashop. Recuerda que siempre puedes realizar movimientos sobre las operaciones realizadas con Redsys desde el Portal de Administración del TPV Virtual.]]></confirmUninstall>
+    <is_configurable>1</is_configurable>
+    <need_instance>1</need_instance>
+</module>
