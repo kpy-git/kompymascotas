@@ -1,0 +1,49 @@
+/**
+ * Module Captcha
+ * Add (re)captcha on contact and account creation forms
+ * © Hervé Hennes 2013-2025
+ * https://github.com/nenes25/eicaptcha
+ * https://www.h-hennes.fr/blog/
+ */
+  - V 2.6.0 - 2025-11-15  #288 Fix php7.0 error
+                          #275 / #308  Configure reCaptcha V3 min score
+                          #289 Fix light/dark theme selection thanks to @marsaldev
+ - V 2.5.1 - 2025-03-03  #288 Fix php7.0 error
+                         #309 prestashop 8.2.1 support
+ - V 2.5.0 - 2024-02-15  #229 Replace override of Authcontroller
+                         #247 Registration check on prestashop 8.x
+                         #221 recaptcha v3 doesn't validate in form added with elementor form builder of warehouse theme
+                         #218 Harmonize and fix licence headers
+ - V 2.4.2 - 2023-04-08  #248 Hide captcha in identity controller
+                         #197 Update Translations others than FR ( IT thanks to @HartLarsson / NL thanks to Geert-JanB )
+ - V 2.4.1 - 2023-02-12  #225 Recaptcha bug create account
+                         #241 Add 2 missing hooks on installation (thanks to prestasafe)
+                         #242 customer-form.tpl verified only in '_PS_THEME_DIR_' and not in '_PS_PARENT_THEME_DIR_' too
+                         #230 Not registered on hook actionContactFormSubmitCaptcha
+ - V 2.4.0 - 2022-08-22  #202 V2.3.1: les modes sombre et clair sont inversés
+                         #205 Captcha box is not visible (Clarify behavior of V3 keys)
+                         #184 Don't require recaptcha for logged in clients
+                         #217 Allow to validate custom forms
+                         #169 Problème lors de la validation de mon formulaire
+                         #165 Rename Hook hookActionContactFormSubmitCaptcha
+                         #162 V2.0.4 not detect PS language switching (thanks to metacreo)
+ - V 2.3.1 - 2021-09-29  : #201 Added displayNewsletterRegistration hook to installation method (thanks to gdebrion)
+ - V 2.3.0 - 2021-09-06  : #94 Recaptcha v3
+                          #188 Compatible with reCaptcha V3 (V2 is not available anymore on Google reCaptcha Entreprise)
+                          #113 not compatible with recaptcha V3
+                          #195 Improve debug information
+                          #196 Improve Code quality : introduce phpcsfixer and phpstan
+ - V 2.2.0 - 2021-08-10 : Code refactoring
+ - V 2.1.1 - 2021-04-16 : #186 Wrong ps_emailsubscription version comparison
+ - V 2.1.0 - 2021-03-15 : Add support for newsletter registration (in certain conditions)
+                          #164 eicaptcha newsletter filtering
+                          #179 Better display debug mode in back office
+                          #180 Display link to github issues in debug module
+ - V 2.0.7 - 2020-12-22 : Fix prestashop 1.7.7 compatibility
+ - V 2.0.6 - 2020-10-31 : Improve code + fix OPC verification
+ - V 2.0.5 - 2019-04-23 : Small fixes - Not released
+ - V 2.0.4 - 2018-03-09 : Display debug information in back-office
+ - V 2.0.3 - 2018-03-01 : Add debug mode + activate compatibility for PS 1.7.0.x
+ - V 2.0.2 - 2018-02-13 : Check if composer "vendor" directory is present
+ - V 2.0.1 - 2017-12-01 : Css improvments thanks to Arnaud Merigeau
+ - V 2.0.0 - 2017-07-10 : New version for prestashop 1.7, add only captcha for contact form and account creation

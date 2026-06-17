@@ -20,6 +20,9 @@
 
 /modules/*
 
+!/modules/eicaptcha/
+!/modules/eicaptcha/**
+
 !/modules/gamifications/
 !/modules/gamifications/**
 
