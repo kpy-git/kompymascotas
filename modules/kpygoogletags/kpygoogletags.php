@@ -126,7 +126,9 @@ class KpyGoogleTags extends Module
             }, $items),
             'transactionBenefit' => round(array_reduce($items, static function ($carry, $product) {
                 return $carry + $product['benefit'];
-            }, 0), 2)
+            }, 0), 2),
+            'firstPurchase' => $this->isFirstPurchase($this->context->customer->id) ? "true" : "false",
+            'transactionEmail' => $this->context->customer->email,
         ];
 
         if (KpyGoogleTagsConfiguration::LOG_ALL || KpyGoogleTagsConfiguration::LOG_PURCHASE) {
@@ -190,6 +192,11 @@ class KpyGoogleTags extends Module
         }
 
         return $gaItems;
+    }
+
+    private function isFirstPurchase(int $customerId): bool
+    {
+        return (int)Db::getInstance()->getValue("SELECT COUNT(*) FROM `" . _DB_PREFIX_ . "orders` WHERE `id_customer` = " . $customerId) === 1;
     }
 
     public function hookDisplayProductAdditionalInfo(array $params): string
