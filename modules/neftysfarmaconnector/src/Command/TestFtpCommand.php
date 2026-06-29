@@ -9,7 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'neftysfarmacconnector:test-ftp', description: 'Test FTP Neftys')]
+#[AsCommand(name: 'neftysfarmaconnector:test-ftp', description: 'Test FTP Neftys')]
 class TestFtpCommand extends Command
 {
     use ContextInitializerTrait;

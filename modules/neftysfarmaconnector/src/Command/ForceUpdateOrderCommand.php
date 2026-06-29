@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'neftysfarmacconnector:upload-order', description: 'Fuerza la subida de un pedido al FTP de Neftys')]
+#[AsCommand(name: 'neftysfarmaconnector:upload-order', description: 'Fuerza la subida de un pedido al FTP de Neftys')]
 class ForceUpdateOrderCommand extends Command
 {
     use ContextInitializerTrait;
