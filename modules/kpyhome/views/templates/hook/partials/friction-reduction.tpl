@@ -41,8 +41,8 @@
             {l s='WhatsApp, phone, and email. We respond within two hours, Monday through Friday (9 a.m. to 7 p.m.).' d='Modules.Kpyhome.Shop'}
         </p>
         <p style="margin-top: 10px; font-weight: 600;">
-          📞 91 XXX XX XX<br>
-          📱 WhatsApp: 6XX XXX XXX
+          📞 6xxxxxxxx{*650 018 019*}<br>
+          📱 WhatsApp: 6XXXXXXX{*50 018 019*}
         </p>
       </div>
     </div>
