@@ -6,15 +6,34 @@ use PrestaShop\Module\NeftysFarmaConnector\Config\NeftysFarmaConfig;
 
 class NeftysFarmaStockRepository
 {
-    public function save(array $stockNeftys): bool
+    public function save(array $stockNeftys): void
     {
         if (empty($stockNeftys)) {
-            return true;
+            return;
         }
 
         \Db::getInstance()->execute("TRUNCATE TABLE " . _DB_PREFIX_ . NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE);
 
-        return \Db::getInstance()->insert(NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE, $stockNeftys);
+        \Db::getInstance()->insert(NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE, $stockNeftys);
+
+        \Db::getInstance()->execute(
+            "UPDATE " . _DB_PREFIX_ . "stock_available sa
+                    INNER JOIN " . _DB_PREFIX_ . "neftys_stock ns 
+                        on ns.id_product=sa.id_product 
+                            and ns.id_product_attribute=sa.id_product_attribute
+                    SET sa.quantity = ns.stock"
+        );
+
+        \Db::getInstance()->execute(
+            "UPDATE " . _DB_PREFIX_ . "stock_available sa
+                INNER JOIN (
+                    SELECT id_product, SUM(stock) AS total_stock
+                    FROM " . _DB_PREFIX_ . "neftys_stock
+                    GROUP BY id_product
+                ) ns_total ON sa.id_product = ns_total.id_product
+                SET sa.quantity = ns_total.total_stock
+                WHERE sa.id_product_attribute = 0"
+        );
     }
 
     public function findAllProductsByEan(): array
