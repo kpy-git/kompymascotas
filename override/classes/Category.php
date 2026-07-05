@@ -7,22 +7,22 @@ class Category extends CategoryCore
     * date: 2026-06-03 13:41:53
     * version: 1.0.0
     */
-    public bool $is_main_category;
+    public bool $is_main_category = false;
     /*
     * module: kpycategory
     * date: 2026-06-03 13:41:53
     * version: 1.0.0
     */
-    public bool $has_image_fixed;
-    public ?int $id_product_image_cover;
-    public ?string $image_link;
-    public ?int $id_twin_category;
+    public bool $has_image_fixed = false;
+    public ?int $id_product_image_cover = null;
+    public ?string $image_link = null;
+    public ?int $id_twin_category = null;
     /*
     * module: kpycategory
     * date: 2026-06-03 13:41:53
     * version: 1.0.0
     */
-    public bool $is_landing;
+    public bool $is_landing = false;
     /*
     * module: kpycategory
     * date: 2026-06-03 13:41:53

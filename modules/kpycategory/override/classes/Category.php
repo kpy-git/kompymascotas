@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 class Category extends CategoryCore
 {
-    public bool $is_main_category;
+    public bool $is_main_category = false;
 
-    public bool $has_image_fixed;
+    public bool $has_image_fixed = false;
 
-    public ?int $id_product_image_cover;
+    public ?int $id_product_image_cover = null;
 
-    public ?string $image_link;
+    public ?string $image_link = null;
 
-    public ?int $id_twin_category;
+    public ?int $id_twin_category = null;
 
-    public bool $is_landing;
+    public bool $is_landing = false;
 
     public function __construct($idCategory = null, $idLang = null, $idShop = null)
     {
