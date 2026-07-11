@@ -1,0 +1,24 @@
+.kpy-product-message-block {
+    font-weight: bold;
+    color: var(--product-message-block-color);
+    font-size: var(--kpy-font-size);
+    /*border-left: 4px solid var(--product-message-block-boder-color);
+    background-color: var(--product-message-block-bg);
+    padding: .5rem .75rem;
+    border-bottom-right-radius: .5rem;
+    border-top-right-radius: .5rem;*/
+}
+
+.kpy-product-availability-message {
+    --product-message-block-color: var(--kpy-color-success);
+    --product-message-block-boder-color: var(--kpy-color-secondary-dark);
+    --product-message-block-bg: var(--kpy-color-secondary-light);
+}
+
+.kpy-product-availability-message-cart {
+    --product-message-block-color: var(--kpy-color-success);
+    --product-message-block-boder-color: transparent;
+    --product-message-block-bg: transparent;
+    border: 1px solid var(--product-message-block-boder-color);
+    border-radius: .75rem;
+}
