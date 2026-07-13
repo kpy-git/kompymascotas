@@ -603,7 +603,7 @@ class AquaOrderController
                     0, 0, 0, 0, 0,
                     '', 0]);
 
-                $this->execProcedureReserva($operacion, $posicion, $producto['codigo'], $producto['cantidad'], $almacen);
+                // $this->execProcedureReserva($operacion, $posicion, $producto['codigo'], $producto['cantidad'], $almacen);
 
                 $this->execProcedureHistoria($order->getFechaPedidoHistoria(), $operacion, $posicion, $producto['codigo'], AquaConfig::ALMACEN);
 

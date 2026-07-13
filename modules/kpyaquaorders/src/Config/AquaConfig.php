@@ -4,7 +4,7 @@ namespace PrestaShop\Module\KpyAquaOrders\Config;
 
 class AquaConfig
 {
-    public const string ALMACEN = 'LASQUEMADAS';
+    public const string ALMACEN = 'TIENDA';
     public const string ALMACEN_ROTOS = 'OTROS';
     public const string ALMACEN_NEFTYS = 'NEFTYS';
 
