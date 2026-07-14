@@ -21,7 +21,10 @@
         ]
     },
     "transmitido_neftys": {
-        "id_order_state": 21
+        "id_order_state": 21,
+        "estados_asociados": [
+            21
+        ]
     },
     "en_preparacion": {
         "id_order_state": 26,

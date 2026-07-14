@@ -48,6 +48,6 @@ class AquaOrderStateWarehouse
 
     public function isSupported(int $orderStateId): bool
     {
-        return array_any($this->orderStates, static fn (array $orderState) => in_array($orderStateId, $orderState['estados_asociados']));
+        return array_any($this->orderStates, static fn (array $orderState) => in_array($orderStateId, $orderState['estados_asociados'] ?? []));
     }
 }
