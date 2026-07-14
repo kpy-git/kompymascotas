@@ -46,7 +46,8 @@ class NeftysFarmaStockRepository
 
         $aqua = DbMssql::getInstance();
         $stmt = $aqua->prepare("UPDATE DATAS03 SET EXISTENCIA=? WHERE ALMACEN='NEFTYS' AND CODIGO=?");
-        
+        $stmtGeneral = $aqua->prepare("UPDATE DATIN03 SET EXISTENCIA=(SELECT SUM(EXISTENCIA) FROM DATAS03 WHERE CODIGO=:sku) WHERE CODIGO=:sku");
+
         foreach ($stockNeftys as $stockNefty) {
             if (isset($stockNefty['pack'])) {
                 continue;
@@ -54,6 +55,9 @@ class NeftysFarmaStockRepository
             $stmt->bindValue(1, $stockNefty['stock'], \PDO::PARAM_INT);
             $stmt->bindValue(2, $stockNefty['id_product'] . '-' . $stockNefty['id_product_attribute']);
             $stmt->execute();
+
+            $stmtGeneral->bindValue(':sku', $stockNefty['id_product'] . '-' . $stockNefty['id_product_attribute']);
+            $stmtGeneral->execute();
         }
     }
 
