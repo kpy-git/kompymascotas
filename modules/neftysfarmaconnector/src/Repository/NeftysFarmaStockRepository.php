@@ -2,6 +2,7 @@
 
 namespace PrestaShop\Module\NeftysFarmaConnector\Repository;
 
+use PrestaShop\Module\KpyAquaOrders\Db\DbMssql;
 use PrestaShop\Module\NeftysFarmaConnector\Config\NeftysFarmaConfig;
 
 class NeftysFarmaStockRepository
@@ -14,7 +15,15 @@ class NeftysFarmaStockRepository
 
         \Db::getInstance()->execute("TRUNCATE TABLE " . _DB_PREFIX_ . NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE);
 
-        \Db::getInstance()->insert(NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE, $stockNeftys);
+        \Db::getInstance()->insert(NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE, array_map(
+            static function (array $product): array {
+                return [
+                    'id_product' => $product['id_product'],
+                    'id_product_attribute' => $product['id_product_attribute'],
+                    'stock' => $product['stock'],
+                ];
+            } ,$stockNeftys
+        ));
 
         \Db::getInstance()->execute(
             "UPDATE " . _DB_PREFIX_ . "stock_available sa
@@ -34,6 +43,18 @@ class NeftysFarmaStockRepository
                 SET sa.quantity = ns_total.total_stock
                 WHERE sa.id_product_attribute = 0"
         );
+
+        $aqua = DbMssql::getInstance();
+        $stmt = $aqua->prepare("UPDATE DATAS03 SET EXISTENCIA=? WHERE ALMACEN='NEFTYS' AND CODIGO=?");
+        
+        foreach ($stockNeftys as $stockNefty) {
+            if (isset($stockNefty['pack'])) {
+                continue;
+            }
+            $stmt->bindValue(1, $stockNefty['stock'], \PDO::PARAM_INT);
+            $stmt->bindValue(2, $stockNefty['id_product'] . '-' . $stockNefty['id_product_attribute']);
+            $stmt->execute();
+        }
     }
 
     public function findAllProductsByEan(): array

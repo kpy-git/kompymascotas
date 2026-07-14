@@ -59,6 +59,7 @@ class NeftysFarmaStockSynchronizer
                         'id_product' => (int)$idPack,
                         'id_product_attribute' => (int)$attrPack,
                         'stock' => (int)floor($stockNeftysFarma / (int)$pack['quantity']),
+                        'pack' => true,
                     ];
                     $this->countEanSynchronized++;
             }
