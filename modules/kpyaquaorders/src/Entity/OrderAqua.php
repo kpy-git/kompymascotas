@@ -891,7 +891,7 @@ class OrderAqua
         $GRT = array('Pedido gratuito', 'Encomenda grátis');
         $HPY = array('hipay', 'comprafacil', 'wfxcomprafacil');
         $PAY = array('Paypal', 'PayPal', 'paypal', 'ps_checkout');
-        $TPV = array('redsysoficial', 'redsys', 'bbva', 'stripe_official');
+        $TPV = array('redsysoficial', 'redsys', 'bbva', 'stripe_official', 'redsyspur');
         $TRA = array('bankwire', 'ps_wirepayment');
         $MAN = array('MANOMANO');
         $BV = ['BULEVIP'];
