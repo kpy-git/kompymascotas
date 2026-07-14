@@ -17,7 +17,7 @@ class AddressPickupAqua extends AddressAqua
 
 	public function __construct(Address $address, Customer $customer, int $id_cart, int $id_order)
 	{
-        parent::__construct($address, $customer, $id_order);
+        parent::__construct($address, $customer);
 
 		$this->id_cart = $id_cart;
 		$this->id = 'PK' . $id_order;

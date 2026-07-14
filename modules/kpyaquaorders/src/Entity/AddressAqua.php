@@ -42,11 +42,11 @@ class AddressAqua
 
     protected AddressAquaRepository $addressRepository;
 
-    public function __construct(Address $address, Customer $customer, string $id_order = '')
+    public function __construct(Address $address, Customer $customer)
     {
         $this->id = (string)$address->id;
 
-        $this->cliente = Tools::getPrefixByCustomerId($customer->id) . $id_order;
+        $this->cliente = Tools::getPrefixByCustomerId($customer->id) . $customer->id;
         if (Tools::isCanarias($address->id_country)) {
             $this->cliente = AquaConfig::CANARIAS_CUSTOMER_CODE;
         }

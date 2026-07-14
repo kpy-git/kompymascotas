@@ -18,7 +18,7 @@ class AddressAquaFactory
         return match ($carrier) {
             AquaCarrier::SEUR_PICKUP => new AddressPickupAqua($address, $customer, $order->id_cart, $order->id),
             AquaCarrier::DHL_SERVICE_POINT => new AddressDHLServicePoint($address, $customer, $order->id_cart, $order->id),
-            default => new AddressAqua($address, $customer, (string)$order->id),
+            default => new AddressAqua($address, $customer),
         };
     }
 }
