@@ -97,7 +97,7 @@ class NeftysFarmaConnector extends Module
             $neftysOrder = NeftysOrderBuilder::from($order, $productsWithoutPacks);
 
             $uploader = new NeftysFarmaOrderUploader();
-            $uploader->uploadNeftysOrder($neftysOrder);
+            $uploader->uploadNeftysOrder($neftysOrder, false);
 
             $order->setCurrentStateWithDate((int)Configuration::get(NeftysFarmaConfig::NEFTYS_OS_TRANSMITTED));
 
