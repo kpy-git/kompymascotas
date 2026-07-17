@@ -8,7 +8,7 @@ use PrestaShop\Module\NeftysFarmaConnector\Exception\NeftysFarmaException;
 
 class FTPManager
 {
-    public const string NEFTYS_ORDERS_PATH = 'Entrada/';
+    public const string NEFTYS_ORDERS_PATH = '/';
     public const string NEFTYS_STOCK_FILE = 'Stock/stock.csv';
 
     private Connection $connection;
