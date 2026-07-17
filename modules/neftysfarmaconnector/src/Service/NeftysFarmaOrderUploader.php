@@ -19,7 +19,7 @@ class NeftysFarmaOrderUploader
         $fileWriter = new FileWriter();
         $fileWriter->writeOrder($order, $fileOrder);
 
-        // FTPManager::getNeftysFarmaConnection()->uploadOrderFile($fileOrder);
+        FTPManager::getNeftysFarmaConnection()->uploadOrderFile($fileOrder);
 
         (new NeftysFarmaOrderRepository())->updateSynchronizationDate($order);
 
