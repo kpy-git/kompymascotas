@@ -132,7 +132,7 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
     {
         $messageFormatter = new ProductAvailabilityMessageFormatter();
 
-        $start = (int)strtotime('H') < 12 ? time() : $this->workingDaysManager->getNextWorkingDayTo(time());
+        $start = (int)date('H') < 12 ? time() : $this->workingDaysManager->getNextWorkingDayTo(time());
 
         $start = $this->workingDaysManager->getNextWorkingDayTo($start);
         $final = $this->workingDaysManager->getNextWorkingDayTo($start);
