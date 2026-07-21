@@ -71,9 +71,13 @@ class KpySpecialPrices extends Module
     public function hookDisplayProductPriceBlock(array $params): string
     {
         if ($this->context->controller instanceof ProductControllerCore && $params['type'] === 'old_price') {
-            return $this->fetch('module:' . $this->name . '/views/templates/hook/displayProductPriceBlock.tpl', [
-                'module_img' => $this->getPathUri() . 'views/img/',
+            $this->context->smarty->assign([
+                $this->name => [
+                    'module_img' => $this->getPathUri() . 'views/img/',
+                ]
             ]);
+
+            return $this->fetch('module:' . $this->name . '/views/templates/hook/displayProductPriceBlock.tpl');
         }
 
         return '';
@@ -201,10 +205,12 @@ class KpySpecialPrices extends Module
             return '';
         }
 
-        return $this->fetch('module:' . $this->name . '/views/templates/hook/displayKpyProductAdditionalInfo.tpl', [
+        $this->smarty->assign([
             'date_end' => $this->getDateEndSpecialPrice($product->id_product, $product->id_product_attribute),
             'offer_img' => $this->getPathUri() . 'views/img/special-price-offer.svg',
         ]);
+
+        return $this->fetch('module:' . $this->name . '/views/templates/hook/displayKpyProductAdditionalInfo.tpl');
     }
 
     private function getDateEndSpecialPrice(int $productId, int $productAttributeId): string

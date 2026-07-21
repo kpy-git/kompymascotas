@@ -3,7 +3,7 @@
         {l s='Regular price: %price% €' sprintf=['%price%' => $product.kpy_special_price_regular_price] d='Modules.Kpyspecialprices.Shop'}
     </div>
     <div class="kpy-special-price-tag">
-        <img src="{$module_img}special-price.svg" alt="special-price-tag">
+        <img src="{$kpyspecialprices.module_img}special-price.svg" alt="special-price-tag">
         {l s='Special price' d='Modules.Kpyspecialprices.Shop'}
     </div>
     {if $product.kpy_special_price_days_left <= 7}
