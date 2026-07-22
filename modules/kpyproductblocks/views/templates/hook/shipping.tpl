@@ -1,4 +1,4 @@
 <div class="shipping">
-    <img src="{$img_path}" alt="shipping">
-    <div class="shipping-tag">{$tag}</div>
+    <img src="{$kpyproductblocks.img_path}" alt="shipping">
+    <div class="shipping-tag">{$kpyproductblocks.tag}</div>
 </div>

@@ -112,16 +112,23 @@ class KpyProductBlocks extends Module implements WidgetInterface
         $productWanted = (int)Tools::getValue('quantity_wanted', 1);
 
         if (round((float)$product['price'] * $productWanted, 2) < _KPY_LIMIT_SHIPPING_FREE_) {
-            return $this->fetch('module:' . $this->name . '/views/templates/hook/shipping.tpl', [
-                'img_path' => '/modules/' . $this->name . '/views/img/shipping.svg',
-                'tag' => $this->trans('Shipping: %price%€', ['%price%' => 4.99], 'Modules.Kpyproductblocks.Shop'),
+            $this->smarty->assign([
+                $this->name => [
+                    'img_path' => '/modules/' . $this->name . '/views/img/shipping.svg',
+                    'tag' => $this->trans('Shipping: %price%€', ['%price%' => 4.99], 'Modules.Kpyproductblocks.Shop'),
+                ]
             ]);
+
+            return $this->fetch('module:' . $this->name . '/views/templates/hook/shipping.tpl');
         }
 
-        return $this->fetch('module:' . $this->name . '/views/templates/hook/shipping.tpl', [
-            'img_path' => '/modules/' . $this->name . '/views/img/shipping_free.svg',
-            'tag' => $this->trans('Shipping: free!', [], 'Modules.Kpyproductblocks.Shop')
-        ]);
+        $this->smarty->assign([
+            $this->name => [
+                'img_path' => '/modules/' . $this->name . '/views/img/shipping_free.svg',
+                'tag' => $this->trans('Shipping: free!', [], 'Modules.Kpyproductblocks.Shop')
+        ]]);
+
+        return $this->fetch('module:' . $this->name . '/views/templates/hook/shipping.tpl');
     }
 
     public function renderUnitPrice(array $configuration): string
