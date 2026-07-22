@@ -109,7 +109,7 @@ class KpyAquaOrders extends Module
                 (int)$params['id_order'],
                 "Ha ocurrido un error en la base de datos al importar el pedido {$params['id_order']}\n\nLog: " . $filename,
                 $exception->getMessage(),
-                ['programacion@piensoymascotas.com'],
+                ['desarrollo@kompymascotas.com'],
                 [
                     'content' => file_get_contents($filePath),
                     'name' => $filename,
