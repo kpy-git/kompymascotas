@@ -10,7 +10,7 @@ enum AquaCarrier: int
     case SEUR_INT = 187;
     case SEUR_PICKUP = 183;
 
-    case MRW = 2;
+    case MRW = 6;
 
     case DHL = 188;
     case DHL_SERVICE_POINT = 270;
@@ -26,7 +26,7 @@ enum AquaCarrier: int
             238, 209 => self::SEUR, // SEUR PT, SEUR AMAZON PRIME
             221 => self::SEUR_INT, // SEUR IT
             259 => self::SEUR_PICKUP, // SEUR PICKUP
-            256 => self::MRW, // MRW PT
+            2 => self::MRW, // MRW PT
             255, 262 => self::DHL, // DHL PT, DHL IT
             271, 272 => self::DHL_SERVICE_POINT, // DHL SERVICE POINT
             251, 5 => self::GLS, // GLS ES
