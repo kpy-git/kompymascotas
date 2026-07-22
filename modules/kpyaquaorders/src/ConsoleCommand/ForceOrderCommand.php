@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\KpyAquaOrders\ConsoleCommand;
 
 use PrestaShop\Module\KpyAquaOrders\CommandDispatcher\CommandDispatcher;
+use PrestaShop\Module\KpyAquaOrders\Config\AquaOrderState;
 use PrestaShop\Module\KpyAquaOrders\Controller\AquaOrderController;
 use PrestaShop\Module\KpyAquaOrders\Db\DbMssql;
 use PrestaShop\Module\KpyAquaOrders\Exception\KpyAquaOrderException;
@@ -14,6 +15,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(name: 'kpyaquaorders:force-order', description: 'Fuerza la actualización de un pedido dado')]
@@ -24,14 +26,24 @@ class ForceOrderCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('Pedido', InputArgument::REQUIRED);
+            ->addArgument('Pedido', InputArgument::REQUIRED)
+            ->addOption(
+                'update',
+                null,
+                InputOption::VALUE_OPTIONAL, 
+                "Simula el estado AQUA - Actualizar pedido completo",
+                false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $order = new \Order((int)$input->getArgument('Pedido'));
 
-        if (!AquaOrderStateWarehouse::getInstance()->isSupported($order->current_state)) {
+        if ($input->getOption('update')) {
+            $orderStateWarehouse = new AquaOrderStateWarehouse();
+            $order->current_state = $orderStateWarehouse->getOrderStateId(AquaOrderState::UPDATE_ORDER);
+
+        } else if (!AquaOrderStateWarehouse::getInstance()->isSupported($order->current_state)) {
             $output->writeln('El estado del pedido no está soportado por ningún comando');
             return Command::SUCCESS;
         }
