@@ -30,9 +30,8 @@ class ForceOrderCommand extends Command
             ->addOption(
                 'update',
                 null,
-                InputOption::VALUE_OPTIONAL, 
-                "Simula el estado AQUA - Actualizar pedido completo",
-                false);
+                InputOption::VALUE_NONE,
+                "Simula el estado AQUA - Actualizar pedido completo");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
