@@ -99,7 +99,13 @@ class NeftysFarmaConnector extends Module
             $uploader = new NeftysFarmaOrderUploader();
             $uploader->uploadNeftysOrder($neftysOrder, false);
 
-            $order->setCurrentStateWithDate((int)Configuration::get(NeftysFarmaConfig::NEFTYS_OS_TRANSMITTED));
+            // todo - en lugar de usar el hook para informar del pedido, meterlo en una cola
+            // sin esto el estado 'Transmitido a Neftys Farma' lo meterá antes del estado que venga del hook
+            // la llamada al hook se hace en OrderHistory antes del guardado definitivo en la base de datos
+            $order->setCurrentStateWithDate(
+                (int)Configuration::get(NeftysFarmaConfig::NEFTYS_OS_TRANSMITTED),
+                date('Y-m-d H:i:s', strtotime('+2 second'))
+            );
 
         } catch (NeftysFarmaException $ex) {
             NeftysFarmaLogger::log($ex->getMessage());
