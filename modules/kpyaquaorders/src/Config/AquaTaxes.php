@@ -5,8 +5,8 @@ namespace PrestaShop\Module\KpyAquaOrders\Config;
 class AquaTaxes
 {
     private int $iva1 = 4;
-    private int $iva3 = 21;
-    private int $iva2 = 10;
+    private int $iva2 = 21;
+    private int $iva3 = 10;
 
     private float $recargo1 = 0.5;
     private float $recargo2 = 5.2;
