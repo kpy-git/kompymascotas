@@ -69,7 +69,7 @@ readonly class AddressAquaRepository
     public function existsAddress(string $addressId, string $customerId): bool
     {
         return (int)$this->aqua->getValue(
-                "SELECT COUNT(*) FROM DATAE01 WITH(NOLOCK) WHERE DELEGACION='{$addressId}' AND CODIGO='{$customerId}'"
+                "SELECT COUNT(*) FROM DATAE03 WITH(NOLOCK) WHERE DELEGACION='{$addressId}' AND CODIGO='{$customerId}'"
             ) > 0;
     }
 
