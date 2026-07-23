@@ -127,30 +127,30 @@
         </div>
       </section>
 
-      {*<section id="promociones" class="section pt-0">
+      <section id="promociones" class="section pt-0">
         <div class="container">
           <div class="promo-wrapper">
             <div class="promo-banner main-promo">
               <div class="promo-content">
                 <span class="badge-promo">Oferta Marzo</span>
-                <h3>+3KG GRATIS</h3>
-                <p>En formatos seleccionados. Porque queremos que lo pruebes de verdad, sin prisa.</p>
+                <h3>-10% SPECIAL PRICE EN TODA LA MARCA</h3>
+                <p>Promoción válida hasta el el 31 de Agosto de 2026</p>
                 <a href="{$boske_category_url}" class="btn btn-primary">Conseguir mi oferta</a>
               </div>
               <img src="{$module_img}boske-regalo-comp.webp" class="promo-img" alt="Regalo">
             </div>
 
-            <div class="promo-banner secondary-promo">
+            {*<div class="promo-banner secondary-promo">
               <div class="promo-gift-icon">
                 <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M2,19H9V10H2Zm9,0h7V10H11ZM13,6a3,3,0,1,0-3-3A3,3,0,1,0,7,6H1V9H9V6h2V9h8V6ZM8.5,4.5H7A1.5,1.5,0,1,1,8.5,3Zm3-1.5A1.5,1.5,0,1,1,13,4.5H11.5Z"></path> </g> </g></svg>
               </div>
               <h3>Regalo Sorpresa</h3>
               <p>En formatos seleccionados</p>
               <small>Ver condiciones <i class="material-icons">chevron_right</i></small>
-            </div>
+            </div>*}
           </div>
         </div>
-      </section>*}
+      </section>
 
       <section id="gamas" class="section products-section">
         <div class="container">
