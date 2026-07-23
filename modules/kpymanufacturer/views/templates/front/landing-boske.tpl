@@ -132,7 +132,7 @@
           <div class="promo-wrapper">
             <div class="promo-banner main-promo">
               <div class="promo-content">
-                <span class="badge-promo">Oferta Marzo</span>
+                <span class="badge-promo">Oferta de verano</span>
                 <h3>-10% SPECIAL PRICE EN TODA LA MARCA</h3>
                 <p>Promoción válida hasta el el 31 de Agosto de 2026</p>
                 <a href="{$boske_category_url}" class="btn btn-primary">Conseguir mi oferta</a>
