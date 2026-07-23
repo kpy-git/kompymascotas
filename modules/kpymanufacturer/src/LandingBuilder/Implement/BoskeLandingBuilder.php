@@ -22,7 +22,7 @@ class BoskeLandingBuilder extends AbstractLandingBuilder
     {
         return [
             'module_img' => $this->module->getPathUri() . 'views/img/boske/',
-            'boske_category_url' => $this->context->link->getCategoryLink((new Category(Manufacturer::getCategoryRelatedByManufacturer(78)))),
+            'boske_category_url' => $this->context->link->getCategoryLink((new Category(Manufacturer::getCategoryRelatedByManufacturer(178)))),
             'boske_category_low_grain' => $this->context->link->getCategoryLink((new Category(2199))),
             'boske_category_low_grain_cat' => $this->context->link->getCategoryLink((new Category(5826))),
             'boske_category_grain_free' => $this->context->link->getCategoryLink((new Category(5527))),
