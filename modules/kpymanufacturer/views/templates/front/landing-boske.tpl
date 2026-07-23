@@ -127,7 +127,7 @@
         </div>
       </section>
 
-      <section id="promociones" class="section pt-0">
+      {*<section id="promociones" class="section pt-0">
         <div class="container">
           <div class="promo-wrapper">
             <div class="promo-banner main-promo">
@@ -150,7 +150,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section>*}
 
       <section id="gamas" class="section products-section">
         <div class="container">
