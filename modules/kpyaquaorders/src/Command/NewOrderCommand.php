@@ -27,7 +27,7 @@ class NewOrderCommand extends MacroCommand
      */
     public function isSupported(Order $order, \Context $context): bool
     {
-        $isCRM = in_array($order->module, ['cashondelivery', 'codfee', 'cashondeliveryplus']);
+        $isCRM = $order->module === 'kpycashondelivery';
 
         if (parent::isSupported($order, $context)
             // los pedidos contra reembolso se ponen en 'Preparación en curso' al hacer un pedido nuevo
