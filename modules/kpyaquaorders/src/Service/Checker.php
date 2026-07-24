@@ -73,11 +73,11 @@ class Checker
             return;
         }
 
-        $receivers = ["administracion@piensoymascotas.com", "programacion@piensoymascotas.com",];
+        $receivers = ["administracion@kompymascotas.com", "desarrollo@kompymascotas.com",];
 
         if (in_array($customerId, [4, 9316, 83052, 30340, 32502])) {
             // los clientes de prueba no mandará emails a administración
-            $receivers = ["programacion@piensoymascotas.com"];
+            $receivers = ["desarrollo@kompymascotas.com.com"];
         }
 
         $msg = 'El pedido <a href="https://atc.piensoymascotas.com/order/' . $orderId . '"> ' . $orderId . '</a> ha sufrido los siguientes descuadres: <br/>';
@@ -94,7 +94,7 @@ class Checker
             'generic',
             'Descuadre pedido AQUA: ' . $orderId,
             array(
-                '{email}' => 'no-reply@piensoymascotas.com',
+                '{email}' => 'no-reply@kompymascotas.com',
                 '{message}' => $msg,
                 '{order_name}' => $orderId,
                 '{attached_file}' => '',
