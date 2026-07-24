@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\NeftysFarmaConnector\Command;
 
 use PrestaShop\Module\NeftysFarmaConnector\Builder\NeftysOrderBuilder;
+use PrestaShop\Module\NeftysFarmaConnector\Config\NeftysFarmaConfig;
 use PrestaShop\Module\NeftysFarmaConnector\Entity\NeftysFarmaOrder;
 use PrestaShop\Module\NeftysFarmaConnector\Exception\NeftysFarmaException;
 use PrestaShop\Module\NeftysFarmaConnector\Logger\NeftysFarmaLogger;
@@ -57,6 +58,11 @@ class ForceUpdateOrderCommand extends Command
 
             $uploader = new NeftysFarmaOrderUploader();
             $uploader->uploadNeftysOrder($neftysOrder, false);
+
+            $order->setCurrentStateWithDate(
+                (int)\Configuration::get(NeftysFarmaConfig::NEFTYS_OS_TRANSMITTED),
+                date('Y-m-d H:i:s', strtotime('+2 second'))
+            );
 
             return Command::SUCCESS;
 
