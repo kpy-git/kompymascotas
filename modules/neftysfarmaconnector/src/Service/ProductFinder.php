@@ -32,7 +32,7 @@ class ProductFinder
 
             $product = new NeftysProduct($sku);
             $product
-                ->setEan($productOrder['product_ean13'])
+                ->setEan(\Product::getEanBySku($sku))
                 ->setQuantity((int)$productOrder['product_quantity']);
 
             $products[] = $product;
