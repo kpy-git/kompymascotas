@@ -147,11 +147,13 @@ class KpyAccountVerify extends Module implements WidgetInterface
          * tropecientas veces solo intentando acceder a la URL
          */
 
-        return $this->fetch('module:' . $this->name . '/views/templates/hook/displayCustomerAccountTop.tpl', [
+        $this->smarty->assign([
             'resend_link' => $this->context->link->getModuleLink($this->name, 'resend', [
                 't' => $this->generateTokenForSignResendUrl(),
-            ]),
+            ])
         ]);
+
+        return $this->fetch('module:' . $this->name . '/views/templates/hook/displayCustomerAccountTop.tpl');
     }
 
     /**
@@ -204,12 +206,14 @@ class KpyAccountVerify extends Module implements WidgetInterface
 
     public function renderWidget($hookName, array $configuration): string
     {
-        return $this->fetch('module:' . $this->name . '/views/templates/widget/accountVerifyMessage.tpl', [
+        $this->smarty->assign([
             'message' => $configuration['message'] ?? '',
             'resend_link' => $this->context->link->getModuleLink($this->name, 'resend', [
                 't' => $this->generateTokenForSignResendUrl(),
             ]),
         ]);
+
+        return $this->fetch('module:' . $this->name . '/views/templates/widget/accountVerifyMessage.tpl');
     }
 
     public function getWidgetVariables($hookName, array $configuration)
