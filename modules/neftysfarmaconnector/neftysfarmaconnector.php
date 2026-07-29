@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PrestaShop\Module\NeftysFarmaConnector\Builder\NeftysOrderBuilder;
+use PrestaShop\Module\NeftysFarmaConnector\Guard\OrderGuard;
 use PrestaShop\Module\NeftysFarmaConnector\Logger\NeftysFarmaLogger;
 use PrestaShop\Module\NeftysFarmaConnector\Entity\NeftysFarmaOrder;
 use PrestaShop\Module\NeftysFarmaConnector\Exception\NeftysFarmaException;
@@ -75,11 +76,9 @@ class NeftysFarmaConnector extends Module
         return true;
     }
 
-    public function hookActionOrderStatusPostUpdate(array $params): void
+    public function hookActionKpyOrderWarehouseSelected(array $params): void
     {
-        $newOrderStatus = (int)$params['newOrderStatus']->id;
-
-        if (!in_array($newOrderStatus, $this->getOrderStates())) {
+        if ($params['warehouse'] !== 'NEFTYS') {
             return;
         }
 
@@ -88,7 +87,7 @@ class NeftysFarmaConnector extends Module
 
         $productsWithoutPacks = $productFinder->getProductsOrderWithoutPacks($order);
 
-        if (!NeftysFarmaOrder::isNeftysFarmaOrder($productsWithoutPacks)) {
+        if (!OrderGuard::areAllProductsSupported($productsWithoutPacks)) {
             NeftysFarmaLogger::logOrder($order, $productsWithoutPacks);
             return;
         }
@@ -99,12 +98,9 @@ class NeftysFarmaConnector extends Module
             $uploader = new NeftysFarmaOrderUploader();
             $uploader->uploadNeftysOrder($neftysOrder, false);
 
-            // todo - en lugar de usar el hook para informar del pedido, meterlo en una cola
-            // sin esto el estado 'Transmitido a Neftys Farma' lo meterá antes del estado que venga del hook
-            // la llamada al hook se hace en OrderHistory antes del guardado definitivo en la base de datos
             $order->setCurrentStateWithDate(
                 (int)Configuration::get(NeftysFarmaConfig::NEFTYS_OS_TRANSMITTED),
-                date('Y-m-d H:i:s', strtotime('+2 second'))
+                date('Y-m-d H:i:s')
             );
 
         } catch (NeftysFarmaException $ex) {
@@ -112,10 +108,4 @@ class NeftysFarmaConnector extends Module
         }
 
     }
-
-    private function getOrderStates(): array
-    {
-        return json_decode(Configuration::get(NeftysFarmaConfig::ORDER_STATES), true);
-    }
-
 }

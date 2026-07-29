@@ -1,0 +1,4 @@
+services:
+  PrestaShop\Module\KpyOrderDispatcher\ConsoleCommand\DispatchOrder:
+    tags:
+      - {name: 'console.command'}

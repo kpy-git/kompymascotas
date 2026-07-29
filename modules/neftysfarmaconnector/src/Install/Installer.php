@@ -67,7 +67,7 @@ class Installer
     private function registerHooks(Module $module): bool
     {
         $hooks = [
-            'actionOrderStatusPostUpdate'
+            'actionKpyOrderWarehouseSelected'
         ];
 
         return $module->registerHook($hooks);
