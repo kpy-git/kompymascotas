@@ -6,6 +6,7 @@ use PrestaShop\Module\NeftysFarmaConnector\Builder\NeftysOrderBuilder;
 use PrestaShop\Module\NeftysFarmaConnector\Config\NeftysFarmaConfig;
 use PrestaShop\Module\NeftysFarmaConnector\Entity\NeftysFarmaOrder;
 use PrestaShop\Module\NeftysFarmaConnector\Exception\NeftysFarmaException;
+use PrestaShop\Module\NeftysFarmaConnector\Guard\OrderGuard;
 use PrestaShop\Module\NeftysFarmaConnector\Logger\NeftysFarmaLogger;
 use PrestaShop\Module\NeftysFarmaConnector\Service\NeftysFarmaOrderUploader;
 use PrestaShop\Module\NeftysFarmaConnector\Service\ProductFinder;
@@ -48,7 +49,7 @@ class ForceUpdateOrderCommand extends Command
 
             $productsWithoutPacks = (new ProductFinder())->getProductsOrderWithoutPacks($order);
 
-            if (!NeftysFarmaOrder::isNeftysFarmaOrder($productsWithoutPacks)) {
+            if (!OrderGuard::areAllProductsSupported($productsWithoutPacks)) {
                 $output->writeln('El pedido no es procesable por Neftys Farma');
                 NeftysFarmaLogger::logOrder($order, $productsWithoutPacks);
                 return Command::SUCCESS;
@@ -61,7 +62,7 @@ class ForceUpdateOrderCommand extends Command
 
             $order->setCurrentStateWithDate(
                 (int)\Configuration::get(NeftysFarmaConfig::NEFTYS_OS_TRANSMITTED),
-                date('Y-m-d H:i:s', strtotime('+2 second'))
+                date('Y-m-d H:i:s')
             );
 
             return Command::SUCCESS;

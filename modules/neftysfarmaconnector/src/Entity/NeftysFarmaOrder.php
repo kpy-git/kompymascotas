@@ -95,20 +95,4 @@ class NeftysFarmaOrder
         ];
     }
 
-    public static function isNeftysFarmaOrder(array $products): bool
-    {
-        /** @var NeftysProduct $product */
-        foreach ($products as $product) {
-            $sql = "SELECT COUNT(*) 
-                FROM " . _DB_PREFIX_ . NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE . " 
-                WHERE id_product={$product->getProductId()} 
-                    and id_product_attribute={$product->getProductAttributeId()}";
-
-            if ((int)\Db::getInstance()->getValue($sql) === 0) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }
