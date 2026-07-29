@@ -1,0 +1,10 @@
+services:
+  PrestaShop\Module\KpyProductSync\ConsoleCommand\TestConnectionCommand:
+    tags:
+      - {name: 'console.command'}
+  PrestaShop\Module\KpyProductSync\ConsoleCommand\SyncProductCommand:
+    tags:
+      - { name: 'console.command' }
+  PrestaShop\Module\KpyProductSync\ConsoleCommand\SyncAllProductCommand:
+    tags:
+      - { name: 'console.command' }

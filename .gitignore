@@ -101,6 +101,9 @@
 !/modules/kpyproductreviews/
 !/modules/kpyproductreviews/**
 
+!/modules/kpyproductsync/
+!/modules/kpyproductsync/**
+
 !/modules/kpyspecialprices/
 !/modules/kpyspecialprices/**
 
