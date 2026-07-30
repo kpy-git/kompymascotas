@@ -86,7 +86,7 @@ class ProductAvailabilityMessagesHandler
 
         // groupB
         // si es lunes antes de la 10 se puede hacer el pedido hoy, si no el siguiente lunes
-        $start = (int)date('N') === 1 && (int)date('H') < 10 ? time() : strtotime('next Monday');
+        $start = (int)date('N') === 1 && (int)date('H') < 11 ? time() : strtotime('next Monday');
 
         if (!$this->workingDaysManager->isWorkingDay($start)) {
             $start = $this->workingDaysManager->getNextWorkingDayTo($start);
