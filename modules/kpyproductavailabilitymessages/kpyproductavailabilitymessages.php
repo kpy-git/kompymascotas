@@ -93,16 +93,16 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
     {
         /** @var \PrestaShop\PrestaShop\Adapter\Presenter\Cart\CartProductLazyArray $product */
         $product = $params['product'];
-        $productAvailabilityMessageHandler = new ProductAvailabilityMessagesHandler();
+        $productAvailabilityMessageHandler = new ProductAvailabilityMessagesHandler($this->workingDaysManager);
 
         // en la clase CartProductLazyArray debería cargar correctamente el mensaje, pero no lo hace
         // getCombinationSpecificData sólo obtiene el nombre del atributo (manda webs)
         $availabilityMessage = $product['stock_quantity'] >= $product['quantity']
-            ? $productAvailabilityMessageHandler->getProductMessageInStock($product['id_product'], $product['id_product_attribute'], $this->context->language->id)
-            : $productAvailabilityMessageHandler->getProductMessageOutStock($product['id_product'], $product['id_product_attribute'], $this->context->language->id);
+            ? $productAvailabilityMessageHandler->getMessageInStock()
+            : $productAvailabilityMessageHandler->getMessageOutStock($product['id_manufacturer']);
 
         $this->context->smarty->assign([
-            'availability_message' => $product['stock_quantity'] >= $product['quantity'] ? $this->getMessageInStock() : $this->getMessageOutStock(),
+            'availability_message' => $availabilityMessage,
         ]);
 
         return $this->fetch('module:' . $this->name . '/views/templates/hook/cartExtraProductActions.tpl');
@@ -120,28 +120,14 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
     {
         /** @var \PrestaShop\PrestaShop\Adapter\Presenter\Product\ProductLazyArray $product */
         $product = $configuration['product'];
+        $productAvailabilityMessageHandler = new ProductAvailabilityMessagesHandler($this->workingDaysManager);
 
         return [
             'kpyproductavailabilitymessage' => $product->quantity >= $product->cart_quantity + $product->quantity_wanted
-                ? $this->getMessageInStock()
-                : $this->getMessageOutStock(),
+                ? $productAvailabilityMessageHandler->getMessageInStock()
+                : $productAvailabilityMessageHandler->getMessageOutStock($product->id_manufacturer),
         ];
     }
 
-    public function getMessageInStock(): string
-    {
-        $messageFormatter = new ProductAvailabilityMessageFormatter();
 
-        $start = (int)date('H') < 12 ? time() : $this->workingDaysManager->getNextWorkingDayTo(time());
-
-        $start = $this->workingDaysManager->getNextWorkingDayTo($start);
-        $final = $this->workingDaysManager->getNextWorkingDayTo($start);
-
-        return $messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
-    }
-
-    public function getMessageOutStock(): string
-    {
-        return 'Disponible próximamente';
-    }
 }

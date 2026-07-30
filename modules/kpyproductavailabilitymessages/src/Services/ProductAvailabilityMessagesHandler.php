@@ -8,6 +8,15 @@ use Db;
 
 class ProductAvailabilityMessagesHandler
 {
+    private ProductAvailabilityMessageFormatter $messageFormatter;
+
+    public function __construct(
+        private readonly WorkingDaysManager $workingDaysManager
+    )
+    {
+        $this->messageFormatter = new ProductAvailabilityMessageFormatter();
+    }
+
     public function getProductMessageInStock(int $productId, int $productAttributeId, int $idLang): string
     {
         if ($productAttributeId) {
@@ -40,5 +49,54 @@ class ProductAvailabilityMessagesHandler
             WHERE id_product = $productId 
                 AND id_lang = $idLang",
         ) ?: '';
+    }
+
+    public function getMessageInStock(): string
+    {
+        $start = (int)date('H') < 12 ? time() : $this->workingDaysManager->getNextWorkingDayTo(time());
+
+        $start = $this->workingDaysManager->getNextWorkingDayTo($start);
+        $final = $this->workingDaysManager->getNextWorkingDayTo($start);
+
+        return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
+    }
+
+    public function getMessageOutStock(int $manufacturerId): string
+    {
+        $groupA = [3, 77, 78, 75,]; // RC, Dingo
+        $groupB = [93, 173,]; // Natural Greatness, Alpha Spirit
+
+        if (!in_array($manufacturerId, array_merge($groupA, $groupB), true)) {
+            return 'Disponible próximamente';
+        }
+
+        $start = 0;
+        if (in_array($manufacturerId, $groupA, true)) {
+            // si es antes de las 11 se puede hacer el pedido el mismo día, si no el siguiente laborable
+            $start = $this->workingDaysManager->isWorkingDay(time()) && (int)date('H') < 11
+                ? time()
+                : $this->workingDaysManager->getNextWorkingDayTo(time());
+
+            // + 2 días en venir la mercancía + 1 día de envío
+            $start = $this->workingDaysManager->addWorkingDaysToTimestamp($start, 3);
+            $final = $this->workingDaysManager->getNextWorkingDayTo($start);
+
+            return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
+        }
+
+        // groupB
+        // si es lunes antes de la 10 se puede hacer el pedido hoy, si no el siguiente lunes
+        $start = (int)date('N') === 1 && (int)date('H') < 10 ? time() : strtotime('next Monday');
+
+        if (!$this->workingDaysManager->isWorkingDay($start)) {
+            $start = $this->workingDaysManager->getNextWorkingDayTo($start);
+        }
+
+        // + 1 día en venir la mercancía + 1 día de envío
+        $start = $this->workingDaysManager->addWorkingDaysToTimestamp($start, 2);
+        $final = $this->workingDaysManager->getNextWorkingDayTo($start);
+
+        return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
+
     }
 }
