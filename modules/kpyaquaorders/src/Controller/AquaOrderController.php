@@ -437,9 +437,7 @@ class AquaOrderController
         }
 
         $usuario = AquaConfig::USUARIO;
-        $almacen = $order->getCarrier() !== AquaCarrier::CARRIER_SACOS_ROTOS
-            ? AquaConfig::ALMACEN
-            : AquaConfig::ALMACEN_ROTOS;
+        $almacen = $order->getAlmacen();
 
         $precisionTotales = AquaConfig::PRECISION_TOTALES;
         $precisionLinea = AquaConfig::PRECISION_LINEA;
@@ -605,7 +603,7 @@ class AquaOrderController
 
                 // $this->execProcedureReserva($operacion, $posicion, $producto['codigo'], $producto['cantidad'], $almacen);
 
-                $this->execProcedureHistoria($order->getFechaPedidoHistoria(), $operacion, $posicion, $producto['codigo'], AquaConfig::ALMACEN);
+                $this->execProcedureHistoria($order->getFechaPedidoHistoria(), $operacion, $posicion, $producto['codigo'], $almacen);
 
                 $this->execProcedureIncorporados($producto['cantidad'], $operacion, $posicion);
             }
@@ -649,7 +647,7 @@ class AquaOrderController
         );
     }
 
-    public function setProductsOrderAsPendingSync(int $idOrder): void
+    public function setProductsOrderAsPendingSync(int $idOrder, string $almacen): void
     {
         $this->aqua
             ->prepare(
@@ -665,7 +663,7 @@ class AquaOrderController
                       AND OP.TIPOOPER = 'C'
                       AND OP.CENTRO = ?")
             ->execute([
-                $idOrder, AquaConfig::ALMACEN
+                $idOrder, $almacen
             ]);
     }
 

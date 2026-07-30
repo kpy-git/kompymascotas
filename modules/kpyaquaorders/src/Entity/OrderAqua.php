@@ -1157,4 +1157,11 @@ class OrderAqua
     {
         $this->observaciones = $observaciones;
     }
+
+    public function getAlmacen(): string
+    {
+        return \Db::getInstance()->getValue(
+            "SELECT warehouse FROM " . _DB_PREFIX_ . "kpy_order_warehouse WHERE id_order = " . $this->id_order,
+        ) ?: 'TIENDA';
+    }
 }
