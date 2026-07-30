@@ -14,15 +14,15 @@ class OrderDispatcher
             default => 'TIENDA',
         };
 
-        \Hook::exec('actionKpyOrderWarehouseSelected', [
-            'id_order' => $id_order,
-            'warehouse' => $warehouse
-        ]);
-
         \Db::getInstance()->delete('kpy_orders_pending_dispatch', 'id_order = ' . $id_order);
         \Db::getInstance()->insert('kpy_order_warehouse', [
             'id_order' => $id_order,
             'warehouse' => $warehouse,
+        ]);
+
+        \Hook::exec('actionKpyOrderWarehouseSelected', [
+            'id_order' => $id_order,
+            'warehouse' => $warehouse
         ]);
     }
 }
