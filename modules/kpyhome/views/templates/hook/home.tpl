@@ -12,7 +12,7 @@
 
     {include file='module:kpyhome/views/templates/hook/partials/products.tpl'}
 
-    {include file='module:kpyhome/views/templates/hook/partials/social.tpl'}
+    {*{include file='module:kpyhome/views/templates/hook/partials/social.tpl'}*}
 
     {include file='module:kpyhome/views/templates/hook/partials/friction-reduction.tpl'}
 
