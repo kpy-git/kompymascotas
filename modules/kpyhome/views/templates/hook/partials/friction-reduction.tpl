@@ -41,8 +41,8 @@
             {l s='WhatsApp, phone, and email. We respond within two hours, Monday through Friday (9 a.m. to 7 p.m.).' d='Modules.Kpyhome.Shop'}
         </p>
         <p style="margin-top: 10px; font-weight: 600;">
-          📞 650 018 019<br>
-          📱 WhatsApp: 650 018 019
+          <a href="tel:650018019">📞 650 018 019</a><br \>
+          <a href="https://wa.me/34650018019">📱 WhatsApp: 650 018 019</a>
         </p>
       </div>
     </div>
