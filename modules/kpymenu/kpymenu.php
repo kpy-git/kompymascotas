@@ -166,10 +166,19 @@ class KpyMenu extends Module implements WidgetInterface
 
     private function getChildrenCategories(int $idCategory, int $nleft, int $nright, int $depth, ?int $max = null): array
     {
+
+        $parentCategory = new Category($idCategory);
+        if ($parentCategory->id_twin_category) {
+            $parentCategory = new Category($parentCategory->id_twin_category);
+            $nleft = $parentCategory->nleft;
+            $nright = $parentCategory->nright;
+            $depth = $parentCategory->level_depth + 1;
+        }
+
         $children = [];
 
         $results = Db::getInstance()->executeS(
-            "select c.id_category, cl.name, cl.link_rewrite, c.nleft, c.nright, c.level_depth
+            "select c.id_category, cl.name, cl.link_rewrite, c.nleft, c.nright, c.level_depth, ifnull(c.id_twin_category, 0) as `twin`
             from " . _DB_PREFIX_ . "category c
             inner join " . _DB_PREFIX_ . "category_lang cl
                 on cl.id_category = c.id_category
@@ -181,10 +190,11 @@ class KpyMenu extends Module implements WidgetInterface
         );
 
         foreach ($results as $category) {
+            $categoryObject = new Category($category['twin'] ?: $category['id_category']);
             $children[] = [
                 'id' => (int)$category['id_category'],
                 'name' => $category['name'],
-                'link' => $this->context->link->getCategoryLink((new Category((int)$category['id_category']))),
+                'link' => $this->context->link->getCategoryLink($categoryObject),
                 'nleft' => (int)$category['nleft'],
                 'nright' => (int)$category['nright'],
                 'depth' => (int)$category['level_depth']
@@ -196,7 +206,7 @@ class KpyMenu extends Module implements WidgetInterface
             $children[] = [
                 'id' => 0,
                 'name' => 'Ver todo',
-                'link' => $this->context->link->getCategoryLink((new Category($idCategory))),
+                'link' => $this->context->link->getCategoryLink(($parentCategory)),
                 'nleft' => 0,
                 'nright' => 0,
                 'depth' => 0
