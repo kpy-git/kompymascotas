@@ -80,7 +80,7 @@
     <div class="paragraph-final">
       <h2>¿Hablamos?</h2>
       <p>No somos una multinacional con oficinas de cristal en Silicon Valley. Somos los de la libreta. Los que se manchan de pelo. Si tienes dudas, no le preguntes a Google. Pregúntanos a nosotros.</p>
-      <a href="https://wa.me/XXXXXXXXX" class="btn-whatsapp">
+      <a href="https://wa.me/34650018019" class="btn-whatsapp">
         <i class="fa-brands fa-whatsapp"></i> Escríbenos por WhatsApp
       </a>
       <p class="small">(te contestará un humano, prometido)</p>
