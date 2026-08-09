@@ -17,7 +17,7 @@ class TestConnectionCommand extends Command
         try {
             $aqua = DbMssql::getInstance();
 
-            $lastOrder = $aqua->getValue("SELECT TOP 1 RTRIM(NUMERO_DOC) AS PEDIDO FROM DATOP01 WITH(NOLOCK) WHERE TIPOOPER = 'C' ORDER BY NUMERO DESC");
+            $lastOrder = $aqua->getValue("SELECT TOP 1 RTRIM(NUMERO_DOC) AS PEDIDO FROM DATOP03 WITH(NOLOCK) WHERE TIPOOPER = 'C' ORDER BY NUMERO DESC");
 
             $output->writeln("<info>Testing order number $lastOrder</info>");
 
