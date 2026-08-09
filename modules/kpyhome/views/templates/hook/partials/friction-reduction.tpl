@@ -3,7 +3,7 @@
     <h2 class="section-title">{l s='No fine print. No surprises.' d='Modules.Kpyhome.Shop'}</h2>
 
     <div class="friction-grid">
-      <div class="friction-item">
+      <a href="{url entity='cms' id='1'}" class="friction-item">
         <div class="friction-icon">
           <img src="{$module_img}package.svg" alt="package">
         </div>
@@ -11,7 +11,7 @@
         <p>
             {l s='Free shipping from %s€. Mainland Spain in 24/48 hours. Baleares and Canary Islands in 3-5 days. If there is a delay, we will notify you before you hear from the carrier.' sprintf=[$limit_free_shipping] d='Modules.Kpyhome.Shop'}
         </p>
-      </div>
+      </a>
 
       <div class="friction-item">
         <div class="friction-icon">
@@ -22,7 +22,7 @@
       </div>
 
 
-      <div class="friction-item">
+      <a href="{url entity='cms' id='7'}" class="friction-item">
         <div class="friction-icon">
           <img src="{$module_img}return-arrow.svg" alt="return">
         </div>
@@ -30,9 +30,9 @@
         <p>
             {l s="Don't like it? Did it arrive broken? We'll refund your money within 48 hours. No weird questions asked." d='Modules.Kpyhome.Shop'}
         </p>
-      </div>
+      </a>
 
-      <div class="friction-item">
+      <a href="{url entity='module' name='kpyfaq' controller='display'}" class="friction-item">
         <div class="friction-icon">
           <img src="{$module_img}balloon.svg" alt="balloon">
         </div>
@@ -40,11 +40,12 @@
         <p>
             {l s='WhatsApp, phone, and email. We respond within two hours, Monday through Friday (9 a.m. to 7 p.m.).' d='Modules.Kpyhome.Shop'}
         </p>
+
         <p style="margin-top: 10px; font-weight: 600;">
-          <a href="tel:650018019">📞 650 018 019</a><br \>
-          <a href="https://wa.me/34650018019">📱 WhatsApp: 650 018 019</a>
+          📞 650 018 019<br \>
+          📱 WhatsApp: 650 018 019
         </p>
-      </div>
+      </a>
     </div>
   </div>
 </section>
