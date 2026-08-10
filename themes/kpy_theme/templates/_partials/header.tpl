@@ -69,13 +69,13 @@
             </a>
           </div>
 
-          <div class="ps-searchbar__offcanvas js-search-offcanvas offcanvas offcanvas-top h-auto" tabindex="-1" id="searchCanvas" aria-labelledby="offcanvasTopLabel">
+          {*<div class="ps-searchbar__offcanvas js-search-offcanvas offcanvas offcanvas-top h-auto" tabindex="-1" id="searchCanvas" aria-labelledby="offcanvasTopLabel">
             <div class="offcanvas-header">
               <div id="_mobile_ps_searchbar" class="ps-searchbar__container"></div>
               <button type="button" class="btn btn-link" data-bs-dismiss="offcanvas" aria-label="{l s='Close search' d='Shop.Theme.Global'}">{l s='Cancel' d='Shop.Theme.Global'}</button>
             </div>
           </div>
-        </div>
+        </div>*}
 
         <div id="_mobile_ps_customersignin" class="d-md-none d-flex col-auto">
           {* JUST PLACEHOLDER FOR RESPONSIVE COMPONENT TO LOAD REAL ONE *}
