@@ -117,5 +117,8 @@
 !/modules/redsyspur/
 !/modules/redsyspur/**
 
+!/modules/kpystorepreparation/
+!/modules/kpystorepreparation/**
+
 **/.idea/
 **/.vscode/
