@@ -151,7 +151,7 @@
     --kpy-bg-menu: #FCFAFF;
     --kpy-bg-footer: #1F424A;
 
-    --kpy-header-height: 118px;
+    --kpy-header-height: 154px;
     --kpy-menu-mobile-height: 48px;
 
     --kpy-font-size: .945rem;
@@ -251,7 +251,7 @@ a,
 }
 
 .kpy-backdrop {
-    height: calc(100vh - var(--kpy-header-height));
+    height: 100vh;
     left: 0;
     position: fixed;
     top: var(--kpy-header-height);
@@ -262,6 +262,10 @@ a,
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+}
+
+.header.floating .kpy-backdrop {
+    top: calc(var(--kpy-header-height) - 34px);
 }
 
 dialog::backdrop {

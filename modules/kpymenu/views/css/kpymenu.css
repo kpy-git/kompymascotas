@@ -75,6 +75,10 @@
     transition: opacity .2s ease-in-out;
 }
 
+.header.floating .kpy-menu__toggle {
+    top: calc(var(--kpy-header-height) - 34px);
+}
+
 .show .kpy-menu__toggle {
     opacity: 1;
     visibility: visible;
