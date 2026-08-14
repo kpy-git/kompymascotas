@@ -5,7 +5,6 @@ declare(strict_types=1);
 use PrestaShop\Module\NeftysFarmaConnector\Builder\NeftysOrderBuilder;
 use PrestaShop\Module\NeftysFarmaConnector\Guard\OrderGuard;
 use PrestaShop\Module\NeftysFarmaConnector\Logger\NeftysFarmaLogger;
-use PrestaShop\Module\NeftysFarmaConnector\Entity\NeftysFarmaOrder;
 use PrestaShop\Module\NeftysFarmaConnector\Exception\NeftysFarmaException;
 use PrestaShop\Module\NeftysFarmaConnector\Install\Installer;
 use PrestaShop\Module\NeftysFarmaConnector\Config\NeftysFarmaConfig;
@@ -93,6 +92,17 @@ class NeftysFarmaConnector extends Module
         }
 
         try {
+            foreach ($productsWithoutPacks as $product) {
+                if ($product->getProductId() === 8299) {
+                    $order->setCurrentStateWithDate(
+                        37, // SIN STOCK EN NEFTYS - PENDIENTE DE REENVIAR
+                        date('Y-m-d H:i:s')
+                    );
+
+                    return;
+                }
+            }
+
             $neftysOrder = NeftysOrderBuilder::from($order, $productsWithoutPacks);
 
             $uploader = new NeftysFarmaOrderUploader();
