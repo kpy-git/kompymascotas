@@ -64,7 +64,7 @@
         {* MOBILE SEARCH BAR *}
         <div class="ps-searchbar--mobile d-md-none d-flex col-auto">
           <div class="header-block d-flex align-items-center">
-            <a class="header-block__action-btn" href="#" role="button" data-bs-toggle="offcanvas" data-bs-target="#searchCanvas" aria-controls="searchCanvas" aria-label="{l s='Show search bar' d='Shop.Theme.Global'}">
+            <a id="search-mobile__action-btn" class="header-block__action-btn" href="#" role="button" data-bs-toggle="offcanvas" data-bs-target="#searchCanvas" aria-controls="searchCanvas" aria-label="{l s='Show search bar' d='Shop.Theme.Global'}">
               <span class="material-icons header-block__icon">&#xE8B6;</span>
             </a>
           </div>
