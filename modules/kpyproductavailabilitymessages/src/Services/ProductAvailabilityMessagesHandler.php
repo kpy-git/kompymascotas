@@ -61,8 +61,14 @@ class ProductAvailabilityMessagesHandler
         return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
     }
 
-    public function getMessageOutStock(int $manufacturerId): string
+    public function getMessageOutStock(int $manufacturerId, int $productId, int $productAttributeId, int $lang = 1): string
     {
+        $manualAvailabilityMessageByProduct = $this->getManualAvailabilityMessageByProduct($productId, $productAttributeId, $lang);
+
+        if (!empty($manualAvailabilityMessageByProduct)) {
+            return $manualAvailabilityMessageByProduct;
+        }
+
         $groupA = [3, 77, 78, 75,]; // RC, Dingo
         $groupB = [93, 173,]; // Natural Greatness, Alpha Spirit
 
@@ -70,7 +76,6 @@ class ProductAvailabilityMessagesHandler
             return 'Disponible próximamente';
         }
 
-        $start = 0;
         if (in_array($manufacturerId, $groupA, true)) {
             // si es antes de las 11 se puede hacer el pedido el mismo día, si no el siguiente laborable
             $start = $this->workingDaysManager->isWorkingDay(time()) && (int)date('H') < 11
@@ -98,5 +103,20 @@ class ProductAvailabilityMessagesHandler
 
         return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
 
+    }
+
+    public function getManualAvailabilityMessageByProduct(int $productId, int $productAttributeId, int $lang = 1): string
+    {
+        $sql = $productAttributeId > 0
+            ? "SELECT available_later FROM " . _DB_PREFIX_ . "product_attribute_lang WHERE id_product_attribute = $productAttributeId AND id_lang = $lang"
+            : "SELECT available_later FROM " . _DB_PREFIX_ . "product_lang WHERE id_product = $productId AND id_lang = $lang";
+        $date = \Db::getInstance()->getValue($sql);
+
+
+        if (empty($date)) {
+            return '';
+        }
+
+        return "Recíbelo a partir de el " . $this->messageFormatter->getWeekdayAndMonthInText(\DateTimeImmutable::createFromFormat('Y-m-d', $date)->getTimestamp());
     }
 }

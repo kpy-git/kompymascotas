@@ -37,7 +37,7 @@ class ProductAvailabilityMessageFormatter
         );
     }
 
-    public function getWeekdayAndMonthInText($timestamp): string
+    public function getWeekdayAndMonthInText(int $timestamp): string
     {
         return sprintf('%s %d de %s',
             $this->weekDays[date('N', $timestamp) - 1],
