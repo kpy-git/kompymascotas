@@ -79,9 +79,9 @@ class ForceOrderCommand extends Command
             $mailer = new Mailer();
             $mailer->sendMailError(
                 (int)$input->getArgument('Pedido'),
-                "Ha ocurrido un error en la base de datos al importar el pedido {$input->getArgument('Pedido')}\n\nLog: " . $filename,
+                "Ha ocurrido un error al importar el pedido {$input->getArgument('Pedido')}\n\nLog: " . $filename,
                 $exception->getMessage(),
-                ['programacion@piensoymascotas.com'],
+                ['desarrollo@kompymascotas.com'],
                 [
                     'content' => file_get_contents($filePath),
                     'name' => $filename,
