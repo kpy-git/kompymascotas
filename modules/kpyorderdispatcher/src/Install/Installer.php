@@ -46,6 +46,13 @@ class Installer
         $hook->description = 'Hook triggered after compute destination warehouse for new orders';
         $hook->position = 1;
         $hook->add();
+
+        $hook = new \Hook();
+        $hook->name = 'actionKpyOrderDispatched';
+        $hook->title = 'actionKpyOrderDispatched';
+        $hook->description = 'Hook triggered after order dispatched';
+        $hook->position = 1;
+        $hook->add();
     }
 
     /**

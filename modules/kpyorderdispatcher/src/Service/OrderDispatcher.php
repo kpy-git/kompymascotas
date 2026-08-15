@@ -9,8 +9,10 @@ class OrderDispatcher
 {
     public function dispatch(int $id_order): void
     {
+        $order = new Order($id_order);
+
         $warehouse = match (true) {
-            OrderGuard::isNeftysFarmaOrder(new Order($id_order)) => 'NEFTYS',
+            OrderGuard::isNeftysFarmaOrder($order) => 'NEFTYS',
             default => 'TIENDA',
         };
 
@@ -21,6 +23,11 @@ class OrderDispatcher
         ]);
 
         \Hook::exec('actionKpyOrderWarehouseSelected', [
+            'id_order' => $id_order,
+            'warehouse' => $warehouse
+        ]);
+
+        \Hook::exec('actionKpyPostOrderDispatched', [
             'id_order' => $id_order,
             'warehouse' => $warehouse
         ]);
