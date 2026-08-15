@@ -79,7 +79,7 @@ class KpyAquaOrders extends Module
         $this->processOrder(new \Order((int)$params['id_order']));
     }
 
-    public function hookActionKpyPostOrderDispatched(array $params): void
+    public function hookActionKpyOrderDispatched(array $params): void
     {
         /** @var \Order $order */
         $order = $params['order'];
