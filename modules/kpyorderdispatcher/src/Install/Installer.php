@@ -40,19 +40,23 @@ class Installer
 
     private function createHook(): void
     {
-        $hook = new \Hook();
-        $hook->name = 'actionKpyOrderWarehouseSelected';
-        $hook->title = 'Compute destination warehouse for new orders';
-        $hook->description = 'Hook triggered after compute destination warehouse for new orders';
-        $hook->position = 1;
-        $hook->add();
+        if (!\Hook::getIdByName('actionKpyOrderWarehouseSelected')) {
+            $hook = new \Hook();
+            $hook->name = 'actionKpyOrderWarehouseSelected';
+            $hook->title = 'Compute destination warehouse for new orders';
+            $hook->description = 'Hook triggered after compute destination warehouse for new orders';
+            $hook->position = 1;
+            $hook->add();
+        }
 
-        $hook = new \Hook();
-        $hook->name = 'actionKpyOrderDispatched';
-        $hook->title = 'actionKpyOrderDispatched';
-        $hook->description = 'Hook triggered after order dispatched';
-        $hook->position = 1;
-        $hook->add();
+        if (!\Hook::getIdByName('actionKpyOrderDispatched')) {
+            $hook = new \Hook();
+            $hook->name = 'actionKpyOrderDispatched';
+            $hook->title = 'actionKpyOrderDispatched';
+            $hook->description = 'Hook triggered after order dispatched';
+            $hook->position = 1;
+            $hook->add();
+        }
     }
 
     /**
