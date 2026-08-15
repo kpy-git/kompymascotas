@@ -11,7 +11,7 @@ class Installer
 {
     private array $hooks = [
         'actionOrderStatusPostUpdate',
-        'actionKpyPostOrderDispatched',
+        'actionKpyOrderDispatched',
     ];
     private array $configurationCredentialsKeys = [
         DbConfig::AQUA_USER,
