@@ -27,7 +27,7 @@ class OrderDispatcher
             'warehouse' => $warehouse
         ]);
 
-        \Hook::exec('actionKpyPostOrderDispatched', [
+        \Hook::exec('actionKpyOrderDispatched', [
             'order' => $order,
         ]);
     }
