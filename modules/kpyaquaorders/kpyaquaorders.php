@@ -1,6 +1,7 @@
 <?php
 
 use PrestaShop\Module\KpyAquaOrders\CommandDispatcher\CommandDispatcher;
+use PrestaShop\Module\KpyAquaOrders\Config\AquaOrderState;
 use PrestaShop\Module\KpyAquaOrders\Controller\AquaOrderController;
 use PrestaShop\Module\KpyAquaOrders\Db\DbMssql;
 use PrestaShop\Module\KpyAquaOrders\DTO\OutsyncOrder;
@@ -75,17 +76,47 @@ class KpyAquaOrders extends Module
             return;
         }
 
-        $aqua = DbMssql::getInstance();
+        $this->processOrder(new \Order((int)$params['id_order']));
+    }
 
-        if ($aqua->withError()) {
-            $this->addOrderToOutSyncFile(new OutsyncOrder((int)$params['id_order'], (int)$params['newOrderStatus']->id));
-            return;
+    public function hookActionKpyPostOrderDispatched(array $params): void
+    {
+        /** @var \Order $order */
+        $order = $params['order'];
+
+        // simula el estado AQUA - ACTUALIZAR PEDIDO COMPLETO
+        $orderStateWarehouse = new AquaOrderStateWarehouse();
+        $order->current_state = $orderStateWarehouse->getOrderStateId(AquaOrderState::UPDATE_ORDER);
+
+        $this->processOrder($order);
+    }
+
+    private function addOrderToOutSyncFile(OutsyncOrder $order): void
+    {
+        if (($file = fopen(self::OUTSYNC_ORDERS_FILE, 'ab'))) {
+            fwrite($file, $order->serialize() . "\n");
+            fclose($file);
         }
+    }
 
+    public function getOutsyncOrdersFilename(): string
+    {
+        return self::OUTSYNC_ORDERS_FILE;
+    }
+
+    private function processOrder(\Order $order): void
+    {
         try {
+            $aqua = DbMssql::getInstance();
+
+            if ($aqua->withError()) {
+                $this->addOrderToOutSyncFile(new OutsyncOrder($order->id, $order->getCurrentState()));
+                return;
+            }
+
             $commandDispatcher = new CommandDispatcher(new AquaOrderController($aqua));
 
-            $commandDispatcher->dispatchAction(new Order((int)$params['id_order']), $this->context);
+            $commandDispatcher->dispatchAction($order, $this->context);
 
         } catch (KpyAquaOrderException $ex) {
             file_put_contents($this->logDirectory . 'orders_error.log',$ex->getFormatDate() . "\t" . $ex->getMessage() . PHP_EOL, FILE_APPEND);
@@ -106,8 +137,8 @@ class KpyAquaOrders extends Module
 
             $mailer = new Mailer();
             $mailer->sendMailError(
-                (int)$params['id_order'],
-                "Ha ocurrido un error en la base de datos al importar el pedido {$params['id_order']}\n\nLog: " . $filename,
+                $order->id,
+                "Ha ocurrido un error en la base de datos al importar el pedido {$order->id}\n\nLog: " . $filename,
                 $exception->getMessage(),
                 ['desarrollo@kompymascotas.com'],
                 [
@@ -117,18 +148,5 @@ class KpyAquaOrders extends Module
                 ]
             );
         }
-    }
-
-    private function addOrderToOutSyncFile(OutsyncOrder $order): void
-    {
-        if (($file = fopen(self::OUTSYNC_ORDERS_FILE, 'ab'))) {
-            fwrite($file, $order->serialize() . "\n");
-            fclose($file);
-        }
-    }
-
-    public function getOutsyncOrdersFilename(): string
-    {
-        return self::OUTSYNC_ORDERS_FILE;
     }
 }

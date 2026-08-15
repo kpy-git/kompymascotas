@@ -1,7 +1,6 @@
 {
     "nuevo_pedido": {
         "estados_asociados": [
-            2,
             25
         ]
     },
@@ -18,12 +17,6 @@
     "solicitud_cancelacion_anulada": {
         "estados_asociados": [
             20
-        ]
-    },
-    "transmitido_neftys": {
-        "id_order_state": 21,
-        "estados_asociados": [
-            21
         ]
     },
     "en_preparacion": {

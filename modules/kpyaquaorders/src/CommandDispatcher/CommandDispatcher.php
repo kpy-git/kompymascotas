@@ -36,7 +36,7 @@ class CommandDispatcher
             new CancelOrderCommand($this->aquaOrderController),
             new CancellationOrderRequest($this->aquaOrderController),
             new CancelCancellationOrderRequest($this->aquaOrderController),
-            new NeftysFarmaOrderCommand($this->aquaOrderController),
+            // new NeftysFarmaOrderCommand($this->aquaOrderController),
         ];
     }
 
