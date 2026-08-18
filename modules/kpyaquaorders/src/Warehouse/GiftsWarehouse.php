@@ -10,7 +10,8 @@ class GiftsWarehouse
 
     public function __construct()
     {
-        $this->gifts = json_decode(file_get_contents(self::FILE_PATH), true);
+        $this->gifts = [];
+        // $this->gifts = json_decode(file_get_contents(self::FILE_PATH), true);
     }
 
     public function getAll(): array
