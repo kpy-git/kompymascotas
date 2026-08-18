@@ -69,7 +69,7 @@ class ProductAvailabilityMessagesHandler
             return $manualAvailabilityMessageByProduct;
         }
 
-        $groupA = [3, 77, 78, 75, 4, 199, 48, 49, 13, 27, 203, 121]; // RC, Dingo, Acana, Orijen , TOW, Advance, Natures Variety, ANC Fresh
+        $groupA = [3, 77, 78, 75, 4, 199, 48, 49, 13, 27, 203, 121, 58]; // RC, Dingo, Acana, Orijen , TOW, Advance, Natures Variety, ANC Fresh
         $groupB = [93, 173,]; // Natural Greatness, Alpha Spirit
 
         if (!in_array($manufacturerId, array_merge($groupA, $groupB), true)) {
@@ -84,6 +84,19 @@ class ProductAvailabilityMessagesHandler
 
             // + 2 días en venir la mercancía + 1 día de envío
             $start = $this->workingDaysManager->addWorkingDaysToTimestamp($start, 3);
+            $final = $this->workingDaysManager->getNextWorkingDayTo($start);
+
+            return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
+        }
+
+        // ANC Fresh
+        if ($manufacturerId === 203) {
+            $start = $this->workingDaysManager->isWorkingDay(time()) && (int)date('H') < 11
+                ? time()
+                : $this->workingDaysManager->getNextWorkingDayTo(time());
+
+            // + 3 días en venir la mercancía + 1 día de envío
+            $start = $this->workingDaysManager->addWorkingDaysToTimestamp($start, 4);
             $final = $this->workingDaysManager->getNextWorkingDayTo($start);
 
             return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
