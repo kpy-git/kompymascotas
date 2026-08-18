@@ -69,7 +69,7 @@ class ProductAvailabilityMessagesHandler
             return $manualAvailabilityMessageByProduct;
         }
 
-        $groupA = [3, 77, 78, 75, 4, 199, 48, 49, 13, 27]; // RC, Dingo, Advance, Natures Variety
+        $groupA = [3, 77, 78, 75, 4, 199, 48, 49, 13, 27, 203, 121]; // RC, Dingo, Acana, Orijen , TOW, Advance, Natures Variety, ANC Fresh
         $groupB = [93, 173,]; // Natural Greatness, Alpha Spirit
 
         if (!in_array($manufacturerId, array_merge($groupA, $groupB), true)) {
