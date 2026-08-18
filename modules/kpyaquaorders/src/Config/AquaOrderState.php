@@ -4,7 +4,6 @@ namespace PrestaShop\Module\KpyAquaOrders\Config;
 
 enum AquaOrderState: string
 {
-    case PREPARING = 'en_preparacion';
     case UPDATE_ORDER = 'actualizar_pedido';
     case UPDATE_ADDRESS = 'actualizar_direccion';
     case UPDATE_PRODUCTS = 'actualizar_productos';
@@ -36,7 +35,6 @@ enum AquaOrderState: string
     public function getPrestaShopName(): string
     {
         return match($this) {
-            self::PREPARING => 'AQUA - En preparación',
             self::UNDO_PREPARING => 'AQUA - Incidencia en preparación',
             self::UPDATE_ORDER => 'AQUA - Actualizar pedido completo',
             self::UPDATE_ADDRESS => 'AQUA - Actualizar dirección',

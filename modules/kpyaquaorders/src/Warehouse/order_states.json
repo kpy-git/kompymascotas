@@ -19,12 +19,6 @@
             20
         ]
     },
-    "en_preparacion": {
-        "id_order_state": 26,
-        "estados_asociados": [
-            26
-        ]
-    },
     "actualizar_pedido": {
         "id_order_state": 27,
         "estados_asociados": [
