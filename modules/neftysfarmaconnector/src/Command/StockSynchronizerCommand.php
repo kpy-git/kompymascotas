@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'neftysfarmaconnector:stock:sync', description: 'Sincroniza el stock con el fichero del FTP de Neftys')]
 class StockSynchronizerCommand extends Command
 {
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -24,7 +24,7 @@ class StockSynchronizerCommand extends Command
 
             if (!$module->active) {
                 $io->warning("El módulo neftysfarmaconnector está desactivado, se interrumpe la ejecución");
-                return;
+                return Command::FAILURE;
             }
 
             $stockFile = $module->getLocalPath() . 'stock/stock.csv';
@@ -45,10 +45,12 @@ class StockSynchronizerCommand extends Command
 
             }
 
+            return Command::SUCCESS;
 
         } catch (NeftysFarmaException $ex) {
-            $io->error($ex->getMessage());
             NeftysFarmaLogger::log($ex->getMessage());
+            $io->error($ex->getMessage());
+            return Command::FAILURE;
         }
     }
 }
