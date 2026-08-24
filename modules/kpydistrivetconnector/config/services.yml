@@ -1,0 +1,4 @@
+services:
+  PrestaShop\Module\KpyDistrivetConnector\Command\StockSynchronizerCommand:
+    tags:
+      - {name: 'console.command'}

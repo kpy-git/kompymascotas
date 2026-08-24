@@ -57,6 +57,9 @@
 !/modules/kpycustomerhistory/
 !/modules/kpycustomerhistory/**
 
+!/modules/kpydistrivetconnector/
+!/modules/kpydistrivetconnector/**
+
 !/modules/kpyfaq/
 !/modules/kpyfaq/**
 
