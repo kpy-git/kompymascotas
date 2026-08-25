@@ -2,7 +2,15 @@
 
 declare(strict_types=1);
 
+use PrestaShop\Module\KpyDistrivetConnector\Config\Config;
+use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetException;
+use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetProductNotFoundException;
 use PrestaShop\Module\KpyDistrivetConnector\Install\Installer;
+use PrestaShop\Module\KpyDistrivetConnector\Logger\DistrivetLogger;
+use PrestaShop\Module\KpyDistrivetConnector\Repository\OrderRepository;
+use PrestaShop\Module\KpyDistrivetConnector\Service\DistrivetClient;
+use PrestaShop\Module\KpyDistrivetConnector\Service\DistrivetOrderBuilder;
+use PrestaShop\Module\KpyDistrivetConnector\Service\ProductFinder;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -73,6 +81,35 @@ class KpyDistrivetConnector extends Module
 
     public function hookActionKpyOrderDispatched(array $params): void
     {
+        if ($params['warehouse'] !== 'DISTRIVET') {
+            return;
+        }
 
+        try {
+            $order = new Order((int)$params['id_order']);
+            $productFinder = new ProductFinder();
+
+            $productsWithoutPacks = $productFinder->getProductsOrderWithoutPacks($order);
+
+            $distrivetOrder = DistrivetOrderBuilder::from($order, $productsWithoutPacks);
+
+            $distrivetClient = new DistrivetClient();
+            $distrivetOrderId = $distrivetClient->createOrder($distrivetOrder);
+
+            if (Config::DEBUG_MODE) {
+                DistrivetLogger::logOrder($distrivetOrder, $this->getLocalPath());
+            }
+
+            $order->setCurrentState(\Configuration::get(Config::DISTRIVET_OS));
+
+            $orderRepository = new OrderRepository();
+            $orderRepository->save($distrivetOrder, $distrivetOrderId);
+
+        } catch (KpyDistrivetProductNotFoundException $exception) {
+            DistrivetLogger::log("Pedido no gestionable por Distrivet. Error: " . $exception->getMessage());
+
+        } catch (KpyDistrivetException $e) {
+            DistrivetLogger::log($e->getMessage());
+        }
     }
 }

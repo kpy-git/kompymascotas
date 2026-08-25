@@ -3,7 +3,7 @@
 namespace PrestaShop\Module\KpyDistrivetConnector\Exception;
 
 
-class KpyDistrivetException extends \Exception
+class KpyDistrivetProductNotFoundException extends KpyDistrivetException
 {
 
 }

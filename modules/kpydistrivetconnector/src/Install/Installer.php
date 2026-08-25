@@ -5,6 +5,7 @@ namespace PrestaShop\Module\KpyDistrivetConnector\Install;
 
 use Db;
 use Module;
+use PrestaShop\Module\KpyCancellationRequest\Install\OrderStateInstaller;
 use PrestaShop\Module\KpyDistrivetConnector\Config\Config;
 use PrestaShopBundle\Install\SqlLoader;
 
@@ -32,6 +33,8 @@ class Installer
         }
 
         $this->createConfigurations();
+
+        $this->createOrderStates($module);
 
         return true;
     }
@@ -88,6 +91,14 @@ class Installer
         if (!\Configuration::get(Config::KPY_DISTRIVET_MANUFACTURERS)) {
             \Configuration::updateValue(Config::KPY_DISTRIVET_MANUFACTURERS, json_encode([]));
         }
+
+        if (!\Configuration::get(Config::KPY_DISTRIVET_API_DOMAIN)) {
+            \Configuration::updateValue(Config::KPY_DISTRIVET_API_DOMAIN, '');
+        }
+
+        if (!\Configuration::get(Config::KPY_DISTRIVET_API_AUTH_PATH)) {
+            \Configuration::updateValue(Config::KPY_DISTRIVET_API_AUTH_PATH, '');
+        }
     }
 
     private function deleteConfigurations(): void
@@ -95,5 +106,18 @@ class Installer
         \Configuration::deleteByName(Config::KPY_DISTRIVET_CLIENT);
         \Configuration::deleteByName(Config::KPY_DISTRIVET_SECRET);
         \Configuration::deleteByName(Config::KPY_DISTRIVET_MANUFACTURERS);
+        \Configuration::deleteByName(Config::KPY_DISTRIVET_API_AUTH_PATH);
+        \Configuration::deleteByName(Config::KPY_DISTRIVET_API_DOMAIN);
+    }
+
+    private function createOrderStates(\Module $module): void
+    {
+        $orderStateInstaller = new OrderStateInstaller($module);
+
+        $orderStateInstaller->install(
+            Config::DISTRIVET_OS,
+            "Pedido transmitido a Distrivet",
+            "#b7d261"
+        );
     }
 }

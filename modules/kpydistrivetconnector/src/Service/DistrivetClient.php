@@ -3,7 +3,9 @@
 namespace PrestaShop\Module\KpyDistrivetConnector\Service;
 
 use PrestaShop\Module\KpyDistrivetConnector\Config\Config;
+use PrestaShop\Module\KpyDistrivetConnector\DTO\DistrivetOrderDTO;
 use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetException;
+use PrestaShop\Module\KpyDistrivetConnector\Logger\DistrivetLogger;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -18,12 +20,18 @@ class DistrivetClient
 
     private string $clientSecret;
 
+    private string $apiDomain;
+
+    private string $apiAuthPath;
+
     private HttpClientInterface $client;
 
     public function __construct()
     {
         $this->clientId = \Configuration::get(Config::KPY_DISTRIVET_CLIENT);
         $this->clientSecret = \Configuration::get(Config::KPY_DISTRIVET_SECRET);
+        $this->apiAuthPath = \Configuration::get(Config::KPY_DISTRIVET_API_AUTH_PATH);
+        $this->apiDomain = \Configuration::get(Config::KPY_DISTRIVET_API_DOMAIN);
 
         $this->client = HttpClient::create();
     }
@@ -36,7 +44,7 @@ class DistrivetClient
         try {
             $accessToken = $this->getAccessToken();
 
-            $response = $this->client->request('GET', 'https://devapi.distrivet.es/v1/stocks', [
+            $response = $this->client->request('GET', $this->apiDomain . '/v1/stocks', [
                 'auth_bearer' => $accessToken,
                 'query' => [
                     'page_size' => $pageSize,
@@ -55,7 +63,7 @@ class DistrivetClient
             ];
 
         } catch (RedirectionExceptionInterface|DecodingExceptionInterface|ClientExceptionInterface|TransportExceptionInterface|ServerExceptionInterface $e) {
-            throw new KpyDistrivetException($e->getMessage(), $e->getCode(), $e);
+            throw new KpyDistrivetException($e->getMessage() . "\n" . $e->getResponse()->toArray(false)['message'] ?? '', $e->getCode(), $e);
         }
 
     }
@@ -66,14 +74,12 @@ class DistrivetClient
     private function getAccessToken(): string
     {
         try {
-            $response = $this->client->request(
-                'POST',
-                'https://distrivet-dev.auth.us-east-1.amazoncognito.com/oauth2/token',
+            $response = $this->client->request('POST', $this->apiAuthPath,
                 [
                     'auth_basic' => [$this->clientId, $this->clientSecret],
                     'body' => [
                         'grant_type' => 'client_credentials',
-                        'scope' => 'api/orders api/stocks api/products',
+                        'scope' => 'api/orders api/stocks api/products api/shipments',
                     ]
                 ]
             );
@@ -85,7 +91,34 @@ class DistrivetClient
             return $response->toArray()['access_token'] ?? '';
 
         } catch (RedirectionExceptionInterface|DecodingExceptionInterface|ClientExceptionInterface|TransportExceptionInterface|ServerExceptionInterface $e) {
-            throw new KpyDistrivetException($e->getMessage(), $e->getCode(), $e);
+            throw new KpyDistrivetException($e->getMessage() . "\n" . $e->getResponse()->toArray(false)['message'] ?? '', $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * @throws KpyDistrivetException
+     */
+    public function createOrder(DistrivetOrderDTO $order): string
+    {
+        try {
+            $response = $this->client->request('POST', $this->apiDomain . '/v1/orders/', [
+                'auth_bearer' => $this->getAccessToken(),
+                'json' => $order,
+            ]);
+
+            $data = $response->toArray();
+
+            if (Config::DEBUG_MODE) {
+                DistrivetLogger::logRequest($order);
+                DistrivetLogger::logResponse($response);
+            }
+
+            return $data['OrderNo'];
+
+        } catch (RedirectionExceptionInterface|DecodingExceptionInterface|ClientExceptionInterface|TransportExceptionInterface|ServerExceptionInterface $e) {
+            DistrivetLogger::logRequest($order);
+            DistrivetLogger::logResponse($e->getResponse());
+            throw new KpyDistrivetException($e->getMessage() . "\n" . $e->getResponse()->toArray(false)['message'] ?? '', $e->getCode(), $e);
         }
     }
 }

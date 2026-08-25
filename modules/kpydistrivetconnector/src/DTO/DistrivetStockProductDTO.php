@@ -2,12 +2,13 @@
 
 namespace PrestaShop\Module\KpyDistrivetConnector\DTO;
 
-readonly class Product
+readonly class DistrivetStockProductDTO
 {
     public function __construct(
         private int                $productId,
         private int                $productAttributeId,
         private string             $distrivetId,
+        private string             $name,
         private int                $stock,
         private \DateTimeImmutable $updatedAt,
         private bool               $isPack = false
@@ -48,5 +49,10 @@ readonly class Product
     public function getSku(): string
     {
         return $this->productId . '-' . $this->productAttributeId;
+    }
+
+    public function getDistrivetName(): string
+    {
+        return $this->name;
     }
 }

@@ -3,7 +3,7 @@
 namespace PrestaShop\Module\KpyDistrivetConnector\Service;
 
 use PrestaShop\Module\KpyDistrivetConnector\Config\Config;
-use PrestaShop\Module\KpyDistrivetConnector\DTO\Product;
+use PrestaShop\Module\KpyDistrivetConnector\DTO\DistrivetStockProductDTO;
 use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetException;
 use PrestaShop\Module\KpyDistrivetConnector\Repository\StockRepository;
 
@@ -48,10 +48,11 @@ class StockSynchronizer
                     continue;
                 }
 
-                $distrivetStock[] = new Product(
+                $distrivetStock[] = new DistrivetStockProductDTO(
                     (int)$product['id_product'],
                     (int)$product['id_product_attribute'],
                     $stock['ProductId'],
+                    $stock['Description'],
                     (int)$stock['Stock'],
                     new \DateTimeImmutable($stock['UpdateDatetime']),
                 );
@@ -64,10 +65,11 @@ class StockSynchronizer
                 foreach ($productPacks as $pack) {
                     [$idPack, $attrPack] = explode('-', $pack['id_product_pack']);
 
-                    $distrivetStock[] = new Product(
+                    $distrivetStock[] = new DistrivetStockProductDTO(
                         (int)$idPack,
                         (int)$attrPack,
                         $stock['ProductId'],
+                        sprintf("Pack %d x %s", $pack['quantity'], $stock['Description']),
                         floor((int)$stock['Stock'] / (int)$pack['quantity']),
                         new \DateTimeImmutable($stock['UpdateDatetime']),
                         true,

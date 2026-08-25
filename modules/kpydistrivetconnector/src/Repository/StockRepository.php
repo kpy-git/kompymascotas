@@ -3,7 +3,8 @@
 namespace PrestaShop\Module\KpyDistrivetConnector\Repository;
 
 use PrestaShop\Module\KpyAquaOrders\Db\DbMssql;
-use PrestaShop\Module\KpyDistrivetConnector\DTO\Product;
+use PrestaShop\Module\KpyDistrivetConnector\DTO\DistrivetStockProductDTO;
+use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetProductNotFoundException;
 
 class StockRepository
 {
@@ -16,13 +17,14 @@ class StockRepository
         \Db::getInstance()->execute("TRUNCATE TABLE `" . _DB_PREFIX_ . "kpy_distrivet_stock`");
 
         \Db::getInstance()->insert('kpy_distrivet_stock', array_map(
-            static function (Product $product): array {
+            static function (DistrivetStockProductDTO $product): array {
                 return [
                     'id_product' => $product->getProductId(),
                     'id_product_attribute' => $product->getProductAttributeId(),
                     'stock' => $product->getStock(),
                     'distrivet_id' => $product->getDistrivetId(),
                     'date_update' => $product->getUpdatedAt()->format('Y-m-d H:i:s'),
+                    'distrivet_name' => $product->getDistrivetName(),
                 ];
             }, $stockDistrivet));
 
@@ -49,7 +51,7 @@ class StockRepository
         $stmt = $aqua->prepare("UPDATE DATAS03 SET EXISTENCIA=? WHERE ALMACEN='DISTRIVET' AND CODIGO=?");
         $stmtGeneral = $aqua->prepare("UPDATE DATIN03 SET EXISTENCIA=(SELECT SUM(EXISTENCIA) FROM DATAS03 WHERE CODIGO=?) WHERE CODIGO=?");
 
-        /** @var Product $stock */
+        /** @var DistrivetStockProductDTO $stock */
         foreach ($stockDistrivet as $product) {
             if ($product->isPack()) {
                 continue;
@@ -96,5 +98,33 @@ class StockRepository
         }
 
         return $productsByEan;
+    }
+
+    /**
+     * @throws KpyDistrivetProductNotFoundException
+     */
+    public function findBySKUOrFail(string $sku): DistrivetStockProductDTO
+    {
+        [$id, $attr] = explode('-', $sku);
+
+        $result = \Db::getInstance()->getRow(
+            "SELECT id_product, id_product_attribute, stock, distrivet_id, distrivet_name, date_update 
+                FROM " . _DB_PREFIX_ . "kpy_distrivet_stock 
+                WHERE id_product_attribute = " . $attr . " AND id_product = " . $id
+        );
+
+        if (empty($result)) {
+            throw new KpyDistrivetProductNotFoundException('No existe en Distrivet ningún producto con sku ' . $sku);
+        }
+
+        return new DistrivetStockProductDTO(
+            $result['id_product'],
+            $result['id_product_attribute'],
+            $result['distrivet_id'],
+            $result['distrivet_name'],
+            $result['stock'],
+            new \DateTimeImmutable($result['date_update']),
+            str_starts_with($result['distrivet_name'], 'Pack')
+        );
     }
 }

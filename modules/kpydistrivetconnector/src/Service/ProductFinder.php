@@ -2,16 +2,22 @@
 
 namespace PrestaShop\Module\KpyDistrivetConnector\Service;
 
-use PrestaShop\Module\KpyDistrivetConnector\DTO\Product;
+use PrestaShop\Module\KpyDistrivetConnector\DTO\DistrivetProductOrderDTO;
+use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetProductNotFoundException;
+use PrestaShop\Module\KpyDistrivetConnector\Repository\StockRepository;
 
 class ProductFinder
 {
+    /**
+     * @throws KpyDistrivetProductNotFoundException
+     */
     public function getProductsOrderWithoutPacks(\Order $order): array
     {
         $products = [];
+        $stockRepository = new StockRepository();
 
         foreach ($order->getProducts() as $productOrder) {
-            // echo print_r($productOrder, true);
+            //echo print_r($productOrder, true);
             $sku = $productOrder['id_product'] . '-' . $productOrder['product_attribute_id'];
             if (\Product::isPack($sku)) {
                 foreach (\Product::getProductsInPack($sku) as $productInPack) {
@@ -19,23 +25,25 @@ class ProductFinder
                         continue;
                     }
 
-                    $product = new Product($productInPack['sku']);
-                    $product
-                        ->setEan(\Product::getEanBySku($productInPack['sku']))
-                        ->setQuantity((int)$productOrder['product_quantity'] * (int)$productInPack['quantity']);
+                    $distrivetProduct = $stockRepository->findBySKUOrFail($productInPack['sku']);
 
-                    $products[] = $product;
+                    $products[] = new DistrivetProductOrderDTO(
+                        $distrivetProduct->getDistrivetId(),
+                        $distrivetProduct->getDistrivetName(),
+                        (int)$productOrder['product_quantity'] * (int)$productInPack['quantity']
+                    );
                 }
 
                 continue;
             }
 
-            $product = new Product($sku);
-            $product
-                ->setEan(\Product::getEanBySku($sku))
-                ->setQuantity((int)$productOrder['product_quantity']);
+            $distrivetProduct = $stockRepository->findBySKUOrFail($sku);
 
-            $products[] = $product;
+            $products[] = new DistrivetProductOrderDTO(
+                $distrivetProduct->getDistrivetId(),
+                $distrivetProduct->getDistrivetName(),
+                (int)$productOrder['product_quantity']
+            );
         }
 
         return $products;
@@ -53,6 +61,6 @@ class ProductFinder
             GROUP BY id_product_pack
             HAVING COUNT(*) = 1";
 
-        return  \Db::getInstance()->executeS($sql);
+        return \Db::getInstance()->executeS($sql);
     }
 }

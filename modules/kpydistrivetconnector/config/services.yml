@@ -2,3 +2,6 @@ services:
   PrestaShop\Module\KpyDistrivetConnector\Command\StockSynchronizerCommand:
     tags:
       - {name: 'console.command'}
+  PrestaShop\Module\KpyDistrivetConnector\Command\ForceUploadOrderCommand:
+    tags:
+      - { name: 'console.command' }
