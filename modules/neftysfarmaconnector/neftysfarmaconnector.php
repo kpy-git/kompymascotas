@@ -92,22 +92,13 @@ class NeftysFarmaConnector extends Module
         }
 
         try {
-            foreach ($productsWithoutPacks as $product) {
-                if ($product->getProductId() === 8299) {
-                    $order->setCurrentStateWithDate(
-                        37, // SIN STOCK EN NEFTYS - PENDIENTE DE REENVIAR
-                        date('Y-m-d H:i:s')
-                    );
-
-                    return;
-                }
-            }
 
             $neftysOrder = NeftysOrderBuilder::from($order, $productsWithoutPacks);
 
             $uploader = new NeftysFarmaOrderUploader();
             $uploader->uploadNeftysOrder($neftysOrder, false);
 
+            // TODO - cuando algún producto no tenga stock (Boske sobre todo) poner el estado 37
             $order->setCurrentStateWithDate(
                 (int)Configuration::get(NeftysFarmaConfig::NEFTYS_OS_TRANSMITTED),
                 date('Y-m-d H:i:s')
