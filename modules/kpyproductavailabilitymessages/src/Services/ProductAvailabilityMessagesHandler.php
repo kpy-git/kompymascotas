@@ -73,7 +73,7 @@ class ProductAvailabilityMessagesHandler
         $groupB = [93, 173,]; // Natural Greatness, Alpha Spirit
         $montilla = [4, 27, 199]; // Advance, Libra, Natures Variety
 
-        if (!in_array($manufacturerId, array_merge($groupA, $groupB), true)) {
+        if (!in_array($manufacturerId, array_merge($groupA, $groupB, $montilla), true)) {
             return 'Disponible próximamente';
         }
 
