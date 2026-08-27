@@ -69,8 +69,9 @@ class ProductAvailabilityMessagesHandler
             return $manualAvailabilityMessageByProduct;
         }
 
-        $groupA = [3, 77, 78, 75, 4, 199, 48, 49, 13, 27, 203, 121, 58]; // RC, Dingo, Acana, Orijen , TOW, Advance, Natures Variety, ANC Fresh
+        $groupA = [3, 77, 78, 75, 48, 49, 13, 203, 121, 58]; // RC, Dingo, Acana, Orijen , TOW, ANC Fresh
         $groupB = [93, 173,]; // Natural Greatness, Alpha Spirit
+        $montilla = [4, 27, 199]; // Advance, Libra, Natures Variety
 
         if (!in_array($manufacturerId, array_merge($groupA, $groupB), true)) {
             return 'Disponible próximamente';
@@ -97,6 +98,19 @@ class ProductAvailabilityMessagesHandler
 
             // + 3 días en venir la mercancía + 1 día de envío
             $start = $this->workingDaysManager->addWorkingDaysToTimestamp($start, 4);
+            $final = $this->workingDaysManager->getNextWorkingDayTo($start);
+
+            return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
+        }
+
+        if (in_array($manufacturerId, $montilla, true)) {
+            // si es antes de las 11 se puede hacer el pedido el mismo día, si no el siguiente laborable
+            $start = $this->workingDaysManager->isWorkingDay(time()) && (int)date('H') < 11
+                ? time()
+                : $this->workingDaysManager->getNextWorkingDayTo(time());
+
+            // + 4 días en venir la mercancía + 1 día de envío
+            $start = $this->workingDaysManager->addWorkingDaysToTimestamp($start, 5);
             $final = $this->workingDaysManager->getNextWorkingDayTo($start);
 
             return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
