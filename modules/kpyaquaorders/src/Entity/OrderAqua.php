@@ -150,6 +150,9 @@ class OrderAqua
         $this->vendedor = $this->loadVendor($order->id_shop, $order->id_customer, $order->module, $this->carrier);
 
         $this->forma_pago = $this->getFormaPagoBy($order->module, $order->payment, $order->id_shop);
+        if ($this->isAffectedPYM($order)) {
+            $this->forma_pago = 'PYM';
+        }
 
         $this->sinFactura = $this->forma_pago === 'GRT' ? 1 : 0;
 
@@ -1163,5 +1166,12 @@ class OrderAqua
         return \Db::getInstance()->getValue(
             "SELECT warehouse FROM " . _DB_PREFIX_ . "kpy_order_warehouse WHERE id_order = " . $this->id_order,
         ) ?: 'TIENDA';
+    }
+
+    public function isAffectedPYM(Order $order): bool
+    {
+        return \Db::getInstance()->getValue(
+            "select exists(select 1 from " . _DB_PREFIX_ . "order_history where id_order = {$order->id} and id_order_state=38)"
+        ) > 0;
     }
 }
