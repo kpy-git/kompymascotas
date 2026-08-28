@@ -922,9 +922,9 @@ class OrderAqua
 
     private function getArrayWithAquaInfoPayment(string $formaPago): array
     {
-        $sql = "SELECT Isnull(DATFP01.CUENTA,'') AS CUENTA, IsNull(DATFP01.TIPOEFECTO,'') AS EFECTO
-                FROM DATFP01 WITH (NOLOCK)
-                WHERE DATFP01.NUMERO='{$formaPago}'";
+        $sql = "SELECT Isnull(DATFP03.CUENTA,'') AS CUENTA, IsNull(DATFP03.TIPOEFECTO,'') AS EFECTO
+                FROM DATFP03 WITH (NOLOCK)
+                WHERE DATFP03.NUMERO='{$formaPago}'";
 
         $result = $this->aqua->getRow($sql);
 
