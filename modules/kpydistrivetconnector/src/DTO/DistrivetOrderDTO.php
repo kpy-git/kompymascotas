@@ -51,6 +51,8 @@ class DistrivetOrderDTO implements \JsonSerializable
             "YourReference" => (string)$this->orderId,
             ...$this->receipt->toArray(),
             'Items' => array_map(static fn (DistrivetProductOrderDTO $product): array => $product->toArray(), $this->products),
+            "ShippingAgentCode" => \Configuration::get('KPY_DISTRIVET_AGENT_CODE') ?: '',
+            "ShippingServiceCode" => \Configuration::get('KPY_DISTRIVET_SERVICE_CODE') ?: '',
         ];
 
         if (!empty($this->notes)) {

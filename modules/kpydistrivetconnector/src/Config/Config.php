@@ -17,4 +17,8 @@ class Config
     public const bool DEBUG_MODE = true;
 
     public const string DISTRIVET_OS = 'KPY_DISTRIVET_OS';
+
+    public const string KPY_DISTRIVET_AGENT_CODE = 'KPY_DISTRIVET_AGENT_CODE';
+
+    public const string KPY_DISTRIVET_SERVICE_CODE = 'KPY_DISTRIVET_SERVICE_CODE';
 }

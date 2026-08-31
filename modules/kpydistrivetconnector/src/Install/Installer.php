@@ -99,6 +99,14 @@ class Installer
         if (!\Configuration::get(Config::KPY_DISTRIVET_API_AUTH_PATH)) {
             \Configuration::updateValue(Config::KPY_DISTRIVET_API_AUTH_PATH, '');
         }
+
+        if (!\Configuration::get(Config::KPY_DISTRIVET_AGENT_CODE)) {
+            \Configuration::updateValue(Config::KPY_DISTRIVET_AGENT_CODE, '');
+        }
+
+        if (!\Configuration::get(Config::KPY_DISTRIVET_SERVICE_CODE)) {
+            \Configuration::updateValue(Config::KPY_DISTRIVET_SERVICE_CODE, '');
+        }
     }
 
     private function deleteConfigurations(): void
@@ -108,6 +116,8 @@ class Installer
         \Configuration::deleteByName(Config::KPY_DISTRIVET_MANUFACTURERS);
         \Configuration::deleteByName(Config::KPY_DISTRIVET_API_AUTH_PATH);
         \Configuration::deleteByName(Config::KPY_DISTRIVET_API_DOMAIN);
+        \Configuration::deleteByName(Config::KPY_DISTRIVET_AGENT_CODE);
+        \Configuration::deleteByName(Config::KPY_DISTRIVET_SERVICE_CODE);
     }
 
     private function createOrderStates(\Module $module): void
