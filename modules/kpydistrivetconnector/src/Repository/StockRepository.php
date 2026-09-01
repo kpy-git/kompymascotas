@@ -14,6 +14,8 @@ class StockRepository
             return;
         }
 
+
+
         \Db::getInstance()->execute("TRUNCATE TABLE `" . _DB_PREFIX_ . "kpy_distrivet_stock`");
 
         \Db::getInstance()->insert('kpy_distrivet_stock', array_map(
@@ -24,7 +26,7 @@ class StockRepository
                     'stock' => $product->getStock(),
                     'distrivet_id' => $product->getDistrivetId(),
                     'date_update' => $product->getUpdatedAt()->format('Y-m-d H:i:s'),
-                    'distrivet_name' => $product->getDistrivetName(),
+                    'distrivet_name' => pSQL($product->getDistrivetName()),
                 ];
             }, $stockDistrivet));
 
