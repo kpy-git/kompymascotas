@@ -98,7 +98,7 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
         // en la clase CartProductLazyArray debería cargar correctamente el mensaje, pero no lo hace
         // getCombinationSpecificData sólo obtiene el nombre del atributo (manda webs)
         $availabilityMessage = $product['stock_quantity'] >= $product['quantity']
-            ? $productAvailabilityMessageHandler->getMessageInStock()
+            ? $productAvailabilityMessageHandler->getMessageInStock($product['id_manufacturer'])
             : $productAvailabilityMessageHandler->getMessageOutStock($product['id_manufacturer'], $product['id_product'], $product['id_product_attribute']);
 
         $this->context->smarty->assign([
@@ -124,7 +124,7 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
 
         return [
             'kpyproductavailabilitymessage' => $product->quantity >= $product->cart_quantity + $product->quantity_wanted
-                ? $productAvailabilityMessageHandler->getMessageInStock()
+                ? $productAvailabilityMessageHandler->getMessageInStock($product->id_manufacturer)
                 : $productAvailabilityMessageHandler->getMessageOutStock($product->id_manufacturer, $product->id, $product->id_product_attribute),
         ];
     }

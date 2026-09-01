@@ -51,9 +51,15 @@ class ProductAvailabilityMessagesHandler
         ) ?: '';
     }
 
-    public function getMessageInStock(): string
+    public function getMessageInStock(int $manufacturerId): string
     {
-        $start = (int)date('H') < 12 ? time() : $this->workingDaysManager->getNextWorkingDayTo(time());
+        $distrivetBrands = json_decode(\Configuration::get('KPY_DISTRIVET_MANUFACTURERS'), true);
+
+        $limit = !in_array($manufacturerId, $distrivetBrands) ? 12 : 6;
+
+        $start = $this->workingDaysManager->isWorkingDay(time()) && (int)date('H') < $limit
+            ? time() // se prepara el mismo día
+            : $this->workingDaysManager->getNextWorkingDayTo(time()); // se prepara el día siguiente
 
         $start = $this->workingDaysManager->getNextWorkingDayTo($start);
         $final = $this->workingDaysManager->getNextWorkingDayTo($start);
@@ -69,7 +75,7 @@ class ProductAvailabilityMessagesHandler
             return $manualAvailabilityMessageByProduct;
         }
 
-        $groupA = [3, 77, 78, 75, 48, 49, 13, 203, 121, 58]; // RC, Dingo, Acana, Orijen , TOW, ANC Fresh
+        $groupA = [3, 77, 78, 75, 203, 121, 58]; // RC, Dingo, ANC Fresh
         $groupB = [93, 173,]; // Natural Greatness, Alpha Spirit
         $montilla = [4, 27, 199]; // Advance, Libra, Natures Variety
 
