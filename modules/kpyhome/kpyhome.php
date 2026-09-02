@@ -92,7 +92,7 @@ class KpyHome extends Module
         if (!$this->isCached($this->template, $this->getCacheId($this->name))) {
             $variables = [
                 'module_img' => $this->getPathUri() . 'views/img/',
-                'best_products' => $this->getProductsForTemplate([7214, 649, 3312, 7103, 661, 3223, 9208]),
+                'best_products' => $this->getProductsForTemplate([7214, 649, 7103, 661, 3223, 9208]),
                 'alternative_products' => $this->getProductsForTemplate([9026, 545, 2702, 7043, 8307, 661]),
                 'comments' => [
                     'comments' => $this->getComments(),
