@@ -973,7 +973,7 @@ class OrderAqua
 
     public function getTotalIva(): float
     {
-        return $this->total_iva;
+        return round($this->total_iva, 6);
     }
 
     public function getProductos(): array
