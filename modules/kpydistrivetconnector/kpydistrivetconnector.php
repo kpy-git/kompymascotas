@@ -79,7 +79,7 @@ class KpyDistrivetConnector extends Module
         return true;
     }
 
-    public function hookActionKpyOrderDispatched(array $params): void
+    public function hookActionKpyOrderWarehouseSelected(array $params): void
     {
         if ($params['warehouse'] !== 'DISTRIVET') {
             return;

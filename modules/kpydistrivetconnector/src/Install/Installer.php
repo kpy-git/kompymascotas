@@ -12,7 +12,7 @@ use PrestaShopBundle\Install\SqlLoader;
 class Installer
 {
     private array $hooks = [
-        'actionKpyOrderDispatched',
+        'actionKpyOrderWarehouseSelected',
     ];
 
     /**
