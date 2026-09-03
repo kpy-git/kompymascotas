@@ -1143,7 +1143,7 @@ class OrderAqua
 
     public function getVolumen(): float
     {
-        return $this->volumen;
+        return round($this->volumen, 2);
     }
 
     public function getSinFactura(): int
