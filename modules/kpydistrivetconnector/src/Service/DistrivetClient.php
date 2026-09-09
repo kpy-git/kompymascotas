@@ -121,4 +121,36 @@ class DistrivetClient
             throw new KpyDistrivetException($e->getMessage() . "\n" . $e->getResponse()->toArray(false)['message'] ?? '', $e->getCode(), $e);
         }
     }
+
+    /**
+     * @throws KpyDistrivetException
+     */
+    public function getTrackingNumber(int $distrivetOrderId): string
+    {
+        try {
+            $response = $this->client->request('GET', $this->apiDomain . '/v1/shipments', [
+                'auth_bearer' => $this->getAccessToken(),
+                'query' => [
+                    'YourOrderNo' => $distrivetOrderId,
+                ],
+            ]);
+
+            if ($response->getStatusCode() !== 200) {
+                // los pedidos que aún no están disopnibles para consultar el envío devuelve un error 500... xd
+                return '';
+            }
+
+            $data = $response->toArray();
+
+            if (Config::DEBUG_MODE) {
+                DistrivetLogger::logResponse($response);
+            }
+
+            return $data['data'][0]['PackageTracking'] ?? '';
+
+        } catch (RedirectionExceptionInterface|DecodingExceptionInterface|ClientExceptionInterface|TransportExceptionInterface|ServerExceptionInterface $e) {
+            DistrivetLogger::logResponse($e->getResponse());
+            throw new KpyDistrivetException($e->getMessage() . "\n" . $e->getResponse()->toArray(false)['message'] ?? '', $e->getCode(), $e);
+        }
+    }
 }

@@ -22,4 +22,18 @@ class OrderRepository
                     FROM " . _DB_PREFIX_ . "message 
                     WHERE private = 0 and id_order = {$orderId}") ?: "";
     }
+
+    public function getDistrivetOrderId(int $orderId): string
+    {
+        return \Db::getInstance()->getValue(
+            "SELECT distrivet_order_id FROM " . _DB_PREFIX_ . "kpy_distrivet_orders WHERE id_order = {$orderId}"
+        ) ?: '';
+    }
+
+    public function getDistrivetShipmentId(int $orderId): string
+    {
+        return \Db::getInstance()->getValue(
+            "SELECT distrivet_shipment_id FROM " . _DB_PREFIX_ . "kpy_distrivet_orders WHERE id_order = {$orderId}"
+        ) ?: '';
+    }
 }

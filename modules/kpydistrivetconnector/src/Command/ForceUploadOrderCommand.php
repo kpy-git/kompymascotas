@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'kpydistrivetconnector:upload-order', description: 'Fuerza la subida de un pedido a la API de Distrivet')]
+#[AsCommand(name: 'kpydistrivetconnector:order:upload', description: 'Fuerza la subida de un pedido a la API de Distrivet')]
 class ForceUploadOrderCommand extends Command
 {
     use ContextInitializerTrait;

@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS `PREFIX_kpy_distrivet_orders` (
     `id_order` int unsigned not null,
     `uploaded_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `distrivet_order_id` VARCHAR(20) NOT NULL,
+    `distrivet_shipment_id` VARCHAR(50),
     PRIMARY KEY(`id_order`)
 )ENGINE=ENGINE_TYPE;
