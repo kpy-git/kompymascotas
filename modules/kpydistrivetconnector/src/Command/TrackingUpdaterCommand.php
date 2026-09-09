@@ -60,6 +60,7 @@ class TrackingUpdaterCommand extends Command
             //$order->setCurrentState(35); // Preparado para el envío
 
             $io->success(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber, $idOrder));
+            $orderRepository->saveTrackingNumber($idOrder, $trackingNumber);
 
             return Command::SUCCESS;
 

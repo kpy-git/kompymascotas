@@ -36,4 +36,11 @@ class OrderRepository
             "SELECT distrivet_shipment_id FROM " . _DB_PREFIX_ . "kpy_distrivet_orders WHERE id_order = {$orderId}"
         ) ?: '';
     }
+
+    public function saveTrackingNumber(int $orderId, string $trackingNumber): void
+    {
+        \Db::getInstance()->update('order_carrier', [
+            'tracking_number' => $trackingNumber,
+        ], 'id_order = ' . $orderId);
+    }
 }
