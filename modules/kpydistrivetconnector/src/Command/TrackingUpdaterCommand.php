@@ -6,6 +6,7 @@ use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetException;
 use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetShipmentNotFoundException;
 use PrestaShop\Module\KpyDistrivetConnector\Repository\OrderRepository;
 use PrestaShop\Module\KpyDistrivetConnector\Service\DistrivetClient;
+use PrestaShop\PrestaShop\Adapter\LegacyContextLoader;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -16,11 +17,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand('kpydistrivetconnector:order:tracking-update', description: 'Update the tracking number provided by Distrivet')]
 class TrackingUpdaterCommand extends Command
 {
-    use ContextInitializerTrait;
-
-    protected function initialize(InputInterface $input, OutputInterface $output): void
-    {
-        $this->initializeContext();
+    public function __construct(
+        private readonly LegacyContextLoader $legacyContextLoader,
+    ) {
+        parent::__construct();
     }
 
     protected function configure(): void
@@ -52,12 +52,15 @@ class TrackingUpdaterCommand extends Command
 
             $trackingNumber = $distrivetClient->getTrackingNumber($distrivetOrderId);
 
-            $order = new \Order($idOrder);
-            //$order->setCurrentState(35); // Preparado para el envío
-
-            $io->success(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber->getTrackingNumber(), $idOrder));
             $orderRepository->saveTrackingNumber($idOrder, $trackingNumber->getTrackingNumber());
             $orderRepository->saveShipmentId($idOrder, $trackingNumber->getShipmentId());
+
+            $this->legacyContextLoader->loadGenericContext();
+
+            $order = new \Order($idOrder);
+            $order->setCurrentStateWithDate(35); // Preparado para el envío
+
+            $io->success(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber->getTrackingNumber(), $idOrder));
 
             return Command::SUCCESS;
 
