@@ -6,5 +6,7 @@ services:
     tags:
       - { name: 'console.command' }
   PrestaShop\Module\KpyDistrivetConnector\Command\TrackingUpdaterCommand:
+    arguments:
+      $legacyContextLoader: '@prestashop.adapter.legacy_context_loader'
     tags:
       - { name: 'console.command' }
