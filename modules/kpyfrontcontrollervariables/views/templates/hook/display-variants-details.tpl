@@ -1,0 +1,1 @@
+<div class="product-miniature__variants"><strong>opciones:</strong> {$kpy_variants|truncate:30:"...":true}</div>
