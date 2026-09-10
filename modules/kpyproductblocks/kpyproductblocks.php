@@ -147,9 +147,11 @@ class KpyProductBlocks extends Module implements WidgetInterface
             return '';
         }
 
-        return $this->fetch('module:' . $this->name . '/views/templates/hook/unit-price.tpl', [
+        $this->smarty->assign( [
             'unit_price' => round($price / $weight, 2),
         ]);
+        
+        return $this->fetch('module:' . $this->name . '/views/templates/hook/unit-price.tpl');
 
     }
 
