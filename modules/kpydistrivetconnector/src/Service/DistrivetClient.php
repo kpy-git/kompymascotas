@@ -4,7 +4,9 @@ namespace PrestaShop\Module\KpyDistrivetConnector\Service;
 
 use PrestaShop\Module\KpyDistrivetConnector\Config\Config;
 use PrestaShop\Module\KpyDistrivetConnector\DTO\DistrivetOrderDTO;
+use PrestaShop\Module\KpyDistrivetConnector\DTO\DistrivetTrackingDTO;
 use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetException;
+use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetShipmentNotFoundException;
 use PrestaShop\Module\KpyDistrivetConnector\Logger\DistrivetLogger;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -125,7 +127,7 @@ class DistrivetClient
     /**
      * @throws KpyDistrivetException
      */
-    public function getTrackingNumber(int $distrivetOrderId): string
+    public function getTrackingNumber(int $distrivetOrderId): DistrivetTrackingDTO
     {
         try {
             $response = $this->client->request('GET', $this->apiDomain . '/v1/shipments', [
@@ -136,8 +138,8 @@ class DistrivetClient
             ]);
 
             if ($response->getStatusCode() !== 200) {
-                // los pedidos que aún no están disopnibles para consultar el envío devuelve un error 500... xd
-                return '';
+                // Los pedidos que aún no están disponibles para consultar el envío devuelve un error 500... xd
+                throw new KpyDistrivetShipmentNotFoundException('Shipment not found');
             }
 
             $data = $response->toArray();
@@ -146,7 +148,7 @@ class DistrivetClient
                 DistrivetLogger::logResponse($response);
             }
 
-            return $data['data'][0]['PackageTracking'] ?? '';
+            return new DistrivetTrackingDTO($data['data'][0]['PackageTracking'] ?? '', $data['data'][0]['ShipmentNo']);
 
         } catch (RedirectionExceptionInterface|DecodingExceptionInterface|ClientExceptionInterface|TransportExceptionInterface|ServerExceptionInterface $e) {
             DistrivetLogger::logResponse($e->getResponse());

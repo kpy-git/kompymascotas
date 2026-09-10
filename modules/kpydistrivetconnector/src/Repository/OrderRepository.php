@@ -43,4 +43,11 @@ class OrderRepository
             'tracking_number' => $trackingNumber,
         ], 'id_order = ' . $orderId);
     }
+
+    public function saveShipmentId(int $orderId, string $shipmentId): void
+    {
+        \Db::getInstance()->update('kpy_distrivet_orders', [
+            'distrivet_shipment_id' => $shipmentId,
+        ], 'id_order = ' . $orderId);
+    }
 }

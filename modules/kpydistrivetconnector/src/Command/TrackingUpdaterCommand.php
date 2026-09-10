@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\KpyDistrivetConnector\Command;
 
 use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetException;
+use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetShipmentNotFoundException;
 use PrestaShop\Module\KpyDistrivetConnector\Repository\OrderRepository;
 use PrestaShop\Module\KpyDistrivetConnector\Service\DistrivetClient;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -51,17 +52,17 @@ class TrackingUpdaterCommand extends Command
 
             $trackingNumber = $distrivetClient->getTrackingNumber($distrivetOrderId);
 
-            if (empty($trackingNumber)) {
-                $io->warning('El trackingnumber aún no está disponible');
-                return Command::SUCCESS;
-            }
-
             $order = new \Order($idOrder);
             //$order->setCurrentState(35); // Preparado para el envío
 
-            $io->success(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber, $idOrder));
-            $orderRepository->saveTrackingNumber($idOrder, $trackingNumber);
+            $io->success(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber->getTrackingNumber(), $idOrder));
+            $orderRepository->saveTrackingNumber($idOrder, $trackingNumber->getTrackingNumber());
+            $orderRepository->saveShipmentId($idOrder, $trackingNumber->getShipmentId());
 
+            return Command::SUCCESS;
+
+        } catch (KpyDistrivetShipmentNotFoundException $exception) {
+            $io->warning($exception->getMessage());
             return Command::SUCCESS;
 
         } catch (KpyDistrivetException $e) {
