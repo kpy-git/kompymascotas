@@ -55,7 +55,10 @@ class TrackingUpdaterCommand extends Command
             $orderRepository->saveTrackingNumber($idOrder, $trackingNumber->getTrackingNumber());
             $orderRepository->saveShipmentId($idOrder, $trackingNumber->getShipmentId());
 
-            $this->legacyContextLoader->loadGenericContext();
+            $this->legacyContextLoader->loadEmployeeContext();
+            $context =  \Context::getContext();
+            $context->employee->id = 0;
+            $context->employee->id_profile = 1;
 
             $order = new \Order($idOrder);
             $order->setCurrentStateWithDate(35); // Preparado para el envío
