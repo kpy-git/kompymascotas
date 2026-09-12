@@ -60,6 +60,9 @@
 !/modules/kpydistrivetconnector/
 !/modules/kpydistrivetconnector/**
 
+!/modules/kpyevolutionpets/
+!/modules/kpyevolutionpets/**
+
 !/modules/kpyfaq/
 !/modules/kpyfaq/**
 
