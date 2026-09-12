@@ -4,6 +4,7 @@ namespace PrestaShop\Module\KpyOrderDispatcher\Service;
 
 use Order;
 use PrestaShop\Module\KpyDistrivetConnector\Service\DistrivetOrderGuard;
+use PrestaShop\Module\KpyEvolutionPets\Service\EvolutionOrderGuard;
 use PrestaShop\Module\NeftysFarmaConnector\Guard\OrderGuard;
 
 class OrderDispatcher
@@ -15,6 +16,7 @@ class OrderDispatcher
         $warehouse = match (true) {
             OrderGuard::isNeftysFarmaOrder($order) => 'NEFTYS',
             DistrivetOrderGuard::isDistrivetOrder($order) => 'DISTRIVET',
+            EvolutionOrderGuard::isEvolutionOrder($order) => 'EVOLUTION_PETS',
             default => 'TIENDA',
         };
 
