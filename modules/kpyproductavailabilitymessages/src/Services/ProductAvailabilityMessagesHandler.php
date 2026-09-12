@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PrestaShop\Module\KpyProductAvailabilityMessages\Services;
 
 use Db;
+use PrestaShop\Module\KpyEvolutionPets\Config\Config;
 
 class ProductAvailabilityMessagesHandler
 {
@@ -54,8 +55,13 @@ class ProductAvailabilityMessagesHandler
     public function getMessageInStock(int $manufacturerId): string
     {
         $distrivetBrands = json_decode(\Configuration::get('KPY_DISTRIVET_MANUFACTURERS'), true);
+        $evolutionBrands = json_decode(\Configuration::get(Config::KPY_EVOLUTION_BRANDS), true);
 
-        $limit = !in_array($manufacturerId, $distrivetBrands) ? 12 : 6;
+        $limit = match (true) {
+            in_array($manufacturerId, $evolutionBrands)  => 8,
+            in_array($manufacturerId, $distrivetBrands)  => 6,
+            default => 12,
+        };
 
         $start = $this->workingDaysManager->isWorkingDay(time()) && (int)date('H') < $limit
             ? time() // se prepara el mismo día
@@ -75,13 +81,18 @@ class ProductAvailabilityMessagesHandler
             return $manualAvailabilityMessageByProduct;
         }
 
+        // mientras el stock no esté sincronizado todos los productos de Evolutions tienen la misma fecha tengan stock o no
+        $evolutionBrands = json_decode(\Configuration::get(Config::KPY_EVOLUTION_BRANDS), true);
+        if (in_array($manufacturerId, $evolutionBrands)) {
+            return $this->getMessageInStock($manufacturerId);
+        }
+
         $groupA = [3, 77, 78, 75, 203, 121, 58]; // RC, Dingo, ANC Fresh
-        $groupB = [93, 173,]; // Natural Greatness, Alpha Spirit
         $montilla = [4, 27, 199]; // Advance, Libra, Natures Variety
 
-        if (!in_array($manufacturerId, array_merge($groupA, $groupB, $montilla), true)) {
+        /*if (!in_array($manufacturerId, array_merge($groupA, $groupB, $montilla), true)) {
             return 'Disponible próximamente';
-        }
+        }*/
 
         if (in_array($manufacturerId, $groupA, true)) {
             // si es antes de las 11 se puede hacer el pedido el mismo día, si no el siguiente laborable
@@ -122,9 +133,11 @@ class ProductAvailabilityMessagesHandler
             return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
         }
 
+        return 'Disponible próximamente';
+
         // groupB
         // si es lunes antes de la 10 se puede hacer el pedido hoy, si no el siguiente lunes
-        $start = (int)date('N') === 1 && (int)date('H') < 11 ? time() : strtotime('next Monday');
+        /*$start = (int)date('N') === 1 && (int)date('H') < 11 ? time() : strtotime('next Monday');
 
         if (!$this->workingDaysManager->isWorkingDay($start)) {
             $start = $this->workingDaysManager->getNextWorkingDayTo($start);
@@ -134,7 +147,7 @@ class ProductAvailabilityMessagesHandler
         $start = $this->workingDaysManager->addWorkingDaysToTimestamp($start, 2);
         $final = $this->workingDaysManager->getNextWorkingDayTo($start);
 
-        return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
+        return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);*/
 
     }
 
