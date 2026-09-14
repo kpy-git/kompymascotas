@@ -438,6 +438,9 @@ class AquaOrderController
 
         $usuario = AquaConfig::USUARIO;
         $almacen = $order->getAlmacen();
+        if ($almacen === 'EVOLUTION_PETS') {
+            $almacen = 'EVOLUTION';
+        }
 
         $precisionTotales = AquaConfig::PRECISION_TOTALES;
         $precisionLinea = AquaConfig::PRECISION_LINEA;
