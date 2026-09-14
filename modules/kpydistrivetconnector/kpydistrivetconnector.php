@@ -100,7 +100,7 @@ class KpyDistrivetConnector extends Module
                 DistrivetLogger::logOrder($distrivetOrder, $this->getLocalPath());
             }
 
-            $order->setCurrentState(\Configuration::get(Config::DISTRIVET_OS));
+            $order->setCurrentState((int)\Configuration::get(Config::DISTRIVET_OS));
 
             $orderRepository = new OrderRepository();
             $orderRepository->save($distrivetOrder, $distrivetOrderId);
