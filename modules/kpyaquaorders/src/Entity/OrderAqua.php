@@ -963,7 +963,7 @@ class OrderAqua
 
     public function getTotalConIva(): float
     {
-        return $this->total_con_iva;
+        return round($this->total_con_iva, 6);
     }
 
     public function getTotalSinIva(): float
@@ -998,107 +998,107 @@ class OrderAqua
 
     public function getTotalArticulos(): float
     {
-        return $this->total_articulos;
+        return round($this->total_articulos, 6);
     }
 
     public function getTotalServicios(): float
     {
-        return $this->total_servicios;
+        return round($this->total_servicios, 6);
     }
 
     public function getTotalTarifa(): float
     {
-        return $this->total_tarifa;
+        return round($this->total_tarifa, 6);
     }
 
     public function getTotalRecargo(): float
     {
-        return $this->total_recargo;
+        return round($this->total_recargo, 6);
     }
 
     public function getBaseRecargo4(): float
     {
-        return $this->base_recargo_4;
+        return round($this->base_recargo_4, 6);
     }
 
     public function getBaseRecargo10(): float
     {
-        return $this->base_recargo_10;
+        return round($this->base_recargo_10, 6);
     }
 
     public function getBaseRecargo21(): float
     {
-        return $this->base_recargo_21;
+        return round($this->base_recargo_21, 6);
     }
 
     public function getBaseIva4(): float
     {
-        return $this->base_iva_4;
+        return round($this->base_iva_4, 6);
     }
 
     public function getBaseIva6(): float
     {
-        return $this->base_iva_6;
+        return round($this->base_iva_6, 6);
     }
 
     public function getBaseIva10(): float
     {
-        return $this->base_iva_10;
+        return round($this->base_iva_10, 6);
     }
 
     public function getBaseIva21(): float
     {
-        return $this->base_iva_21;
+        return round($this->base_iva_21, 6);
     }
 
     public function getBaseIva20(): float
     {
-        return $this->base_iva_20;
+        return round($this->base_iva_20, 6);
     }
 
     public function getBaseIva22(): float
     {
-        return $this->base_iva_22;
+        return round($this->base_iva_22, 6);
     }
 
     public function getBaseIva23(): float
     {
-        return $this->base_iva_23;
+        return round($this->base_iva_23, 6);
     }
 
     public function getTotalIva4(): float
     {
-        return $this->total_iva_4;
+        return round($this->total_iva_4, 6);
     }
 
     public function getTotalIva6(): float
     {
-        return $this->total_iva_6;
+        return round($this->total_iva_6, 6);
     }
 
     public function getTotalIva10(): float
     {
-        return $this->total_iva_10;
+        return round($this->total_iva_10, 6);
     }
 
     public function getTotalIva21(): float
     {
-        return $this->total_iva_21;
+        return round($this->total_iva_21, 6);
     }
 
     public function getTotalIva20(): float
     {
-        return $this->total_iva_20;
+        return round($this->total_iva_20, 6);
     }
 
     public function getTotalIva22(): float
     {
-        return $this->total_iva_22;
+        return round($this->total_iva_22, 6);
     }
 
     public function getTotalIva23(): float
     {
-        return $this->total_iva_23;
+        return round($this->total_iva_23, 6);
     }
 
     public function getFechaPedido(): string
@@ -1138,7 +1138,7 @@ class OrderAqua
 
     public function getPeso(): float
     {
-        return $this->peso;
+        return round($this->peso, 6);
     }
 
     public function getVolumen(): float
