@@ -202,9 +202,10 @@ class OrderAqua
                     ON m.id_order=o.id_order 
                 WHERE m.message NOT LIKE '%payment%' 
                     AND m.message NOT LIKE '%transaccion%' 
+                    AND m.private = 0
                     AND o.id_order =" . $orderId);
 
-        return empty($results) ? '' : mb_strtoupper(trim($results['message1'] . " " . $results['message2']));
+        return empty($results) ? '' : mb_strtoupper(trim(preg_replace('/[^\p{L}\p{N}\s.,\-_\/]/u', '', $results['message1'] . " " . $results['message2'])));
     }
 
     public function cambiarIdOrder($id_order): void
