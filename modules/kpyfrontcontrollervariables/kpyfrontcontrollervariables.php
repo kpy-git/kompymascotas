@@ -63,6 +63,9 @@ class KpyFrontControllerVariables extends Module
 
             $variantsWithoutPacks = array_column(array_filter($variants, static fn(array $pack) => $pack['is_pack'] === 'no'), 'weight');
 
+            if (empty($variantsWithoutPacks)) {
+                return '';
+            }
             $minWeight = $this->formatWeight(min($variantsWithoutPacks));
             $maxWeight = $this->formatWeight(max($variantsWithoutPacks));
 
