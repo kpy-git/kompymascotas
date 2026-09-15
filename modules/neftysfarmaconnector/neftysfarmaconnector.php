@@ -94,7 +94,7 @@ class NeftysFarmaConnector extends Module
         // TODO - cuando algún producto no tenga stock (Boske sobre todo) poner el estado 37
         /** @var PrestaShop\Module\NeftysFarmaConnector\DTO\NeftysProduct $product */
         foreach ($productsWithoutPacks as $product) {
-            if ($product->getProductId() === 8852 || $product->getProductId() === 8300) {
+            if ($product->getProductId() === 8300) {
                 $order->setCurrentStateWithDate(
                     37,
                     date('Y-m-d H:i:s')
