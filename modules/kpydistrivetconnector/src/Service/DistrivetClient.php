@@ -139,7 +139,7 @@ class DistrivetClient
 
             if ($response->getStatusCode() !== 200) {
                 // Los pedidos que aún no están disponibles para consultar el envío devuelve un error 500... xd
-                throw new KpyDistrivetShipmentNotFoundException('Shipment not found');
+                throw new KpyDistrivetShipmentNotFoundException('Shipment not found for order ' . $distrivetOrderId);
             }
 
             $data = $response->toArray();

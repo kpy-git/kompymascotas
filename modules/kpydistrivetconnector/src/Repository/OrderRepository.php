@@ -2,6 +2,7 @@
 
 namespace PrestaShop\Module\KpyDistrivetConnector\Repository;
 
+use PrestaShop\Module\KpyDistrivetConnector\Config\Config;
 use PrestaShop\Module\KpyDistrivetConnector\DTO\DistrivetOrderDTO;
 
 class OrderRepository
@@ -49,5 +50,23 @@ class OrderRepository
         \Db::getInstance()->update('kpy_distrivet_orders', [
             'distrivet_shipment_id' => $shipmentId,
         ], 'id_order = ' . $orderId);
+    }
+
+    public function getOrdersPendingFulfillment(): array
+    {
+        $results = \Db::getInstance()->executeS(
+            "select kod.distrivet_order_id
+                from " . _DB_PREFIX_ . "orders o
+                inner join " . _DB_PREFIX_ . "kpy_distrivet_orders kod
+                    on kod.id_order = o.id_order
+                where kod.distrivet_shipment_id is null 
+                    and o.current_state = " . (int)\Configuration::get(Config::DISTRIVET_OS) . "
+                order by o.id_order");
+
+        if (empty($results)) {
+            return [];
+        }
+
+        return array_map(static fn ($row): int => $row["distrivet_order_id"], $results);
     }
 }
