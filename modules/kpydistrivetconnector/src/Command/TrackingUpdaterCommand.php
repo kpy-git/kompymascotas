@@ -41,9 +41,9 @@ class TrackingUpdaterCommand extends Command
             return Command::FAILURE;
         }
 
-        try {
-            $orderRepository = new OrderRepository();
+        $orderRepository = new OrderRepository();
 
+        try {
             if ($idOrder !== false) {
                 $distrivetOrderId = $orderRepository->getDistrivetOrderId($idOrder);
 
@@ -61,26 +61,27 @@ class TrackingUpdaterCommand extends Command
             foreach ($distrivetOrders as $distrivetOrder) {
                 $distrivetClient = new DistrivetClient();
 
-                $trackingNumber = $distrivetClient->getTrackingNumber($distrivetOrder);
+                try {
+                    $trackingNumber = $distrivetClient->getTrackingNumber($distrivetOrder);
 
-                $orderRepository->saveTrackingNumber($idOrder, $trackingNumber->getTrackingNumber());
-                $orderRepository->saveShipmentId($idOrder, $trackingNumber->getShipmentId());
+                    $orderRepository->saveTrackingNumber($idOrder, $trackingNumber->getTrackingNumber());
+                    $orderRepository->saveShipmentId($idOrder, $trackingNumber->getShipmentId());
 
-                $this->legacyContextLoader->loadEmployeeContext();
-                $context = \Context::getContext();
-                $context->employee->id = 0;
-                $context->employee->id_profile = 1;
+                    $this->legacyContextLoader->loadEmployeeContext();
+                    $context = \Context::getContext();
+                    $context->employee->id = 0;
+                    $context->employee->id_profile = 1;
 
-                $order = new \Order($idOrder);
-                $order->setCurrentStateWithDate(35); // Preparado para el envío
+                    $order = new \Order($idOrder);
+                    $order->setCurrentStateWithDate(35); // Preparado para el envío
 
-                $io->writeln(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber->getTrackingNumber(), $idOrder));
+                    $io->writeln(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber->getTrackingNumber(), $idOrder));
+
+                } catch (KpyDistrivetShipmentNotFoundException $exception) {
+                    $io->warning($exception->getMessage());
+                }
             }
 
-            return Command::SUCCESS;
-
-        } catch (KpyDistrivetShipmentNotFoundException $exception) {
-            $io->warning($exception->getMessage());
             return Command::SUCCESS;
 
         } catch (KpyDistrivetException $e) {
