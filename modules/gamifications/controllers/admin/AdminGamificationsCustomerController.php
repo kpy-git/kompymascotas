@@ -163,8 +163,7 @@ class AdminGamificationsCustomerController extends GamificationsAdminController
             'legend' => [
                 'title' => $this->trans('Edit', [], 'Modules.Gamifications.Admin'),
             ],
-            'description' => $this
-                ->l('Some fields are disabled, they only provide information about customer and cannot be changed.'),
+            'description' => $this->trans('Some fields are disabled, they only provide information about customer and cannot be changed.', [], 'Modules.Gamifications.Admin'),
             'input' => [
                 [
                     'label' => $this->trans('Email', [], 'Modules.Gamifications.Admin'),

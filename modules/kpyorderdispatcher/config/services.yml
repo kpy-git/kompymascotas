@@ -2,3 +2,8 @@ services:
   PrestaShop\Module\KpyOrderDispatcher\ConsoleCommand\DispatchOrder:
     tags:
       - {name: 'console.command'}
+  PrestaShop\Module\KpyOrderDispatcher\ConsoleCommand\OrderFinishedCommand:
+    arguments:
+      $legacyContextLoader: '@prestashop.adapter.legacy_context_loader'
+    tags:
+      - { name: 'console.command' }

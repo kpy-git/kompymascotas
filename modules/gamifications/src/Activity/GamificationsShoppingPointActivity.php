@@ -106,12 +106,16 @@ class GamificationsShoppingPointActivity
         }
 
         // si tiene una devolucion (y no está denegada) se le resta al total pagado lo que se ha devuelto
+
+        /*
+         * Por el momento no se generan devoluciones
+         *
         $totalPaid -= (float) Db::getInstance()->getValue("
             SELECT r.total
             FROM ps_pym_returns r
             WHERE r.id_order={$order->id}
                 and not exists(SELECT * from ps_pym_return_history rh where r.id_return = rh.id_return and rh.id_return_state=96)");
-
+        */
         $totalPaid = floor($totalPaid);
 
         $earnedPoints = $shoppingPointPointsRatio * $totalPaid;
