@@ -16,4 +16,26 @@ class OrderRepository
 
         return array_map(static fn (array $row): int => $row['id_order'], $results);
     }
+
+    public function findOrdersToRequestReview(): array
+    {
+        // pedidos entregados en menos de 5 días desde que se realiza el pedido
+        $results = \Db::getInstance()->executeS(
+            "select o.id_order, DATE_FORMAT(oh.date_add, '%d-%m-%Y') as `date_shipped`, DATE_FORMAT(o.date_add, '%d-%m-%Y') as `date_add`
+                    from " . _DB_PREFIX_ . "orders o
+                    inner join " . _DB_PREFIX_ . "order_history oh
+                        on oh.id_order = o.id_order and o.current_state = oh.id_order_state
+                    where o.id_order > 866180
+                      and o.current_state = 5
+                      and o.total_paid > 0 and DATEDIFF(oh.date_add, o.date_add) <= 5"
+        );
+
+        return array_reduce($results, static function (array $carry, array $row): array {
+            $carry[$row['id_order']] = [
+                'date_add' => $row['date_add'],
+                'date_shipped' => $row['date_shipped'],
+            ];
+            return $carry;
+        }, []);
+    }
 }

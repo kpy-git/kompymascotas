@@ -7,3 +7,8 @@ services:
       $legacyContextLoader: '@prestashop.adapter.legacy_context_loader'
     tags:
       - { name: 'console.command' }
+  PrestaShop\Module\KpyOrderDispatcher\ConsoleCommand\OrdersRequestReview:
+    arguments:
+      $legacyContextLoader: '@prestashop.adapter.legacy_context_loader'
+    tags:
+      - { name: 'console.command' }
