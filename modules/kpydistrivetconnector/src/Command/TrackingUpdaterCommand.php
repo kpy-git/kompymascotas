@@ -52,27 +52,27 @@ class TrackingUpdaterCommand extends Command
                     return Command::SUCCESS;
                 }
 
-                $distrivetOrders = [$distrivetOrderId];
+                $distrivetOrders[$idOrder] = $distrivetOrderId;
 
             } else {
                 $distrivetOrders = $orderRepository->getOrdersPendingFulfillment();
             }
 
-            foreach ($distrivetOrders as $distrivetOrder) {
+            foreach ($distrivetOrders as $orderId => $distrivetOrder) {
                 $distrivetClient = new DistrivetClient();
 
                 try {
                     $trackingNumber = $distrivetClient->getTrackingNumber($distrivetOrder);
 
-                    $orderRepository->saveTrackingNumber($idOrder, $trackingNumber->getTrackingNumber());
-                    $orderRepository->saveShipmentId($idOrder, $trackingNumber->getShipmentId());
+                    $orderRepository->saveTrackingNumber($orderId, $trackingNumber->getTrackingNumber());
+                    $orderRepository->saveShipmentId($orderId, $trackingNumber->getShipmentId());
 
                     $this->legacyContextLoader->loadEmployeeContext();
                     $context = \Context::getContext();
                     $context->employee->id = 0;
                     $context->employee->id_profile = 1;
 
-                    $order = new \Order($idOrder);
+                    $order = new \Order($orderId);
                     $order->setCurrentStateWithDate(35); // Preparado para el envío
 
                     $io->writeln(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber->getTrackingNumber(), $idOrder));

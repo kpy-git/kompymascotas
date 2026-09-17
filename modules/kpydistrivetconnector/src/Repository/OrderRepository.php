@@ -55,7 +55,7 @@ class OrderRepository
     public function getOrdersPendingFulfillment(): array
     {
         $results = \Db::getInstance()->executeS(
-            "select kod.distrivet_order_id
+            "select kod.distrivet_order_id, o.id_order
                 from " . _DB_PREFIX_ . "orders o
                 inner join " . _DB_PREFIX_ . "kpy_distrivet_orders kod
                     on kod.id_order = o.id_order
@@ -67,6 +67,9 @@ class OrderRepository
             return [];
         }
 
-        return array_map(static fn ($row): int => $row["distrivet_order_id"], $results);
+        return array_reduce($results, static function (array $carry, array $row): array {
+            $carry[$row['id_order']] = $row["distrivet_order_id"];
+            return $carry;
+        }, []);
     }
 }
