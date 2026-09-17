@@ -25,6 +25,7 @@ class OrderRepository
                     from " . _DB_PREFIX_ . "orders o
                     inner join " . _DB_PREFIX_ . "order_history oh
                         on oh.id_order = o.id_order and o.current_state = oh.id_order_state
+                        and DATEDIFF(now(), oh.date_add) < 7
                     where o.id_order > 866180
                       and o.current_state = 5
                       and o.total_paid > 0 and DATEDIFF(oh.date_add, o.date_add) <= 5"
