@@ -39,7 +39,7 @@ class StockSynchronizer
 
                 $product = $kpyProductsByEAN[$stock['Barcode']];
 
-                if (!in_array($product['manufacturer'], $allowedManufacturers)) {
+                if (!in_array($product['manufacturer'], $allowedManufacturers) && !in_array((int)$product['id_product'], [9855, 9856,])) {
                     continue;
                 }
 
