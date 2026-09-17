@@ -75,7 +75,7 @@ class TrackingUpdaterCommand extends Command
                     $order = new \Order($orderId);
                     $order->setCurrentStateWithDate(35); // Preparado para el envío
 
-                    $io->writeln(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber->getTrackingNumber(), $idOrder));
+                    $io->writeln(sprintf("Tracking number updated successfully %s [%d]", $trackingNumber->getTrackingNumber(), $orderId));
 
                 } catch (KpyDistrivetShipmentNotFoundException $exception) {
                     $io->warning($exception->getMessage());
