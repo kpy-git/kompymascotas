@@ -126,7 +126,7 @@ class KpyProductFlags extends Module
                     ON f.id_flag = pf.id_flag
                 INNER JOIN " . _DB_PREFIX_ . "kpy_flag_lang fl ON fl.id_flag = pf.id_flag
                     AND fl.id_lang = {$this->context->language->id}
-                WHERE pf.id_product = $productId AND pf.id_product_attribute = $productAttributeId
+                WHERE pf.id_product = $productId AND (pf.id_product_attribute = $productAttributeId or pf.id_product_attribute=0)
                     and pf.active = 1
                     and ((pf.date_begin IS NULL AND pf.date_end IS NULL) OR
                         (pf.date_begin IS NULL AND NOW() < pf.date_end) OR
@@ -187,7 +187,7 @@ class KpyProductFlags extends Module
             INNER JOIN " . _DB_PREFIX_ . "product_attribute_combination pac
                 ON pac.id_product_attribute = pa.id_product_attribute
             INNER JOIN " . _DB_PREFIX_ . "kpy_product_flag pf
-                ON pf.id_product = pa.id_product AND pf.id_product_attribute = pa.id_product_attribute
+                ON pf.id_product = pa.id_product AND (pf.id_product_attribute = pa.id_product_attribute or pf.id_product_attribute=0)
             INNER JOIN " . _DB_PREFIX_ . "kpy_flag f
                 ON f.id_flag = pf.id_flag
             INNER JOIN " . _DB_PREFIX_ . "kpy_flag_lang fl ON fl.id_flag = pf.id_flag
