@@ -2783,7 +2783,7 @@ class Redsyspur extends PaymentModule {
 		$smartyVars['reference'] = $order->reference;
 		$smartyVars['redsysOrder'] = $orderDetails['redsys_order'];
 		/** Parámetros de la orden */
-		$smartyVars['shippingPaid'] = json_encode($shippingPaid);
+		//$smartyVars['shippingPaid'] = json_encode($shippingPaid);
 		$smartyVars['transactionType'] = $orderDetails['transaction_type'];
 		/** Importes de la orden */
 		$smartyVars['amountPaid'] = number_format(($orderDetails['confirmation_amount'] - $orderDetails['refund_amount'])/100, 2);
