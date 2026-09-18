@@ -7,7 +7,7 @@
         <div class="slider-container" id="promo-slider">
             <div class="slider-track">
                 {foreach from=$banners item=banner}
-                    <a href="{$banner.url}" class="slide"><img src="{$banners_path}/{$banner.image}" alt="{$banner.description}"></a>
+                    <a href="{$banner.url}" class="slide"><img src="{$banners_path}{$banner.image}" alt="{$banner.description}"></a>
                 {/foreach}
             </div>
 
