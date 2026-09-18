@@ -8,6 +8,7 @@ use PrestaShop\Module\NeftysFarmaConnector\Logger\NeftysFarmaLogger;
 use PrestaShop\Module\NeftysFarmaConnector\Exception\NeftysFarmaException;
 use PrestaShop\Module\NeftysFarmaConnector\Install\Installer;
 use PrestaShop\Module\NeftysFarmaConnector\Config\NeftysFarmaConfig;
+use PrestaShop\Module\NeftysFarmaConnector\Repository\NeftysFarmaStockRepository;
 use PrestaShop\Module\NeftysFarmaConnector\Service\NeftysFarmaOrderUploader;
 use PrestaShop\Module\NeftysFarmaConnector\Service\ProductFinder;
 
@@ -91,12 +92,13 @@ class NeftysFarmaConnector extends Module
             return;
         }
 
-        // TODO - cuando algún producto no tenga stock (Boske sobre todo) poner el estado 37
+        $stockRepository = new NeftysFarmaStockRepository();
+
         /** @var PrestaShop\Module\NeftysFarmaConnector\DTO\NeftysProduct $product */
         foreach ($productsWithoutPacks as $product) {
-            if ($product->getProductId() === 8300) {
+            if ($stockRepository->getStockByProduct($product->getProductId(), $product->getProductAttributeId()) < $product->getQuantity()) {
                 $order->setCurrentStateWithDate(
-                    37,
+                    37, // Sin stock en Neftys - Pendiente de reenviar
                     date('Y-m-d H:i:s')
                 );
                 return;

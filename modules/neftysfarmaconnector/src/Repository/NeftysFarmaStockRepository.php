@@ -91,4 +91,13 @@ class NeftysFarmaStockRepository
 
         return $productsByEan;
     }
+
+    public function getStockByProduct(int $productId, int $productAttributeId): int
+    {
+        return \Db::getInstance()->getValue(
+            "SELECT stock 
+            FROM " . _DB_PREFIX_ . NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE . " 
+            WHERE id_product=$productId and id_product_attribute=$productAttributeId",
+        ) ?: 0;
+    }
 }
