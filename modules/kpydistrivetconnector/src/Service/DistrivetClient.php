@@ -41,7 +41,7 @@ class DistrivetClient
     /**
      * @throws KpyDistrivetException
      */
-    public function getStock(int $pageSize = 10000): array
+    public function getStock(int $pageSize = 100000): array
     {
         try {
             $accessToken = $this->getAccessToken();
