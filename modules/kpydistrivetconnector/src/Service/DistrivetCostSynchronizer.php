@@ -23,9 +23,9 @@ class DistrivetCostSynchronizer
         $this->distrivetClient = new DistrivetClient();
     }
 
-    public function getProductsCost(): array
+    public function getProductsCost(int $limit): array
     {
-        $distrivetProducts = $this->stockRepository->findAllProductsByDistrivetId();
+        $distrivetProducts = $this->stockRepository->findAllProductsByDistrivetId($limit);
 
         $productsCosts = [];
 

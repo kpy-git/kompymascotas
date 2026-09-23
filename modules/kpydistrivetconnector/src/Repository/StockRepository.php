@@ -149,12 +149,12 @@ class StockRepository
         \Db::getInstance()->insert("kpy_distrivet_products_costs", $values);
     }
 
-    public function findAllProductsByDistrivetId(): array
+    public function findAllProductsByDistrivetId(int $limit): array
     {
         $results = \Db::getInstance()->executeS(
             "select distrivet_id, id_product, id_product_attribute
                 from " . _DB_PREFIX_ . "kpy_distrivet_stock
-                where distrivet_id != ''"
+                where distrivet_id != ''" . ($limit > 0 ? " limit " . $limit : "")
         );
 
         return array_reduce($results, static function (array $products, array $row): array {
