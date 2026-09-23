@@ -10,3 +10,6 @@ services:
       $legacyContextLoader: '@prestashop.adapter.legacy_context_loader'
     tags:
       - { name: 'console.command' }
+  PrestaShop\Module\KpyDistrivetConnector\Command\PriceSynchronizerCommand:
+    tags:
+      - { name: 'console.command' }

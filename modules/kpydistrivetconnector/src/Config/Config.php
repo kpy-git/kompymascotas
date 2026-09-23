@@ -21,4 +21,8 @@ class Config
     public const string KPY_DISTRIVET_AGENT_CODE = 'KPY_DISTRIVET_AGENT_CODE';
 
     public const string KPY_DISTRIVET_SERVICE_CODE = 'KPY_DISTRIVET_SERVICE_CODE';
+
+    public const string KPY_DISTRIVET_TOKEN_LIFETIME = 'KPY_DISTRIVET_TOKEN_LIFETIME';
+
+    public const string KPY_DISTRIVET_TOKEN = 'KPY_DISTRIVET_TOKEN';
 }

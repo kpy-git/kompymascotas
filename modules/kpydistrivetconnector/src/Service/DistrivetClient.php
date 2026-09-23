@@ -73,7 +73,25 @@ class DistrivetClient
     /**
      * @throws KpyDistrivetException
      */
-    private function getAccessToken(): string
+    private function getAccessToken(bool $useCache=false): string
+    {
+        if ($useCache && $this->isTokenValid()) {
+            return \Configuration::get(Config::KPY_DISTRIVET_TOKEN);
+        }
+
+        $accessTokenResponse = $this->executeRequestAccessToken();
+        \Configuration::updateValue(Config::KPY_DISTRIVET_TOKEN_LIFETIME, time() + $accessTokenResponse['expires_in']);
+        \Configuration::updateValue(Config::KPY_DISTRIVET_TOKEN, $accessTokenResponse['access_token']);
+
+        return $accessTokenResponse['access_token'];
+    }
+
+    private function isTokenValid(): bool
+    {
+        return time() < (int)\Configuration::get(Config::KPY_DISTRIVET_TOKEN_LIFETIME);
+    }
+
+    private function executeRequestAccessToken(): array
     {
         try {
             $response = $this->client->request('POST', $this->apiAuthPath,
@@ -90,7 +108,7 @@ class DistrivetClient
                 throw new KpyDistrivetException($response->getContent(), $response->getStatusCode());
             }
 
-            return $response->toArray()['access_token'] ?? '';
+            return $response->toArray();
 
         } catch (RedirectionExceptionInterface|DecodingExceptionInterface|ClientExceptionInterface|TransportExceptionInterface|ServerExceptionInterface $e) {
             throw new KpyDistrivetException($e->getMessage() . "\n" . $e->getResponse()->toArray(false)['message'] ?? '', $e->getCode(), $e);
@@ -152,6 +170,28 @@ class DistrivetClient
 
         } catch (RedirectionExceptionInterface|DecodingExceptionInterface|ClientExceptionInterface|TransportExceptionInterface|ServerExceptionInterface $e) {
             DistrivetLogger::logResponse($e->getResponse());
+            throw new KpyDistrivetException($e->getMessage() . "\n" . $e->getResponse()->toArray(false)['message'] ?? '', $e->getCode(), $e);
+        }
+    }
+
+    public function getProductCost(string $distrivetId): float
+    {
+        try {
+            $accessToken = $this->getAccessToken(true);
+
+            $response = $this->client->request('GET', $this->apiDomain . '/v1/products/' . $distrivetId, [
+                'auth_bearer' => $accessToken,
+            ]);
+
+            if ($response->getStatusCode() !== 200) {
+                throw new KpyDistrivetException($response->getContent(), $response->getStatusCode());
+            }
+
+            $data = $response->toArray();
+
+            return $data['NetPrice'];
+
+        } catch (RedirectionExceptionInterface|DecodingExceptionInterface|ClientExceptionInterface|TransportExceptionInterface|ServerExceptionInterface $e) {
             throw new KpyDistrivetException($e->getMessage() . "\n" . $e->getResponse()->toArray(false)['message'] ?? '', $e->getCode(), $e);
         }
     }

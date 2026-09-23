@@ -15,3 +15,11 @@ CREATE TABLE IF NOT EXISTS `PREFIX_kpy_distrivet_orders` (
     `distrivet_shipment_id` VARCHAR(50),
     PRIMARY KEY(`id_order`)
 )ENGINE=ENGINE_TYPE;
+
+CREATE TABLE IF NOT EXISTS `PREFIX_kpy_distrivet_products_costs` (
+    `id_product` int unsigned NOT NULL,
+    `id_product_attribute` int unsigned NOT NULL,
+    `distrivet_id` VARCHAR(50) NOT NULL,
+    `cost` FLOAT,
+    PRIMARY KEY (`id_product`, `id_product_attribute`)
+)ENGINE=ENGINE_TYPE;

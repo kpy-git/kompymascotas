@@ -107,6 +107,14 @@ class Installer
         if (!\Configuration::get(Config::KPY_DISTRIVET_SERVICE_CODE)) {
             \Configuration::updateValue(Config::KPY_DISTRIVET_SERVICE_CODE, '');
         }
+
+        if (!\Configuration::get(Config::KPY_DISTRIVET_TOKEN)) {
+            \Configuration::updateValue(Config::KPY_DISTRIVET_TOKEN, '');
+        }
+
+        if (!\Configuration::get(Config::KPY_DISTRIVET_TOKEN_LIFETIME)) {
+            \Configuration::updateValue(Config::KPY_DISTRIVET_TOKEN_LIFETIME, '');
+        }
     }
 
     private function deleteConfigurations(): void
@@ -118,6 +126,8 @@ class Installer
         \Configuration::deleteByName(Config::KPY_DISTRIVET_API_DOMAIN);
         \Configuration::deleteByName(Config::KPY_DISTRIVET_AGENT_CODE);
         \Configuration::deleteByName(Config::KPY_DISTRIVET_SERVICE_CODE);
+        \Configuration::deleteByName(Config::KPY_DISTRIVET_TOKEN);
+        \Configuration::deleteByName(Config::KPY_DISTRIVET_TOKEN_LIFETIME);
     }
 
     private function createOrderStates(\Module $module): void

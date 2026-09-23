@@ -68,7 +68,7 @@ class StockSynchronizer
                     $distrivetStock[] = new DistrivetStockProductDTO(
                         (int)$idPack,
                         (int)$attrPack,
-                        $stock['ProductId'],
+                        '',
                         sprintf("Pack %d x %s", $pack['quantity'], $stock['Description']),
                         floor((int)$stock['Stock'] / (int)$pack['quantity']),
                         new \DateTimeImmutable($stock['UpdateDatetime']),

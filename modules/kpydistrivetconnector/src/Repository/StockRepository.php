@@ -3,6 +3,7 @@
 namespace PrestaShop\Module\KpyDistrivetConnector\Repository;
 
 use PrestaShop\Module\KpyAquaOrders\Db\DbMssql;
+use PrestaShop\Module\KpyDistrivetConnector\DTO\DistrivetCostDTO;
 use PrestaShop\Module\KpyDistrivetConnector\DTO\DistrivetStockProductDTO;
 use PrestaShop\Module\KpyDistrivetConnector\Exception\KpyDistrivetProductNotFoundException;
 
@@ -13,8 +14,6 @@ class StockRepository
         if (empty($stockDistrivet)) {
             return;
         }
-
-
 
         \Db::getInstance()->execute("TRUNCATE TABLE `" . _DB_PREFIX_ . "kpy_distrivet_stock`");
 
@@ -128,5 +127,39 @@ class StockRepository
             new \DateTimeImmutable($result['date_update']),
             str_starts_with($result['distrivet_name'], 'Pack')
         );
+    }
+
+    public function saveProductCostPrice(array $products): void
+    {
+        if (empty($products)) {
+            return;
+        }
+
+        \Db::getInstance()->execute("TRUNCATE TABLE " . _DB_PREFIX_ . "kpy_distrivet_products_costs");
+
+        $values = array_map(static function (DistrivetCostDTO $product): array {
+            return [
+                'id_product' => $product->getProductId(),
+                'id_product_attribute' => $product->getProductAttributeId(),
+                'distrivet_id' => $product->getDistrivetId(),
+                'cost' => $product->getCost(),
+            ];
+        }, $products);
+
+        \Db::getInstance()->insert("kpy_distrivet_products_costs", $values);
+    }
+
+    public function findAllProductsByDistrivetId(): array
+    {
+        $results = \Db::getInstance()->executeS(
+            "select distrivet_id, id_product, id_product_attribute
+                from " . _DB_PREFIX_ . "kpy_distrivet_stock
+                where distrivet_id != ''"
+        );
+
+        return array_reduce($results, static function (array $products, array $row): array {
+            $products[$row['distrivet_id']] = $row['id_product'] . '-' . $row['id_product_attribute'];
+            return $products;
+        }, []);
     }
 }
