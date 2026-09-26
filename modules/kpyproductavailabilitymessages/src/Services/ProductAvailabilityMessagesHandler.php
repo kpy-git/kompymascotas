@@ -151,15 +151,15 @@ class ProductAvailabilityMessagesHandler
 
     }
 
-    public function getManualAvailabilityMessageByProduct(int $productId, int $productAttributeId, int $lang = 1): string
+    public function getManualAvailabilityMessageByProduct(int $productId, int $productAttributeId, int $shop = 1): string
     {
         $sql = $productAttributeId > 0
-            ? "SELECT available_later FROM " . _DB_PREFIX_ . "product_attribute_lang WHERE id_product_attribute = $productAttributeId AND id_lang = $lang"
-            : "SELECT available_later FROM " . _DB_PREFIX_ . "product_lang WHERE id_product = $productId AND id_lang = $lang";
+            ? "SELECT available_date FROM " . _DB_PREFIX_ . "product_attribute_shop WHERE id_product_attribute = $productAttributeId AND id_shop = $shop"
+            : "SELECT available_date FROM " . _DB_PREFIX_ . "product_shop WHERE id_product = $productId AND id_shop = $shop";
         $date = \Db::getInstance()->getValue($sql);
 
 
-        if (empty($date)) {
+        if (empty($date) || time() > strtotime($date)) {
             return '';
         }
 
