@@ -133,9 +133,14 @@ class KpyProductForm extends Module
             return;
         }
 
+        /** @var DbQuery $query */
+        $query = $params['query'];
+
         // modifica la consulta para no sacar las combinaciones desactivadas en la página de producto
-        $params['query']->where('not exists (select 1 
+        $query->where('not exists (select 1 
             from ' . _DB_PREFIX_ .'kpy_product_attribute kpa 
             where pa.id_product_attribute=kpa.id_product_attribute and kpa.active=0)');
+
+        $query->orderBy('pa.weight', true);
     }
 }
