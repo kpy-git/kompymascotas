@@ -29,7 +29,7 @@
 
 {block name='content'}
     {if $modules.kpyfrontcontrollervariables.is_mobile}
-        {include file='catalog/_partials/product-header.tpl' shortly=true}
+        {include file='catalog/_partials/product-header.tpl'}
     {/if}
 
     {* FIRST PART - PHOTO, NAME, PRICES, ADD TO CART*}
@@ -59,7 +59,7 @@
         <div class="row">
           <div class="col-xl-7">
               {if !$modules.kpyfrontcontrollervariables.is_mobile}
-                  {include file='catalog/_partials/product-header.tpl' shortly=false}
+                  {include file='catalog/_partials/product-header.tpl'}
               {/if}
 
               {block name='product_variants'}

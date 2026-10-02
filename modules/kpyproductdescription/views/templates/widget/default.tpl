@@ -1,3 +1,4 @@
+<div id="product-description-heading">
 <div class="row">
   <div class="product-features col-md-4 col-xs-12">
     {include file="module:kpyproductdescription/views/templates/widget/features.tpl"}
@@ -51,4 +52,5 @@
 
     {$product.description nofilter}
 
+</div>
 </div>
