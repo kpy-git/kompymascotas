@@ -113,6 +113,15 @@ class KpyHome extends Module
         );
     }
 
+    public function hookDisplayHeader(): string
+    {
+        if ($this->context->isMobile() && $this->context->controller->php_self === 'index') {
+            return $this->fetch('module:' . $this->name . '/views/templates/hook/displayHeader.tpl');
+        }
+
+        return '';
+    }
+
     public function getProductsForTemplate(array $id_products): array
     {
         $searchProvider = new KpyHomeSearchProvider();

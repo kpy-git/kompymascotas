@@ -71,7 +71,8 @@ class Installer
     {
         $hooks = [
             'displayHome',
-            'actionFrontControllerSetMedia'
+            'actionFrontControllerSetMedia',
+            'displayHeader',
         ];
 
         return $module->registerHook($hooks);
