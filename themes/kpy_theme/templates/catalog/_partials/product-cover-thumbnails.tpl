@@ -81,7 +81,7 @@
 
         {block name='product_images'}
             <div class="product__thumbnails">
-                <ul class="product__thumbnails-list">
+                <ul class="product__thumbnails-list d-md-grid d-xs-none">
                     {foreach from=$product.images item=image key=key name=productThumbnails}
                         <button
                                 class="product__thumbnail focus-ring js-thumb-container{if $image.id_image == $product.default_image.id_image} active{/if}"

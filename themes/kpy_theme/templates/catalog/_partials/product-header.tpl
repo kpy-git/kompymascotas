@@ -21,16 +21,16 @@
     <div class="product__description-short pe-4">
       {if $product.id_manufacturer == 178}
           {$product.description_short nofilter}
-      {else}
+      {*{else}
         {if $shortly}
             <span>{$product.description_short|strip_tags|replace:"&nbsp;":" "|truncate:180:" ..."}</span>
-            {if $product.description_short|strip_tags|replace:"&nbsp;":" "|count_characters > 160}
+            {if $product.description_short|strip_tags|replace:"&nbsp;":" "|count_characters > 180}
               <br />
               <a href="#product-description-heading" class="product-complete-description">{l s='Show full description' d='Shop.Theme.Catalog'}</a>
             {/if}
         {else}
             {$product.description_short|strip_tags|replace:"&nbsp;":" "}
-        {/if}
+        {/if}*}
       {/if}
 
     </div>
