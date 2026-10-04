@@ -4,21 +4,23 @@ namespace PrestaShop\Module\KpyProductAvailabilityMessages\Strategy;
 
 use PrestaShop\Module\KpyProductAvailabilityMessages\Services\WorkingDaysManager;
 
-class ANCFreshStrategy extends MessageStrategy
+class ANCFreshStrategy implements DeliveryStrategyInterface
 {
     public function isManufacturerSupported(int $manufacturer): bool
     {
         return 203 === $manufacturer;
     }
 
-    public function computeRange(WorkingDaysManager $workingDaysManager): void
+    public function getPurchaseDayTimestamp(WorkingDaysManager $workingDaysManager): int
     {
-        $this->start = $workingDaysManager->isWorkingDay(time()) && (int)date('H') < 11
+        // pedido diario antes de las 11
+        return (int)date('H') < 11 && $workingDaysManager->isWorkingDay(time())
             ? time()
             : $workingDaysManager->getNextWorkingDayTo(time());
+    }
 
-        // + 3 días en venir la mercancía + 1 día de envío
-        $this->start = $workingDaysManager->addWorkingDaysToTimestamp($this->start, 4);
-        $this->end = $workingDaysManager->getNextWorkingDayTo($this->start);
+    public function getFulfillmentDays(): int
+    {
+        return 3;
     }
 }

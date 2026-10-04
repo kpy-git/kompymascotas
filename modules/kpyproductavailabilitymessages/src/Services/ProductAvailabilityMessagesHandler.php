@@ -92,12 +92,14 @@ class ProductAvailabilityMessagesHandler
         $messageStrategyManager = new MessageStrategyManager();
 
         try {
-            $strategy = $messageStrategyManager->getAvailableStrategyByManufacturer($manufacturerId);
-            $strategy->computeRange($this->workingDaysManager);
+            $deliveryRangeCalculator = new DeliveryRangeCalculator(
+                $this->workingDaysManager,
+                $messageStrategyManager->getAvailableStrategyByManufacturer($manufacturerId)
+            );
 
             return $this->messageFormatter->convierteRangoTiempoADiasSemana(
-                $strategy->getStart(),
-                $strategy->getEnd()
+                $deliveryRangeCalculator->getFirstDeliveryDay(),
+                $deliveryRangeCalculator->getEndDeliveryDay(),
             );
 
         } catch (KpyMessageStrategyNotFound $exception) {

@@ -6,6 +6,7 @@ use PrestaShop\Module\KpyProductAvailabilityMessages\Exception\KpyMessageStrateg
 
 class MessageStrategyManager
 {
+    /** @var DeliveryStrategyInterface[] */
     private array $strategies;
 
     public function __construct()
@@ -21,7 +22,7 @@ class MessageStrategyManager
     /**
      * @throws KpyMessageStrategyNotFound
      */
-    public function getAvailableStrategyByManufacturer(int $manufacturer): MessageStrategy
+    public function getAvailableStrategyByManufacturer(int $manufacturer): DeliveryStrategyInterface
     {
         foreach ($this->strategies as $strategy) {
             if ($strategy->isManufacturerSupported($manufacturer)) {
