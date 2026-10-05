@@ -33,8 +33,12 @@ class StockSynchronizer
             $skus = [];
 
             foreach ($globalStock as $stock) {
+                if (!isset($stock['Barcode'])) {
+                    continue;
+                }
+
                 $barcode = ltrim($stock['Barcode'], '0');
-                if (!isset($barcode, $kpyProductsByEAN[$barcode])) {
+                if (!isset($kpyProductsByEAN[$barcode])) {
                     continue;
                 }
 
