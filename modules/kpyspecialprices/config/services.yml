@@ -1,0 +1,4 @@
+services:
+  PrestaShop\Module\KpySpecialPrices\ConsoleCommand\DeleteExpiredSpecialPrices:
+    tags:
+      - {name: 'console.command'}
