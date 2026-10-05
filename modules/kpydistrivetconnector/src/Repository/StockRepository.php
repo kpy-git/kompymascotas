@@ -91,7 +91,7 @@ class StockRepository
                 continue;
             }
 
-            $productsByEan[$product['ean']] = [
+            $productsByEan[ltrim($product['ean'], '0')] = [
                 'id_product' => (int)$product['id_product'],
                 'id_product_attribute' => (int)$product['attr'],
                 'manufacturer' => $product['id_manufacturer'],
