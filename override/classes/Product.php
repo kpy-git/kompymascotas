@@ -115,4 +115,19 @@ class Product extends ProductCore
 
         return self::$_frontFeaturesCache[$id_product . '-' . $id_lang];
     }
+
+    public static function getMonoproductPacksByProduct(int $productId, int $productAttributeId): array
+    {
+        $sql = "SELECT pp.id_product_pack, pp.quantity
+            FROM " . _DB_PREFIX_ . "kpy_packs pp
+            INNER JOIN (
+                SELECT pp.id_product_pack
+                FROM " . _DB_PREFIX_ . "kpy_packs pp
+                WHERE pp.id_product_item = {$productId} and pp.id_product_attribute_item = {$productAttributeId}
+            ) AS product_packs ON pp.id_product_pack=product_packs.id_product_pack
+            GROUP BY id_product_pack
+            HAVING COUNT(*) = 1";
+
+        return  \Db::getInstance()->executeS($sql);
+    }
 }
