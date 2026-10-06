@@ -63,7 +63,9 @@ class KpyLandingSearchProvider
 					AND tr.`id_state` = 0
 				LEFT JOIN `' . _DB_PREFIX_ . 'tax` t ON (t.`id_tax` = tr.`id_tax`)
 				' . Product::sqlStock('p', 0)
-            . ' WHERE p.`id_product`  IN (' . implode(',', $products) . ') 
+            . ' WHERE p.`id_product` IN (' . implode(',', $products) . ') 
+                    AND product_shop.active = 1 
+                    and product_shop.visibility = "both"
             ORDER BY FIELD(p.`id_product`, ' . implode(',', $products) . ')';
 
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
