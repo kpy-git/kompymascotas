@@ -969,7 +969,7 @@ class OrderAqua
 
     public function getTotalSinIva(): float
     {
-        return $this->total_sin_iva;
+        return round($this->total_sin_iva, 6);
     }
 
     public function getTotalIva(): float
