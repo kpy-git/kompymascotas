@@ -15,7 +15,7 @@ class OrderDispatcher
         $order = new Order($id_order);
 
         $warehouse = match (true) {
-            StorePriorityProductsGuard::withStorePriority($order),
+            StorePriorityProductsGuard::withStorePriority($order) => 'TIENDA',
             OrderGuard::isNeftysFarmaOrder($order) => 'NEFTYS',
             DistrivetOrderGuard::isDistrivetOrder($order) => 'DISTRIVET',
             EvolutionOrderGuard::isEvolutionOrder($order) => 'EVOLUTION_PETS',
