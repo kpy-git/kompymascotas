@@ -1,0 +1,4 @@
+services:
+  PrestaShop\Module\KpyStorePreparation\ConsoleCommand\UpdateStockPriorityProducts:
+    tags:
+      - {name: 'console.command'}

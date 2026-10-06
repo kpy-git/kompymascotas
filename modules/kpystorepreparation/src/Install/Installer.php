@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace PrestaShop\Module\KpyStorePreparation\Install;
 
 use Db;
+use Configuration;
 use Module;
+use PrestaShop\Module\KpyStorePreparation\Config\StorePreparationConfig;
 use PrestaShopBundle\Install\SqlLoader;
 
 class Installer
@@ -30,6 +32,10 @@ class Installer
             return false;
         }
 
+        if (!Configuration::get(StorePreparationConfig::PRIORITY_BRANDS)) {
+            Configuration::updateValue(StorePreparationConfig::PRIORITY_BRANDS, json_encode([]));
+        }
+
         return true;
     }
 
@@ -43,6 +49,8 @@ class Installer
         foreach ($this->hooks as $hook) {
             $module->unregisterHook($hook);
         }
+
+        Configuration::deleteByName(StorePreparationConfig::PRIORITY_BRANDS);
 
         return $this->executeSqlFromFile($module->getLocalPath() . 'src/Install/uninstall.sql');
     }
