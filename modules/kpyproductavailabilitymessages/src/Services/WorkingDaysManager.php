@@ -15,7 +15,7 @@ class WorkingDaysManager
 
     public function isWorkingDay(?int $timestamp = null): bool
     {
-        return date('N', $timestamp) < 6 && !in_array(date('d-m-Y', $timestamp), $this->nonWorkingDays);
+        return date('N', $timestamp) < 6 && !in_array(date('Y-m-d', $timestamp), $this->nonWorkingDays);
     }
 
     public function getNextWorkingDayTo(int $timestamp): int
