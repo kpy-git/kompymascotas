@@ -13,14 +13,20 @@ class ANCFreshStrategy implements DeliveryStrategyInterface
 
     public function getPurchaseDayTimestamp(WorkingDaysManager $workingDaysManager): int
     {
-        // pedido diario antes de las 11
-        return (int)date('H') < 11 && $workingDaysManager->isWorkingDay(time())
+        // pedido los lunes antes de las 11
+        $start = (int)date('N') === 1 && (int)date('H') < 11
             ? time()
-            : $workingDaysManager->getNextWorkingDayTo(time());
+            : strtotime('next Monday');
+
+        while (!$workingDaysManager->isWorkingDay($start)) {
+            $start = strtotime('next Monday', $start);
+        }
+
+        return $start;
     }
 
     public function getFulfillmentDays(): int
     {
-        return 3;
+        return 1;
     }
 }
