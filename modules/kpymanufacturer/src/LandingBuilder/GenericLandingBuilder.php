@@ -89,7 +89,7 @@ class GenericLandingBuilder extends AbstractLandingBuilder
             $categories[$result['pet']][] = [
                 'title' => $result['title'] ?? $category->getName($this->context->language->id),
                 'subtitle' => $result['subtitle'] ?? substr(Category::getDescriptionClean($category->description[$this->context->language->id] ?? ''), 0, 100),
-                'image' => $this->context->link->getImageLink('small-default', $productId . '-' . Image::getCover($productId)['id_image']),
+                'image' => $this->context->link->getImageLink('small_default', $productId . '-' . Image::getCover($productId)['id_image']),
                 'url' => $this->context->link->getCategoryLink($category),
             ];
         }
