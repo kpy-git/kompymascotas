@@ -10,9 +10,6 @@ class PriorityProductsRepository
     {
         $brands = json_decode(\Configuration::get(StorePreparationConfig::PRIORITY_BRANDS, "[]"), true);
 
-        if (empty($brands)) {
-            return [];
-        }
 
         $products = \Db::getInstance()->executeS(
             "select ps.id_product, ifnull(pas.id_product_attribute, 0) as id_product_attribute
@@ -26,16 +23,23 @@ class PriorityProductsRepository
                     on pas.id_product=ps.id_product
                 where ps.active = 1
                     and ps.visibility = 1
-                    and not exists (select 1 from " . _DB_PREFIX_ . "kpy_product_attribute kpa where kpa.id_product_attribute=pas.id_product_attribute and kpa.active=0)"
+                    and not exists (select 1 from " . _DB_PREFIX_ . "kpy_product_attribute kpa where kpa.id_product_attribute=pas.id_product_attribute and kpa.active=0)
+                union 
+                select id_product, id_product_attribute
+                from " . _DB_PREFIX_ . "kpy_store_priority_product"
         );
 
+        if (empty($products)) {
+            return [];
+        }
+        
         return array_map(static fn(array $row): string => $row['id_product'] . '-' . $row['id_product_attribute'], $products);
     }
 
     public function saveProducts(array $products): void
     {
-        \Db::getInstance()->execute("TRUNCATE TABLE " . _DB_PREFIX_ . "kpy_store_priority_product");
+        \Db::getInstance()->execute("TRUNCATE TABLE " . _DB_PREFIX_ . "kpy_store_priority_product_stock");
 
-        \Db::getInstance()->insert("kpy_store_priority_product", $products);
+        \Db::getInstance()->insert("kpy_store_priority_product_stock", $products);
     }
 }
