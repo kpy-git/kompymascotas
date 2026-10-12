@@ -45,6 +45,7 @@ class ProductSynchronizer
                 ($productCode->isCombinationProduct() ? $productCode->getProductAttributeId() : null),
                 2) ?? 0.0,
             $result['weight'],
+            $result['active'] === 1,
             $result['pack'] === 'si'
         );
     }

@@ -18,14 +18,15 @@ class SynchronizeSingleProductCommand
                    and id_product_attribute={$product->getProductCode()->getProductAttributeId()})") > 0;
 
         $stmt =  $appDb->prepare(!$exists
-            ? "INSERT INTO kpy_product (id_product, id_product_attribute, is_jirafa, is_pack, weight, brand_id, sales_price_es) 
-                      VALUES (:id_product, :id_product_attribute, :is_jirafa, :is_pack, :weight, :brand_id, :sales_price_es)"
+            ? "INSERT INTO kpy_product (id_product, id_product_attribute, is_jirafa, is_pack, weight, brand_id, sales_price_es, active) 
+                      VALUES (:id_product, :id_product_attribute, :is_jirafa, :is_pack, :weight, :brand_id, :sales_price_es, :active)"
             : "UPDATE kpy_product
                 SET is_jirafa = :is_jirafa,
                     is_pack = :is_pack,
                     weight = :weight,
                     sales_price_es = :sales_price_es,
-                    brand_id = :brand_id
+                    brand_id = :brand_id,
+                    active = :active
                 WHERE id_product = :id_product
                     AND id_product_attribute = :id_product_attribute");
 
@@ -36,6 +37,7 @@ class SynchronizeSingleProductCommand
         $stmt->bindValue(':is_pack', $product->isPack(), PDO::PARAM_BOOL);
         $stmt->bindValue(':weight', $product->getWeight());
         $stmt->bindValue(':sales_price_es', $product->getSalesPrice());
+        $stmt->bindValue(':active', $product->isActive(), PDO::PARAM_BOOL);
 
         $stmt->execute();
     }

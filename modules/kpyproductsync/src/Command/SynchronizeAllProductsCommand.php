@@ -21,6 +21,7 @@ readonly class SynchronizeAllProductsCommand
                 'sales_price_es' => $product->getSalesPrice(),
                 'is_pack' => (int)$product->isPack(),
                 'is_jirafa' => (int)$product->isJirafa(),
+                'active' => (int)$product->isActive(),
             ];
         }, $products);
 

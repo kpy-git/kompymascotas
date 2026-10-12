@@ -9,6 +9,7 @@ readonly class AppProduct
         private int $brand,
         private float $salesPrice,
         private float $weight,
+        private bool $active,
         private bool $isPack = false,
         private bool $isJirafa= false
     )
@@ -45,5 +46,8 @@ readonly class AppProduct
         return $this->isJirafa;
     }
 
-
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
 }
