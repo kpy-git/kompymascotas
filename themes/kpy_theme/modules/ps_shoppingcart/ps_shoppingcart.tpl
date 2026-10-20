@@ -12,9 +12,17 @@
         <span class="header-block__action-btn pe-md-0">
       {/if}
 
-      <i class="material-icons header-block__icon" aria-hidden="true">&#xE8CC;</i>
-      <span class="d-none d-md-flex header-block__title">{l s='Cart' d='Shop.Theme.Checkout'}</span>
-      <span class="header-block__badge">{$cart.products_count}</span>
+      <div class="nav-module">
+      <div class="nav-icon">
+        <i class="material-icons" aria-hidden="true">shopping_cart</i>
+      </div>
+      <div class="nav-icon-text">
+        {l s='Cart' d='Shop.Theme.Checkout'}
+      </div>
+    </div>
+
+    <span class="d-none d-md-flex header-block__title"></span>
+    <span class="header-block__badge">{$cart.products_count}</span>
 
       {if $cart.products_count> 0}
       </a>
