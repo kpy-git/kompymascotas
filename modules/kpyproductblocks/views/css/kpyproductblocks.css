@@ -17,13 +17,34 @@
 .product-secure-payments {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     margin: 0;
     color: var(--bs-gray-600);
-    flex-wrap: wrap;
     font-size: var(--kpy-font-size);
+}
+
+.product-secure-payments-title,
+.product-secure-payments-methods {
+    display: flex;
+    align-items: center;
+}
+
+.product-secure-payments-methods {
+    gap: 0.25rem;
 }
 
 .product-secure-payments .important {
     font-weight: bold;
     color: var(--kpy-text-dark);
+}
+
+@media (max-width: 768px) {
+    .product-secure-payments {
+        flex-wrap: wrap;
+    }
+
+    .product-secure-payments-title,
+    .product-secure-payments-methods {
+        flex-basis: 100%;
+    }
 }
