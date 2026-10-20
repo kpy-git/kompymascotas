@@ -956,7 +956,6 @@ input[type="email"]::placeholder {
 }
 
 .btn.add-to-cart {
-    background: var(--kpy-color-red);
     width: 100%;
     height: 3.375rem;
     font-size: 1.125rem;
@@ -976,10 +975,6 @@ input[type="email"]::placeholder {
     font-weight: 600;
 }
 
-.btn.add-to-cart:hover {
-    background: var(--kpy-color-red-dark);
-    color: white;
-}
 
 .btn-primary,
 .btn-outline-primary:hover {
@@ -991,7 +986,7 @@ input[type="email"]::placeholder {
 .btn-primary:hover {
     background-color: var(--kpy-color-accent-dark);
     border-color: var(--kpy-color-accent-dark);
-    color: var(--kpy-color-primary);
+    color: white;
 }
 
 .btn-outline-primary {
@@ -2748,6 +2743,43 @@ a.js-remove-from-cart:hover {
         width: 100%;
         flex-grow: unset;
     }
+}
 
+.blockcart-modal__title-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: #2F6B34;
+    color: #fff;
+    font-size: 18px;
+}
 
+.blockcart-modal__title {
+    color: var(--kpy-text-dark);
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+.blockcart-modal__name,
+.blockcart-modal__price {
+    font-weight: bolder;
+    font-size: var(--kpy-font-size);
+    color: var(--kpy-text-dark);
+    line-height: 1.25;
+}
+
+.blockcart-modal__quantity,
+.blockcart-modal__property {
+    color: var(--bs-gray-600);
+    font-size: var(--kpy-font-size-small);
+    font-weight: 600;
+}
+
+.blockcart-modal__image {
+    border-radius: var(--kpy-border-radius);
+    border: 1px solid #ece8dc;
+    padding: .1rem;
 }
