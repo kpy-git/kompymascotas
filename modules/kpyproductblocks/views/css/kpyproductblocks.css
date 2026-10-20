@@ -1,14 +1,9 @@
-.product-availability {
-    margin-bottom: 1.5rem;
-}
-
-.product-availability .shipping {
+.kpy-shipping {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
 }
 
-.product-availability .shipping img {
+.kpy-shipping img {
     margin-right: .5rem;
     max-height: 20px;
 }
@@ -19,3 +14,16 @@
     font-weight: bold;
 }
 
+.product-secure-payments {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: var(--bs-gray-600);
+    flex-wrap: wrap;
+    font-size: var(--kpy-font-size);
+}
+
+.product-secure-payments .important {
+    font-weight: bold;
+    color: var(--kpy-text-dark);
+}

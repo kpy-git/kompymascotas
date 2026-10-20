@@ -7,10 +7,13 @@
   {foreach from=$groups key=id_attribute_group item=group}
     {if !empty($group.attributes)}
     <div class="variant">
-      <label for="group_{$id_attribute_group}" class="form-label">{$group.name}{l s=': ' d='Shop.Theme.Catalog'}
+      <label for="group_{$id_attribute_group}" class="form-label">
+          {$group.name}{l s=': ' d='Shop.Theme.Catalog'}
+          <span class="fw-bold">
           {foreach from=$group.attributes key=id_attribute item=group_attribute}
             {if $group_attribute.selected}{$group_attribute.name}{/if}
           {/foreach}
+          </span>
       </label>
 
       {if $group.group_type == 'select'}
@@ -43,7 +46,7 @@
         </ul>
       {elseif $group.group_type == 'radio'}
         <ul id="group_{$id_attribute_group}" class="radio-variants">
-          {foreach from=$group.attributes key=id_attribute item=group_attribute}
+            {foreach from=$group.attributes key=id_attribute item=group_attribute}
             <li class="radio-variant form-check">
               <div class="attribute-flags">
                   {if isset($modules.kpyspecialprices.attributes_special_price) and in_array($id_attribute, $modules.kpyspecialprices.attributes_special_price)}
@@ -60,12 +63,15 @@
 
               <label>
                 <input class="form-check-input input-radio" type="radio" data-product-attribute="{$id_attribute_group}" name="group[{$id_attribute_group}]" value="{$id_attribute}" title="{$group_attribute.name}"{if $group_attribute.selected} checked="checked"{/if}>
-                <span class="form-check-label radio-label">{$group_attribute.name}</span>
+                <span class="form-check-label radio-label">{$group_attribute.name|strtolower|replace:"pack":""|replace:"saco de":""}</span>
               </label>
 
-              <div class="attribute-price">{$modules.kpyfrontcontrollervariables.attribute_prices[$id_attribute]} €</div>
+              <div class="attribute-prices">
+                  <div class="attribute-price">{$modules.kpyfrontcontrollervariables.attribute_prices[$id_attribute].price}</div>
+                  <div class="attribute-pvr">{$modules.kpyfrontcontrollervariables.attribute_prices[$id_attribute].pvr}</div>
+              </div>
               {if isset($modules.kpyfrontcontrollervariables.attributes_unit_prices[$id_attribute])}
-                <div class="attribute-unit-price">({$modules.kpyfrontcontrollervariables.attributes_unit_prices[$id_attribute]} €/Kg)</div>
+                <div class="attribute-unit-price text-center">{$modules.kpyfrontcontrollervariables.attributes_unit_prices[$id_attribute]} €/Kg</div>
               {/if}
 
             </li>

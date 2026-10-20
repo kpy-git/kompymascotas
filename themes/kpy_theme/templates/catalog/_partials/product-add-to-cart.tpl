@@ -37,7 +37,7 @@
           }
         </div>
 
-        <div class="product-actions__button add mt-2">
+        <div class="product-actions__button add w-100">
           <button
             class="btn btn-primary btn-with-icon add-to-cart w-100"
             data-button-action="add-to-cart"

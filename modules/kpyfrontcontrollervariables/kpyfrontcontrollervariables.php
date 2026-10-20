@@ -114,16 +114,28 @@ class KpyFrontControllerVariables extends Module
             $attributesUnitPrices = [];
 
             foreach ($attributes as $attribute) {
-                $attributesPrices[$attribute["id_attribute"]] = Product::getPriceStatic(
+                $salesPrice = Product::getPriceStatic(
                     $product->id,
                     true,
                     $attribute["id_product_attribute"],
                     2,
                 );
 
+                $attributesPrices[$attribute["id_attribute"]] = [
+                    'price' => Context::getContext()->getCurrentLocale()->formatPrice($salesPrice, 'EUR'),
+                    'pvr' => Context::getContext()->getCurrentLocale()->formatPrice($salesPrice + Product::getPriceStatic(
+                            $product->id,
+                            true,
+                            $attribute["id_product_attribute"],
+                            2,
+                            null,
+                            true
+                        ), 'EUR'),
+                ];
+
                 $weight = (float)$attribute["weight"];
                 if ($weight >= 1 && Product::isPienso($product->id)) {
-                    $attributesUnitPrices[$attribute["id_attribute"]] = round($attributesPrices[$attribute["id_attribute"]] / $weight, 2);
+                    $attributesUnitPrices[$attribute["id_attribute"]] = round($salesPrice / $weight, 2);
                 }
             }
 

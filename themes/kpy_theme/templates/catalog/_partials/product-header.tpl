@@ -15,7 +15,6 @@
     <h1 class="h4 product__name">{block name='page_title'}{$product.name}{/block}</h1>
   {/block}
 
-  {widget name='productcomments' hook='additional_info' product=$product}
 
   {block name='product_description_short'}
     <div class="product__description-short pe-4">
@@ -33,3 +32,6 @@
 
     </div>
   {/block}
+
+{widget name='productcomments' hook='additional_info' product=$product}
+

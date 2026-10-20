@@ -96,10 +96,16 @@ class KpyProductBlocks extends Module implements WidgetInterface
         }
     }
 
-    public function renderWidget($hookName, array $configuration)
+    public function renderWidget($hookName, array $configuration): string
     {
-        return match($hookName) {
+        $this->smarty->assign([
+            $this->name => [
+                'img_path' => '/modules/' . $this->name . '/views/img',
+            ]]);
+
+        return match ($hookName) {
             'product_shipping' => $this->renderShippingPrice($configuration),
+            'secure_payment' => $this->fetch('module:' . $this->name . '/views/templates/hook/secure-payment.tpl'),
             'unit_price' => $this->renderUnitPrice($configuration),
             default => ''
         };
@@ -111,11 +117,17 @@ class KpyProductBlocks extends Module implements WidgetInterface
 
         $productWanted = (int)Tools::getValue('quantity_wanted', 1);
 
-        if (round((float)$product['price'] * $productWanted, 2) < _KPY_LIMIT_SHIPPING_FREE_) {
+        $amount = round((float)$product['price'] * $productWanted, 2);
+
+        if ($amount < _KPY_LIMIT_SHIPPING_FREE_) {
             $this->smarty->assign([
                 $this->name => [
-                    'img_path' => '/modules/' . $this->name . '/views/img/shipping.svg',
-                    'tag' => $this->trans('Shipping: %price%€', ['%price%' => 4.99], 'Modules.Kpyproductblocks.Shop'),
+                    'img_path' => '/modules/' . $this->name . '/views/img',
+                    'shipping_img' => 'shipping.svg',
+                    'tag' => $this->trans(
+                        'Shipping: %price%€ · Add %diff%€ to shipping free',
+                        ['%price%' => 4.99, '%diff%' => round(_KPY_LIMIT_SHIPPING_FREE_ - $amount, 2)],
+                        'Modules.Kpyproductblocks.Shop'),
                 ]
             ]);
 
@@ -124,9 +136,10 @@ class KpyProductBlocks extends Module implements WidgetInterface
 
         $this->smarty->assign([
             $this->name => [
-                'img_path' => '/modules/' . $this->name . '/views/img/shipping_free.svg',
+                'img_path' => '/modules/' . $this->name . '/views/img',
+                'shipping_img' => 'shipping_free.svg',
                 'tag' => $this->trans('Shipping: free!', [], 'Modules.Kpyproductblocks.Shop')
-        ]]);
+            ]]);
 
         return $this->fetch('module:' . $this->name . '/views/templates/hook/shipping.tpl');
     }
@@ -147,7 +160,7 @@ class KpyProductBlocks extends Module implements WidgetInterface
             return '';
         }
 
-        $this->smarty->assign( [
+        $this->smarty->assign([
             'unit_price' => round($price / $weight, 2),
         ]);
 

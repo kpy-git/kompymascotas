@@ -150,6 +150,8 @@
     --kpy-surface: #e7ecef;
     --kpy-bg-menu: #FCFAFF;
     --kpy-bg-footer: #1F424A;
+    --kpy-color-red: #d63c2e;
+    --kpy-color-red-dark: #b8322a;
 
     --kpy-header-height: 154px;
     --kpy-menu-mobile-height: 48px;
@@ -583,7 +585,8 @@ input[type="email"]::placeholder {
     margin-bottom: .25rem;
     font-family: "Raleway", sans-serif;
     font-weight: 700;
-    font-size: 1.675rem;
+    font-size: 1.925rem;
+    line-height: 1.18;
 }
 
 .product-brand {
@@ -621,7 +624,11 @@ input[type="email"]::placeholder {
     overflow-y: hidden;
     scroll-snap-align: start;
     scroll-snap-type: x mandatory;
-    padding-top: .5rem; /* para dejar algo de espacio para los flags */
+    padding: .5rem;
+}
+
+.page-product .product__variants {
+    margin-block-end: 0;
 }
 
 @media (min-width: 768px) {
@@ -637,10 +644,16 @@ input[type="email"]::placeholder {
 .product__variants .radio-variant {
     position: relative;
     padding: .5rem 1rem;
-    font-size: var(--kpy-font-size);
-    width: 120px;
-    height: 160px;
+    font-size: 1.125rem;
+    width: 152px;
+    height: 142px;
     flex-shrink: 0;
+}
+
+.radio-variant > label {
+    font-weight: 800;
+    width: 100%;
+    text-align: center;
 }
 
 .product__variants .variant .radio-variants .radio-variant {
@@ -653,7 +666,29 @@ input[type="email"]::placeholder {
 
 .product__variants .radio-variant:has(.input-radio:checked) {
     font-weight: 600;
-    border-width: 2px;
+    border-width: 1px;
+    box-shadow: 0 0 0 1.5px var(--kpy-text-dark),0 0 0 5px rgba(42,92,104,.16)
+}
+
+.product__variants .radio-variant:has(.input-radio:checked)::after {
+    content: "✓";
+    position: absolute;
+    top: -9px;
+    right: -9px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #fff;
+    border-radius: 999px;
+    background: var(--kpy-text-dark);
+    box-shadow: 0 1px 4px rgba(0,0,0,.25);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
 }
 
 .product__variants .radio-variant:has(.input-radio:checked),
@@ -661,11 +696,13 @@ input[type="email"]::placeholder {
     background-color: var(--kpy-text-light);
     border-color: var(--kpy-text-primary);
     color: var(--kpy-text-dark);
+    border-width: 1px;
 }
 
 .product__variants input.input-radio {
     position: absolute;
     top: 0;
+    right: 0;
     width: 100%;
     height: 100%;
     cursor: pointer;
@@ -674,8 +711,8 @@ input[type="email"]::placeholder {
 
 .product__variants .variant .form-label {
     color: var(--kpy-text-dark);
-    font-weight: 600;
-    margin-bottom: 1rem;
+    font-weight: 400;
+    margin-bottom: .25rem;
 }
 
 .product-actions-border {
@@ -700,12 +737,11 @@ input[type="email"]::placeholder {
 }
 
 .product__unit-price {
-    color: var(--kpy-text-secondary);
+    color: var(--bs-gray-600);
 }
 
 .product-comments-additional-info {
-    margin: 0;
-    margin-bottom: 1rem;
+    margin: 0 0 1rem;
     gap: .1rem;
     align-items: center;
 }
@@ -713,7 +749,7 @@ input[type="email"]::placeholder {
 .product-comments-additional-info,
 .link-comment {
     color: var(--bs-gray);
-    font-size: .75rem;
+    font-size: var(--kpy-font-size-small);
     font-weight: 600;
 }
 
@@ -807,7 +843,9 @@ input[type="email"]::placeholder {
 }
 
 .average-grade {
-    padding-block-start: .35rem;
+    font-weight: 800;
+    color: var(--kpy-text-dark);
+    font-size: var(--kpy-font-size);
 }
 
 .grade-bar {
@@ -901,6 +939,21 @@ input[type="email"]::placeholder {
     font-weight: 600;
     letter-spacing: .05em;
     font-family: "Raleway", sans-serif;
+}
+
+.btn.add-to-cart {
+    background: var(--kpy-color-red);
+    width: 100%;
+    height: 3.375rem;
+    font-size: 1.125rem;
+    font-weight: 800;
+    line-height: 1.15;
+    font-family: "Nunito", "Raleway",sans-serif;
+}
+
+.btn.add-to-cart:hover {
+    background: var(--kpy-color-red-dark);
+    color: white;
 }
 
 .btn-primary,
@@ -1025,8 +1078,7 @@ fieldset:disabled .btn {
 
 .product-actions__wrapper-add-to-cart {
     display: flex;
-    gap: .5rem;
-    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .page-product .product__add-to-cart {
@@ -1034,11 +1086,16 @@ fieldset:disabled .btn {
 }
 
 .product-actions__quantity #quantity_wanted {
-    max-width: unset;
-    height: 2.765rem;
-    font-size: 1.25rem;
-    font-weight: bold;
+    max-width: 6rem;
+    height: 3.375rem;
+    font-size: 1.125rem;
+    font-weight: 700;
     color: var(--kpy-text-dark);
+}
+#ps_checkout-payment-method-logo-block-container {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .product-actions__wrapper-add-to-cart.btn-fixed {
@@ -1071,19 +1128,14 @@ fieldset:disabled .btn {
     }
 }
 
-.product-actions__quantity,
-.product-actions__button {
-    width: 100%;
-}
-
 .product-actions__wrapper-add-to-cart.btn-fixed .product-actions__quantity,
 .product-actions__wrapper-add-to-cart.btn-fixed .product-actions__button {
     width: 50%;
 }
 
 .product-actions__quantity button {
-    width: 6rem;
-    line-height: 2rem;
+    width: 3.375rem;
+    line-height: 3rem;
 }
 
 .product-actions__wrapper-add-to-cart.btn-fixed .product-actions__quantity button {
@@ -1092,28 +1144,18 @@ fieldset:disabled .btn {
 
 .quantity-button button,
 .quantity-button button:hover {
-    border-color: #ced4da;
+    border: 1.5px solid #e3ddd0;
     opacity: 1;
-    line-height: 2rem;
+    line-height: 3rem;
 }
 
-.quantity-button button.btn.increment {
+.quantity-button button.btn {
     color: var(--kpy-text-dark);
-    background-color: var(--kpy-text-light);
+    background-color: #f4f2ec;
 }
 
-.quantity-button button.btn.increment:hover {
-    background-color: var(--kpy-text-primary);
-    color: var(--kpy-text-light);
-}
-
-.quantity-button button.btn.decrement {
-    color: var(--bs-gray);
-    background-color: var(--bs-gray-100);
-}
-
-.quantity-button button.btn.decrement:hover {
-    background-color: var(--bs-gray-300);
+.quantity-button button.btn:hover {
+    background-color: #ebe8df;
 }
 
 .page-product .product__discount {
@@ -1122,30 +1164,43 @@ fieldset:disabled .btn {
     gap: .5rem;
 }
 
+.product-actions__quantity button.btn.decrement{
+    border-bottom-left-radius: var(--kpy-border-radius);
+    border-top-left-radius: var(--kpy-border-radius);
+}
+
+.product-actions__quantity button.btn.increment{
+    border-bottom-right-radius: var(--kpy-border-radius);
+    border-top-right-radius: var(--kpy-border-radius);
+}
+
 .product__discount-percentage {
     display: inline-flex;
 }
 
 .badge.discount {
-    background-color: var(--kpy-color-secondary);
+    background-color: var(--kpy-color-red);
     color: var(--kpy-color-secondary-light);
     border: unset;
-    font-weight: 600;
-    padding:0 .3rem;
+    font-weight: 800;
+    padding: .1rem .5rem;
     margin: 0 0 0 -.17rem;
     line-height: 1.5;
+    letter-spacing: .2px;
+    font-size: var(--kpy-font-size);
 }
 
 .page-product .product__price-regular {
     font-size: 1.25rem;
-    color: var(--bs-gray-500);
+    color: var(--bs-gray-600);
     text-decoration: line-through;
 }
 
 .page-product .product__current-price {
-    font-size: 2.125rem;
+    font-size: 2.5rem;
     color: var(--kpy-text-dark);
-    font-weight: bold;
+    font-weight: 800;
+    line-height: 1.1;
 }
 
 .attribute-flags {
@@ -1159,13 +1214,25 @@ fieldset:disabled .btn {
     gap: .25rem;
 }
 
-.attribute-price {
-    margin-top: .75rem;
+.attribute-prices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: .25rem;
+    margin-top: .25rem;
+}
+
+.attribute-pvr {
+    font-size: var(--kpy-font-size-small);
+    color: var(--bs-gray-600);
+    text-decoration: line-through;
 }
 
 .attribute-unit-price {
-    color: var(--kpy-text-secondary);
-    font-size: .75rem;
+    color: var(--bs-gray-600);
+    font-size: var(--kpy-font-size-small);
+    text-align: center;
 }
 
 a.js-remove-from-cart {
@@ -1707,7 +1774,7 @@ a.js-remove-from-cart:hover {
     padding: .5rem;
 }
 
-kpy-form-group .form-control::placeholder {
+.kpy-form-group .form-control::placeholder {
     color: var(--bs-gray-300);
 }
 
@@ -2604,6 +2671,18 @@ margin-bottom: 2rem;
 
     .user-info .dropdown-toggle::after {
         border: unset;
+    }
+
+    .page-product .product__container {
+        gap: 2.5rem;
+        grid-template-columns: 40% minmax(0, 1fr);
+    }
+
+    .product__carousel {
+        background: #fff;
+        border: 1px solid #ece8dc;
+        border-radius: var(--kpy-border-radius);
+        overflow: hidden;
     }
 }
 
