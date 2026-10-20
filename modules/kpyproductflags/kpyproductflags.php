@@ -99,6 +99,7 @@ class KpyProductFlags extends Module
 
     private function getProductFlags(int $productId): array
     {
+        /* el flag de ahorro XL no aparecerá en la vista de categorías */
         $results = Db::getInstance()->executeS(
             "SELECT pf.id_flag, fl.name, f.color, f.bg_color, f.icon, f.type
                 FROM " . _DB_PREFIX_ . "kpy_product_flag pf
@@ -112,6 +113,7 @@ class KpyProductFlags extends Module
                         (pf.date_begin IS NULL AND NOW() < pf.date_end) OR
                         (pf.date_end IS NULL AND NOW() >pf.date_begin) OR
                         (NOW() BETWEEN pf.date_begin AND pf.date_end))
+                    and f.id_flag != 8
                 ORDER BY f.id_flag"
         );
 
