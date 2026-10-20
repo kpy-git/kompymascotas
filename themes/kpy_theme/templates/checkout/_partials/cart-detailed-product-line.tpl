@@ -119,7 +119,7 @@
                         <span class="product-line__item-regular-price">{$product.regular_price}</span>
 
                         <span class="product__discount-percentage">
-                        <span class="tag-discount"><img src="{$urls.img_url}tag-dto-start.svg" alt="discount"></span>
+                        {*<span class="tag-discount"><img src="{$urls.img_url}tag-dto-start.svg" alt="discount"></span>*}
 
                         {if $product.discount_type === 'percentage'}
                             <span class="product-line__item-discount product-line__item-discount--percentage badge discount">
