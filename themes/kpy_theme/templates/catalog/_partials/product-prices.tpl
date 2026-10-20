@@ -19,11 +19,7 @@
 
       {if $product.has_discount}
           <div class="product__discount">
-              {if $product.kpy_special_price}
-                  {hook h='displayProductPriceBlock' product=$product type="old_price"}
-
-              {else}
-                  <span class="product__price-regular">{$product.regular_price}</span>
+                                <span class="product__price-regular">{$product.regular_price}</span>
                   {if $product.discount_type === 'percentage'}
                       <span class="product__discount-percentage">
             {*({l s='Save %percentage%' d='Shop.Theme.Catalog' sprintf=['%percentage%' => $product.discount_percentage_absolute]})*}
@@ -34,7 +30,6 @@
             ({l s='Save %amount%' d='Shop.Theme.Catalog' sprintf=['%amount%' => $product.discount_to_display]})
           </span>
                   {/if}
-              {/if}
           </div>
       {/if}
 
@@ -92,6 +87,10 @@
       {block name='product_unit_price'}
           {widget name='kpyproductblocks' hook='unit_price' product=$product}
       {/block}
+
+      {if $product.kpy_special_price}
+        {hook h='displayProductPriceBlock' product=$product type="old_price"}
+      {/if}
 
       <div class="product-availability">
         {widget name='kpyproductavailabilitymessages' hook='product' product=$product}

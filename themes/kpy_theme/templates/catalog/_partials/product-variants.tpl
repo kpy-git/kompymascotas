@@ -51,7 +51,7 @@
               <div class="attribute-flags">
                   {if isset($modules.kpyspecialprices.attributes_special_price) and in_array($id_attribute, $modules.kpyspecialprices.attributes_special_price)}
                     <div class="kpy-special-price-attribute-tag">
-                      <img src="{$modules.kpyspecialprices.icon}" alt="special-price-tag">
+                      <img src="{$modules.kpyspecialprices.icon}" alt="special-price-tag"> {l s='Special price' d='Modules.Kpyspecialprices.Shop'}
                     </div>
                   {elseif isset($modules.kpyproductflags.attributes_flag[$id_attribute])}
                       <div class="kpy-product-attribute-flag" style="background-color: {$modules.kpyproductflags.attributes_flag[$id_attribute].background};color: {$modules.kpyproductflags.attributes_flag[$id_attribute].color};">
