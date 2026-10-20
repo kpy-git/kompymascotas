@@ -651,8 +651,8 @@ input[type="email"]::placeholder {
     position: relative;
     padding: .5rem 1rem;
     font-size: 1.125rem;
-    width: 152px;
-    height: 142px;
+    width: 147px;
+    height: 152px;
     flex-shrink: 0;
 }
 
@@ -1234,16 +1234,6 @@ fieldset:disabled .btn {
     line-height: 1.1;
 }
 
-.attribute-flags {
-    display: flex;
-    flex-wrap: wrap;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    z-index: 1;
-    align-items: flex-start;
-    gap: .25rem;
-}
 
 .attribute-prices {
     display: flex;

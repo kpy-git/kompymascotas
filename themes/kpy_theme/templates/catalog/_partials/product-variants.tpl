@@ -50,12 +50,15 @@
             <li class="radio-variant form-check">
               <div class="attribute-flags">
                   {if isset($modules.kpyspecialprices.attributes_special_price) and in_array($id_attribute, $modules.kpyspecialprices.attributes_special_price)}
-                    <div class="badge kpy-special-price-attribute-tag">
+                    <div class="kpy-special-price-attribute-tag">
                       <img src="{$modules.kpyspecialprices.icon}" alt="special-price-tag">
                     </div>
                   {elseif isset($modules.kpyproductflags.attributes_flag[$id_attribute])}
-                      <div class="badge kpy-product-attribute-flag" style="background-color: {$modules.kpyproductflags.attributes_flag[$id_attribute].background}">
-                        <img src="{$modules.kpyproductflags.attributes_flag[$id_attribute].icon}" alt="{$modules.kpyproductflags.attributes_flag[$id_attribute].name}">
+                      <div class="kpy-product-attribute-flag" style="background-color: {$modules.kpyproductflags.attributes_flag[$id_attribute].background};color: {$modules.kpyproductflags.attributes_flag[$id_attribute].color};">
+                          {if $modules.kpyproductflags.attributes_flag[$id_attribute].icon != ''}
+                            <img src="{$modules.kpyproductflags.attributes_flag[$id_attribute].icon}" alt="{$modules.kpyproductflags.attributes_flag[$id_attribute].name}">
+                          {/if}
+                        <span>{$modules.kpyproductflags.attributes_flag[$id_attribute].name}</span>
                       </div>
                   {/if}
                   {hook h="displayProductAttributeFlags" product=$product attribute=$id_attribute}

@@ -8,9 +8,27 @@
 }
 
 .kpy-product-attribute-flag {
-    padding: .25rem;
+    padding: .2rem;
+    border-top-left-radius: var(--kpy-border-radius);
+    border-top-right-radius: var(--kpy-border-radius);
+    width: 100%;
 }
 
 .kpy-product-attribute-flag img {
-    width: var(--kpy-font-size);
+    width: var(--kpy-font-size-mini);
+    margin-right: .25rem;
+}
+
+.attribute-flags {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 0;
+    left: 0;
+    align-items: flex-start;
+    gap: .5rem;
+    font-size: var(--kpy-font-size-mini);
+    font-weight: 800;
+    text-align: center;
+    right: 0;
 }

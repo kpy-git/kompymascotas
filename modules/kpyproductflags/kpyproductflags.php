@@ -87,7 +87,9 @@ class KpyProductFlags extends Module
                 $params['flags'][$typeSanitized] = [
                     'type' => $typeSanitized,
                     'label' => $flag['name'],
-                    'icon' => $this->getPathUri() . 'views/img/' . ($flag['icon'] ?? sprintf('flag_%d.svg', $flag['id_flag'])),
+                    'icon' => $flag['icon'] !== null
+                        ? $this->getPathUri() . 'views/img/' . sprintf('flag_%d.svg', $flag['id_flag'])
+                        : '',
                     'color' => $flag['color'] ?? '',
                     'background' => $flag['bg_color'] ?? '',
                 ];
@@ -172,7 +174,11 @@ class KpyProductFlags extends Module
                 $flags[$flag['id_attribute']] = [
                     'name' => $flag['name'],
                     'background' => $flag['bg_color'] ?? '',
-                    'icon' => $this->getPathUri() . 'views/img/' . ($flag['icon'] ?? sprintf('flag_%d.svg', $flag['id_flag'])),
+                    'color' => $flag['color'] ?? '',
+                    'icon' => $flag['icon'] !== null
+                        ? $this->getPathUri() . 'views/img/' . sprintf('flag_%d.svg', $flag['id_flag'])
+                        : ''
+                    ,
                 ];
                 return $flags;
             }, []),
