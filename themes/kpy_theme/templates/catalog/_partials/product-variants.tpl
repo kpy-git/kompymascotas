@@ -63,7 +63,7 @@
 
               <label>
                 <input class="form-check-input input-radio" type="radio" data-product-attribute="{$id_attribute_group}" name="group[{$id_attribute_group}]" value="{$id_attribute}" title="{$group_attribute.name}"{if $group_attribute.selected} checked="checked"{/if}>
-                <span class="form-check-label radio-label">{$group_attribute.name|strtolower|replace:"pack":""|replace:"saco de":""}</span>
+                <span class="form-check-label radio-label">{$group_attribute.name|strtolower|replace:"pack":""|replace:"saco de":""|replace:"bolsa de":""|replace:"lata de":""}</span>
               </label>
 
               <div class="attribute-prices">

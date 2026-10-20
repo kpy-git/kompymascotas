@@ -1,113 +1,113 @@
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/raleway/raleway-v37-latin-regular.woff2') format('woff2'); 
+    src: url('../fonts/raleway/raleway-v37-latin-regular.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 500;
-    src: url('../fonts/raleway/raleway-v37-latin-500.woff2') format('woff2'); 
+    src: url('../fonts/raleway/raleway-v37-latin-500.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 600;
-    src: url('../fonts/raleway/raleway-v37-latin-600.woff2') format('woff2'); 
+    src: url('../fonts/raleway/raleway-v37-latin-600.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 700;
-    src: url('../fonts/raleway/raleway-v37-latin-700.woff2') format('woff2'); 
+    src: url('../fonts/raleway/raleway-v37-latin-700.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 800;
-    src: url('../fonts/raleway/raleway-v37-latin-800.woff2') format('woff2'); 
+    src: url('../fonts/raleway/raleway-v37-latin-800.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 900;
-    src: url('../fonts/raleway/raleway-v37-latin-900.woff2') format('woff2'); 
+    src: url('../fonts/raleway/raleway-v37-latin-900.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 200;
-    src: url('../fonts/nunito/nunito-v32-latin-200.woff2') format('woff2'); 
+    src: url('../fonts/nunito/nunito-v32-latin-200.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 300;
-    src: url('../fonts/nunito/nunito-v32-latin-300.woff2') format('woff2'); 
+    src: url('../fonts/nunito/nunito-v32-latin-300.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/nunito/nunito-v32-latin-regular.woff2') format('woff2'); 
+    src: url('../fonts/nunito/nunito-v32-latin-regular.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 500;
-    src: url('../fonts/nunito/nunito-v32-latin-500.woff2') format('woff2'); 
+    src: url('../fonts/nunito/nunito-v32-latin-500.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 600;
-    src: url('../fonts/nunito/nunito-v32-latin-600.woff2') format('woff2'); 
+    src: url('../fonts/nunito/nunito-v32-latin-600.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
-    src: url('../fonts/nunito/nunito-v32-latin-700.woff2') format('woff2'); 
+    src: url('../fonts/nunito/nunito-v32-latin-700.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 800;
-    src: url('../fonts/nunito/nunito-v32-latin-800.woff2') format('woff2'); 
+    src: url('../fonts/nunito/nunito-v32-latin-800.woff2') format('woff2');
 }
 
 @font-face {
-    font-display: swap; 
+    font-display: swap;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 900;
-    src: url('../fonts/nunito/nunito-v32-latin-900.woff2') format('woff2'); 
+    src: url('../fonts/nunito/nunito-v32-latin-900.woff2') format('woff2');
 }
 
 
@@ -160,7 +160,7 @@
     --kpy-font-size-small: .875rem;
     --kpy-font-size-mini: .8rem;
     --kpy-border-radius: .75rem;
-    --kpy-shadow-hover: 0 4px 8px rgba(0,0,0,.1);
+    --kpy-shadow-hover: 0 4px 8px rgba(0, 0, 0, .1);
 
     --bs-body-line-height: 1.25;
     --bs-breadcrumb-divider: ">";
@@ -463,7 +463,7 @@ input[type="email"]::placeholder {
     color: var(--kpy-text-dark);
 }
 
-.ps-searchbar__container .btn{
+.ps-searchbar__container .btn {
     font-weight: bold;
     color: var(--kpy-text-dark);
 }
@@ -589,6 +589,12 @@ input[type="email"]::placeholder {
     line-height: 1.18;
 }
 
+@media (max-width: 768px) {
+    .page-product .product__name {
+        font-size: 1.375rem;
+    }
+}
+
 .product-brand {
     margin-bottom: .35rem;
 }
@@ -650,6 +656,14 @@ input[type="email"]::placeholder {
     flex-shrink: 0;
 }
 
+@media (max-width: 768px) {
+    .product__variants .radio-variant {
+        font-size: 1.05rem;
+        width: 142px;
+        height: 132px;
+    }
+}
+
 .radio-variant > label {
     font-weight: 800;
     width: 100%;
@@ -667,7 +681,7 @@ input[type="email"]::placeholder {
 .product__variants .radio-variant:has(.input-radio:checked) {
     font-weight: 600;
     border-width: 1px;
-    box-shadow: 0 0 0 1.5px var(--kpy-text-dark),0 0 0 5px rgba(42,92,104,.16)
+    box-shadow: 0 0 0 1.5px var(--kpy-text-dark), 0 0 0 5px rgba(42, 92, 104, .16)
 }
 
 .product__variants .radio-variant:has(.input-radio:checked)::after {
@@ -684,7 +698,7 @@ input[type="email"]::placeholder {
     border: 2px solid #fff;
     border-radius: 999px;
     background: var(--kpy-text-dark);
-    box-shadow: 0 1px 4px rgba(0,0,0,.25);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
     font-size: 13px;
     font-weight: 800;
     line-height: 1;
@@ -948,7 +962,18 @@ input[type="email"]::placeholder {
     font-size: 1.125rem;
     font-weight: 800;
     line-height: 1.15;
-    font-family: "Nunito", "Raleway",sans-serif;
+    font-family: "Nunito", "Raleway", sans-serif;
+}
+
+@media (max-width: 768px) {
+    .btn.add-to-cart {
+        font-size: var(--kpy-font-size);
+    }
+}
+
+.cart-fixed-price {
+    font-size: var(--kpy-font-size-mini);
+    font-weight: 600;
 }
 
 .btn.add-to-cart:hover {
@@ -1092,6 +1117,7 @@ fieldset:disabled .btn {
     font-weight: 700;
     color: var(--kpy-text-dark);
 }
+
 #ps_checkout-payment-method-logo-block-container {
     display: none;
     visibility: hidden;
@@ -1100,19 +1126,29 @@ fieldset:disabled .btn {
 
 .product-actions__wrapper-add-to-cart.btn-fixed {
     flex-wrap: nowrap;
-    justify-content: stretch;
+    justify-content: center;
     gap: .75rem;
     position: fixed;
     bottom: 0;
     left: 0;
-    animation: slide-up .6s;
+    animation: slide-up .85s;
     width: 100%;
     padding-inline: 1rem;
     backdrop-filter: blur(10px);
     background: #ffffff6b;
     box-shadow: 0 0 8px #0000001a, 0 0 20px #00000024;
     padding: .7rem 4vw;
-    border-radius: .75rem .7rem 0 0;
+    z-index: 999;
+}
+
+@media (max-width: 768px) {
+    .product-actions__button {
+        flex-grow: 1;
+    }
+
+    .product-actions__button .material-icons {
+        font-size: 1.475rem;
+    }
 }
 
 @keyframes slide-up {
@@ -1128,18 +1164,18 @@ fieldset:disabled .btn {
     }
 }
 
-.product-actions__wrapper-add-to-cart.btn-fixed .product-actions__quantity,
-.product-actions__wrapper-add-to-cart.btn-fixed .product-actions__button {
-    width: 50%;
-}
-
 .product-actions__quantity button {
     width: 3.375rem;
     line-height: 3rem;
 }
 
 .product-actions__wrapper-add-to-cart.btn-fixed .product-actions__quantity button {
-    width: 3.5rem;
+    width: 2.5rem;
+}
+
+.product-actions__wrapper-add-to-cart.btn-fixed .product-actions__quantity #quantity_wanted {
+    padding: 0;
+    max-width: 3rem;
 }
 
 .quantity-button button,
@@ -1164,12 +1200,12 @@ fieldset:disabled .btn {
     gap: .5rem;
 }
 
-.product-actions__quantity button.btn.decrement{
+.product-actions__quantity button.btn.decrement {
     border-bottom-left-radius: var(--kpy-border-radius);
     border-top-left-radius: var(--kpy-border-radius);
 }
 
-.product-actions__quantity button.btn.increment{
+.product-actions__quantity button.btn.increment {
     border-bottom-right-radius: var(--kpy-border-radius);
     border-top-right-radius: var(--kpy-border-radius);
 }
@@ -1333,10 +1369,11 @@ a.js-remove-from-cart:hover {
 
 @media (min-width: 1200px) {
     .layout-left-column .products, .layout-right-column .products {
-        grid-template-columns: repeat(4, minmax(0,1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 1rem;
     }
 }
+
 .search-filters .search-filters-title {
     color: var(--kpy-text-dark);
     font-size: 1.25rem;
@@ -1571,15 +1608,18 @@ a.js-remove-from-cart:hover {
     font-size: var(--kpy-font-size);
     color: var(--kpy-text-dark);
 }
-@media(min-width: 768px) {
+
+@media (min-width: 768px) {
     .product-line__content {
         grid-template-columns: minmax(0, 1fr) 16rem;
     }
 }
+
 .product-line__item.product-line__item--info {
     font-size: var(--kpy-font-size-small);
     color: var(--bs-gray-600);
 }
+
 .product-line__item-price {
     font-weight: bold;
     font-size: 1rem;
@@ -1813,7 +1853,7 @@ a.js-remove-from-cart:hover {
     border-radius: var(--kpy-border-radius);
 }
 
-.kpy-form-group textarea:focus{
+.kpy-form-group textarea:focus {
     border-color: var(--kpy-text-primary);
 }
 
@@ -2112,7 +2152,6 @@ a.js-remove-from-cart:hover {
 .customer-link__logout:hover .customer-account__icon {
     fill: var(--kpy-color-primary);
 }
-
 
 
 .account-menu__icon {
@@ -2559,11 +2598,13 @@ a.js-remove-from-cart:hover {
     left: 30px;
     border-bottom: 1px solid var(--cart-rule-border-color, var(--kpy-primary-accent));
 }
+
 .cart-rule-code::after {
     bottom: calc(-1 * var(--corner-radio) / 2);
     left: 30px;
     border-top: 1px solid var(--cart-rule-border-color, var(--kpy-primary-accent));
 }
+
 .cart-rule-amount {
     font-size: 1.5rem;
     font-weight: 600;
@@ -2587,7 +2628,7 @@ a.js-remove-from-cart:hover {
 }
 
 .page-contact .kpy-form-group {
-margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
 .page-contact h1 {
@@ -2653,7 +2694,7 @@ margin-bottom: 2rem;
         box-shadow: unset;
     }
 
-    .nav-module:has(.multi-line):hover .nav-icon > .material-icons{
+    .nav-module:has(.multi-line):hover .nav-icon > .material-icons {
         color: var(--kpy-text-dark);
     }
 

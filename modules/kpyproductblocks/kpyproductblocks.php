@@ -73,7 +73,7 @@ class KpyProductBlocks extends Module implements WidgetInterface
         return true;
     }
 
-    public function hookActionFrontControllerSetMedia()
+    public function hookActionFrontControllerSetMedia(): void
     {
         if ($this->context->controller->php_self === 'product') {
             $this->context->controller->registerStylesheet(
@@ -85,14 +85,14 @@ class KpyProductBlocks extends Module implements WidgetInterface
                 ]
             );
 
-            $this->context->controller->registerJavascript(
+            /*$this->context->controller->registerJavascript(
                 $this->name . '-script',
                 'modules/' . $this->name . '/views/js/' . $this->name . '.js',
                 [
                     'position' => 'bottom',
                     'priority' => 1000,
                 ]
-            );
+            );*/
         }
     }
 
