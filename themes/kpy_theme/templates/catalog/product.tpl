@@ -109,7 +109,11 @@
 
 
                 {block name='product_description'}
-                    {widget name='kpyproductdescription' hook='description' id_product=$product.id}
+                    {* kpyproductpage: si devuelve algo, sustituye a la ficha de siempre; si no, sale la de siempre *}
+                    {capture name='kpp'}{hook h='displayKpyProductPage' product=$product}{/capture}
+                    {if $smarty.capture.kpp|trim}{$smarty.capture.kpp nofilter}{else}
+                        {widget name='kpyproductdescription' hook='description' id_product=$product.id}
+                    {/if}
                     {*
                     {if $product.description}
                       <div class="info accordion-item" id="description">

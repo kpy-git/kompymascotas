@@ -111,6 +111,9 @@
 !/modules/kpyproductform/
 !/modules/kpyproductform/**
 
+!/modules/kpyproductpage/
+!/modules/kpyproductpage/**
+
 !/modules/kpyproductreviews/
 !/modules/kpyproductreviews/**
 

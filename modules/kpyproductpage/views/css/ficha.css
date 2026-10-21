@@ -1,0 +1,189 @@
+/* Kompy · Ficha de producto (kpyproductpage). Móvil primero; PC desde 992 px. */
+.kpp{--kpp-tinta:#2A5C68;--kpp-texto:#4b5a61;--kpp-gris:#5f6b72;--kpp-borde:#ece8dc;--kpp-suave:#fcfbf8;--kpp-teal:#007a85;--kpp-lila:#F4F0FC;--kpp-lila-t:#6A4CA3;--kpp-verde:#E8F4EC;--kpp-verde-t:#1E6B3A;--kpp-amarillo:#FFF5D8;
+  display:flex;flex-direction:column;gap:12px;margin:24px 0;color:var(--kpp-tinta)}
+.kpp *{box-sizing:border-box}
+.kpp-fila{display:flex;flex-direction:column;gap:12px}
+.kpp-sec{background:#fff;border:1px solid var(--kpp-borde);border-radius:16px;padding:16px;min-width:0}
+.kpp-h2{margin:0;font-size:1.125rem;font-weight:800;line-height:1.25;color:var(--kpp-tinta)}
+.kpp-car .kpp-h2,.kpp-ben .kpp-h2{margin-bottom:12px}
+.kpp a{color:var(--kpp-teal);text-underline-offset:3px}
+.kpp-nota,.kpp-pie{margin:8px 0 0;font-size:.8125rem;color:var(--kpp-gris)}
+
+/* Desplegables: <details>, sin JavaScript */
+.kpp-acc>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr 24px;align-items:center;column-gap:8px;min-height:44px;margin:-4px 0}
+.kpp-acc>summary::-webkit-details-marker{display:none}
+.kpp-acc>summary::after{content:"";grid-column:2;grid-row:1/span 2;width:10px;height:10px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:rotate(45deg);justify-self:center;margin-top:-4px;transition:transform .15s}
+.kpp-acc[open]>summary::after{transform:rotate(225deg);margin-top:4px}
+.kpp-acc__res{grid-column:1;font-size:.8125rem;color:var(--kpp-gris);line-height:1.3;margin-top:2px}
+.kpp-acc[open] .kpp-acc__res{display:none}
+.kpp-acc__cuerpo{padding-top:12px}
+.kpp-acc>summary:focus-visible,.kpp-chip:focus-visible,.kpp-tab:focus-visible,.kpp-mas>summary:focus-visible{outline:3px solid var(--kpp-teal);outline-offset:2px;border-radius:8px}
+
+/* Características */
+.kpp-para{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 12px}
+.kpp-para__et{font-size:.875rem;font-weight:800;color:var(--kpp-gris);margin-right:2px}
+.kpp-pill{padding:5px 11px;border-radius:999px;background:#f4f2ec;font-size:.875rem;font-weight:700}
+.kpp-pill--mascota{background:#EAF3F4;font-weight:800}
+.kpp-fichas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0}
+.kpp-ficha{padding:10px 12px;border-radius:12px;border:1px solid #f0ece2;background:var(--kpp-suave)}
+.kpp-ficha dt{font-size:.75rem;font-weight:700;color:var(--kpp-gris)}
+.kpp-ficha dd{margin:2px 0 0;font-size:.9375rem;font-weight:800;line-height:1.3;overflow-wrap:anywhere}
+.kpp-pie{display:flex;flex-wrap:wrap;gap:4px 12px}
+
+/* Beneficios: todos a la vista, dos columnas en móvil */
+.kpp-ben__lista{list-style:none;margin:0;padding:10px;border-radius:14px;background:var(--kpp-lila);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 8px}
+.kpp-ben__item{display:flex;align-items:center;gap:8px;padding:6px 2px;font-size:.8125rem;font-weight:800;line-height:1.25;color:var(--kpp-lila-t)}
+.kpp-ben__icono{flex-shrink:0;width:40px;height:40px;object-fit:contain}
+
+/* Ingredientes */
+.kpp-ing__titular{margin:0 0 8px;font-size:1rem;font-weight:800}
+.kpp-barra{display:flex;height:14px;border-radius:999px;overflow:hidden;background:#efece4}
+.kpp-c0{background:#2A5C68}.kpp-c1{background:#E8806F}.kpp-c2{background:#E5A800}.kpp-c3{background:#7B5CB0}
+.kpp-leyenda{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.875rem}
+.kpp-leyenda li{display:flex;align-items:center;gap:6px}
+.kpp-punto{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.kpp-sellos{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.kpp-sellos li{padding:4px 10px;border-radius:999px;background:var(--kpp-verde);color:var(--kpp-verde-t);font-size:.8125rem;font-weight:800}
+.kpp-sellos li::before{content:"✓ "}
+.kpp-ing__texto{margin:12px 0 0;font-size:.9375rem;line-height:1.6;color:var(--kpp-texto)}
+.kpp-ing__texto strong{color:var(--kpp-tinta)}
+.kpp-mas{margin-top:4px}
+.kpp-mas>summary{cursor:pointer;display:inline-flex;align-items:center;min-height:44px;color:var(--kpp-teal);font-weight:800;font-size:.9375rem}
+.kpp-mas>p,.kpp-mas>div{margin:0;padding:12px 14px;border-radius:12px;background:var(--kpp-suave);border:1px solid #f0ece2;font-size:.875rem;line-height:1.55;color:var(--kpp-texto)}
+
+/* Composición */
+.kpp-cifras{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.kpp-cifra{flex:1 1 calc(50% - 4px);display:flex;flex-direction:column;padding:10px 12px;border-radius:12px;background:#EAF3F4}
+.kpp-cifra--grasa{background:var(--kpp-amarillo)}.kpp-cifra--fibra{background:var(--kpp-verde)}.kpp-cifra--ceniza{background:var(--kpp-lila)}
+.kpp-cifra__n{font-size:.8125rem;font-weight:700;color:var(--kpp-texto)}
+.kpp-cifra__v{font-size:1.5rem;font-weight:800;line-height:1.15}
+.kpp-cifra__ayuda{font-size:.75rem;color:var(--kpp-gris);line-height:1.25}
+.kpp-tabla{width:100%;margin-top:8px;border-collapse:collapse;font-size:.9375rem}
+.kpp-tabla th,.kpp-tabla td{padding:8px 2px;border-bottom:1px solid #f0ece2;text-align:left;font-weight:400}
+.kpp-tabla td{text-align:right;font-weight:800}
+
+/* Ración diaria */
+.kpp-calc__preg{margin:0 0 8px;font-size:.9375rem;font-weight:700}
+.kpp-calc__det{margin:-4px 0 10px;font-size:.8125rem;color:var(--kpp-gris)}
+.kpp-calc__det:empty{display:none}
+.kpp-rac__tit{margin:12px 0 6px;font-weight:700;color:var(--kpp-tinta)}
+.kpp-rac__tit:first-child{margin-top:0}
+.kpp-tabs,.kpp-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.kpp-chip,.kpp-tab{min-height:44px;min-width:56px;padding:0 14px;border-radius:999px;border:1.5px solid #e2ddd0;background:#fff;color:var(--kpp-tinta);font:inherit;font-size:.9375rem;font-weight:800;cursor:pointer}
+.kpp-tab{border-radius:12px}
+.kpp-chip[aria-pressed=true],.kpp-tab[aria-pressed=true]{background:var(--kpp-tinta);border-color:var(--kpp-tinta);color:#fff}
+.kpp-calc__res{padding:14px 16px;border-radius:14px;background:var(--kpp-amarillo)}
+.kpp-calc__valor{display:block;font-size:1.375rem;line-height:1.25}
+.kpp-calc__dias{list-style:none;margin:6px 0 0;padding:0;font-size:.875rem;color:var(--kpp-texto)}
+.kpp-calc__dias::before{content:attr(data-titulo);display:block;font-weight:800;color:var(--kpp-tinta)}
+.kpp-calc__dias:empty{display:none}
+.kpp-rac__tabla table{width:100%;border-collapse:collapse;font-size:.875rem;margin:0 0 8px}
+.kpp-rac__tabla th,.kpp-rac__tabla td{padding:6px 4px;border-bottom:1px solid #f0ece2;text-align:left}
+
+/* Descripción: imágenes de marca, nunca más anchas que la pantalla */
+.kpp-desc__texto{font-size:.9375rem;line-height:1.65;color:var(--kpp-texto)}
+/* El tema pone el texto de .rich-text en gris claro (poco contraste): aquí manda el nuestro */
+.kpp .kpp-desc__texto p,.kpp .kpp-desc__texto li,.kpp .kpp-desc__texto span{color:var(--kpp-texto)}
+.kpp .kpp-desc__texto strong{color:var(--kpp-tinta)}
+.kpp-desc__texto img{max-width:100%;height:auto}
+.kpp-desc__texto h3{font-size:1rem;font-weight:800;color:var(--kpp-tinta);margin:16px 0 6px}
+/* Listas de cosas cortas (p. ej. «Ingredientes clave»): en columnas, más compactas */
+.kpp-desc__texto ul.kpp-lista-corta{columns:2;column-gap:28px}
+.kpp-desc__texto ul.kpp-lista-corta li{break-inside:avoid}
+@media (min-width:768px){.kpp-desc__texto ul.kpp-lista-corta{columns:3}}
+
+/* Contenido de marca (KppMarca, hoy Boske), dentro de «Descripción» */
+.kpp-marca{--kpp-marca-color:#eef2ff;--kpp-marca-tinta:#373869;--kpp-marca-rojo:#e84253}
+/* Opinión de la especialista: como en la ficha de siempre, borde amarillo y fondo crema */
+.kpp-marca__opinion{display:grid;margin:16px 0;border:2px solid #ffe36b;border-radius:16px;background:#fff4d7;overflow:hidden}
+.kpp-marca__opinion-foto{display:block;width:100%;height:200px;object-fit:cover;object-position:center 30%}
+.kpp-marca__opinion>div{padding:14px 16px}
+.kpp .kpp-desc__texto .kpp-marca h3{margin:0 0 8px;color:var(--kpp-tinta)}
+.kpp .kpp-desc__texto .kpp-marca__firma{margin:-4px 0 8px;font-size:.8125rem;color:var(--kpp-gris)}
+.kpp .kpp-desc__texto .kpp-marca p{margin:0 0 10px}
+.kpp .kpp-desc__texto .kpp-marca p:last-child{margin-bottom:0}
+.kpp-marca__foto{display:block;width:100%;height:auto;margin:12px 0;border-radius:12px}
+/* Fotos con su texto: foto y texto en dos columnas en PC, alternando el lado */
+.kpp-marca__caja{display:grid;gap:12px;align-items:center;margin:16px 0}
+.kpp-marca__caja>img{display:block;width:100%;height:auto;max-height:260px;object-fit:cover;border-radius:12px}
+/* Por qué elegirlo: tarjetas del color del producto, como las cajas de la ficha de siempre */
+.kpp .kpp-desc__texto .kpp-marca h3.kpp-marca__titulo{margin:20px 0 10px;text-align:center;font-size:1.0625rem;font-weight:800}
+.kpp .kpp-desc__texto .kpp-marca h3.kpp-marca__titulo--rojo{color:var(--kpp-marca-rojo)}
+.kpp-marca__claves,.kpp-marca__ingredientes{list-style:none;margin:0;padding:0}
+.kpp-marca__claves{display:grid;gap:8px}
+.kpp-marca__claves li{display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 14px;border-radius:14px;background:var(--kpp-marca-color)}
+.kpp-marca__claves img{flex-shrink:0;width:40px;height:40px;object-fit:contain}
+.kpp .kpp-desc__texto .kpp-marca__claves p{margin:0;font-size:.875rem;line-height:1.4;color:var(--kpp-marca-tinta)}
+.kpp .kpp-desc__texto .kpp-marca__claves strong{color:var(--kpp-marca-tinta)}
+/* Ingredientes principales: centrados, del mismo tamaño */
+.kpp-marca__ingredientes{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;text-align:center}
+.kpp-marca__ingredientes li{flex:0 1 calc((100% - 20px) / 3);max-width:180px}
+.kpp-marca__ingredientes img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:12px}
+.kpp .kpp-desc__texto .kpp-marca__ingredientes span{display:block;margin-top:6px;font-size:.8125rem;font-weight:800;line-height:1.25;color:var(--kpp-tinta)}
+
+/* Preguntas frecuentes: cada una se abre por separado */
+.kpp-faq__item{border-top:1px solid var(--kpp-borde)}
+.kpp-faq__item:last-child{border-bottom:1px solid var(--kpp-borde)}
+.kpp-faq__item>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr 20px;align-items:center;gap:10px;min-height:48px;padding:10px 0;font-size:.9375rem;font-weight:800;line-height:1.35;color:var(--kpp-tinta)}
+.kpp-faq__item>summary::-webkit-details-marker{display:none}
+.kpp-faq__item>summary::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);justify-self:center;margin-top:-3px;transition:transform .15s}
+.kpp-faq__item[open]>summary::after{transform:rotate(225deg);margin-top:3px}
+.kpp-faq__item>summary:focus-visible{outline:3px solid var(--kpp-teal);outline-offset:2px;border-radius:8px}
+.kpp-faq__resp{padding:0 0 14px;font-size:.9375rem;line-height:1.6;color:var(--kpp-texto)}
+.kpp-faq__resp strong{color:var(--kpp-tinta)}
+
+@media (min-width:576px){
+  .kpp-fichas{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .kpp-ben__lista{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:992px){
+  .kpp{gap:24px;margin:32px 0}
+  /* Las dos filas con la misma rejilla: el corte entre bloques cae en el mismo sitio arriba y
+     abajo, y en cada fila los dos bloques miden lo mismo de alto (esquinas alineadas). */
+  .kpp-fila{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:stretch;gap:24px}
+  .kpp-fila>.kpp-sec:only-child{grid-column:1/-1}
+  .kpp-sec{padding:24px 26px;border-radius:18px}
+  .kpp-h2{font-size:1.375rem}
+  .kpp-car .kpp-h2,.kpp-ben .kpp-h2{margin-bottom:16px}
+  /* En PC todo abierto: el desplegable se queda en título */
+  .kpp-acc>summary{cursor:default;pointer-events:none;grid-template-columns:1fr}
+  .kpp-acc>summary::after,.kpp-acc__res{display:none}
+  .kpp-acc__cuerpo{padding-top:16px}
+  .kpp-ben__lista{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 8px;padding:20px 12px}
+  .kpp-ben__item{flex-direction:column;text-align:center;font-size:.84rem}
+  .kpp-ben__icono{width:56px;height:56px}
+  .kpp-cifra__v{font-size:1.75rem}
+}
+@media (min-width:768px){
+  .kpp-marca__opinion{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:stretch}
+  .kpp-marca__opinion-foto{height:100%;min-height:240px}
+  .kpp-marca__opinion>div{padding:18px 22px;align-self:center}
+  .kpp-marca__caja{grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:24px;margin:18px 0}
+  .kpp-marca__caja--der{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+  .kpp-marca__caja--der>img{order:2}
+  .kpp-marca__claves{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .kpp-marca__ingredientes{gap:16px}
+}
+@media (min-width:992px) and (max-width:1199px){
+  /* Tablet apaisada y portátil pequeño: los beneficios, en tres columnas */
+  .kpp-ben__lista{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){.kpp-acc>summary::after{transition:none}}
+
+/* Las tablas de la descripción, dentro de su caja.
+ *
+ * Muchas descripciones vienen del editor viejo con tablas de ancho fijo (966 px es la más repetida).
+ * En el móvil sacaban la página entera: 978 px de ancho en una pantalla de 360, con su barra de
+ * desplazamiento horizontal y el diseño descuadrado. Con esto la tabla se desplaza sola dentro de su
+ * hueco y la página se queda en 360.
+ *
+ * Medido en la ficha del Eukanuba Adult Small Breed: 978 px → 362 px.
+ */
+.product__description table,
+.product__infos table,
+.product-info-label table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
