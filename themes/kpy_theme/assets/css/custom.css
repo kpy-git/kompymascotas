@@ -630,7 +630,7 @@ input[type="email"]::placeholder {
     overflow-y: hidden;
     scroll-snap-align: start;
     scroll-snap-type: x mandatory;
-    padding: .5rem;
+    padding: .5rem 0;
 }
 
 .page-product .product__variants {
@@ -2746,8 +2746,12 @@ a.js-remove-from-cart:hover {
     }
 
     .product__carousel img {
-        max-height: 250px;
+        max-height: 240px;
         object-fit: contain;
+    }
+
+    .page-product .product__images {
+        margin-block-end: .5rem;
     }
 }
 
