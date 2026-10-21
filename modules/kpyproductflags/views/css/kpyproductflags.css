@@ -32,3 +32,9 @@
     text-align: center;
     right: 0;
 }
+
+@media (max-width: 768px) {
+    .attribute-flags {
+        font-size: .675rem;
+    }
+}

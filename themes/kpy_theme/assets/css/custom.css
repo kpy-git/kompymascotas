@@ -659,13 +659,17 @@ input[type="email"]::placeholder {
 @media (max-width: 768px) {
     .product__variants .radio-variant {
         font-size: 1.05rem;
-        width: 105px;
+        width: 98px;
     }
     .breadcrumb__wrapper {
         margin: .25rem 0;
     }
     .breadcrumb {
         padding-bottom: .25rem;
+    }
+
+    .page-product .product__variants .variant .radio-variants {
+        gap: .5rem;
     }
 }
 
