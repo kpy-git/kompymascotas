@@ -103,6 +103,7 @@
             {/block}
         </div>
         <div class="col-xs-12">
+            {hook h='displayKpyCrossSell' product=$product}
             {block name='product_tabs'}
             <div class="product__infos accordion accordion-flush" id="product-infos-accordion">
 
@@ -188,11 +189,11 @@
     </div>{* /row *}
     {* END OF SECOND PART *}
 
-    {block name='product_accessories'}
+    {*{block name='product_accessories'}
         {if $accessories}
             {include file='catalog/_partials/product-accessories.tpl'}
         {/if}
-    {/block}
+    {/block}*}
 
     {block name='product_footer'}
         {hook h='displayFooterProduct' product=$product category=$category}

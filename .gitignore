@@ -51,6 +51,9 @@
 !/modules/kpycategory/
 !/modules/kpycategory/**
 
+!/modules/kpycrosssell/
+!/modules/kpycrossell/**
+
 !/modules/kpycustomerform/
 !/modules/kpycustomerform/**
 
