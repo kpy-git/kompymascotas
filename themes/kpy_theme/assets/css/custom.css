@@ -740,6 +740,12 @@ input[type="email"]::placeholder {
     margin-top: 1rem;
 }
 
+@media (min-width: 1200px) {
+    .page-product .product__additional-info {
+        gap: 1.25rem;
+    }
+}
+
 .product-complete-description {
     font-size: .75rem;
     margin-top: .5rem;
