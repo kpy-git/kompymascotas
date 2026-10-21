@@ -659,8 +659,13 @@ input[type="email"]::placeholder {
 @media (max-width: 768px) {
     .product__variants .radio-variant {
         font-size: 1.05rem;
-        width: 142px;
-        height: 132px;
+        width: 105px;
+    }
+    .breadcrumb__wrapper {
+        margin: .25rem 0;
+    }
+    .breadcrumb {
+        padding-bottom: .25rem;
     }
 }
 
@@ -2738,6 +2743,11 @@ a.js-remove-from-cart:hover {
     .product-comments-grade-bar {
         width: 100%;
         flex-grow: unset;
+    }
+
+    .product__carousel img {
+        max-height: 250px;
+        object-fit: contain;
     }
 }
 
