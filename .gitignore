@@ -120,6 +120,9 @@
 !/modules/kpyproductsync/
 !/modules/kpyproductsync/**
 
+!/modules/kpyproductzoom/
+!/modules/kpyproductzoom/**
+
 !/modules/kpyspecialprices/
 !/modules/kpyspecialprices/**
 

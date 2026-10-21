@@ -1,0 +1,18 @@
+/*
+ * Kompy · Ampliar fotos con los dedos. Lo justo: que el navegador deje pellizcar y que se note que
+ * la foto de la ficha se puede tocar.
+ */
+#product-modal .carousel-item img{touch-action:none;will-change:transform;user-select:none;-webkit-user-drag:none}
+/* Con la foto ampliada, los controles de pasar de foto estorban. */
+#product-modal.kpz-ampliada .carousel-control-prev,
+#product-modal.kpz-ampliada .carousel-control-next{opacity:0;pointer-events:none}
+.kpz-pista{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:5;padding:8px 16px;border-radius:999px;
+  background:rgba(31,66,74,.86);color:#fff;font-size:14px;font-weight:700;white-space:nowrap;animation:kpz-fundido .3s ease-out}
+@keyframes kpz-fundido{from{opacity:0}to{opacity:1}}
+@media (max-width:991.98px){
+  /* La foto de la ficha abre la galería: que se vea que se puede tocar. */
+  .product__carousel .carousel-item img{cursor:zoom-in}
+}
+@media (prefers-reduced-motion:reduce){
+  .kpz-pista{animation:none}
+}
