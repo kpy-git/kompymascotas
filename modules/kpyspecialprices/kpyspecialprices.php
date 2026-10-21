@@ -70,7 +70,10 @@ class KpySpecialPrices extends Module
 
     public function hookDisplayProductPriceBlock(array $params): string
     {
-        if ($this->context->controller instanceof ProductControllerCore && $params['type'] === 'old_price') {
+        if ($this->context->controller instanceof ProductControllerCore
+            && $params['type'] === 'old_price'
+            && $this->hasSpecialPrice($params['product']['id_product'], $params['product']['id_product_attribute'])
+        ) {
             $product = $params['product'];
             $this->context->smarty->assign([
                 $this->name => [
@@ -224,6 +227,6 @@ class KpySpecialPrices extends Module
                     AND id_product_attribute = {$productAttributeId}
                     AND NOW() BETWEEN `date_from` AND `expire`
                     AND id_shop = {$this->context->shop->id}"
-        ));
+        )) ?: '';
     }
 }
