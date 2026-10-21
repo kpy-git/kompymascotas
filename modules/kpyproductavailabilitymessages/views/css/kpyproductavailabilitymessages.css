@@ -9,10 +9,16 @@
     border-top-right-radius: .5rem;
 }
 
-.kpy-product-availability-message {
+.in-stock {
     --product-message-block-color: var(--kpy-color-success);
     --product-message-block-boder-color: var(--kpy-color-success);
     --product-message-block-bg: #e8f1ec;
+}
+
+.out-of-stock {
+    --product-message-block-color: var(--bs-warning);
+    --product-message-block-boder-color: var(--bs-warning-border-subtle);
+    --product-message-block-bg: var(--bs-warning-bg-subtle);
 }
 
 .kpy-product-availability-message-cart {
