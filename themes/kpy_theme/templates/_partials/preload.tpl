@@ -9,6 +9,7 @@
 
 <link rel="preconnect" href="https://www.googletagmanager.com">
 <link rel="preconnect" href="https://widgets.rr.skeepers.io">
+<link rel="preconnect" href="https://assets.prestashop3.com">
 <link rel="dns-prefetch" href="https://www.google-analytics.com">
 <link rel="dns-prefetch" href="https://www.paypal.com">
 <link rel="dns-prefetch" href="https://cdn.doofinder.com">

@@ -531,7 +531,7 @@ input[type="email"]::placeholder {
     display: flex;
     flex-wrap: nowrap;
     justify-content: start;
-    align-items: start;
+    align-items: stretch;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-align: start;
@@ -566,6 +566,10 @@ input[type="email"]::placeholder {
     .product__variants .radio-variant {
         font-size: 1.05rem;
         width: 98px;
+        min-height: 100px;
+        padding-block: 1.5rem;
+        height: unset;
+        box-sizing: border-box;
     }
     .breadcrumb__wrapper {
         margin: .25rem 0;
