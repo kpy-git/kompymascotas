@@ -526,6 +526,27 @@ input[type="email"]::placeholder {
     color: var(--kpy-text-dark);
 }
 
+/* Kompy · Móvil: las fotos y los vídeos de dentro de una descripción no ensanchan la página. Había
+un centenar de fichas (las de Royal Canin entre ellas, con fotos de 486 a 846 px) que en el móvil
+medían el doble que la pantalla. */
+.product__description img,
+.rich-text img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product__description iframe,
+.product__description video,
+.rich-text iframe,
+.rich-text video {
+    max-width: 100%;
+}
+
+/* Y una palabra larguísima en una opinión, tampoco: se parte. */
+.comment-text {
+    overflow-wrap: anywhere;
+}
+
 .page-product .product__variants .variant .radio-variants {
     gap: 1rem;
     display: flex;
@@ -1009,6 +1030,7 @@ fieldset:disabled .btn {
 .footer-logo > img {
     width: 350px;
     height: auto;
+    max-width: 100%;
 }
 
 .footer__top {
