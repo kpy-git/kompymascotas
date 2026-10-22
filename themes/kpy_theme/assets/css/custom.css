@@ -62,6 +62,9 @@
     --kpy-font-size: .945rem;
     --kpy-font-size-small: .875rem;
     --kpy-font-size-mini: .8rem;
+    --kpy-font-size-extra-mini: .765rem;
+
+
     --kpy-border-radius: .75rem;
     --kpy-shadow-hover: 0 4px 8px rgba(0, 0, 0, .1);
 
@@ -573,6 +576,10 @@ input[type="email"]::placeholder {
 
     .page-product .product__variants .variant .radio-variants {
         gap: .5rem;
+    }
+
+    .radio-variant > label {
+        font-size: var(--kpy-font-size-small);
     }
 }
 
@@ -1172,6 +1179,14 @@ fieldset:disabled .btn {
     color: var(--bs-gray-600);
     font-size: var(--kpy-font-size-small);
     text-align: center;
+}
+
+@media (max-width: 768px) {
+    .attribute-prices,
+    .attribute-pvr,
+    .attribute-unit-price {
+        font-size: var(--kpy-font-size-extra-mini);
+    }
 }
 
 a.js-remove-from-cart {
