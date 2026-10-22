@@ -28,6 +28,13 @@ class Kpyproductpage extends Module
     /** 1 = plantilla nueva en todos los productos; 0 = solo en los que tienen datos nuevos. */
     public const CONF_TODOS = 'KPP_TODOS';
 
+    /**
+     * Marcas (id_manufacturer, separados por comas) repasadas enteras: todas sus fichas salen con la
+     * plantilla nueva aunque les falte la analítica (henos, snacks, lechos y accesorios no la
+     * publican). Bunny, 22/10/2026.
+     */
+    public const CONF_COMPLETAS = 'KPP_MARCAS_COMPLETAS';
+
     /** Carpeta de los iconos de beneficios dentro de `modules/` (vacío = la de siempre). */
     public const CONF_ICONOS = 'KPP_ICONOS';
 
@@ -44,7 +51,7 @@ class Kpyproductpage extends Module
     {
         $this->name = 'kpyproductpage';
         $this->tab = 'front_office_features';
-        $this->version = '1.1.0';
+        $this->version = '1.2.0';
         $this->author = 'Kompy';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -68,13 +75,15 @@ class Kpyproductpage extends Module
             && $this->registerHook('actionFrontControllerSetMedia')
             && $this->registerHook('displayFooterProduct')
             && Configuration::updateValue(self::CONF_EXCLUIR, '')
-            && Configuration::updateValue(self::CONF_TODOS, 0);
+            && Configuration::updateValue(self::CONF_TODOS, 0)
+            && Configuration::updateValue(self::CONF_COMPLETAS, '');
     }
 
     public function uninstall(): bool
     {
         Configuration::deleteByName(self::CONF_EXCLUIR);
         Configuration::deleteByName(self::CONF_TODOS);
+        Configuration::deleteByName(self::CONF_COMPLETAS);
         Configuration::deleteByName(self::CONF_ICONOS);
         Configuration::deleteByName(self::CONF_PREVIA);
 
@@ -174,8 +183,11 @@ class Kpyproductpage extends Module
         }
         // Ficha completa = ingredientes y composición cargados: las que se dan de alta ahora. Casi
         // todo el catálogo tiene beneficios puestos (hasta juguetes), así que eso no distingue.
-        // Una ficha con contenido de marca también sale entera, aunque le falte la analítica.
-        $completa = (trim($ingredientes) !== '' && $composicion !== []) || $marcaPropia !== null;
+        // Una ficha con contenido de marca también sale entera, aunque le falte la analítica, y
+        // también las de las marcas repasadas enteras (CONF_COMPLETAS).
+        $completas = array_filter(array_map('intval', explode(',', (string) Configuration::get(self::CONF_COMPLETAS))));
+        $completa = (trim($ingredientes) !== '' && $composicion !== []) || $marcaPropia !== null
+            || ($idMarca > 0 && in_array($idMarca, $completas, true));
         if (!$completa && !Configuration::get(self::CONF_TODOS)) {
             return '';
         }
@@ -225,6 +237,8 @@ class Kpyproductpage extends Module
         if (Tools::isSubmit('submitKpp')) {
             $ids = implode(',', array_filter(array_map('intval', preg_split('/[\s,;]+/', (string) Tools::getValue(self::CONF_EXCLUIR)))));
             Configuration::updateValue(self::CONF_EXCLUIR, $ids);
+            $completas = implode(',', array_filter(array_map('intval', preg_split('/[\s,;]+/', (string) Tools::getValue(self::CONF_COMPLETAS)))));
+            Configuration::updateValue(self::CONF_COMPLETAS, $completas);
             Configuration::updateValue(self::CONF_TODOS, (int) Tools::getValue(self::CONF_TODOS));
             Configuration::updateValue(self::CONF_ICONOS, trim(str_replace('..', '', (string) Tools::getValue(self::CONF_ICONOS)), '/ '));
             $salida .= $this->displayConfirmation($this->trans('Guardado.', [], 'Modules.Kpyproductpage.Admin'));
@@ -239,6 +253,7 @@ class Kpyproductpage extends Module
         $helper->default_form_language = (int) $this->context->language->id;
         $helper->fields_value = [
             self::CONF_EXCLUIR => Configuration::get(self::CONF_EXCLUIR),
+            self::CONF_COMPLETAS => Configuration::get(self::CONF_COMPLETAS),
             self::CONF_TODOS => (int) Configuration::get(self::CONF_TODOS),
             self::CONF_ICONOS => Configuration::get(self::CONF_ICONOS),
         ];
@@ -252,6 +267,12 @@ class Kpyproductpage extends Module
                         'name' => self::CONF_EXCLUIR,
                         'label' => $this->trans('Marcas con su ficha de siempre', [], 'Modules.Kpyproductpage.Admin'),
                         'desc' => $this->trans('Id de fabricante separados por comas (p. ej. Boske).', [], 'Modules.Kpyproductpage.Admin'),
+                    ],
+                    [
+                        'type' => 'text',
+                        'name' => self::CONF_COMPLETAS,
+                        'label' => $this->trans('Marcas con la ficha nueva en todas sus fichas', [], 'Modules.Kpyproductpage.Admin'),
+                        'desc' => $this->trans('Id de fabricante separados por comas: salen con la ficha nueva aunque les falte la analítica (p. ej. Bunny, 219).', [], 'Modules.Kpyproductpage.Admin'),
                     ],
                     [
                         'type' => 'switch',
