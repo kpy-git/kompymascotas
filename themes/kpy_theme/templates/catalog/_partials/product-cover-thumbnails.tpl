@@ -21,7 +21,7 @@
                                             srcset="
                       {$image.bySize.default_xl.sources.avif} 400w,
                       {$image.bySize.product_main.sources.avif} 720w"
-                                            sizes="(min-width: 992px) 50vw, (min-width: 360px) 33vw, 100vw"
+                                            sizes="(min-width: 992px) 50vw, 100vw"
                                             type="image/avif"
                                     >
                                 {/if}
@@ -31,7 +31,7 @@
                                             srcset="
                       {$image.bySize.default_xl.sources.webp} 400w,
                       {$image.bySize.product_main.sources.webp} 720w"
-                                            sizes="(min-width: 992px) 50vw, (min-width: 360px) 33vw, 100vw"
+                                            sizes="(min-width: 992px) 50vw, 100vw"
                                             type="image/webp"
                                     >
                                 {/if}
@@ -41,11 +41,12 @@
                                         srcset="
                     {$image.bySize.default_xl.url} 400w,
                     {$image.bySize.product_main.url} 720w"
-                                        sizes="(min-width: 992px) 50vw, (min-width: 360px) 33vw, 100vw"
+                                        sizes="(min-width: 992px) 50vw, 100vw"
                                         src="{$image.bySize.product_main.url}"
                                         width="{$image.bySize.product_main.width}"
                                         height="{$image.bySize.product_main.height}"
-                                        {if $smarty.foreach.productImages.first}
+                                        {* Kompy · La prioridad, a la foto que se ve (la portada del formato), no a la primera de la lista. *}
+                                        {if $image.id_image == $product.default_image.id_image}
                                             fetchpriority="high"
                                         {else}
                                             loading="lazy"
@@ -140,7 +141,7 @@
                             srcset="
               {$urls.no_picture_image.bySize.default_xl.sources.avif} 400w,
               {$urls.no_picture_image.bySize.product_main.sources.avif} 720w"
-                            sizes="(min-width: 992px) 50vw, (min-width: 360px) 33vw, 100vw"
+                            sizes="(min-width: 992px) 50vw, 100vw"
                             type="image/avif"
                     >
                 {/if}
@@ -150,7 +151,7 @@
                             srcset="
               {$urls.no_picture_image.bySize.default_xl.sources.webp} 400w,
               {$urls.no_picture_image.bySize.product_main.sources.webp} 720w"
-                            sizes="(min-width: 992px) 50vw, (min-width: 360px) 33vw, 100vw"
+                            sizes="(min-width: 992px) 50vw, 100vw"
                             type="image/webp"
                     >
                 {/if}
@@ -160,7 +161,7 @@
                         srcset="
             {$urls.no_picture_image.bySize.default_xl.url} 400w,
             {$urls.no_picture_image.bySize.product_main.url} 720w"
-                        sizes="(min-width: 992px) 50vw, (min-width: 360px) 33vw, 100vw"
+                        sizes="(min-width: 992px) 50vw, 100vw"
                         width="{$urls.no_picture_image.bySize.product_main.width}"
                         height="{$urls.no_picture_image.bySize.product_main.height}"
                         src="{$urls.no_picture_image.bySize.default_xl.url}"
