@@ -1,9 +1,13 @@
+{* El filtro Perros/Gatos solo sale si hay destacados de las dos mascotas (una marca solo de gatos no enseña «Perros») *}
+{$hayPerro = false}{$hayGato = false}
+{foreach from=$products item=product}{if $product.pet == 'perro'}{$hayPerro = true}{elseif $product.pet == 'gato'}{$hayGato = true}{/if}{/foreach}
 <section id="productos" class="productos-section section-gap">
     <div class="container">
 
         <h2 class="section-title" style="text-align:center;">{l s='Feaured products' d='Modules.Kpymanufacturer.Shop'}</h2>
         <p class="section-sub" style="text-align:center;">{l s='The most highly rated by our customers and recommended by veterinarians' d='Modules.Kpymanufacturer.Shop'} </p>
 
+        {if $hayPerro && $hayGato}
         <div class="productos-tabs" role="tablist">
             <button class="prod-tab active" onclick="switchProdTab('all', this)">{l s='All products' d='Modules.Kpymanufacturer.Shop'}</button>
             <button class="prod-tab" onclick="switchProdTab('perro', this)">
@@ -13,6 +17,7 @@
                 <img src="{$urls.img_url}cat-face.svg" alt="cat"> {l s='Cats' d='Modules.Kpymanufacturer.Shop'}
             </button>
         </div>
+        {/if}
 
         <div class="prod-grid" id="prod-grid">
 

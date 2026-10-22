@@ -9,7 +9,11 @@
 
     {include file='module:kpymanufacturer/views/templates/front/_partials/gamas.tpl'}
 
-    {if $banners|count > 0}
+    {* Promociones vivas de la marca (kpypromolanding); sin ninguna, el slider de siempre *}
+    {capture name='kplPromos'}{hook h='displayKpyPromoMarca'}{/capture}
+    {if trim($smarty.capture.kplPromos) !== ''}
+        {$smarty.capture.kplPromos nofilter}
+    {elseif $banners|count > 0}
         {include file='module:kpymanufacturer/views/templates/front/_partials/slider.tpl'}
     {/if}
 
