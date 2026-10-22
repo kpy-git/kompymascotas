@@ -66,7 +66,7 @@
 
               <label>
                 <input class="form-check-input input-radio" type="radio" data-product-attribute="{$id_attribute_group}" name="group[{$id_attribute_group}]" value="{$id_attribute}" title="{$group_attribute.name}"{if $group_attribute.selected} checked="checked"{/if}>
-                <span class="form-check-label radio-label">{$group_attribute.name|strtolower|replace:"pack":""|replace:"saco de":""|replace:"bolsa de":""|replace:"lata de":""}</span>
+                <span class="form-check-label radio-label">{$group_attribute.name|strtolower|replace:"pack":""|regex_replace:"/\b(sacos?|bolsas?|bolsitas?|latas?|tarrinas?|terrinas?|sobres?|botes?|bandejas?|barritas?|sticks?|pouch(es)?)\s+de\s+/iu":""}</span>
               </label>
 
               <div class="attribute-prices">
@@ -74,7 +74,7 @@
                   <div class="attribute-pvr">{$modules.kpyfrontcontrollervariables.attribute_prices[$id_attribute].pvr}</div>
               </div>
               {if isset($modules.kpyfrontcontrollervariables.attributes_unit_prices[$id_attribute])}
-                <div class="attribute-unit-price text-center">{$modules.kpyfrontcontrollervariables.attributes_unit_prices[$id_attribute]} €/Kg</div>
+                  <div class="attribute-unit-price">({$modules.kpyfrontcontrollervariables.attributes_unit_prices[$id_attribute]|string_format:"%.2f"|replace:".":","} {$modules.kpyfrontcontrollervariables.attributes_unit_labels[$id_attribute]|default:"€/Kg"})</div>
               {/if}
 
             </li>

@@ -630,7 +630,7 @@ input[type="email"]::placeholder {
     overflow-y: hidden;
     scroll-snap-align: start;
     scroll-snap-type: x mandatory;
-    padding: .5rem 0;
+    padding: .5rem 0 .5rem .5rem;
 }
 
 .page-product .product__variants {
