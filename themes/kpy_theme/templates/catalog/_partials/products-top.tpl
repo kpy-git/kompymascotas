@@ -6,7 +6,8 @@
     <div class="products__selection">
         <div class="products__count">
             {if $listing.pagination.total_items> 1}
-                <p>{l s='All products of' d='Shop.Theme.Catalog'} {$category.name|lower} | <span class="small text-black-50">{l s='There are %product_count% products.' d='Shop.Theme.Catalog' sprintf=['%product_count%' => $listing.pagination.total_items]}</span></p>
+                {* En el buscador no hay categoría: sin esta comprobación salen tres avisos de PHP. *}
+                <p>{if isset($category.name)}{l s='All products of' d='Shop.Theme.Catalog'} {$category.name|lower} | {/if}<span class="small text-black-50">{l s='There are %product_count% products.' d='Shop.Theme.Catalog' sprintf=['%product_count%' => $listing.pagination.total_items]}</span></p>
             {elseif $listing.pagination.total_items> 0}
                 <p>{l s='There is 1 product.' d='Shop.Theme.Catalog'}</p>
             {/if}

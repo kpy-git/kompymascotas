@@ -7,7 +7,7 @@
     {foreach from=$product.flags item=flag}
       {if $flag.type !== 'discount'}
         <li class="badge {$flag.type}" {if isset($flag.background) && $flag.background != ''}style="background-color:{$flag.background} !important;border-color:{$flag.background} !important" {/if}>
-            {if isset($flag.icon)}<img src="{$flag.icon}" alt="{$flag.label}">{/if} {$flag.label}
+            {if isset($flag.icon) and $flag.icon != ''}<img src="{$flag.icon}" alt="{$flag.label}">{/if} {$flag.label}
         </li>
       {/if}
     {/foreach}

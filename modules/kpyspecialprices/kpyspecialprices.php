@@ -70,10 +70,15 @@ class KpySpecialPrices extends Module
 
     public function hookDisplayProductPriceBlock(array $params): string
     {
-        if ($this->context->controller instanceof ProductControllerCore && $params['type'] === 'old_price') {
+        if ($this->context->controller instanceof ProductControllerCore
+            && $params['type'] === 'old_price'
+            && $this->hasSpecialPrice($params['product']['id_product'], $params['product']['id_product_attribute'])
+        ) {
+            $product = $params['product'];
             $this->context->smarty->assign([
                 $this->name => [
                     'module_img' => $this->getPathUri() . 'views/img/',
+                    'date_end' => $this->getDateEndSpecialPrice($product->id_product, $product->id_product_attribute),
                 ]
             ]);
 
@@ -101,7 +106,7 @@ class KpySpecialPrices extends Module
         if (!empty($specialPrice)) {
             $dateEnd = new \DateTimeImmutable($specialPrice['expire']);
             $presentedProduct->appendArray([
-                'kpy_special_price_regular_price' => round((float)$presentedProduct->regular_price_amount * (1 - (float)$specialPrice['old_discount'] / 100), 2),
+                'kpy_special_price_regular_price' => round((float)$presentedProduct->regular_price_amount * (1 - (float)$specialPrice['old_discount']), 2),
                 'kpy_special_price_old_discount' => (float)$specialPrice['old_discount'],
                 'kpy_special_price_expire' => Tools::displayDate($specialPrice['expire']),
                 'kpy_special_price_days_left' => $dateEnd->diff(new \DateTimeImmutable())->days,
@@ -222,6 +227,6 @@ class KpySpecialPrices extends Module
                     AND id_product_attribute = {$productAttributeId}
                     AND NOW() BETWEEN `date_from` AND `expire`
                     AND id_shop = {$this->context->shop->id}"
-        ));
+        )) ?: '';
     }
 }

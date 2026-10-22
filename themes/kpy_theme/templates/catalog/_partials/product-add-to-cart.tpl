@@ -23,7 +23,7 @@
       {/block}
 
     {block name='product_quantity'}
-      <div class="product-actions__wrapper-add-to-cart">
+      <div class="product-actions__wrapper-add-to-cart {if $modules.kpyfrontcontrollervariables.is_mobile}btn-fixed{/if}">
         <div class="product-actions__quantity quantity-button js-quantity-button">
           {include file='components/qty-input.tpl'
             attributes=[
@@ -32,14 +32,13 @@
               "value" => "{$product.minimal_quantity}",
               "min" => "{$product.minimal_quantity}"
             ]
-
             marginHelper="mb-2"
           }
         </div>
 
-        <div class="product-actions__button add mt-2">
+        <div class="product-actions__button add w-md-100">
           <button
-            class="btn btn-primary btn-with-icon add-to-cart w-100"
+            class="btn btn-primary btn-with-icon add-to-cart w-md-100"
             data-button-action="add-to-cart"
             data-text-alt="{l s='Add' d='Modules.Kpyproductblocks.Shop'}"
             data-text-complete="{l s='Add to cart' d='Shop.Theme.Actions'}"
@@ -48,8 +47,14 @@
               disabled
             {/if}
          >
-            <i class="material-icons me-1" aria-hidden="true">&#xE547;</i>
+            <i class="material-icons" aria-hidden="true">&#xE547;</i>
+
+          {if $modules.kpyfrontcontrollervariables.is_mobile}
+              <div>{l s='Add to cart' d='Shop.Theme.Actions'}<br /><span class="cart-fixed-price">{$product.price}</span></div>
+          {else}
             <span>{l s='Add to cart' d='Shop.Theme.Actions'}</span>
+          {/if}
+
           </button>
         </div>
 

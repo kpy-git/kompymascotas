@@ -126,6 +126,8 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
             'kpyproductavailabilitymessage' => $product->quantity >= $product->cart_quantity + $product->quantity_wanted
                 ? $productAvailabilityMessageHandler->getMessageInStock($product->id_manufacturer)
                 : $productAvailabilityMessageHandler->getMessageOutStock($product->id_manufacturer, $product->id, $product->id_product_attribute),
+            'stock_class' => !$product->getAddToCartUrl() ? 'out-of-stock' : 'in-stock',
+
         ];
     }
 

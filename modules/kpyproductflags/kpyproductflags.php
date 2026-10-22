@@ -87,7 +87,9 @@ class KpyProductFlags extends Module
                 $params['flags'][$typeSanitized] = [
                     'type' => $typeSanitized,
                     'label' => $flag['name'],
-                    'icon' => $this->getPathUri() . 'views/img/' . ($flag['icon'] ?? sprintf('flag_%d.svg', $flag['id_flag'])),
+                    'icon' => $flag['icon'] !== null
+                        ? $this->getPathUri() . 'views/img/' . sprintf('flag_%d.svg', $flag['id_flag'])
+                        : '',
                     'color' => $flag['color'] ?? '',
                     'background' => $flag['bg_color'] ?? '',
                 ];
@@ -97,6 +99,7 @@ class KpyProductFlags extends Module
 
     private function getProductFlags(int $productId): array
     {
+        /* el flag de ahorro XL no aparecerá en la vista de categorías */
         $results = Db::getInstance()->executeS(
             "SELECT pf.id_flag, fl.name, f.color, f.bg_color, f.icon, f.type
                 FROM " . _DB_PREFIX_ . "kpy_product_flag pf
@@ -110,6 +113,7 @@ class KpyProductFlags extends Module
                         (pf.date_begin IS NULL AND NOW() < pf.date_end) OR
                         (pf.date_end IS NULL AND NOW() >pf.date_begin) OR
                         (NOW() BETWEEN pf.date_begin AND pf.date_end))
+                    and f.id_flag != 8
                 ORDER BY f.id_flag"
         );
 
@@ -172,7 +176,11 @@ class KpyProductFlags extends Module
                 $flags[$flag['id_attribute']] = [
                     'name' => $flag['name'],
                     'background' => $flag['bg_color'] ?? '',
-                    'icon' => $this->getPathUri() . 'views/img/' . ($flag['icon'] ?? sprintf('flag_%d.svg', $flag['id_flag'])),
+                    'color' => $flag['color'] ?? '',
+                    'icon' => $flag['icon'] !== null
+                        ? $this->getPathUri() . 'views/img/' . sprintf('flag_%d.svg', $flag['id_flag'])
+                        : ''
+                    ,
                 ];
                 return $flags;
             }, []),

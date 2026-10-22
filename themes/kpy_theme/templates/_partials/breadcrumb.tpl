@@ -15,9 +15,17 @@
                     <a href="{$path.url}" class="{$componentName}-link"><span><i class="material-icons">home</i></span></a>
                   </li>
 
-                {* en las páginas de producto/categorías nos ahorramos poner el último enlace y el segundo (comprar por mascota) *}
-                {elseif (($page.page_name == 'product' or $page.page_name == 'category') and ($smarty.foreach.breadcrumb.last or $smarty.foreach.breadcrumb.iteration == 2))}
-
+                {* en las páginas de producto/categorías *}
+                {elseif (($page.page_name == 'product' or $page.page_name == 'category'))}
+                    {if (!$modules.kpyfrontcontrollervariables.is_mobile and ($smarty.foreach.breadcrumb.last or $smarty.foreach.breadcrumb.iteration == 2))}
+                        {* nos ahorramos poner el último enlace y el segundo (comprar por mascota) *}
+                    {elseif ($modules.kpyfrontcontrollervariables.is_mobile and $smarty.foreach.breadcrumb.iteration != ($breadcrumb.count - 1))}
+                        {* en la versión móvil sólo pone el penúltimo (la categoría actual) *}
+                    {else}
+                        <li class="{$componentName}-item">
+                            <a href="{$path.url}" class="{$componentName}-link"><span>{$path.title}</span></a>
+                        </li>
+                    {/if}
                 {else}
                     <li class="{$componentName}-item">
                         <a href="{$path.url}" class="{$componentName}-link"><span>{$path.title}</span></a>

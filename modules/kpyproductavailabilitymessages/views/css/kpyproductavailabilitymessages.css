@@ -2,17 +2,23 @@
     font-weight: bold;
     color: var(--product-message-block-color);
     font-size: var(--kpy-font-size);
-    /*border-left: 4px solid var(--product-message-block-boder-color);
+    border-left: 4px solid var(--product-message-block-boder-color);
     background-color: var(--product-message-block-bg);
     padding: .5rem .75rem;
     border-bottom-right-radius: .5rem;
-    border-top-right-radius: .5rem;*/
+    border-top-right-radius: .5rem;
 }
 
-.kpy-product-availability-message {
+.in-stock {
     --product-message-block-color: var(--kpy-color-success);
-    --product-message-block-boder-color: var(--kpy-color-secondary-dark);
-    --product-message-block-bg: var(--kpy-color-secondary-light);
+    --product-message-block-boder-color: var(--kpy-color-success);
+    --product-message-block-bg: #e8f1ec;
+}
+
+.out-of-stock {
+    --product-message-block-color: var(--bs-warning);
+    --product-message-block-boder-color: var(--bs-warning-border-subtle);
+    --product-message-block-bg: var(--bs-warning-bg-subtle);
 }
 
 .kpy-product-availability-message-cart {
