@@ -1,0 +1,372 @@
+/* Kompy · Landing de promociones. Colores de la tienda (variables del tema) con su valor por si faltan. */
+.kpl{--kpl-tinta:var(--kpy-text-dark,#2A5C68);--kpl-crema:var(--kpy-color-primary,#FFF5D8);--kpl-crema-osc:var(--kpy-color-primary-dark,#F2C965);--kpl-crema-flag:var(--kpy-primary-accent,#FFEAB7);--kpl-crema-suave:#FFFBEE;--kpl-coral:var(--kpy-color-accent,#FF5E4F);--kpl-coral-osc:var(--kpy-color-accent-dark,#E85547);--kpl-coral-claro:#FFEDEA;--kpl-lila:var(--kpy-color-secondary,#A97DF1);--kpl-lila-osc:var(--kpy-color-secondary-dark,#8669B8);--kpl-lila-claro:var(--kpy-color-secondary-light,#F7F2FF);--kpl-lila-flag:#7B5CB0;--kpl-verde:#2F6B34;--kpl-verde-claro:#EAF6EC;--kpl-amarillo:#FFF3C4;--kpl-amarillo-flag:#FFD45A;--kpl-rojo:#DD3737;--kpl-negro:#111111;--kpl-negro-2:#1C1C1C;--kpl-mute:#5B6E75;--kpl-borde:#E9EEF0;--kpl-titulos:'Raleway',var(--bs-font-sans-serif,sans-serif);display:grid;gap:clamp(28px,4vw,52px);color:var(--kpl-tinta)}
+/* Los hijos de una rejilla pueden encoger por debajo de su contenido (si no, una foto de 640 px ensancha toda la página en el móvil) */
+.kpl,.kpl > *,.kpl-hero > *,.kpl-tipo > *,.kpl-banner > *,.kpl-pcab > *,.kpl-mini > *,.kpl-marca > *,.kpl-sec > *,.kpl-sec__h > *{min-width:0}
+.kpl{max-width:100%}
+.kpl img{max-width:100%}
+.kpl h1,.kpl h2,.kpl h3{font-family:var(--kpl-titulos);color:var(--kpl-tinta);margin:0}
+.kpl p{margin:0}
+.kpl a{text-decoration:none}
+.kpl .btn{font-family:var(--kpl-titulos);border-radius:.75rem;letter-spacing:.05em;font-weight:600;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.kpl .kpl-sec{display:grid;gap:16px}
+.kpl .kpl-sec__h{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.kpl .kpl-sec__h h2{font-size:clamp(22px,2.4vw,30px);font-weight:800;letter-spacing:-.4px;line-height:1.1}
+.kpl .kpl-sec__h p{margin-top:6px;color:var(--kpl-mute);font-size:15px;font-weight:600}
+.kpl .kpl-sec__h--lista{margin-top:12px}
+/* La rejilla de «lo más rebajado»: la tarjeta de siempre de la tienda en una rejilla propia (sin la
+   clase `row` del tema, cuyos márgenes negativos la sacaban 12 px por cada lado: en el móvil, pegada
+   a los bordes), y con el botón «Ver opciones» siempre a la vista: el tema solo lo enseña al pasar el
+   ratón, y en una tarjeta blanca sobre fondo oscuro el hueco parecía un botón que faltaba. */
+.kpl .kpl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0}
+.kpl .kpl-grid .product-miniature{padding:0}
+.kpl .kpl-grid .product-miniature__bottom{padding:12px 12px 12px}
+.kpl .kpl-grid .product-list-view-options{visibility:visible;opacity:1;margin-top:10px}
+.kpl .kpl-grid .product-list-view-options .btn{width:100%;min-height:42px;font-family:var(--kpl-titulos);font-weight:700;font-size:14px;letter-spacing:.03em;border-radius:.75rem;display:inline-flex;align-items:center;justify-content:center;background:var(--kpl-acento,var(--kpl-coral));border-color:var(--kpl-acento,var(--kpl-coral));color:var(--kpl-acento-fg,#fff)}
+.kpl .kpl-grid .product-list-view-options .btn:hover{filter:brightness(1.06);color:var(--kpl-acento-fg,#fff)}
+.kpl .kpl-eyebrow{display:block;font-size:11.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--kpl-coral);margin-bottom:6px}
+
+/* Lo que las tarjetas de los listados necesitan de las hojas de kpyspecialprices y kpyproductflags,
+   que esos módulos solo cargan en categoría, ficha y portada (desde la 1.4.0 este módulo no registra
+   hojas ajenas). Copiado tal cual de modules/kpyspecialprices/views/css/kpyspecialprices.css y de
+   modules/kpyproductflags/views/css/kpyproductflags.css (1.0.0, 23/10/2026): la píldora amarilla del
+   precio Special Price, su etiqueta en la foto (con su icono) y el aire de las etiquetas. */
+.product-miniature .product-miniature__price.kpy-special-price-listing{background-color:var(--kpy-color-primary-dark);border-radius:.25rem;width:fit-content;padding:0 .3em}
+.product-flags .kpy-special-price{font-weight:bold;display:inline-flex;align-items:center;gap:.35rem;padding:0 .3rem;line-height:1.5;margin:0 0 0 .5rem;align-self:end}
+@layer bs-base{.product-flags .badge:not(.discount).kpy-special-price{background-color:var(--kpy-primary-accent) !important;border:1px solid var(--kpy-primary-accent) !important;color:var(--kpy-color-accent) !important}}
+.badge.kpy-special-price img{width:1rem}
+.product-flags{padding:0 .25rem}
+.product-flags .badge img{width:1rem;margin-right:.15rem}
+
+/* Portada */
+/* Portada: una banda corta (el título; con `--solo`, a una columna: el boletín está fuera desde la 1.4.0), nada de foto */
+.kpl-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(16px,3vw,40px);align-items:center;background:var(--kpl-crema);border-radius:20px;padding:clamp(16px,2.4vw,28px) clamp(16px,3vw,36px)}
+.kpl-hero--solo{grid-template-columns:1fr}
+.kpl-hero h1{font-size:clamp(28px,3.2vw,40px);font-weight:800;letter-spacing:-.8px;line-height:1.05;margin-top:10px;max-width:14ch}
+.kpl-hero h1 em{font-style:normal;color:var(--kpl-coral)}
+.kpl-hero p{margin-top:8px;font-size:15px;color:var(--kpl-mute);font-weight:600;max-width:46ch;line-height:1.5}
+.kpl-pill{display:inline-flex;align-items:center;gap:8px;max-width:100%;background:#fff;border-radius:999px;padding:5px 12px;font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--kpl-coral);line-height:1.3;white-space:normal}
+.kpl-pill i{width:8px;height:8px;border-radius:50%;background:var(--kpl-coral);display:inline-block;animation:kpl-late 1.6s ease-in-out infinite}
+@keyframes kpl-late{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:.6}}
+/* La tarjeta del boletín (sin uso desde la 1.4.0: fuera de la landing hasta que Julián decida; se queda por si vuelve) */
+.kpl-news{background:#fff;color:var(--kpl-tinta);border-radius:16px;padding:16px 18px;box-shadow:0 10px 30px rgba(42,92,104,.10)}
+.kpl-news h2{font-size:19px;font-weight:800;letter-spacing:-.3px}
+.kpl-news p{margin:4px 0 0;font-size:13px;color:#6B5F43;font-weight:600;line-height:1.45}
+.kpl-news p strong{color:var(--kpl-coral);font-weight:800}
+.kpl-news form{margin-top:10px;display:grid;gap:8px}
+.kpl-news__fila{display:flex;gap:8px;align-items:stretch}
+.kpl-news input[type=email]{flex:1 1 auto;width:100%;min-width:0;border:1.5px solid #E1E5E8;border-radius:12px;padding:9px 12px;font:inherit;font-size:15px;color:var(--kpl-tinta);background:#fff;min-height:42px}
+.kpl-news .btn{flex:0 0 auto;min-height:42px;padding:0 16px;white-space:nowrap}
+.kpl-news__ok{margin-top:10px;background:var(--kpl-verde-claro);color:var(--kpl-verde);border-radius:12px;padding:10px 14px;font-weight:800}
+.kpl-news__error{margin-top:8px;background:var(--kpl-coral-claro);color:#B73A2E;border-radius:12px;padding:8px 12px;font-weight:700;font-size:13.5px}
+.kpl-news .gdpr_consent{font-size:12px;color:#6B7378;font-weight:600}
+
+/* Selector de mascota */
+.kpl-quien{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--kpl-borde)}
+.kpl-quien__l{font-size:14px;font-weight:800}
+.kpl-seg{display:inline-flex;background:#F1F4F6;border-radius:999px;padding:4px;gap:2px}
+.kpl-seg a{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:9px 16px;font-size:14px;font-weight:800;color:var(--kpl-tinta);min-height:40px;line-height:1}
+.kpl-seg a img{width:20px;height:20px}
+.kpl-seg a.on{background:var(--kpl-tinta);color:#fff}
+.kpl-solo{font-size:14px;font-weight:700;color:var(--kpl-mute);padding:8px 0}
+
+/* Etiquetas: las mismas que los listados */
+.kpl-et{display:inline-flex;align-items:center;gap:4px;border-radius:4px;padding:2px 6px;font-size:12px;font-weight:600;line-height:1.5;white-space:nowrap;color:#fff;background:var(--kpl-tinta)}
+.kpl-et--special_price{background:var(--kpl-crema-flag);color:var(--kpl-coral);font-weight:700}
+.kpl-et--special_price::before{content:"★";font-size:12px}
+.kpl-et--cupon,.kpl-et--segunda_unidad,.kpl-et--kilos_gratis,.kpl-et--regalos,.kpl-et--outlet{border-radius:999px;padding:4px 10px;font-weight:800;line-height:1.25;box-shadow:0 1px 3px rgba(0,0,0,.16)}
+.kpl-et--cupon{background:var(--kpl-lila-flag)}
+.kpl-et--segunda_unidad{background:var(--kpl-verde)}
+.kpl-et--kilos_gratis{background:var(--kpl-amarillo-flag);color:var(--kpl-rojo)}
+.kpl-et--regalos{background:var(--kpl-coral)}
+.kpl-et--outlet{background:var(--kpl-negro);color:var(--kpl-crema-osc)}
+
+/* Tarjetas de tipo */
+.kpl-tipos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.kpl-tipo{display:grid;grid-template-columns:1fr 42%;gap:8px;align-items:end;min-height:176px;border-radius:18px;padding:18px 16px 16px 18px;overflow:hidden;color:var(--kpl-tinta);position:relative;transition:transform .2s,box-shadow .2s}
+.kpl-tipo:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(42,92,104,.14)}
+.kpl-tipo__txt{display:flex;flex-direction:column;align-self:stretch}
+.kpl-tipo h3{margin:10px 0 0;font-size:clamp(19px,1.9vw,23px);font-weight:800;letter-spacing:-.3px;line-height:1.1}
+.kpl-tipo__n{margin-top:6px;font-size:13px;font-weight:700;opacity:.8}
+.kpl-tipo__cta{margin-top:auto;padding-top:12px;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:800}
+.kpl-tipo__cta i{width:26px;height:26px;border-radius:50%;border:2px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-size:13px}
+.kpl-tipo__img{position:relative;height:100%;min-height:120px;display:flex;align-items:flex-end;justify-content:center}
+.kpl-tipo__img img{max-height:150px;width:auto;max-width:100%;filter:drop-shadow(0 10px 14px rgba(0,0,0,.18))}
+.kpl-tipo__ticket{position:absolute;right:-4px;top:8px;background:#fff;color:var(--kpl-lila-flag);border:2px dashed var(--kpl-lila-flag);border-radius:8px;padding:4px 8px;font-size:11.5px;font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace;transform:rotate(8deg)}
+.kpl-tipo__ticket--kg{background:var(--kpl-amarillo-flag);color:var(--kpl-rojo);border:2px solid var(--kpl-rojo);border-radius:999px;font-family:var(--kpl-titulos);font-size:12.5px;transform:rotate(-7deg);top:14px;right:0}
+.kpl-tipo--special_price{background:var(--kpl-crema)}
+.kpl-tipo--cupon{background:var(--kpl-lila-claro)}.kpl-tipo--cupon h3,.kpl-tipo--cupon .kpl-tipo__cta{color:var(--kpl-lila-osc)}
+.kpl-tipo--segunda_unidad{background:var(--kpl-verde-claro)}.kpl-tipo--segunda_unidad h3,.kpl-tipo--segunda_unidad .kpl-tipo__cta{color:var(--kpl-verde)}
+.kpl-tipo--kilos_gratis{background:var(--kpl-amarillo)}.kpl-tipo--kilos_gratis h3,.kpl-tipo--kilos_gratis .kpl-tipo__cta{color:#C9473A}
+.kpl-tipo--regalos{background:var(--kpl-coral-claro)}.kpl-tipo--regalos h3,.kpl-tipo--regalos .kpl-tipo__cta{color:#C9473A}
+.kpl-tipo--outlet{background:var(--kpl-negro-2);color:#fff}.kpl-tipo--outlet h3,.kpl-tipo--outlet .kpl-tipo__cta{color:#fff}
+
+/* Banners */
+.kpl-banners{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kpl-banner{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:center;border-radius:18px;padding:18px 18px 18px 22px;overflow:hidden;--b-fg:var(--kpl-tinta);--b-mute:var(--kpl-mute);--b-acc:var(--kpl-coral);color:var(--b-fg);min-width:0}
+.kpl-banner--destacado{grid-column:1 / -1;grid-template-columns:1.2fr .8fr;padding:clamp(18px,2.6vw,34px)}
+.kpl-banner__top{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+/* Los logos, a la altura de cada sitio multiplicada por su factor (`--kpl-logo-k`, KplBiblioteca::factorLogo): los muy apaisados más altos de lo que les tocaría y los cuadrados menos, para que pesen lo mismo a la vista. */
+.kpl-banner__logo{display:block;height:calc(34px * var(--kpl-logo-k,1));width:auto;max-width:150px;object-fit:contain}
+.kpl-banner--destacado .kpl-banner__logo{height:calc(40px * var(--kpl-logo-k,1));max-width:180px}
+.kpl-banner__logo--caja{background:#fff;border-radius:8px;padding:5px 10px;height:calc(44px * var(--kpl-logo-k,1))}
+.kpl-banner__marca{font-family:var(--kpl-titulos);font-size:18px;font-weight:800}
+.kpl-banner h3{margin:12px 0 0;font-size:clamp(18px,1.9vw,22px);font-weight:800;letter-spacing:-.3px;line-height:1.15;color:var(--b-fg)}
+.kpl-banner--destacado h3{font-size:clamp(22px,2.8vw,32px)}
+.kpl-banner p{margin:8px 0 0;font-size:14px;color:var(--b-mute);line-height:1.45;max-width:44ch;font-weight:600}
+.kpl-banner__meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;font-weight:800;color:var(--b-mute)}
+.kpl-banner__meta span{display:inline-flex;align-items:center;gap:6px}
+.kpl-banner__meta span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--b-acc)}
+.kpl-banner__btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.kpl-banner__btns .btn{padding:10px 16px;font-size:13.5px;min-height:40px}
+.kpl-banner__img{display:flex;align-items:center;justify-content:center;min-height:120px}
+.kpl-banner__img img{max-height:190px;width:auto;max-width:100%;filter:drop-shadow(0 12px 18px rgba(0,0,0,.18))}
+.kpl-banner--destacado .kpl-banner__img img{max-height:250px}
+.kpl-banner--special_price{background:var(--kpl-crema);--b-acc:#C9473A;--b-mute:#6B5F43}
+.kpl-banner--cupon{background:var(--kpl-lila-claro);--b-acc:var(--kpl-lila-osc);--b-mute:#6F6490}
+.kpl-banner--segunda_unidad{background:var(--kpl-verde-claro);--b-acc:var(--kpl-verde);--b-mute:#4F6B52}
+.kpl-banner--kilos_gratis{background:var(--kpl-amarillo);--b-acc:#C9473A;--b-mute:#6B5F43}
+.kpl-banner--regalos{background:var(--kpl-coral-claro);--b-acc:#C9473A;--b-mute:#7A5A55}
+.kpl-banner--outlet{background:var(--kpl-negro-2);--b-fg:#fff;--b-mute:#C7C7C7;--b-acc:var(--kpl-crema-osc)}
+.kpl-banner--destacado.kpl-banner--special_price{background:var(--kpl-tinta);--b-fg:#fff;--b-mute:#D9E4E7;--b-acc:var(--kpl-crema-osc)}
+.kpl-banner--cupon .btn-outline-primary{border-color:var(--kpl-lila-osc);color:var(--kpl-lila-osc)}
+.kpl-banner--cupon .btn-primary{background:var(--kpl-lila-osc);border-color:var(--kpl-lila-osc)}
+/* Varios sacos superpuestos: el primero detrás y más grande; «lado» = al lado, sin superponer (kilos gratis) */
+.kpl-pila{display:flex;align-items:flex-end;justify-content:center}
+.kpl-pila img{position:relative}
+.kpl-banner__img .kpl-pila img + img{margin-left:-24%;z-index:1;max-height:150px}
+.kpl-banner__img .kpl-pila img + img + img{margin-left:-22%;z-index:2;max-height:125px}
+.kpl-banner--destacado .kpl-banner__img .kpl-pila img + img{max-height:200px}
+.kpl-banner--destacado .kpl-banner__img .kpl-pila img + img + img{max-height:165px}
+.kpl-pila--lado{gap:10px}
+.kpl-banner__img .kpl-pila--lado img + img{margin-left:0;max-height:118px}
+
+/* Tarjetas de marca (página por tipo) */
+.kpl-marcas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpl-marca{display:flex;flex-direction:column;gap:10px;border-radius:16px;padding:16px;color:var(--kpl-tinta);background:var(--kpl-crema-suave);border:1.5px solid var(--kpl-borde);min-height:150px;position:relative;transition:box-shadow .2s}
+.kpl-marca:hover{box-shadow:0 8px 20px rgba(42,92,104,.12)}
+.kpl-marca img{height:calc(36px * var(--kpl-logo-k,1));width:auto;max-width:150px;object-fit:contain;object-position:center;align-self:flex-start}
+.kpl-marca__nombre{font-family:var(--kpl-titulos);font-size:17px;font-weight:800}
+.kpl-marca b{font-family:var(--kpl-titulos);font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1;color:#C9473A}
+.kpl-marca small{font-size:13px;color:var(--kpl-mute);font-weight:700}
+.kpl-marca__ir{margin-top:auto;font-size:13.5px;font-weight:800;color:var(--kpl-coral)}
+.kpl-marca .kpl-et{position:absolute;right:12px;top:12px}
+.kpl-marca--cupon b,.kpl-marca--cupon .kpl-marca__ir{color:var(--kpl-lila-osc)}
+.kpl-marca--segunda_unidad b,.kpl-marca--segunda_unidad .kpl-marca__ir{color:var(--kpl-verde)}
+
+/* Cabeceras de las páginas con listado */
+.kpl-tcab h1{margin-top:10px;font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.6px;line-height:1.1}
+.kpl-tcab p{margin-top:8px;color:var(--kpl-mute);font-weight:600;font-size:15px;max-width:60ch}
+.kpl-pcab{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(14px,2.4vw,32px);align-items:center;border-radius:20px;padding:clamp(18px,2.6vw,34px);background:var(--kpl-crema);--b-acc:#C9473A;--b-mute:#6B5F43}
+.kpl-pcab--cupon{background:var(--kpl-lila-claro);--b-acc:var(--kpl-lila-osc);--b-mute:#6F6490}
+.kpl-pcab--segunda_unidad{background:var(--kpl-verde-claro);--b-acc:var(--kpl-verde);--b-mute:#4F6B52}
+.kpl-pcab--kilos_gratis{background:var(--kpl-amarillo)}
+.kpl-pcab--regalos{background:var(--kpl-coral-claro)}
+.kpl-pcab--outlet{background:var(--kpl-negro-2);color:#fff;--b-acc:var(--kpl-crema-osc);--b-mute:#C7C7C7}
+.kpl-pcab--outlet h1,.kpl-pcab--outlet .kpl-dur{color:#fff}
+.kpl-pcab h1{margin:12px 0 0;font-size:clamp(23px,3vw,34px);font-weight:800;letter-spacing:-.6px;line-height:1.1}
+.kpl-dur{display:inline-flex;align-items:center;gap:8px;margin-top:12px;background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:800;color:var(--kpl-tinta)}
+.kpl-dur i{font-style:normal;color:var(--b-acc)}
+.kpl-pcab__meta{margin:12px 0 0;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;font-weight:700;color:var(--b-mute)}
+.kpl-pcab__meta span{display:inline-flex;align-items:center;gap:6px}
+.kpl-pcab__meta span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--b-acc);flex:0 0 auto}
+.kpl-pcab__btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
+.kpl-pcab__lnk{font-size:14px;font-weight:800;color:var(--b-acc)}
+.kpl-pcab--cupon .btn-primary{background:var(--kpl-lila-osc);border-color:var(--kpl-lila-osc)}
+.kpl-btn--ok{background:var(--kpl-verde-claro);color:var(--kpl-verde);border:1.5px solid var(--kpl-verde);cursor:default}
+.kpl-pcab__img{display:flex;align-items:center;justify-content:center}
+.kpl-pcab__img img{max-height:250px;width:auto;max-width:100%;filter:drop-shadow(0 12px 18px rgba(0,0,0,.18))}
+.kpl-pcab__img .kpl-pila img + img{margin-left:-24%;z-index:1;max-height:200px}
+.kpl-pcab__img .kpl-pila--lado img + img{margin-left:0;max-height:150px}
+.kpl-h1--oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.kpl--listado{gap:clamp(18px,2.6vw,32px)}
+.kpl--listado #js-product-list-header{display:grid;gap:16px}
+
+/* Nada que listar */
+.kpl-vacio{border-radius:20px;background:var(--kpl-crema-suave);border:1.5px dashed var(--kpl-borde);padding:clamp(20px,3vw,36px);text-align:center}
+.kpl-vacio__ico{width:60px;height:60px;border-radius:50%;background:var(--kpl-crema);display:inline-flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px}
+.kpl-vacio h2{font-size:clamp(22px,2.8vw,30px);font-weight:800;letter-spacing:-.4px}
+.kpl-vacio p{margin:8px auto 0;max-width:52ch;color:var(--kpl-mute);font-size:15px;font-weight:600}
+.kpl-vacio__btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px}
+.kpl-minis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px;text-align:left}
+.kpl-mini{border-radius:14px;padding:12px 12px 12px 14px;display:grid;grid-template-columns:1fr 38%;gap:8px;align-items:end;color:var(--kpl-tinta);background:var(--kpl-crema)}
+.kpl-mini div{display:flex;flex-direction:column;gap:6px;align-self:stretch}
+.kpl-mini .kpl-et{align-self:flex-start}
+.kpl-mini b{font-family:var(--kpl-titulos);font-size:15px;font-weight:800;line-height:1.15}
+.kpl-mini small{font-size:12px;font-weight:700;opacity:.8;margin-top:auto}
+.kpl-mini img{max-height:96px;width:auto;max-width:100%;justify-self:center;filter:drop-shadow(0 6px 10px rgba(0,0,0,.16))}
+.kpl-mini--cupon{background:var(--kpl-lila-claro)}.kpl-mini--segunda_unidad{background:var(--kpl-verde-claro)}.kpl-mini--kilos_gratis{background:var(--kpl-amarillo)}.kpl-mini--regalos{background:var(--kpl-coral-claro)}.kpl-mini--outlet{background:var(--kpl-negro-2);color:#fff}
+.kpl-vacio .kpl-tipos{margin-top:22px;text-align:left}
+
+/* Accesos */
+.kpl-accesos{background:var(--kpl-lila-claro);border-radius:20px;padding:clamp(16px,2.6vw,30px)}
+.kpl-accesos__h{text-align:center;margin-bottom:clamp(12px,1.8vw,20px);font-size:clamp(20px,2.2vw,26px);font-weight:800}
+.kpl-accesos__g{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.kpl-acceso{background:#fff;border-radius:16px;padding:16px 16px 18px;text-align:center;color:var(--kpl-tinta)}
+.kpl-acceso img{height:100px;width:auto;margin:0 auto 10px;object-fit:contain;display:block}
+.kpl-acceso b{display:block;font-family:var(--kpl-titulos);font-size:17px;font-weight:800}
+.kpl-acceso span{display:block;margin-top:4px;font-size:13.5px;font-weight:800;color:var(--kpl-coral)}
+
+/* Bloque en la landing de una marca: con su aire arriba y abajo (en la landing genérica las secciones no lo ponen) */
+.kpl--marca{gap:16px;padding-block:clamp(32px,5vw,56px)}
+.kpl-marca-promos{display:grid;grid-template-columns:1.6fr 1fr;gap:12px}
+.kpl-marca-promos--una{grid-template-columns:1fr}
+.kpl-marca-promos .kpl-banner + .kpl-banner{grid-template-columns:1fr auto;padding:16px 16px 16px 18px}
+.kpl-marca-promos .kpl-banner + .kpl-banner .kpl-banner__img img{max-height:170px}
+.kpl-marca-promos .kpl-banner + .kpl-banner h3{font-size:clamp(16px,1.6vw,19px)}
+/* Un solo banner a todo el ancho: más grande y con el saco cerca del texto */
+.kpl-banner--ancho{grid-template-columns:1.25fr 1fr;padding:clamp(20px,3vw,34px) clamp(20px,3vw,40px);gap:24px}
+.kpl-banner--ancho h3{font-size:clamp(22px,2.6vw,30px)}
+.kpl-banner--ancho p{font-size:15px;max-width:52ch}
+.kpl-banner--ancho .kpl-banner__logo{height:calc(40px * var(--kpl-logo-k,1));max-width:180px}
+.kpl-banner--ancho .kpl-banner__img{justify-content:flex-start;padding-left:4%}
+.kpl-banner--ancho .kpl-banner__img img{max-height:240px}
+
+/* Campaña: el lema y la piel negra (Black Friday). Solo cambian colores: la estructura es la misma.
+   Contrastes (Rafa, 14/10): sobre las tarjetas negras las etiquetas van llenas de color (amarillo o
+   rojo con texto negro), nunca negro sobre negro; el gris de apoyo es claro de verdad. Los colores
+   de las etiquetas de campaña llegan en variables en el propio bloque (`KplCampanas::estilo()`):
+   --kpl-et-sp-*, --kpl-et-cup-*, --kpl-et-seg-*, --kpl-et-kg-* y los acentos --kpl-bf-amarillo y
+   --kpl-bf-rojo; lo de aquí es lo que vale si no llegan (los colores por defecto). */
+.kpl-lema{display:inline-flex;align-items:center;gap:8px;max-width:100%;margin-top:12px;background:var(--kpl-crema-osc);color:#111;border-radius:999px;padding:7px 14px;font-family:var(--kpl-titulos);font-weight:800;font-size:13px;letter-spacing:.02em;line-height:1.3;white-space:normal}
+.kpl-banner__lema{color:var(--b-acc)}
+/* La piel negra. Los colores salen de la paleta de la campaña (`KplCampanas::estilo()`, en variables
+   en el propio bloque: --kpl-fondo, --kpl-superficie, --kpl-borde, --kpl-acento…); lo de aquí es lo
+   que vale si no llegan: el negro, el amarillo Kompy y el coral del Black Friday. */
+.kpl--negra{--kpl-fondo:#111111;--kpl-superficie:#222222;--kpl-superficie-2:#2E2E2E;--kpl-borde:#3C3C3C;--kpl-borde-suave:#292929;--kpl-brillo:rgba(242,201,101,.18);--kpl-tinte:rgba(242,201,101,.16);--kpl-tinte-2:rgba(255,106,92,.16);--kpl-acento:#F2C965;--kpl-acento-fg:#111111;--kpl-acento-2:#FF6A5C;--kpl-acento-2-fg:#111111;--kpl-bf-amarillo:var(--kpl-acento);--kpl-bf-rojo:var(--kpl-acento-2);--kpl-tinta:#FFFFFF;--kpl-mute:#D5DBDE;--kpl-crema:var(--kpl-superficie);--kpl-crema-suave:var(--kpl-superficie);--kpl-lila-claro:var(--kpl-superficie);--kpl-verde-claro:var(--kpl-superficie);--kpl-amarillo:var(--kpl-superficie);--kpl-coral-claro:var(--kpl-superficie);color:#fff}
+/* Matices (Rafa, 14/10: «la veo muy negra»): el fondo es oscuro, pero cada bloque tiene su superficie
+   (un poco más clara, con borde visible y sombra), la cabecera lleva un brillo del acento, cada
+   sección empieza con una raya fina, y las tarjetas de cada tipo llevan un tinte de su color (el
+   acento en Special Price y kilos gratis, el secundario en cupón y 2ª unidad, blanco en outlet). */
+.kpl--negra .kpl-hero{background:radial-gradient(720px 340px at 0% 0%,var(--kpl-brillo),transparent 60%),linear-gradient(135deg,var(--kpl-superficie-2),var(--kpl-fondo) 60%);border:1px solid var(--kpl-borde);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.kpl--negra .kpl-hero h1 em,.kpl--negra .kpl-eyebrow{color:var(--kpl-bf-amarillo)}
+.kpl--negra .kpl-hero p,.kpl--negra .kpl-sec__h p,.kpl--negra .kpl-tcab p{color:#D5DBDE}
+.kpl--negra .kpl-pill{background:var(--kpl-bf-amarillo);color:var(--kpl-acento-fg)}.kpl--negra .kpl-pill i{background:var(--kpl-acento-fg)}
+.kpl--negra .kpl-lema{background:var(--kpl-bf-amarillo);color:var(--kpl-acento-fg)}
+.kpl--negra .kpl-news{background:#fff;color:#2A5C68}.kpl--negra .kpl-news h2{color:#2A5C68}.kpl--negra .kpl-news p{color:#6B5F43}
+.kpl--negra .kpl-quien{border-color:var(--kpl-borde-suave)}.kpl--negra .kpl-seg{background:var(--kpl-superficie);box-shadow:inset 0 0 0 1px var(--kpl-borde)}.kpl--negra .kpl-seg a{color:#fff}.kpl--negra .kpl-seg a.on{background:var(--kpl-bf-amarillo);color:var(--kpl-acento-fg)}
+.kpl--negra .kpl-solo{color:#D5DBDE}
+.kpl--negra .kpl-sec{border-top:1px solid var(--kpl-borde-suave);padding-top:clamp(18px,2.6vw,30px)}
+.kpl--negra .kpl-tipo,.kpl--negra .kpl-banner,.kpl--negra .kpl-marca,.kpl--negra .kpl-acceso,.kpl--negra .kpl-vacio,.kpl--negra .kpl-pcab,.kpl--negra .kpl-mini{background:var(--kpl-superficie);color:#fff;border:1px solid var(--kpl-borde);box-shadow:0 10px 26px rgba(0,0,0,.28);--b-fg:#fff;--b-mute:#D5DBDE;--b-acc:var(--kpl-bf-amarillo)}
+.kpl--negra .kpl-tipo--special_price,.kpl--negra .kpl-tipo--kilos_gratis,.kpl--negra .kpl-banner--special_price,.kpl--negra .kpl-banner--kilos_gratis,.kpl--negra .kpl-marca--special_price,.kpl--negra .kpl-marca--kilos_gratis,.kpl--negra .kpl-pcab--special_price,.kpl--negra .kpl-pcab--kilos_gratis,.kpl--negra .kpl-mini--special_price,.kpl--negra .kpl-mini--kilos_gratis{background:linear-gradient(135deg,var(--kpl-tinte),transparent 58%),var(--kpl-superficie)}
+.kpl--negra .kpl-tipo--cupon,.kpl--negra .kpl-tipo--segunda_unidad,.kpl--negra .kpl-tipo--regalos,.kpl--negra .kpl-banner--cupon,.kpl--negra .kpl-banner--segunda_unidad,.kpl--negra .kpl-banner--regalos,.kpl--negra .kpl-marca--cupon,.kpl--negra .kpl-marca--segunda_unidad,.kpl--negra .kpl-marca--regalos,.kpl--negra .kpl-pcab--cupon,.kpl--negra .kpl-pcab--segunda_unidad,.kpl--negra .kpl-pcab--regalos,.kpl--negra .kpl-mini--cupon,.kpl--negra .kpl-mini--segunda_unidad,.kpl--negra .kpl-mini--regalos{background:linear-gradient(135deg,var(--kpl-tinte-2),transparent 58%),var(--kpl-superficie)}
+.kpl--negra .kpl-tipo--outlet,.kpl--negra .kpl-banner--outlet,.kpl--negra .kpl-pcab--outlet,.kpl--negra .kpl-mini--outlet{background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(255,255,255,0) 58%),var(--kpl-superficie)}
+.kpl--negra .kpl-banner--destacado{border-color:var(--kpl-bf-amarillo);box-shadow:0 0 0 1px var(--kpl-tinte),0 16px 36px rgba(0,0,0,.35)}
+.kpl--negra .kpl-grid .product-miniature,.kpl--negra .kpl-grid .card{box-shadow:0 10px 26px rgba(0,0,0,.3)}
+.kpl--negra .kpl-tipo__n{opacity:1;color:#D5DBDE}
+.kpl--negra .kpl-tipo h3,.kpl--negra .kpl-tipo__cta,.kpl--negra .kpl-marca b,.kpl--negra .kpl-marca__ir,.kpl--negra .kpl-acceso span,.kpl--negra .kpl-pcab__lnk,.kpl--negra .kpl-vacio p a{color:var(--kpl-bf-amarillo)}
+.kpl--negra .kpl-tipo--cupon h3,.kpl--negra .kpl-tipo--cupon .kpl-tipo__cta,.kpl--negra .kpl-tipo--segunda_unidad h3,.kpl--negra .kpl-tipo--segunda_unidad .kpl-tipo__cta,.kpl--negra .kpl-marca--cupon b,.kpl--negra .kpl-marca--segunda_unidad b{color:var(--kpl-bf-rojo)}
+.kpl--negra .kpl-et{background:var(--kpl-et-sp-bg,var(--kpl-bf-amarillo));color:var(--kpl-et-sp-fg,#111);border:0;box-shadow:none;font-weight:800}
+.kpl--negra .kpl-et--special_price::before{color:inherit}
+.kpl--negra .kpl-et--cupon{background:var(--kpl-et-cup-bg,var(--kpl-bf-rojo));color:var(--kpl-et-cup-fg,#111)}
+.kpl--negra .kpl-et--segunda_unidad{background:var(--kpl-et-seg-bg,var(--kpl-bf-rojo));color:var(--kpl-et-seg-fg,#111)}
+.kpl--negra .kpl-et--kilos_gratis{background:var(--kpl-et-kg-bg,var(--kpl-bf-amarillo));color:var(--kpl-et-kg-fg,#111)}
+.kpl--negra .kpl-et--regalos{background:var(--kpl-bf-rojo);color:#111}
+.kpl--negra .kpl-et--outlet{background:#fff;color:#111}
+/* La piel clara: las etiquetas de campaña con sus colores tal cual (sin campaña, los de siempre) */
+.kpl--clara .kpl-et--special_price{background:var(--kpl-et-sp-bg,var(--kpl-crema-flag));color:var(--kpl-et-sp-fg,var(--kpl-coral))}
+.kpl--clara .kpl-et--cupon{background:var(--kpl-et-cup-bg,var(--kpl-lila-flag));color:var(--kpl-et-cup-fg,#fff)}
+.kpl--clara .kpl-et--segunda_unidad{background:var(--kpl-et-seg-bg,var(--kpl-verde));color:var(--kpl-et-seg-fg,#fff)}
+.kpl--clara .kpl-et--kilos_gratis{background:var(--kpl-et-kg-bg,var(--kpl-amarillo-flag));color:var(--kpl-et-kg-fg,var(--kpl-rojo))}
+.kpl--negra .kpl-banner__logo,.kpl--negra .kpl-marca img,.kpl--negra .kpl-pcab .kpl-banner__logo{background:#fff;border-radius:8px;padding:5px 10px;box-sizing:content-box}
+.kpl--negra .kpl-dur{background:var(--kpl-fondo);color:#fff;border:1px solid var(--kpl-borde)}.kpl--negra .kpl-dur i{color:var(--kpl-bf-amarillo)}
+.kpl--negra .btn-outline-primary{border-color:var(--kpl-bf-amarillo);color:var(--kpl-bf-amarillo);background:transparent}
+.kpl--negra .btn-outline-primary:hover{background:var(--kpl-bf-amarillo);color:var(--kpl-acento-fg)}
+.kpl--negra .btn-primary,.kpl--negra .kpl-banner--cupon .btn-primary,.kpl--negra .kpl-pcab--cupon .btn-primary{background:var(--kpl-acento-2);border-color:var(--kpl-acento-2);color:var(--kpl-acento-2-fg)}
+.kpl--negra .btn-primary:hover{filter:brightness(1.08)}
+.kpl--negra .kpl-btn--ok{background:var(--kpl-superficie);color:#7CC48F;border-color:#7CC48F}
+.kpl--negra .kpl-tipo__ticket{background:var(--kpl-fondo);color:var(--kpl-bf-amarillo);border-color:var(--kpl-bf-amarillo)}
+.kpl--negra .kpl-tipo__ticket--kg{background:var(--kpl-bf-amarillo);color:var(--kpl-acento-fg);border-color:var(--kpl-bf-amarillo)}
+.kpl--negra .kpl-grid .product-miniature,.kpl--negra .kpl-grid .card{background:#fff;border-radius:14px;color:var(--kpy-text-dark,#2A5C68)}
+.kpl--negra .kpl-grid .product-miniature *{--kpl-tinta:#2A5C68}
+.kpl--negra .kpl-grid .product-list-view-options .btn{background:var(--kpl-acento-2);border-color:var(--kpl-acento-2);color:var(--kpl-acento-2-fg)}
+.kpl--negra .kpl-grid .product-list-view-options .btn:hover{background:var(--kpl-acento-2);color:var(--kpl-acento-2-fg)}
+.kpl--negra .kpl-accesos{background:var(--kpl-superficie-2);border:1px solid var(--kpl-borde)}
+.kpl--negra .kpl-accesos .kpl-acceso{background:#fff;color:#2A5C68;border:0}.kpl--negra .kpl-accesos .kpl-acceso b{color:#2A5C68}.kpl--negra .kpl-accesos .kpl-acceso span{color:#C9473A}
+body.kpl-piel-negra,body.kpl-piel-negra #wrapper{background:#111}
+body.kpl-piel-negra .breadcrumb__wrapper,body.kpl-piel-negra .breadcrumb__wrapper a,body.kpl-piel-negra .breadcrumb__wrapper li{color:#D5DBDE}
+/* La piel clara con paleta (Reyes Magos…): el fondo de la campaña en la cabecera, el acento donde la
+   tienda pone el coral y el secundario donde pone el lila. Sin paleta, los de la tienda. */
+.kpl--clara{--kpl-crema:var(--kpl-fondo,#FFF5D8);--kpl-coral:var(--kpl-acento-texto,#FF5E4F);--kpl-coral-osc:var(--kpl-acento,#E85547);--kpl-lila-osc:var(--kpl-acento-2-texto,#8669B8);--kpl-lila-flag:var(--kpl-acento-2,#7B5CB0);--kpl-lila-claro:var(--kpl-superficie-2,#F7F2FF)}
+.kpl--clara .kpl-hero{background:radial-gradient(720px 340px at 0% 0%,var(--kpl-brillo,transparent),transparent 60%),var(--kpl-crema);border:1px solid var(--kpl-borde,transparent)}
+.kpl--clara .kpl-lema{background:var(--kpl-acento,var(--kpl-crema-osc));color:var(--kpl-acento-fg,#111)}
+.kpl--clara .btn-primary,.kpl--clara .kpl-banner--cupon .btn-primary,.kpl--clara .kpl-pcab--cupon .btn-primary{background:var(--kpl-acento,var(--kpl-coral));border-color:var(--kpl-acento,var(--kpl-coral));color:var(--kpl-acento-fg,#fff)}
+.kpl--clara .btn-outline-primary{border-color:var(--kpl-acento,var(--kpl-coral));color:var(--kpl-acento,var(--kpl-coral))}
+.kpl--clara .kpl-tipo--special_price,.kpl--clara .kpl-banner--special_price,.kpl--clara .kpl-pcab--special_price{--b-acc:var(--kpl-acento,#C9473A)}
+.kpl--clara .kpl-tipo--special_price h3,.kpl--clara .kpl-tipo--special_price .kpl-tipo__cta,.kpl--clara .kpl-marca b,.kpl--clara .kpl-marca__ir{color:var(--kpl-acento-texto,#C9473A)}
+/* El bloque de la marca durante la campaña: una banda con la piel dentro de su landing */
+.kpl--marca.kpl--negra{background:radial-gradient(600px 300px at 0% 0%,var(--kpl-brillo),transparent 60%),linear-gradient(135deg,var(--kpl-superficie),var(--kpl-fondo) 60%);border-radius:24px;padding-inline:clamp(12px,2.5vw,28px)}
+.kpl--marca.kpl--negra .kpl-sec__h h2{color:#fff}
+.kpl--marca.kpl--clara{background:var(--kpl-crema);border-radius:24px;padding-inline:clamp(12px,2.5vw,28px)}
+/* Las páginas con listado durante la campaña: la cabecera (el tipo o la promoción, el filtro y las
+   marcas) es un bloque con la piel; el listado sigue en blanco, que es donde mejor se ven los sacos. */
+.kpl-cab--campana{border-radius:24px;padding:clamp(16px,2.6vw,32px)}
+.kpl-cab--campana.kpl--negra{background:radial-gradient(720px 340px at 0% 0%,var(--kpl-brillo),transparent 60%),linear-gradient(135deg,var(--kpl-superficie),var(--kpl-fondo) 60%);border:1px solid var(--kpl-borde);box-shadow:0 18px 40px rgba(0,0,0,.3)}
+.kpl-cab--campana.kpl--clara{background:var(--kpl-crema)}
+.kpl-cab--campana .kpl-pcab{background:transparent;border:0;padding:0;border-radius:0}
+.kpl-cab--campana.kpl--clara .kpl-marca,.kpl-cab--campana.kpl--clara .kpl-dur{background:#fff}
+.kpl-cab--campana.kpl--clara .kpl-quien{border-color:var(--kpl-crema-osc)}
+.kpl-tcab .kpl-lema{margin-top:14px}
+.kpl-pcab .kpl-dur + .kpl-lema{margin-left:8px}
+
+/* Móvil */
+@media (max-width:767px){
+  .kpl{gap:24px}
+  .kpl-hero{grid-template-columns:1fr;padding:16px 14px;border-radius:18px;gap:14px}
+  .kpl-hero h1{font-size:28px;max-width:none}
+  .kpl-pill{font-size:10px;letter-spacing:1px}
+  .kpl-lema{font-size:12px}
+  .kpl-hero p{font-size:14px}
+  .kpl-news{padding:14px}
+  .kpl-news__fila{flex-wrap:wrap}
+  .kpl-news__fila .btn{flex:1 1 100%}
+  .kpl-banner--ancho .kpl-banner__img{justify-content:center;padding-left:0}
+  .kpl-tipos{grid-template-columns:1fr;gap:10px}
+  .kpl-tipo{grid-template-columns:1fr 104px;min-height:0;padding:14px 12px 14px 16px}
+  .kpl-tipo h3{font-size:19px}
+  .kpl-tipo__img{min-height:96px}.kpl-tipo__img img{max-height:104px}
+  .kpl-tipo__ticket{font-size:10.5px;right:-2px}
+  .kpl-banners{grid-template-columns:1fr;gap:10px}
+  .kpl-banner,.kpl-banner--destacado,.kpl-pcab,.kpl-marca-promos .kpl-banner + .kpl-banner{grid-template-columns:1fr;padding:16px 14px;gap:10px}
+  .kpl-banner__img{order:-1;min-height:0}
+  .kpl-banner__img img,.kpl-banner--destacado .kpl-banner__img img{max-height:150px}
+  .kpl-banner__img .kpl-pila img + img,.kpl-banner--destacado .kpl-banner__img .kpl-pila img + img{max-height:120px}
+  .kpl-banner__img .kpl-pila img + img + img,.kpl-banner--destacado .kpl-banner__img .kpl-pila img + img + img{max-height:100px}
+  .kpl-banner h3,.kpl-banner--destacado h3{font-size:21px}
+  .kpl-banner__btns .btn{width:100%}
+  .kpl-marcas{grid-template-columns:1fr;gap:8px}
+  .kpl-marca{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"logo pct et" "logo small small";align-items:center;column-gap:12px;row-gap:2px;min-height:0;padding:10px 12px}
+  .kpl-marca img{grid-area:logo;height:calc(30px * var(--kpl-logo-k,1));max-width:92px;align-self:center}
+  .kpl-marca__nombre{grid-area:logo}
+  .kpl-marca b{grid-area:pct;font-size:22px}
+  .kpl-marca small{grid-area:small;font-size:12.5px}
+  .kpl-marca .kpl-et{grid-area:et;position:static;justify-self:end}
+  .kpl-marca__ir{display:none}
+  .kpl-pcab__btns .btn{width:100%}
+  .kpl-pcab__img img{max-height:170px}
+  .kpl-pcab__img .kpl-pila img + img{max-height:130px}
+  .kpl-vacio{padding:18px 14px}.kpl-vacio h2{font-size:22px}.kpl-vacio p{font-size:14px}
+  .kpl-vacio__btns{flex-direction:column}.kpl-vacio__btns .btn{width:100%}
+  .kpl-minis{grid-template-columns:1fr;gap:8px;margin-top:16px}
+  .kpl-mini{grid-template-columns:1fr 78px;padding:10px 10px 10px 12px;gap:6px;align-items:center}
+  .kpl-mini b{font-size:14px}.kpl-mini img{max-height:70px}
+  .kpl-accesos__g{grid-template-columns:1fr 1fr}
+  .kpl-accesos__g .kpl-acceso:nth-child(3){grid-column:1 / -1}
+  .kpl-acceso img{height:80px}
+  .kpl .kpl-sec__h .btn{width:100%}
+  .kpl .kpl-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .kpl .kpl-grid .product-miniature__bottom{padding:10px 10px 12px}
+  .kpl .kpl-grid .product-miniature .product-miniature__price{font-size:1.2rem}
+  .kpl .kpl-grid .product-miniature__title{font-size:13.5px;margin-top:4px}
+  .kpl-marca-promos{grid-template-columns:1fr}
+  .kpl-cab--campana{padding:14px 12px;border-radius:18px}
+  .kpl-pcab .kpl-dur + .kpl-lema{margin-left:0}
+  .kpl-quien__l{display:none}
+  .kpl-seg{width:100%;justify-content:space-between}
+  .kpl-seg a{flex:1;justify-content:center;padding:9px 8px}
+}
+@media (min-width:768px) and (max-width:1023px){
+  .kpl .kpl-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .kpl-tipos{grid-template-columns:1fr 1fr}
+  .kpl-marcas{grid-template-columns:1fr 1fr}
+  .kpl-minis{grid-template-columns:1fr 1fr}
+}

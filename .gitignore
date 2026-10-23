@@ -126,6 +126,9 @@
 !/modules/kpyproductzoom/
 !/modules/kpyproductzoom/**
 
+!/modules/kpypromolanding/
+!/modules/kpypromolanding/**
+
 !/modules/kpyspecialprices/
 !/modules/kpyspecialprices/**
 

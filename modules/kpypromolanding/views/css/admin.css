@@ -1,0 +1,171 @@
+/*
+ * Kompy · Landing de promociones (back office). La misma pinta que la pantalla de Kompy ·
+ * Promociones (pasos numerados, fichas, chips, barra de guardar), con los colores de la tienda.
+ * Todo bajo .kpl-admin para no tocar nada más del back office.
+ */
+.kpl-admin{--kpl-tinta:#25303B;--kpl-gris:#6C757D;--kpl-borde:#DDE2E6;--kpl-verde:#2F6B34;--kpl-verde-claro:#EAF6EC;--kpl-azul:#1D5C8C;--kpl-azul-claro:#E6F1FA;--kpl-ambar:#8A5A00;--kpl-ambar-claro:#FFF4D6;--kpl-rojo:#B8322A;--kpl-lila:#7B5CB0;--kpl-lila-claro:#F3EDFF;--kpl-lila-osc:#5A3F8C;--kpl-crema:#FFF5D8;--kpl-amarillo:#F2C965;max-width:1280px}
+.kpl-admin .kpl-panel{padding:0;overflow:visible}
+.kpl-admin .kpl-cabeza{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;height:auto;min-height:40px}
+.kpl-admin .kpl-cabeza__sub{font-weight:400;text-transform:none;color:var(--kpl-gris);font-size:12.5px}
+.kpl-admin .kpl-cabeza__btns,.kpl-admin .kpl-cabeza__nueva{margin-left:auto;display:inline-flex;gap:6px;font-weight:400;text-transform:none;white-space:nowrap}
+.kpl-admin .kpl-inline{display:inline}
+.kpl-admin .kpl-cuerpo{padding:16px 20px}
+.kpl-admin p{margin:0 0 10px}
+.kpl-ayuda{margin:0 0 14px;padding:10px 12px;border-radius:8px;background:#F6F8F9;color:#44505C;font-size:13px;line-height:1.5}
+.kpl-nota{display:block;margin-top:4px;color:var(--kpl-gris);font-size:12px;line-height:1.4}
+.kpl-opcional,.kpl-gris{color:var(--kpl-gris);font-weight:400}
+.kpl-bloque{display:block}
+.kpl-nowrap{white-space:nowrap}
+.kpl-url{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;word-break:break-all}
+.kpl-subtitulo{margin:18px 0 8px;font-size:14px;font-weight:700;color:var(--kpl-tinta)}
+.kpl-subtitulo small{font-weight:400;color:var(--kpl-gris)}
+
+/* Cómo funciona: tres pasos en fila */
+.kpl-flujo{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;padding:16px 20px 6px}
+.kpl-flujo__paso{position:relative;padding:14px 14px 12px 50px;border:1.5px solid var(--kpl-borde);border-radius:12px;background:#fff}
+.kpl-flujo__paso--auto{background:var(--kpl-crema);border-color:var(--kpl-amarillo)}
+.kpl-flujo__paso .kpl-num{position:absolute;left:14px;top:14px}
+.kpl-flujo__paso strong{display:block;margin-bottom:4px;font-size:14.5px;color:var(--kpl-tinta)}
+.kpl-flujo__paso p{margin:0;font-size:12.5px;line-height:1.45;color:#44505C}
+.kpl-flujo__flecha{display:flex;align-items:center;font-size:22px;color:#B9C2CA}
+.kpl-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;background:var(--kpl-tinta);color:#fff;font-size:13px;font-weight:700;flex-shrink:0}
+.kpl-cifras{display:flex;flex-wrap:wrap;gap:10px;padding:10px 20px 18px}
+.kpl-cifra{display:flex;flex-direction:column;min-width:150px;padding:10px 14px;border-radius:10px;background:#F4F6F7}
+.kpl-cifra strong{font-size:20px;line-height:1.15;color:var(--kpl-tinta)}
+.kpl-cifra span{color:#5C6873;font-size:12px}
+.kpl-cifra--si{background:var(--kpl-verde-claro)}.kpl-cifra--si strong{color:var(--kpl-verde)}
+.kpl-cifra--ojo{background:var(--kpl-ambar-claro)}.kpl-cifra--ojo strong{color:var(--kpl-ambar)}
+.kpl-cifra--negra{background:#111}.kpl-cifra--negra strong{color:var(--kpl-amarillo)}.kpl-cifra--negra span{color:#D5DBDE}
+
+/* Chips y tipos */
+.kpl-chip{display:inline-block;padding:2px 9px;border-radius:999px;background:#EEF1F3;color:#44505C;font-size:11.5px;font-weight:700;white-space:nowrap}
+.kpl-chip--si{background:var(--kpl-verde-claro);color:var(--kpl-verde)}
+.kpl-chip--info{background:var(--kpl-azul-claro);color:var(--kpl-azul)}
+.kpl-chip--ojo{background:var(--kpl-ambar-claro);color:var(--kpl-ambar);white-space:normal}
+.kpl-chip--gris{background:#F4F5F6;color:#8A949D}
+.kpl-cuentas{display:inline-flex;flex-wrap:wrap;gap:6px;font-weight:400;text-transform:none}
+.kpl-tipo-mini{display:inline-block;padding:2px 9px;border-radius:6px;font-weight:700;white-space:nowrap;font-size:12px;background:#EEF1F3;color:#44505C}
+.kpl-tipo-mini--cupon{background:var(--kpl-lila-claro);color:var(--kpl-lila-osc)}
+.kpl-tipo-mini--segunda_unidad{background:var(--kpl-verde-claro);color:var(--kpl-verde)}
+.kpl-tipo-mini--special_price{background:#FDECEA;color:var(--kpl-rojo)}
+.kpl-tipo-mini--kilos_gratis{background:#FFD45A;color:#8A2A1E}
+
+/* Tablas */
+.kpl-tabla-caja{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.kpl-admin .kpl-tabla td{vertical-align:middle!important}
+.kpl-admin .kpl-tabla small{color:var(--kpl-gris);display:block;font-size:11.5px}
+.kpl-admin .kpl-tabla strong.kpl-bloque{margin-top:3px}
+.kpl-admin tr.kpl-fila--terminada td,.kpl-admin tr.kpl-fila--apagada td{opacity:.7}
+.kpl-admin tr.kpl-actual td{background:#FBF9FF}
+.kpl-banner-celda{min-width:200px}
+.kpl-thumbs{display:inline-flex;align-items:flex-end;gap:6px;background:var(--kpl-crema);border-radius:8px;padding:4px 8px}
+.kpl-thumb-logo{height:22px;width:auto;background:#fff;border-radius:4px;padding:2px 5px}
+.kpl-thumb-saco{height:46px;width:auto}
+.kpl-permanentes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpl-permanente{display:grid;grid-template-columns:56px 1fr;gap:2px 12px;align-items:center;padding:10px 12px;border:1.5px solid var(--kpl-borde);border-radius:12px;background:#fff;color:var(--kpl-tinta);text-decoration:none}
+.kpl-permanente:hover{border-color:#B9C2CA;text-decoration:none}
+.kpl-permanente img{grid-row:span 3;max-height:56px;max-width:56px;justify-self:center}
+.kpl-permanente strong{font-size:14px}.kpl-permanente small{font-size:11.5px;color:var(--kpl-gris)}.kpl-permanente span{font-size:11.5px}
+
+/* El formulario de campaña: pasos como en Promociones */
+.kpl-form{margin-top:16px;border:1.5px solid var(--kpl-borde);border-radius:12px;background:#fff}
+.kpl-form__titulo{margin:0;padding:12px 20px;border-bottom:1px solid var(--kpl-borde);font-size:15px;font-weight:700;color:var(--kpl-tinta)}
+.kpl-paso{padding:18px 20px;border-bottom:1px solid var(--kpl-borde)}
+.kpl-paso__titulo{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:16px;font-weight:700;color:var(--kpl-tinta)}
+.kpl-fila{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px}
+.kpl-campo{flex:1 1 220px;min-width:0}
+.kpl-campo--ancho{flex:2 1 380px}
+.kpl-campo>label{display:block;margin-bottom:5px;font-weight:700;color:var(--kpl-tinta)}
+.kpl-fecha{display:flex;gap:6px}.kpl-fecha input[type="date"]{flex:1 1 auto}.kpl-fecha input[type="time"]{flex:0 0 110px}
+.kpl-checks{margin:4px 0 14px}
+.kpl-admin .kpl-check{display:flex;align-items:flex-start;gap:8px;margin:0 0 8px;font-weight:400;color:#33404C;cursor:pointer}
+.kpl-admin .kpl-check input{flex-shrink:0;margin:3px 0 0}
+.kpl-admin .kpl-check strong{color:var(--kpl-tinta)}
+.kpl-sangrado{max-width:520px;margin:-2px 0 12px 24px}
+.kpl-pregunta{margin:14px 0 8px;font-weight:700;color:var(--kpl-tinta)}
+.kpl-pregunta small{font-weight:400;color:var(--kpl-gris)}
+.kpl-pieles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:16px;max-width:720px}
+.kpl-admin .kpl-piel{display:block;margin:0;cursor:pointer;font-weight:400}
+.kpl-admin .kpl-piel input{position:absolute;opacity:0;pointer-events:none}
+.kpl-piel__caja{display:grid;grid-template-columns:64px 1fr;column-gap:12px;align-items:center;padding:12px 14px;border:2px solid var(--kpl-borde);border-radius:12px;background:#fff;transition:border-color .15s}
+.kpl-piel__caja strong{font-size:15px;color:var(--kpl-tinta)}
+.kpl-piel__caja small{grid-column:2;color:#5C6873;font-size:12.5px;line-height:1.4}
+.kpl-piel__muestra{grid-row:span 2;display:flex;align-items:center;justify-content:center;gap:4px;width:64px;height:44px;border-radius:8px}
+.kpl-piel__muestra i{display:block;width:12px;height:12px;border-radius:50%}
+.kpl-piel__muestra--negra{background:#111}.kpl-piel__muestra--negra i:nth-child(1){background:#F2C965}.kpl-piel__muestra--negra i:nth-child(2){background:#FF6A5C}.kpl-piel__muestra--negra i:nth-child(3){background:#fff}
+.kpl-piel__muestra--clara{background:#FFF5D8;border:1px solid #F2C965}.kpl-piel__muestra--clara i:nth-child(1){background:#FF5E4F}.kpl-piel__muestra--clara i:nth-child(2){background:#2A5C68}.kpl-piel__muestra--clara i:nth-child(3){background:#A97DF1}
+.kpl-admin .kpl-piel:hover .kpl-piel__caja{border-color:#B9C2CA}
+.kpl-admin .kpl-piel input:checked+.kpl-piel__caja{border-color:var(--kpl-tinta);background:#F6F8F9}
+.kpl-etiquetas input.kpl-color{width:92px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+/* La paleta: las preparadas (un clic) y los tres colores */
+.kpl-paletas{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+.kpl-admin .kpl-paleta{display:inline-flex;align-items:center;gap:10px;padding:8px 12px 8px 8px;border:1.5px solid var(--kpl-borde);border-radius:12px;background:#fff;cursor:pointer;text-align:left;font:inherit;color:var(--kpl-tinta);transition:border-color .15s,box-shadow .15s}
+.kpl-admin .kpl-paleta:hover{border-color:var(--kpl-tinta);box-shadow:0 4px 12px rgba(42,92,104,.12)}
+.kpl-paleta__muestra{display:flex;align-items:center;justify-content:center;gap:5px;width:56px;height:40px;border-radius:8px;border:1px solid rgba(0,0,0,.08);flex:0 0 auto}
+.kpl-paleta__muestra i{display:block;width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
+.kpl-paleta__txt strong{display:block;font-size:13.5px}
+.kpl-paleta__txt small{display:block;font-size:11.5px;color:#5C6873;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.kpl-colores{margin-bottom:14px}
+.kpl-colorcampo{display:flex;align-items:center;gap:8px}
+.kpl-colorcampo input[type=color]{width:44px;height:34px;padding:2px;border:1.5px solid var(--kpl-borde);border-radius:8px;background:#fff;cursor:pointer;flex:0 0 auto}
+.kpl-colorcampo input.kpl-color{width:110px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+/* La portada de la tienda durante una campaña (marcas primero y cuántos productos) */
+.kpl-portada{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:12px 14px;margin:0 0 16px;border:1.5px solid var(--kpl-borde);border-radius:12px;background:#F6F8F9}
+.kpl-portada__txt{flex:1 1 380px;min-width:0}
+.kpl-portada__txt strong{display:block;color:var(--kpl-tinta)}
+.kpl-portada__campos{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px}
+.kpl-admin .kpl-portada__campos label{display:grid;gap:4px;margin:0;font-size:12.5px;font-weight:700;color:#5C6873}
+.kpl-portada__campos input[name=marcas_prioridad]{width:240px}
+.kpl-portada__campos input[name=portada_n]{width:80px}
+.kpl-muestra{display:inline-block;border-radius:999px;padding:4px 10px;font-weight:800;font-size:12px;white-space:nowrap}
+.kpl-barra{position:sticky;bottom:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:12px 20px;border-radius:0 0 12px 12px;background:rgba(255,255,255,.97);box-shadow:0 -6px 16px rgba(20,30,40,.06)}
+.kpl-barra__resumen{flex:1 1 320px;margin:0;color:var(--kpl-tinta);font-size:13px;font-weight:600}
+.kpl-barra__botones{display:flex;gap:8px;margin-left:auto}
+
+/* Imágenes */
+.kpl-detalle{margin:0 0 12px;border:1.5px solid var(--kpl-borde);border-radius:12px;background:#fff}
+.kpl-detalle>summary{display:flex;align-items:center;gap:8px;padding:12px 16px;font-weight:700;color:var(--kpl-tinta);cursor:pointer;list-style:none}
+.kpl-detalle>summary::-webkit-details-marker{display:none}
+.kpl-detalle>summary::before{content:"▸";color:var(--kpl-gris);font-size:12px}
+.kpl-detalle[open]>summary::before{content:"▾"}
+.kpl-detalle>summary small{font-weight:400;color:var(--kpl-gris)}
+.kpl-detalle__cuerpo{padding:0 16px 14px}
+.kpl-detalle--panel{border:0;border-radius:4px}
+.kpl-detalle--panel>summary{padding:0}
+.kpl-detalle--panel>summary::before{display:none}
+.kpl-motor__fila{display:flex;flex-wrap:wrap;gap:6px}
+.kpl-motor__fila input[type="text"]{flex:1 1 220px}
+.kpl-motor__fila select{width:auto}
+.kpl-subir{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px}
+.kpl-subir select,.kpl-subir input[type="text"]{width:auto;min-width:150px}
+.kpl-fichero{position:relative;overflow:hidden;margin:0}
+.kpl-fichero input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.kpl-galeria{display:flex;flex-wrap:wrap;gap:12px}
+.kpl-img{width:156px;background:var(--kpl-crema);border-radius:10px;padding:8px;text-align:center;font-size:11px;line-height:1.3}
+.kpl-img img{max-height:96px;max-width:100%;display:block;margin:0 auto 6px}
+.kpl-img small{display:block;color:#44505C}
+.kpl-img--rota{background:#fde8e8}
+.kpl-img__no{height:96px;display:flex;align-items:center;justify-content:center;color:#a33}
+.kpl-img--descartada{background:#F3F3F3}.kpl-img--descartada img{opacity:.45}
+
+/* Mantenimiento */
+.kpl-mant{display:grid;gap:10px}
+.kpl-mant__fila{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:12px 14px;border:1.5px solid var(--kpl-borde);border-radius:12px;background:#fff}
+.kpl-mant__fila>div{flex:1 1 420px}
+.kpl-mant__fila--peligro{border-color:#F2C3BF;background:#FFF8F7}
+.kpl-mant__peligro{display:inline-flex;gap:6px}.kpl-mant__peligro input{width:120px}
+
+@media (max-width:991.98px){
+  .kpl-flujo{grid-template-columns:1fr}.kpl-flujo__flecha{display:none}
+  .kpl-permanentes,.kpl-pieles{grid-template-columns:1fr}
+  .kpl-admin .kpl-cabeza__btns,.kpl-admin .kpl-cabeza__nueva{margin-left:0}
+  .kpl-barra__botones{width:100%}.kpl-barra__botones .btn{flex:1 1 0}
+}
+
+/* La biblioteca: las subidas a mano con su tipo, aparte de las hechas solas */
+.kpl-ayuda--biblio{margin-top:-4px}
+.kpl-ayuda--biblio b{color:var(--kpl-tinta)}
+.kpl-subir .form-control{height:34px}
+.kpl-img--subida{background:#EEF6F7;border:1px solid #CFE3E6}
+.kpl-img__tipo{display:inline-block;background:var(--kpl-tinta);color:#fff;border-radius:999px;padding:1px 8px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px}
+.kpl-detalle--automaticas{margin-top:14px}
