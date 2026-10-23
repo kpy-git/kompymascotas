@@ -24,11 +24,14 @@
         <span class="ms-auto"><i class="material-icons">chevron_right</i></span>
       </a>
 
-      <li class="{$elementName}__element offers">
+      {capture name='kplMenu'}{hook h='displayKpyPromoMenu' movil=true}{/capture}
+      {if trim($smarty.capture.kplMenu) !== ''}{$smarty.capture.kplMenu nofilter}{else}
+      <a href="{url entity='module' name='kpypromolanding' controller='landing'}" class="{$elementName}__element offers">
         {include file="components/svg-offer.tpl" classes="{$elementName}__element-icon"}
         <span>{l s='Offers and promotions' d='Modules.Kpymenu.Shop'}</span>
         <span class="ms-auto"><i class="material-icons">chevron_right</i></span>
-      </li>
+      </a>
+      {/if}
 
       {hook h='displayKpyMenuMobileElementsAfter'}
     </ul>

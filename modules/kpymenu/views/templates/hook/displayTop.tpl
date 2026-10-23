@@ -53,12 +53,15 @@
 		</div>
 	</li>
 	
+	{capture name='kplMenu'}{hook h='displayKpyPromoMenu'}{/capture}
+	{if trim($smarty.capture.kplMenu) !== ''}{$smarty.capture.kplMenu nofilter}{else}
 	<li class="{$elementName}__element">
-		<a href="#" class="top-link">
+		<a href="{url entity='module' name='kpypromolanding' controller='landing'}" class="top-link">
 			{include file="components/svg-offer.tpl" classes="{$elementName}__icon"}
 			<span>{l s='Offers and promotions' d='Modules.Kpymenu.Shop'}</span>
 			<i class="material-icons">keyboard_arrow_down</i>
 		</a>
 	</li>
+	{/if}
 </ul>
 </nav>
