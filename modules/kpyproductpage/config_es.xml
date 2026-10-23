@@ -2,7 +2,7 @@
 <module>
     <name>kpyproductpage</name>
     <displayName><![CDATA[Kompy &middot; Ficha de producto]]></displayName>
-    <version><![CDATA[1.1.0]]></version>
+    <version><![CDATA[1.2.0]]></version>
     <description><![CDATA[Caracter&iacute;sticas, beneficios, ingredientes, composici&oacute;n, raci&oacute;n y descripci&oacute;n con una sola plantilla, pensada para m&oacute;vil.]]></description>
     <author><![CDATA[Kompy]]></author>
     <tab><![CDATA[front_office_features]]></tab>
