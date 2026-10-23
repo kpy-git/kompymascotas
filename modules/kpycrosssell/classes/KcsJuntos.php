@@ -204,15 +204,26 @@ class KcsJuntos
      * Los productos de la cesta que ya llevan una promoción del módulo de cupones. No se les pone
      * otra encima.
      *
+     * Se pregunta por el hook de consulta `actionKpyCouponsProductosConPromo` (lo define y lo
+     * contesta `kpycoupons`; aquí solo se lanza): este módulo no llama a ninguna clase de otro
+     * módulo (regla de Julián, 23/10/2026). Sin `kpycoupons`, nadie contesta y no hay nada que respetar.
+     *
      * @return int[] id_product
      */
     private static function conOtraPromo(Cart $cart): array
     {
-        if (!class_exists('KpcCarrito') || !method_exists('KpcCarrito', 'productosConPromo')) {
-            return [];
+        $productos = [];
+        try {
+            Hook::exec('actionKpyCouponsProductosConPromo', [
+                'cart' => $cart,
+                'id_shop' => (int) Context::getContext()->shop->id,
+                'productos' => &$productos,
+            ]);
+        } catch (Throwable $e) {
+            PrestaShopLogger::addLog('kpycrosssell, al preguntar por las promociones de la cesta: ' . $e->getMessage(), 2, null, 'Cart', (int) $cart->id, true);
         }
 
-        return KpcCarrito::productosConPromo($cart, (int) Context::getContext()->shop->id);
+        return array_values(array_unique(array_map('intval', (array) $productos)));
     }
 
     /** Un código por cesta, imposible de adivinar desde fuera. */

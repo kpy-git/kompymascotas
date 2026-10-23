@@ -22,7 +22,7 @@
   <ul class="kcs__lista">
     {foreach $kcs.articulos as $a}
       <li class="kcs__art{if $a.en_cesta} is-puesto{/if}"{if !empty($a.oculto) || !empty($a.sobra)} hidden{/if}{if !empty($a.oculto)} data-kcs-oculto{/if}
-          {if !empty($a.pesos)} data-kcs-pesos="{$a.pesos.json|escape:'html':'UTF-8'}"{/if}>
+              {if !empty($a.pesos)} data-kcs-pesos="{$a.pesos.json|escape:'html':'UTF-8'}"{/if}>
         <div class="kcs__fila">
           {* La foto lleva al mismo sitio que el nombre: para el lector de pantalla basta con el nombre. *}
           <a class="kcs__ir kcs__ir--foto" href="{$a.url|escape:'html':'UTF-8'}" data-kcs-ir tabindex="-1" aria-hidden="true"><img class="kcs__foto" src="{$a.foto|escape:'html':'UTF-8'}" alt="" loading="lazy" width="72" height="72"></a>
@@ -65,5 +65,5 @@
     "elige_talla": "{l s='Elige su talla para añadirlo' d='Modules.Kpycrosssell.Shop'|escape:'javascript'}",
     "elige_opcion_talla": "{l s='Elige su talla' d='Modules.Kpycrosssell.Shop'|escape:'javascript'}",
     "desde": "{l s='desde' d='Modules.Kpycrosssell.Shop'|escape:'javascript'}"
-  {rdelim}</script>
+    {rdelim}</script>
 </section>

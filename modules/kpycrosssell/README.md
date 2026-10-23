@@ -140,8 +140,9 @@ se está mirando: si no, la tienda entera enseñaría los tres mismos snacks en 
 
 ## El bloque
 
-Lo coloca `kpyproductbuy` con el enganche `displayKpyCrossSell`, **dentro de la caja de compra**,
-justo debajo del botón y antes de los beneficios clave, porque es donde se decide.
+Lo coloca el tema con el enganche `displayKpyCrossSell` (`catalog/product.tpl`, debajo del bloque
+de compra, antes de la descripción), porque es donde se decide. Hasta la 1.5 lo llamaba
+`kpyproductbuy` desde su caja; ese módulo ya no existe (23/10/2026).
 
 En el **ordenador** (a partir de 992 px) el bloque sale de la columna de compra y se pone **a todo el
 ancho**, debajo de las dos columnas: una tarjeta bajo la foto, otra en medio y otra bajo el botón de
@@ -213,10 +214,18 @@ docker exec … php modules/kpycrosssell/bin/cobertura.php    # a cuántos produ
 
 1. Copiar la carpeta a `modules/kpycrosssell`.
 2. `php bin/console prestashop:module install kpycrosssell`.
-3. Comprobar los cuatro hooks: `displayKpyCrossSell` (lo llama `kpyproductbuy` desde dentro de la
-   caja de compra), `actionFrontControllerSetMedia`, `actionCartSave` y `displayShoppingCart`.
+3. Comprobar los cuatro hooks: `displayKpyCrossSell` (lo llama el tema desde `catalog/product.tpl`),
+   `actionFrontControllerSetMedia`, `actionCartSave` y `displayShoppingCart`.
 4. Comprobar que aparece Catálogo → **Kompy · Caprichitos** (al actualizar desde la 1.4, `upgrade-1.5.0.php`
    le cambia el nombre).
 5. Vaciar la caché.
 
 Funciona solo: sin `kpycoupons` no hay nada que respetar, y sin parejas a mano las saca del catálogo.
+
+**Desde la 1.6.0 (23/10/2026)**, sin llamadas a otros módulos (regla de Julián): los productos que ya
+llevan una promoción de `kpycoupons` se preguntan por su hook de consulta
+`actionKpyCouponsProductosConPromo` (este módulo lo lanza con `cart`, `id_shop` y `productos` por
+referencia; `kpycoupons` lo contesta; sin él, nadie contesta), en vez de llamar a `KpcCarrito`. Y
+`junto.js` coloca los puntos de `gamifications` junto al botón de comprar del tema
+(`.product-actions__wrapper-add-to-cart`), no en la caja de `kpyproductbuy`. Sin tablas nuevas ni
+`upgrade`: solo sube la versión.

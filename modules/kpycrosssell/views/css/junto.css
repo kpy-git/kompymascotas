@@ -254,6 +254,25 @@ a.kcs__nombre:focus-visible { outline: 2px solid var(--kcs-tinta); outline-offse
   .kcs__titulo { font-size: 20px; }
 }
 
+@container (min-width: 460px) {
+  .kcs__fila {
+    grid-template-columns: 56px minmax(0, 1fr);
+    grid-template-areas:
+      'foto texto'
+      'precio palanca';
+    align-content: start;
+    row-gap: 8px;
+    column-gap: 10px;
+    height: 100%;
+    min-height: 0;
+    padding: 10px 12px;
+  }
+
+  .kcs__foto { grid-area: foto; width: 56px; height: 56px; }
+  .kcs__texto { grid-area: texto; align-self: center; }
+  .kcs__precio { grid-area: precio; align-items: flex-start; align-self: center; }
+  .kcs__palanca { grid-area: palanca; align-self: center; justify-self: end; }
+}
 
 /* En el móvil, todo lo que se pueda para el nombre: es lo único que decide si interesa. */
 @media (max-width: 767px) {
