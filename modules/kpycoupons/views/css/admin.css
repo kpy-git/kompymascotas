@@ -1,0 +1,326 @@
+/*
+ * Kompy · Promociones (back office). Los mismos colores que la tienda: lila para el cupón, verde
+ * para la 2ª unidad. Todo bajo .kpc-admin para no tocar nada más del back office.
+ */
+.kpc-admin{--kpc-lila:#7B5CB0;--kpc-lila-claro:#F3EDFF;--kpc-lila-osc:#5A3F8C;--kpc-verde:#2F6B34;--kpc-verde-claro:#EAF6EC;--kpc-ambar:#8A5A00;--kpc-ambar-claro:#FFF4D6;--kpc-azul:#1D5C8C;--kpc-azul-claro:#E6F1FA;--kpc-violeta:#4E2BB3;--kpc-violeta-claro:#EFE9FF;--kpc-gris:#6C757D;--kpc-borde:#DDE2E6;--kpc-rojo:#B8322A;max-width:1280px}
+.kpc-admin .kpc-panel{padding:0;overflow:visible}
+.kpc-admin .kpc-cabeza{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;height:auto;min-height:40px}
+.kpc-admin .kpc-cabeza__nueva,.kpc-admin .kpc-cabeza__filtro{margin-left:auto;font-weight:400;text-transform:none;white-space:nowrap}
+.kpc-admin .kpc-cabeza__filtro input{margin:0 4px 0 0;vertical-align:middle}
+
+/* Pasos */
+.kpc-paso{padding:18px 20px;border-bottom:1px solid var(--kpc-borde)}
+.kpc-paso__titulo{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:16px;font-weight:700;color:#25303B}
+.kpc-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;background:#25303B;color:#fff;font-size:13px;font-weight:700}
+.kpc-ayuda{margin:0 0 14px;padding:10px 12px;border-radius:8px;background:#F6F8F9;color:#44505C;font-size:13px}
+.kpc-ayuda--ojo{background:#FFF8F7;color:#7A2A22}
+.kpc-nota{display:block;margin-top:4px;color:var(--kpc-gris);font-size:12px;line-height:1.4}
+.kpc-opcional,.kpc-gris{color:var(--kpc-gris);font-weight:400}
+.kpc-rojo{color:var(--kpc-rojo)!important}
+
+/*
+ * Lo que se ve según lo elegido. Con CSS y no con JS: está bien desde el primer momento, aunque
+ * el JS tarde o falle. Hasta elegir el tipo, solo el paso 1; luego, solo lo de ese tipo (y, en un
+ * Special Price, lo de su modo; un cupón o una 2ª unidad cuentan como «el mismo %»).
+ */
+.kpc-form:not(:has(input[name="tipo"]:checked)) .kpc-tras-tipo,
+.kpc-form:has(input[name="tipo"]:checked) .kpc-elige,
+.kpc-form:has(input[name="tipo"][value="cupon"]:checked) [data-kpc-solo]:not([data-kpc-solo~="cupon"]),
+.kpc-form:has(input[name="tipo"][value="segunda_unidad"]:checked) [data-kpc-solo]:not([data-kpc-solo~="segunda_unidad"]),
+.kpc-form:has(input[name="tipo"][value="special_price"]:checked) [data-kpc-solo]:not([data-kpc-solo~="special_price"]),
+.kpc-form:has(input[name="tipo"][value="regalo"]:checked) [data-kpc-solo]:not([data-kpc-solo~="regalo"]),
+.kpc-form:not(:has(input[name="regalo_modo"][value="mismo"]:checked)) [data-kpc-regalo-modo="mismo"],
+.kpc-form:not(:has(input[name="tipo"][value="special_price"]:checked)) [data-kpc-modo]:not([data-kpc-modo~="pct"]),
+.kpc-form:has(input[name="tipo"][value="special_price"]:checked):has(input[name="modo_precio"][value="pct"]:checked) [data-kpc-modo]:not([data-kpc-modo~="pct"]),
+.kpc-form:has(input[name="tipo"][value="special_price"]:checked):has(input[name="modo_precio"][value="pct_articulo"]:checked) [data-kpc-modo]:not([data-kpc-modo~="pct_articulo"]),
+.kpc-form:has(input[name="tipo"][value="special_price"]:checked):has(input[name="modo_precio"][value="precio_articulo"]:checked) [data-kpc-modo]:not([data-kpc-modo~="precio_articulo"]),
+.kpc-form:not(:has(input[name="elegir"]:checked)) .kpc-tras-elegir,
+.kpc-form:not(:has(input[name="elegir"]:checked)) [data-kpc-elegir],
+.kpc-form:has(input[name="elegir"]:checked) .kpc-elige-como,
+.kpc-form:has(input[name="elegir"][value="marca"]:checked) [data-kpc-elegir]:not([data-kpc-elegir~="marca"]),
+.kpc-form:has(input[name="elegir"][value="lista"]:checked) [data-kpc-elegir]:not([data-kpc-elegir~="lista"]),
+.kpc-form:has(input[name="incluir_packs"]:not(:checked)) [data-kpc-si-packs]{display:none!important}
+.kpc-elige,.kpc-elige-como{margin:0;padding:10px 12px;border-radius:8px;background:#F6F8F9;color:#44505C;font-size:13px}
+.kpc-tipos--dos{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kpc-tipo__icono--como{background:#EEF1F3;color:#25303B}
+.kpc-admin .kpc-tipo input[name="elegir"]:checked+.kpc-tipo__caja{border-color:#25303B;background:#F6F8F9}
+.kpc-modo-bloque{margin:0 0 6px}
+.kpc-solo-packs{margin:-2px 0 10px 24px}
+
+/* Tipo */
+.kpc-tipos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.kpc-admin .kpc-tipo{display:block;margin:0;cursor:pointer;font-weight:400}
+.kpc-admin .kpc-tipo input{position:absolute;opacity:0;pointer-events:none}
+.kpc-tipo__caja{display:grid;grid-template-columns:40px 1fr;column-gap:12px;row-gap:4px;align-items:center;align-content:start;height:100%;padding:14px;border:2px solid var(--kpc-borde);border-radius:12px;background:#fff;transition:border-color .15s,background-color .15s}
+.kpc-tipo__caja strong{font-size:15px;color:#25303B}
+.kpc-tipo__caja small{grid-column:2;color:#5C6873;font-size:12.5px;line-height:1.4}
+.kpc-tipo__icono{grid-row:span 2;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:999px;font-size:15px;font-weight:800}
+.kpc-tipo__icono--cupon{background:var(--kpc-lila-claro);color:var(--kpc-lila-osc)}
+.kpc-tipo__icono--segunda{background:var(--kpc-verde-claro);color:var(--kpc-verde)}
+.kpc-tipo__icono--especial{background:#FDECEA;color:#B8322A}
+.kpc-tipo__icono--regalo{background:var(--kpc-violeta-claro);color:var(--kpc-violeta)}
+.kpc-admin .kpc-tipo:hover .kpc-tipo__caja{border-color:#B9C2CA}
+.kpc-admin .kpc-tipo input:checked+.kpc-tipo__caja{border-color:var(--kpc-lila);background:#FBF9FF}
+.kpc-admin .kpc-tipo input[value="segunda_unidad"]:checked+.kpc-tipo__caja{border-color:var(--kpc-verde);background:#F7FBF8}
+.kpc-admin .kpc-tipo input[value="special_price"]:checked+.kpc-tipo__caja{border-color:#C23A2C;background:#FFF8F7}
+.kpc-admin .kpc-tipo input[value="regalo"]:checked+.kpc-tipo__caja{border-color:var(--kpc-violeta);background:#F8F5FF}
+
+/* El regalo: qué se regala, cuántos, tope; y el buscador de artículos (con lo elegido en una ficha) */
+.kpc-regalo-bloque{margin:0 0 14px;padding:12px 14px;border-radius:10px;background:#F8F5FF}
+.kpc-regalo-bloque .kpc-pregunta{margin-top:0}
+.kpc-regalo-bloque .kpc-fila{margin-bottom:4px}
+.kpc-prefijo{display:flex;align-items:center;gap:8px}
+.kpc-prefijo>span{white-space:nowrap;font-weight:700;color:var(--kpc-violeta)}
+.kpc-prefijo .form-control{max-width:220px}
+.kpc-campo--articulo{flex:1 1 320px}
+.kpc-articulo{position:relative}
+.kpc-articulo__elegido{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1.5px solid var(--kpc-violeta);border-radius:10px;background:#fff}
+.kpc-articulo__elegido.is-mal{border-color:var(--kpc-rojo);background:#FDF5F4}
+.kpc-articulo__texto{display:flex;flex-direction:column;gap:2px;flex:1 1 auto;min-width:0}
+.kpc-articulo__texto strong{color:#25303B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kpc-articulo__texto small{color:var(--kpc-gris)}
+.kpc-admin .kpc-articulo__quitar{background:#EEF1F3;color:#25303B}
+.kpc-admin .kpc-articulo__quitar:hover{background:#DDE2E6}
+.kpc-opcion__detalle{grid-column:1/-1;color:var(--kpc-gris);font-size:11.5px}
+.kpc-opcion__detalle:empty{display:none}
+.kpc-celda-regalo{min-width:260px}
+.kpc-regalo-nuevo{display:block;margin-top:4px;padding:4px 8px;border-radius:6px;background:var(--kpc-violeta-claro);color:var(--kpc-violeta);font-size:12.5px;font-weight:600}
+.kpc-regalo-nuevo .kpc-deshacer{margin-left:6px;font-weight:400;text-decoration:underline;cursor:pointer}
+.kpc-celda-regalo .kpc-articulo{margin-top:6px;min-width:240px}
+.kpc-celda-botones{white-space:nowrap}
+.kpc-celda-botones .btn{margin:1px 0 1px 2px}
+.kpc-tabla--previa tr.is-regalo-cambiado td{background:#F8F5FF}
+.kpc-fila-sinregalo{opacity:.72}
+.kpc-modos{margin:0 0 14px;padding:10px 14px;border-radius:10px;background:#FFF8F7}
+.kpc-modos .kpc-pregunta{margin-top:0}
+.kpc-admin .kpc-tipo input:focus-visible+.kpc-tipo__caja{outline:2px solid #25303B;outline-offset:2px}
+
+/* Campos */
+.kpc-fila{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px}
+.kpc-campo{flex:1 1 200px;min-width:0}
+.kpc-campo--pct{flex:0 0 150px}
+.kpc-campo--ancho{flex:2 1 360px}
+.kpc-campo>label,.kpc-lista>label{display:block;margin-bottom:5px;font-weight:700;color:#25303B}
+.kpc-codigo{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.kpc-fecha{display:flex;gap:6px}
+.kpc-fecha input[type="date"]{flex:1 1 auto}
+.kpc-fecha input[type="time"]{flex:0 0 110px}
+
+/* Buscadores con fichas */
+.kpc-picker{position:relative}
+.kpc-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.kpc-chips:empty{display:none}
+.kpc-ficha{display:inline-flex;align-items:center;gap:4px;max-width:100%;padding:3px 4px 3px 10px;border-radius:999px;background:#25303B;color:#fff;font-size:12.5px;font-weight:600}
+.kpc-ficha__texto{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kpc-ficha__quitar{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:0;border:0;border-radius:999px;background:rgba(255,255,255,.18);color:#fff;font-size:14px;line-height:1;cursor:pointer}
+.kpc-ficha__quitar:hover{background:rgba(255,255,255,.35)}
+.kpc-opciones{position:absolute;z-index:30;top:100%;left:0;right:0;max-height:320px;margin:4px 0 0;padding:4px;overflow:auto;list-style:none;border:1px solid var(--kpc-borde);border-radius:10px;background:#fff;box-shadow:0 10px 30px rgba(20,30,40,.14)}
+.kpc-opcion{display:grid;grid-template-columns:1fr auto;gap:0 10px;padding:7px 10px;border-radius:7px;cursor:pointer}
+.kpc-opcion.is-activa,.kpc-opcion:hover{background:#F1F4F6}
+.kpc-opcion__nombre{font-weight:600;color:#25303B}
+.kpc-opcion__cuenta{color:var(--kpc-gris);font-size:12px;white-space:nowrap}
+.kpc-opcion__ruta{grid-column:1/-1;color:var(--kpc-gris);font-size:11.5px}
+.kpc-opcion__ruta:empty{display:none}
+.kpc-opcion--nada{color:var(--kpc-gris);cursor:default}
+
+/* Afinar la marca: gamas, tamaños, sueltos y packs */
+.kpc-afinar{margin:10px 0 4px}
+.kpc-marca-bloque{margin:0 0 12px;padding:10px 12px;border:1px solid var(--kpc-borde);border-radius:10px;background:#FBFCFC}
+.kpc-marca-bloque .kpc-pregunta{margin:0 0 8px}
+.kpc-pregunta small{font-weight:400;color:var(--kpc-gris)}
+.kpc-arbol{max-height:300px;overflow:auto;padding:2px;border:1px solid #EEF1F3;border-radius:8px;background:#fff}
+.kpc-arbol__buscar{max-width:380px;margin:0 0 8px}
+.kpc-admin .kpc-rama{display:flex;align-items:center;gap:8px;margin:0;padding:4px 8px 4px calc(8px + var(--sangria,0) * 18px);border-radius:6px;font-weight:400;color:#33404C;cursor:pointer}
+.kpc-admin .kpc-rama:hover{background:#F4F6F7}
+.kpc-admin .kpc-rama input{flex-shrink:0;margin:0}
+.kpc-admin .kpc-rama span{flex:1 1 auto;min-width:0}
+.kpc-admin .kpc-rama small,.kpc-admin .kpc-ficha-check small{flex-shrink:0;padding:0 6px;border-radius:999px;background:#F1F4F6;color:var(--kpc-gris);font-size:11px;font-weight:600;line-height:18px}
+.kpc-admin .kpc-rama small{margin-left:auto}
+.kpc-admin .kpc-rama:has(input:checked){background:var(--kpc-verde-claro);color:#1F4A23;font-weight:600}
+.kpc-admin .kpc-rama:has(input:checked) small{background:#fff}
+.kpc-fichas-caja{margin:0 0 12px}
+.kpc-fichas-caja>.kpc-pregunta{margin:6px 0 8px}
+.kpc-fichas,.kpc-grupo{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.kpc-grupo{margin:0 0 8px}
+.kpc-grupo__nombre{min-width:76px;color:var(--kpc-gris);font-size:11.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+.kpc-admin .kpc-ficha-check{position:relative;display:inline-flex;align-items:center;gap:6px;margin:0;padding:5px 11px;border:1.5px solid var(--kpc-borde);border-radius:999px;background:#fff;color:#33404C;font-size:12.5px;font-weight:400;cursor:pointer;transition:border-color .12s,background-color .12s}
+.kpc-admin .kpc-ficha-check input{position:absolute;opacity:0;pointer-events:none}
+.kpc-admin .kpc-ficha-check:hover{border-color:#B9C2CA}
+.kpc-admin .kpc-ficha-check:has(input:checked){border-color:#25303B;background:#25303B;color:#fff}
+.kpc-admin .kpc-ficha-check:has(input:checked) small{background:rgba(255,255,255,.18);color:#fff}
+.kpc-admin .kpc-ficha-check:has(input:focus-visible){outline:2px solid #25303B;outline-offset:2px}
+.kpc-otras{margin:0 0 12px}
+.kpc-otras summary{padding:4px 0;font-weight:700;color:#25303B;cursor:pointer}
+.kpc-otras summary small{font-weight:400;color:var(--kpc-gris)}
+.kpc-otras .kpc-picker{margin-top:6px}
+
+/* Características */
+.kpc-caracs{display:flex;flex-wrap:wrap;gap:12px 24px;margin:4px 0 16px}
+.kpc-carac{min-width:0;margin:0;padding:0;border:0}
+.kpc-carac legend{width:auto;margin:0 0 6px;border:0;font-size:13px;font-weight:700;color:#25303B}
+.kpc-admin .kpc-pastilla{display:inline-flex;margin:0 6px 6px 0;font-weight:400;cursor:pointer}
+.kpc-admin .kpc-pastilla input{position:absolute;opacity:0;pointer-events:none}
+.kpc-admin .kpc-pastilla span{padding:5px 11px;border:1.5px solid var(--kpc-borde);border-radius:999px;background:#fff;color:#33404C;font-size:12.5px;transition:all .12s}
+.kpc-admin .kpc-pastilla:hover span{border-color:#B9C2CA}
+.kpc-admin .kpc-pastilla input:checked+span{border-color:#25303B;background:#25303B;color:#fff}
+.kpc-admin .kpc-pastilla input:focus-visible+span{outline:2px solid #25303B;outline-offset:2px}
+.kpc-admin .kpc-pastilla input:disabled+span{opacity:.45;cursor:not-allowed}
+
+/* Lista y fichero */
+.kpc-lista{margin:6px 0 10px}
+.kpc-lista textarea,.kpc-excluir textarea{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px}
+.kpc-lista__pie{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
+.kpc-admin .kpc-lista__tipo{width:auto;min-width:190px;flex:0 0 auto}
+.kpc-fichero{position:relative;overflow:hidden;margin:0}
+.kpc-fichero input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.kpc-fichero__nombre{color:#33404C;font-size:12.5px}
+.kpc-excluir{margin:0 0 12px}
+.kpc-excluir summary{cursor:pointer;font-weight:700;color:#25303B;padding:4px 0}
+.kpc-excluir textarea{margin-top:6px}
+.kpc-contador{margin-left:6px;padding:1px 8px;border-radius:999px;background:var(--kpc-ambar-claro);color:var(--kpc-ambar);font-size:11.5px;font-weight:600}
+
+/* Casillas */
+.kpc-checks{margin:4px 0 14px}
+.kpc-admin .kpc-check{display:flex;align-items:flex-start;gap:8px;margin:0 0 8px;font-weight:400;color:#33404C;cursor:pointer}
+.kpc-admin .kpc-check input{flex-shrink:0;margin:3px 0 0}
+.kpc-admin .kpc-check strong{color:#25303B}
+.kpc-radios{margin-bottom:4px}
+.kpc-pregunta{margin:14px 0 8px;font-weight:700;color:#25303B}
+.kpc-canales{margin:0 0 4px 24px}
+.kpc-canales.is-apagado{opacity:.55}
+.kpc-comprobar small{color:var(--kpc-gris);font-weight:400}
+.kpc-atajos{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:2px 0 14px}
+.kpc-atajos>span{color:var(--kpc-gris);font-size:12.5px;margin-right:2px}
+.kpc-enlace{margin-top:12px;padding:10px 12px;border-radius:8px;background:var(--kpc-lila-claro);color:var(--kpc-lila-osc)}
+.kpc-enlace>span{display:block;margin-bottom:6px;font-weight:600}
+.kpc-enlace code{display:inline-block;max-width:100%;padding:3px 7px;margin-right:6px;border-radius:5px;background:#fff;color:#33404C;overflow-wrap:anywhere}
+.kpc-enlace .kpc-nota{color:var(--kpc-lila-osc)}
+.kpc-enlace .kpc-nota code{padding:0 4px}
+
+/* La barra de guardar, pegada abajo mientras se rellena */
+.kpc-barra{position:sticky;bottom:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:12px 20px;border-top:1px solid var(--kpc-borde);border-radius:0 0 5px 5px;background:rgba(255,255,255,.97);box-shadow:0 -6px 16px rgba(20,30,40,.06)}
+.kpc-barra__resumen{flex:1 1 320px;margin:0;color:#25303B;font-size:13px;font-weight:600}
+.kpc-barra__botones{display:flex;gap:8px;margin-left:auto}
+
+/* Vista previa */
+.kpc-cifras{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.kpc-cifra{display:flex;flex-direction:column;min-width:140px;padding:10px 14px;border-radius:10px;background:#F4F6F7}
+.kpc-cifra strong{font-size:24px;line-height:1.1;color:#25303B}
+.kpc-cifra span{color:#5C6873;font-size:12.5px}
+.kpc-cifra--si{background:var(--kpc-verde-claro)}
+.kpc-cifra--si strong{color:var(--kpc-verde)}
+.kpc-cifra--ojo{background:var(--kpc-ambar-claro)}
+.kpc-cifra--ojo strong{color:var(--kpc-ambar)}
+.kpc-cifra--info{background:var(--kpc-azul-claro)}
+.kpc-cifra--info strong{color:var(--kpc-azul)}
+.kpc-leida{margin:0 0 12px;padding:10px 12px;border-left:3px solid var(--kpc-verde);border-radius:0 8px 8px 0;background:#F7FBF8}
+.kpc-leida p{margin:0 0 6px}
+.kpc-leida--faltan{border-left-color:var(--kpc-rojo);background:#FDF5F4}
+.kpc-leida__no{margin-bottom:6px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px}
+.kpc-vacio{padding:12px;color:var(--kpc-gris)}
+
+/* Tablas */
+.kpc-tabla-caja{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.kpc-tabla td{vertical-align:middle!important}
+.kpc-tabla small{color:var(--kpc-gris)}
+.kpc-tabla--previa code{padding:0;background:none;color:#33404C;font-size:12px}
+.kpc-tabla--previa td.text-right,.kpc-tabla--previa td:last-child,.kpc-tabla--previa td:nth-child(-n+3){white-space:nowrap}
+.kpc-tabla--previa td:nth-child(4){min-width:220px}
+.kpc-tabla--previa td:nth-child(5){min-width:120px}
+.kpc-fila-especial,.kpc-fila-otra{opacity:.72}
+.kpc-actual{background:#FBF9FF}
+.kpc-acciones{min-width:200px;text-align:right}
+.kpc-acciones .btn{margin:2px 0 2px 2px}
+.kpc-borrar:hover{border-color:var(--kpc-rojo);color:var(--kpc-rojo)}
+.kpc-chip{display:inline-block;padding:2px 9px;border-radius:999px;background:#EEF1F3;color:#44505C;font-size:11.5px;font-weight:700;white-space:nowrap}
+.kpc-chip--si{background:var(--kpc-verde-claro);color:var(--kpc-verde)}
+.kpc-chip--info{background:var(--kpc-azul-claro);color:var(--kpc-azul)}
+.kpc-chip--ojo{background:var(--kpc-ambar-claro);color:var(--kpc-ambar)}
+.kpc-chip--gris{background:#F4F5F6;color:#8A949D}
+.kpc-chip--canal{background:var(--kpc-lila-claro);color:var(--kpc-lila-osc)}
+.kpc-tipo-mini{display:inline-block;padding:2px 9px;border-radius:6px;font-weight:700;white-space:nowrap}
+.kpc-tipo-mini--cupon{background:var(--kpc-lila-claro);color:var(--kpc-lila-osc)}
+.kpc-tipo-mini--segunda{background:var(--kpc-verde-claro);color:var(--kpc-verde)}
+.kpc-tipo-mini--especial{background:#FDECEA;color:#B8322A}
+.kpc-tipo-mini--liquidacion{background:#FBE9E7;color:#8F1D17}
+.kpc-tipo-mini--bajada{background:#FCEBE9;color:#9A2A20}
+.kpc-tipo-mini--outlet{background:#E8E8E8;color:#222}
+.kpc-cupo-mini{display:inline-block;margin-top:2px}
+
+/* Bloques dentro de un paso (el cupo): un recuadro con su título, para que no se mezcle con lo de al lado */
+.kpc-bloque{margin:4px 0 14px;padding:12px 14px;border:1px solid var(--kpc-borde);border-radius:10px;background:#FBFCFC}
+.kpc-admin .kpc-bloque__titulo{display:block;margin:0 0 8px;font-weight:700;color:#25303B}
+.kpc-cupo__entrada{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 16px;margin-bottom:10px}
+.kpc-cupo__numero{flex:0 0 200px;width:200px}
+.kpc-cupo__numero .form-control{font-size:15px;font-weight:700}
+.kpc-cupo__numero .form-control::placeholder{font-size:13px;font-weight:400}
+.kpc-cupo__que{flex:1 1 320px;min-width:0;margin:0;padding-top:4px;color:#44505C;font-size:12.5px;line-height:1.45}
+.kpc-cupo__que strong{color:#25303B}
+.kpc-cupo__opciones{display:flex;flex-direction:column;gap:2px}
+.kpc-cupo__opciones .kpc-check{margin-bottom:4px}
+.kpc-cupo__estado{display:inline-block;margin:6px 0 0;padding:6px 12px;border-radius:999px;background:var(--kpc-azul-claro);color:var(--kpc-azul);font-size:12.5px}
+.kpc-cupo__estado.is-agotada{background:var(--kpc-ambar-claro);color:var(--kpc-ambar)}
+.kpc-encendida{margin-top:2px;padding-top:12px;border-top:1px dashed var(--kpc-borde)}
+.kpc-encendida .kpc-check{margin-bottom:0}
+.kpc-tipo-mini--regalo{background:var(--kpc-violeta-claro);color:var(--kpc-violeta)}
+.kpc-subtitulo{margin:18px 0 8px;font-size:14px;font-weight:700;color:#25303B}
+.kpc-subtitulo small{font-weight:400;color:var(--kpc-gris)}
+
+/* La lista de promociones, arriba y plegada: el ojo la abre; «Productos» despliega los de cada una */
+.kpc-admin .kpc-plegar{display:inline-flex;align-items:center;gap:8px;padding:0;border:0;background:none;color:inherit;font:inherit;text-transform:inherit;cursor:pointer}
+.kpc-admin .kpc-plegar i{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:#EEF1F3}
+.kpc-admin .kpc-plegar[aria-expanded="true"] i{background:#25303B;color:#fff}
+.kpc-admin .kpc-plegar:hover i{background:#DDE2E6}
+.kpc-admin .kpc-plegar[aria-expanded="true"]:hover i{background:#3A4652}
+.kpc-cuentas{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;font-weight:400;text-transform:none}
+.kpc-cuentas small{color:var(--kpc-gris)}
+.kpc-lista-cuerpo{padding-top:4px}
+.kpc-admin .kpc-terminadas{display:inline-flex;align-items:center;gap:6px;margin:0 0 8px;font-weight:400;color:#44505C}
+.kpc-admin .kpc-terminadas input{margin:0}
+.kpc-tabla--promos>tbody>tr.kpc-sub>td{padding:12px 14px 16px;background:#FAFBFB;border-top:0}
+.kpc-sub .kpc-cifras{margin-bottom:10px}
+.kpc-sub .kpc-tabla-caja{max-height:460px;overflow:auto;border:1px solid #EEF1F3;border-radius:8px;background:#fff}
+.kpc-sub .kpc-tabla--previa{margin:0}
+.kpc-sub .kpc-tabla--previa thead th{position:sticky;top:0;z-index:1;background:#fff;box-shadow:0 1px 0 var(--kpc-borde)}
+.kpc-cargando{margin:0;color:var(--kpc-gris)}
+.kpc-admin .kpc-ver[aria-expanded="true"]{border-color:#25303B;background:#25303B;color:#fff}
+.kpc-merchant{padding:0}
+.kpc-merchant>summary{display:flex;align-items:center;gap:8px;padding:12px 16px;font-weight:700;color:#25303B;cursor:pointer}
+.kpc-merchant>summary small{font-weight:400;color:var(--kpc-gris)}
+.kpc-merchant>:not(summary){margin-left:16px;margin-right:16px}
+
+/* Productos de la promoción: buscar, quitar, volver a meter */
+.kpc-herramientas{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 10px}
+.kpc-herramientas__buscar{flex:1 1 280px;max-width:460px}
+.kpc-herramientas__cuenta{color:var(--kpc-gris);font-size:12.5px}
+.kpc-herramientas__cambios{padding:4px 10px;border-radius:999px;background:var(--kpc-ambar-claro);color:var(--kpc-ambar);font-size:12.5px;font-weight:700}
+.kpc-herramientas__botones{display:flex;gap:6px;margin-left:auto}
+.kpc-tabla--previa tr.is-quitada td{background:#FDF5F4;color:#8A949D;text-decoration:line-through}
+.kpc-tabla--previa tr.is-quitada td:last-child{text-decoration:none}
+.kpc-tabla--previa tr.is-vuelve td{background:#F7FBF8}
+.kpc-tabla--previa .kpc-quitar:hover{border-color:var(--kpc-rojo);color:var(--kpc-rojo)}
+.kpc-fila-fuera{opacity:.6}
+
+.kpc-admin [hidden]{display:none!important}
+
+@media (max-width:767.98px){
+  .kpc-paso{padding:14px}
+  .kpc-tipos{grid-template-columns:1fr}
+  .kpc-herramientas__botones{width:100%;margin-left:0}
+  .kpc-herramientas__botones .btn{flex:1 1 0}
+  .kpc-campo--pct{flex:1 1 140px}
+  .kpc-cupo__numero{flex:1 1 140px;width:auto}
+  .kpc-barra{padding:10px 14px}
+  .kpc-barra__botones{width:100%}
+  .kpc-barra__botones .btn{flex:1 1 0}
+  .kpc-canales{margin-left:0}
+  .kpc-grupo__nombre{min-width:100%}
+  .kpc-arbol{max-height:240px}
+}
+
+@media (max-width:1099.98px){
+  .kpc-tipos{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:767.98px){
+  .kpc-tipos{grid-template-columns:1fr}
+}

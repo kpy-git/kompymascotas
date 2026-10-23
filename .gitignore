@@ -60,6 +60,9 @@
 !/modules/kpycustomerhistory/
 !/modules/kpycustomerhistory/**
 
+!/modules/kpycoupons/
+!/modules/kpycoupons/**
+
 !/modules/kpydistrivetconnector/
 !/modules/kpydistrivetconnector/**
 

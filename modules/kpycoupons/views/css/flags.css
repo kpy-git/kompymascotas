@@ -1,0 +1,91 @@
+/* Kompy · Las etiquetas de promoción sobre la foto, en los listados y en el buscador.
+ *
+ * El color lo pone el módulo (el mismo que la ficha); aquí solo va la forma, para que se lean de
+ * un vistazo en el móvil, que es por donde entra el 80 % del tráfico.
+ *
+ * Solo se toca lo nuestro (`.badge` que empiece por `kpc-`): las etiquetas manuales de
+ * `kpyproductflags` se quedan como están.
+ */
+.product-flags .badge[class*="kpc-"] {
+  padding: 4px 10px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-transform: none;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .18);
+}
+
+/* Dos etiquetas como mucho, y la de promoción primero: si no caben, se cae la manual. */
+.product-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 100%;
+}
+
+.product-flags .badge[class*="kpc-"] {
+  order: -1;
+}
+
+/* El fondo amarillo del precio (`kpy-special-price-listing`, de `kpyspecialprices`) sale con solo
+ * tener promoción apuntada, aunque el precio no esté rebajado de verdad: en pruebas lo llevaban 16
+ * productos y solo 9 lo tenían. La etiqueta «Special Price» sí lo mira (`KpcFlags::ajustar`): sin
+ * ella, tampoco hay fondo de oferta. Así el amarillo vuelve a significar algo. */
+.product-miniature:not(:has(.badge.kpy-special-price)) .product-miniature__price.kpy-special-price-listing {
+  padding: 0;
+  background-color: transparent;
+}
+
+@media (max-width: 575px) {
+  .product-flags .badge[class*="kpc-"] {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+
+  /* En el móvil la tarjeta es media pantalla: con dos etiquetas no se ve la foto. */
+  .product-flags .badge:not([class*="kpc-"]) ~ .badge:not([class*="kpc-"]) {
+    display: none;
+  }
+}
+
+/* La promoción de cada fila de la cesta, debajo del nombre: el regalo y la versión con regalo en
+   violeta, el Special Price en crema, la 2ª unidad en verde y el cupón en lila (los de la ficha). */
+.product-line__actions:has(> .kpc-lr-fila){flex-wrap:wrap;row-gap:2px}
+.kpc-lr-fila{display:flex;flex:0 0 100%;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;margin:6px 0 2px}
+.kpc-lr{display:inline-flex;align-items:flex-start;gap:8px;max-width:100%;padding:8px 12px 8px 8px;border-radius:10px;background:#EFE9FF;color:#4E2BB3;font-size:13.5px;line-height:1.35}
+.kpc-lr__chip{display:inline-flex;align-items:center;gap:4px;flex-shrink:0;padding:2px 9px 2px 6px;border-radius:999px;background:#7F4AFF;color:#fff;font-size:12.5px;font-weight:800;line-height:20px}
+.kpc-lr__chip .material-icons{font-size:16px;line-height:20px}
+.kpc-lr__estrella{font-size:12px;line-height:20px}
+.kpc-lr--especial{background:#FFF6DC;color:#8F2A22}
+.kpc-lr--especial .kpc-lr__chip{padding-left:8px;background:#FFEAB7;color:#B8322A}
+.kpc-lr--segunda{background:#F1F9F3;color:#1E6B3A}
+.kpc-lr--segunda .kpc-lr__chip{padding-left:9px;background:#2F6B34}
+.kpc-lr--cupon{background:#F7F2FF;color:#5A3F8C}
+.kpc-lr--cupon .kpc-lr__chip{padding-left:9px;background:#7B5CB0}
+/* Un Special Price con nombre propio (2.3.0): «Liquidación» en rojo oscuro, «Bajada de precio» en rojo. */
+.kpc-lr--liquidacion{background:#FBE9E7;color:#8F1D17}
+.kpc-lr--liquidacion .kpc-lr__chip{padding-left:8px;background:#B3261E}
+.kpc-lr--bajada{background:#FCEBE9;color:#9A2A20}
+.kpc-lr--bajada .kpc-lr__chip{padding-left:8px;background:#C23A2C}
+.kpc-lr--outlet{background:#EFEFEF;color:#222}
+.kpc-lr--outlet .kpc-lr__chip{padding-left:8px;background:#3A3A3A}
+/* Las unidades que no han cabido en el cupo: a precio habitual, en gris. */
+.kpc-lr--tope{background:#F4F6F7;color:#4b5a61}
+.kpc-lr--tope .kpc-lr__chip{padding-left:9px;background:#8A949D;text-decoration:line-through}
+.kpc-lr__texto{display:flex;flex-direction:column;gap:1px;min-width:0}
+.kpc-lr__texto strong{font-weight:800}
+.kpc-lr__texto s{margin-left:2px;color:#6b7280;font-weight:400}
+.kpc-lr__sub{color:#4b5a61;font-size:12.5px}
+
+/* La ventana «Añadido a tu carrito» (hook displayCartModalFooter del tema): la promoción de la línea que
+   acaba de entrar, encima de los botones. Clases del tema que se tocan: `.blockcart-modal__cart-footer-extra`
+   (su hueco para los módulos). */
+.blockcart-modal__cart-footer-extra{order:-1;flex:0 0 100%;width:100%;margin:0 0 10px}
+.kpc-modal{display:flex;flex-direction:column;gap:6px}
+.kpc-modal__titulo{margin:0;font-size:13px;font-weight:600;color:#5f6b72}
+.kpc-modal .kpc-lr-fila{margin:0}
