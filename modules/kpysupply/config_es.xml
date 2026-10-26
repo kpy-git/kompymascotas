@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>kpysupply</name>
+    <displayName><![CDATA[Kompy &middot; Acuerdos con proveedores]]></displayName>
+    <version><![CDATA[1.1.0]]></version>
+    <description><![CDATA[Lo que el proveedor da en cada promoci&oacute;n (redenci&oacute;n, descuento en factura o precios de coste nuevos), por art&iacute;culo y con fechas; la lista pegada desde Excel con verificador; las ventas del periodo para cobrar la redenci&oacute;n y contrastar facturas.]]></description>
+    <author><![CDATA[Kompy]]></author>
+    <tab><![CDATA[administration]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>0</need_instance>
+</module>

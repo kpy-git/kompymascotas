@@ -2,7 +2,7 @@
 <module>
     <name>kpycrosssell</name>
     <displayName><![CDATA[Kompy &middot; Caprichitos]]></displayName>
-    <version><![CDATA[1.5.0]]></version>
+    <version><![CDATA[1.6.0]]></version>
     <description><![CDATA[Sugerencias que pegan con el producto que se est&aacute; viendo, con descuento por llevarlos juntos.]]></description>
     <author><![CDATA[Kompy]]></author>
     <tab><![CDATA[front_office_features]]></tab>
