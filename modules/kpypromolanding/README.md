@@ -285,6 +285,22 @@ sin `require` de ficheros ajenos.
   (`kpc-cupon`, `kpc-segunda`, `kpc-regalo`, `kpc-liquidacion`, `kpc-outlet`, `kpc-bajada`,
   `kpc-especial`) y el texto «kg Gratis» de la etiqueta del catálogo. Un regalo entra como «Kilos
   gratis» o «Regalos» según lo que regala (lo dice el resumen por `id_kpy_coupon`).
+- `actionDoofinderExtendFeed` (1.5.0; lo dispara el módulo de Doofinder al generar su feed de productos,
+  `feeds/product.php`, con `extra_header` y `extra_rows` por referencia): **la campaña en el buscador**.
+  Siempre añade seis columnas a la cabecera (`kpy_campana`, `kpy_campana_fondo`, `kpy_campana_texto`,
+  `kpy_campana_promo`, `kpy_campana_promo_fondo`, `kpy_campana_promo_texto`) y, solo con campaña viva,
+  sus valores en los productos que entran: el nombre («Black Friday −25 %», «Cupón Black −10 %») y los
+  colores de la etiqueta de campaña de cada tipo, los mismos que pone `actionProductFlagsModifier` en
+  la tienda. Va **detrás de kpycoupons** en el hook (`upgrade-1.5.0.php` lo asegura) y trabaja sobre
+  las filas que este ya añadió: `kpy_especial` = 1 → columnas `kpy_campana…` (con el % de
+  `KplPromos::enCampana`, o el nombre a secas si el Special Price es del catálogo, que entra cuando
+  entra todo); `kpy_promo_tipo` cupon | segunda | regalo → columnas `kpy_campana_promo…`; liquidación,
+  outlet y bajada son el propio Special Price (van en las primeras; la hoja del buscador esconde su
+  etiqueta genérica). No añade productos: solo completa filas. Sin campaña viva no cambia nada. Un
+  fallo se apunta en el registro y el feed sigue como estaba. La plantilla y el CSS v6 del buscador
+  (`docs/doofinder/`) pintan esas columnas en lugar de «Precio especial» y de la etiqueta de
+  promoción, con los colores en línea; en el panel de Doofinder hay que marcar las seis columnas en
+  «Campos indexados adicionales».
 - `moduleRoutes`: las direcciones de arriba (la de cada campaña activa, leída de `KPL_CAMPANAS`).
 - `actionFrontControllerSetMedia`: la sincronización pendiente tras instalar (después de contestar
   a la primera visita, porque en consola no hay dominio para las direcciones de las imágenes); la
@@ -553,3 +569,20 @@ Julián (correo sobre el paquete del 19/10): ningún módulo llama a funciones d
 - `upgrade-1.4.0.php`: la columna, el hook nuevo registrado, el viejo quitado, una sincronización por
   el hook y otra pendiente con imágenes. Idempotente.
 - La salida de la landing es la misma (mismas tarjetas, textos y orden), salvo la tarjeta del boletín.
+
+### 1.5.0 (26/10/2026): la campaña también en el buscador
+
+Rafa (26/10, con Doofinder recién puesto al día): en Black Friday las etiquetas del buscador tienen que
+ir «en sintonía con el diseño web». Hasta ahora la piel de campaña solo llegaba a la tienda; el feed de
+Doofinder llevaba lo genérico de kpycoupons («Precio especial», «Código −10 %»). Nuevo hook
+`actionDoofinderExtendFeed` (ver «Hooks»): seis columnas con el nombre y los colores de campaña de
+cada producto que entra, detrás de kpycoupons, sin tocar su código ni el de Doofinder. Plantilla y CSS
+**v6** del buscador en `docs/doofinder/` (los pega Rafa en el panel; las seis columnas se marcan en
+«Campos indexados adicionales» del índice). `upgrade-1.5.0.php`: registra el hook y, si hiciera
+falta, lo vuelve a registrar para que quede detrás de kpycoupons. Sin tablas nuevas. Probado en
+pruebas con el hook lanzado como lo lanza Doofinder (`scratchpad/doofinder-campana.php`): sin campaña
+viva, cabecera con las diez columnas y ninguna fila con valor; con Black Friday adelantada a ahora,
+las 30 filas de kpycoupons con su campaña (13 solo Special Price → «Black Friday» o «Black Friday
+−10 %» según sea del módulo o del catálogo; 7 cupones → «Cupón Black −10 %»; 5 segundas unidades; 2
+regalos → «kg gratis · Black»; 1 liquidación y 2 outlets → solo las columnas del Special Price), y
+por páginas de 500 las mismas filas que el feed entero. 34 comprobaciones.

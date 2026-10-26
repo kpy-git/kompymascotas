@@ -64,7 +64,7 @@ class Kpypromolanding extends Module
         'moduleRoutes', 'actionKpyCouponsReparto', 'actionFrontControllerSetMedia', 'displayKpyPromoMarca',
         'displayBanner', 'actionProductFlagsModifier', 'actionPresentProductListing', 'actionKpyCouponsCampana',
         'actionKpyCouponsResumen', 'displayKpyCouponsFormulario', 'actionKpyCouponsGuardar', 'displayContentWrapperTop',
-        'displayKpyPromoMenu',
+        'displayKpyPromoMenu', 'actionDoofinderExtendFeed',
     ];
 
     /** Las claves de configuración nuestras (para dejarlo limpio al desinstalar). */
@@ -82,7 +82,7 @@ class Kpypromolanding extends Module
     {
         $this->name = 'kpypromolanding';
         $this->tab = 'front_office_features';
-        $this->version = '1.4.0';
+        $this->version = '1.5.0';
         $this->author = 'Kompy';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -806,6 +806,92 @@ class Kpypromolanding extends Module
         }
 
         return $tipos === [] ? null : ['nombre' => (string) $c['nombre'], 'clave' => (string) $c['clave'], 'piel' => (string) $c['piel'], 'tipos' => $tipos];
+    }
+
+    /**
+     * El feed de Doofinder durante una campaña (Black Friday…): a cada producto que entra en ella se
+     * le añaden el nombre y los colores de campaña de sus etiquetas, para que el buscador diga «Black
+     * Friday −25 %» en negro y oro, como la tienda. Seis columnas, siempre en la cabecera (vacías sin
+     * campaña viva, para que el índice de Doofinder no las pierda):
+     *
+     *   kpy_campana, kpy_campana_fondo, kpy_campana_texto                    en lugar de «Precio especial»
+     *   kpy_campana_promo, kpy_campana_promo_fondo, kpy_campana_promo_texto  en lugar de la etiqueta de promoción
+     *
+     * Va detrás de kpycoupons en el hook y trabaja sobre las filas que este ya ha añadido (sus columnas
+     * `kpy_especial` y `kpy_promo_tipo`: datos del feed, no funciones de otro módulo). Un Special Price
+     * del catálogo que no es promoción de Kompy · Promociones entra cuando entra todo (ninguna
+     * promoción marcada en el paso 6), con el nombre a secas, como en los listados. Si falla algo, el
+     * feed sigue como estaba y se apunta en el registro.
+     */
+    public function hookActionDoofinderExtendFeed(array $params): void
+    {
+        $columnas = ['kpy_campana', 'kpy_campana_fondo', 'kpy_campana_texto', 'kpy_campana_promo', 'kpy_campana_promo_fondo', 'kpy_campana_promo_texto'];
+        $params['extra_header'] = array_values(array_unique(array_merge((array) ($params['extra_header'] ?? []), $columnas)));
+        try {
+            $c = KplCampanas::viva();
+            if ($c === null) {
+                return;
+            }
+            $filas = (array) ($params['extra_rows'] ?? []);
+            foreach ($filas as $i => $fila) {
+                $idProducto = (int) ($fila['id_product'] ?? 0);
+                if ($idProducto <= 0) {
+                    continue;
+                }
+                $campana = $this->campanaEnElFeed($c, $idProducto, (array) $fila);
+                if ($campana !== []) {
+                    $filas[$i] = $fila + $campana;
+                }
+            }
+            $params['extra_rows'] = $filas;
+        } catch (Throwable $e) {
+            PrestaShopLogger::addLog('kpypromolanding, feed de Doofinder: ' . $e->getMessage(), 3, null, 'Kpypromolanding', 0, true);
+        }
+    }
+
+    /**
+     * Las columnas de campaña de un producto del feed, a partir de lo que kpycoupons dice de él
+     * (`kpy_especial`, `kpy_promo_tipo`) y de lo que entra en la campaña (`KplPromos::enCampana`).
+     * Liquidación, outlet y bajada son el propio Special Price: van con las columnas de este, y la
+     * hoja de estilos del buscador esconde su etiqueta genérica mientras hay campaña.
+     *
+     * @return array<string, string> vacío si la campaña no cambia nada en este producto
+     */
+    private function campanaEnElFeed(array $c, int $idProducto, array $fila): array
+    {
+        $suyas = KplPromos::enCampana($c, $idProducto);
+        $salida = [];
+        if ((string) ($fila['kpy_especial'] ?? '') === '1') {
+            $pct = $suyas['special_price'] ?? (KplPromos::promoEntra($c, 0) ? 0.0 : null);
+            $e = $pct !== null ? $this->etiquetaDeCampana($c, 'special_price', (float) $pct) : null;
+            if ($e !== null) {
+                $salida += ['kpy_campana' => $e['label'], 'kpy_campana_fondo' => $e['background'], 'kpy_campana_texto' => $e['color']];
+            }
+        }
+        $tipo = [
+            'cupon' => 'cupon',
+            'segunda' => 'segunda_unidad',
+            'regalo' => isset($suyas['kilos_gratis']) || !isset($suyas['regalos']) ? 'kilos_gratis' : 'regalos',
+        ][(string) ($fila['kpy_promo_tipo'] ?? '')] ?? null;
+        if ($tipo !== null && isset($suyas[$tipo])) {
+            $e = $this->etiquetaDeCampana($c, $tipo, (float) $suyas[$tipo]);
+            if ($e !== null) {
+                $salida += ['kpy_campana_promo' => $e['label'], 'kpy_campana_promo_fondo' => $e['background'], 'kpy_campana_promo_texto' => $e['color']];
+            }
+        }
+
+        return $salida;
+    }
+
+    /** La etiqueta de campaña de un tipo con su %; sin % conocido, el nombre a secas («Black Friday»), nunca «−0 %». */
+    private function etiquetaDeCampana(array $c, string $tipo, float $pct): ?array
+    {
+        $e = KplCampanas::etiqueta($c, $tipo, $pct);
+        if ($e !== null && $pct <= 0 && $tipo !== 'kilos_gratis') {
+            $e['label'] = KplCampanas::etiquetaCorta($c, $tipo) ?: $e['label'];
+        }
+
+        return $e;
     }
 
     /**
