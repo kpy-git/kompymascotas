@@ -54,7 +54,7 @@
                   {elseif $c.entra}
                     {foreach $c.entra as $e}<span class="kpc-chip kpc-chip--canal">{if $e === 'web'}Todos{elseif $e === 'shopping'}Google{elseif $e === 'email'}Email{elseif $e === 'social'}Redes{else}{$e|escape:'html':'UTF-8'}{/if}</span> {/foreach}
                   {else}<small>la pulsa el cliente</small>{/if}
-                  {if !$c.en_ficha}<br><small>oculta en la ficha</small>{/if}
+                  {if !$c.en_ficha}<br><small>oculta en la ficha</small>{elseif $c.ver}<br><small>solo la ve quien llega de {foreach $c.ver as $e}{if $e === 'shopping'}Google{elseif $e === 'email'}email{elseif $e === 'social'}redes{/if}{if !$e@last}, {/if}{/foreach}</small>{/if}
                 </td>
                 <td>{if $c.tipo === 'special_price'}<small>precio oferta</small>{elseif $c.en_merchant}✓{else}—{/if}</td>
                 <td class="kpc-acciones">

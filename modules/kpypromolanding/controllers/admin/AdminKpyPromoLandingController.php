@@ -71,9 +71,10 @@ class AdminKpyPromoLandingController extends ModuleAdminController
 
         $contestadas = KplPromociones::todas($idTienda);
         $promos = $this->promociones($contestadas ?? [], $resumen, $categorias);
-        $cuentas = ['viva' => 0, 'programada' => 0, 'terminada' => 0, 'apagada' => 0];
+        $cuentas = ['viva' => 0, 'programada' => 0, 'terminada' => 0, 'apagada' => 0, 'fuera' => 0];
         foreach ($promos as $pr) {
-            ++$cuentas[$pr['estado']];
+            // Una viva que no va a la landing (cupón oculto o solo por canal) cuenta aparte.
+            ++$cuentas[$pr['fuera'] !== '' && $pr['estado'] === 'viva' ? 'fuera' : $pr['estado']];
         }
         $vivasEnLanding = count(array_filter($resumen['claves'], static fn (array $c): bool => $c['estado'] === 'viva' && (int) $c['listar'] === 1 && empty($c['permanente'])));
         $campanaViva = KplCampanas::viva();
@@ -329,6 +330,8 @@ class AdminKpyPromoLandingController extends ModuleAdminController
                 'url' => $clave !== '' ? KplPromos::urlClave($clave) : '',
                 'id_category' => (int) ($categorias[$clave]['id_category'] ?? 0),
                 'en_landing' => $c !== null && $c['estado'] === 'viva' && (int) $c['listar'] === 1,
+                // Por qué no va a la landing aunque esté en marcha (kpycoupons 3.1.0: oculta o solo por canal).
+                'fuera' => KplPromociones::porQueFuera($promo),
                 'n' => (int) ($c['n']['todos'] ?? 0),
                 'titulo' => (string) ($c['titulo'] ?? ''),
                 'logo' => (string) ($c['logo'] ?? ''),

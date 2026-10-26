@@ -82,7 +82,7 @@ class Kpypromolanding extends Module
     {
         $this->name = 'kpypromolanding';
         $this->tab = 'front_office_features';
-        $this->version = '1.5.0';
+        $this->version = '1.5.1';
         $this->author = 'Kompy';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -909,7 +909,8 @@ class Kpypromolanding extends Module
         foreach ((array) ($r['vales'] ?? []) as $k => $v) {
             $idPromo = (int) ($v['id_kpy_coupon'] ?? 0);
             $tipo = ($v['tipo'] ?? '') === 'segunda' ? 'segunda_unidad' : 'cupon';
-            if ($idPromo <= 0 || !KplPromos::promoEntra($c, $idPromo)) {
+            // Un cupón por canal no está en la landing ni lleva la piel de campaña en la ficha: tampoco en la cesta.
+            if ($idPromo <= 0 || (string) ($v['ver_canal'] ?? '') !== '' || !KplPromos::promoEntra($c, $idPromo)) {
                 continue;
             }
             $e = KplCampanas::etiqueta($c, $tipo, (float) ($v['pct'] ?? 0));

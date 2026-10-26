@@ -34,6 +34,8 @@ class KpcCupon extends ObjectModel
     public $auto_web = 0;
     /** Canales que lo aplican de entrada, separados por comas: `shopping,email,social`. */
     public $auto_canal = '';
+    /** Canales desde los que se ve (3.1.0), separados por comas; vacío = en toda la tienda (si `en_ficha`). */
+    public $ver_canal = '';
     /** 0 = no se enseña en la ficha (solo entra en la cesta). */
     public $en_ficha = 1;
     /** 1 = las combinaciones con Special Price se quedan fuera. */
@@ -111,6 +113,7 @@ class KpcCupon extends ObjectModel
             'fecha_hasta' => ['type' => self::TYPE_DATE, 'validate' => 'isDateFormat'],
             'auto_web' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
             'auto_canal' => ['type' => self::TYPE_STRING, 'validate' => 'isCleanHtml', 'size' => 64],
+            'ver_canal' => ['type' => self::TYPE_STRING, 'validate' => 'isCleanHtml', 'size' => 64],
             'en_ficha' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
             'excluir_especial' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
             'incluir_packs' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],

@@ -1046,7 +1046,9 @@ class KpcFicha
      *
      * «Para todos» (`auto_web`), como lo define Julián (23/10/2026): el cupón lo ve cualquiera en la
      * ficha de **sus** productos, venga de donde venga la visita (aunque «se enseña» esté desmarcado);
-     * y nunca en un producto que no entra (de ahí el `$suyos` de arriba).
+     * y nunca en un producto que no entra (de ahí el `$suyos` de arriba). Y un cupón que solo se ve
+     * desde un canal (`ver_canal`, 3.1.0) solo lo ve quien llega de él (`KpcElegibles::seVe`); un
+     * robot, nunca.
      *
      * @param int[] $enFicha
      */
@@ -1061,7 +1063,12 @@ class KpcFicha
                 continue;
             }
             $ipas = array_values(array_intersect($enFicha, $suyos[(int) $cupon['id_kpy_coupon']] ?? []));
-            if ($ipas === [] || (empty($cupon['en_ficha']) && empty($cupon['auto_web']))) {
+            // Un cupón por canal que esta visita ya lleva puesto (llegó del canal y luego vino de otro sitio, o
+            // entró por el enlace `?kpc=`) se le sigue enseñando: la cesta lo descuenta y la ficha no puede
+            // decir otra cosa (revisión del 26/10/2026).
+            $puesto = !$this->robot && (string) ($cupon['ver_canal'] ?? '') !== ''
+                && mb_strtoupper($this->modulo->elegido()) === mb_strtoupper((string) $cupon['codigo']);
+            if ($ipas === [] || (!$puesto && !KpcElegibles::seVe($cupon, $this->robot ? '' : Kpycoupons::canalDeLaVisita()))) {
                 continue;
             }
             $conCupo = KpcCupo::tieneCupo($cupon) && (int) ($cupon['cupo_ficha'] ?? 1);

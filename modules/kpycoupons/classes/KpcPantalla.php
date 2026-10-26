@@ -111,6 +111,7 @@ class KpcPantalla
         $valores['antiguos'] = $valores['elegir'] === 'marca' ? $this->deAntes($valores) : '';
         $valores['carac_marcadas'] = array_fill_keys($valores['caracteristicas'], true);
         $valores['canal_marcado'] = array_fill_keys($valores['canales'], true);
+        $valores['ver_marcado'] = array_fill_keys($valores['ver_canales'], true);
         // El regalo elegido (el mismo para todos, el de reserva), dicho para la pantalla.
         $valores['regalo_articulos'] = $this->articulosDichos([$valores['regalo_mismo'], $valores['regalo_reserva']]);
 
@@ -381,10 +382,27 @@ class KpcPantalla
         $cupon->fecha_hasta = $this->mismoMinuto($this->fechaHora($v['fecha_hasta'], $v['hora_hasta'], '23:59', true), (string) $cupon->fecha_hasta);
         $cupon->auto_web = $v['tipo'] === 'cupon' && $v['entra'] === 'todos' ? 1 : 0;
         $cupon->auto_canal = $v['tipo'] === 'cupon' && $v['entra'] === 'canal' ? implode(',', $v['canales']) : '';
+        // Dónde se ve (3.1.0): en toda la tienda, solo quien llega de un canal, o en ningún sitio (solo por
+        // enlace o código). Lo que solo ven unos no puede llegar ya puesto a todos: pasa a «por canal».
+        // Solo en el cupón: la 2ª unidad entra sola en la cesta de cualquiera, así que «solo quien llega de»
+        // sería mentira (revisión del 26/10/2026). `valoresDelFormulario()` ya lo normaliza; esto es la red.
+        $cupon->ver_canal = $v['tipo'] === 'cupon' && $v['ver'] === 'canal' ? implode(',', $v['ver_canales']) : '';
+        if ($cupon->ver_canal !== '' && $cupon->auto_web) {
+            $cupon->auto_web = 0;
+            $cupon->auto_canal = $cupon->ver_canal;
+        }
+        // Y «ya puesto si llega de» solo desde canales que también lo ven: quien no lo ve no lo lleva.
+        if ($cupon->ver_canal !== '' && $cupon->auto_canal !== '') {
+            $cupon->auto_canal = implode(',', array_values(array_intersect(explode(',', $cupon->auto_canal), explode(',', $cupon->ver_canal))));
+        }
         // El Special Price y el regalo se ven siempre en la ficha (el regalo se pide con su tarjeta). Y el
         // cupón «para todos» también: lo ve cualquiera en la ficha de sus productos, venga de donde
         // venga la visita (Julián, 23/10/2026).
-        $cupon->en_ficha = $esPrecio || $esRegalo || $cupon->auto_web ? 1 : $v['en_ficha'];
+        $cupon->en_ficha = $esPrecio || $esRegalo || $cupon->auto_web ? 1 : ($v['ver'] === 'nadie' ? 0 : 1);
+        // Oculto del todo: no entra solo desde ningún canal (quien no lo ve no lo lleva puesto).
+        if (!$cupon->en_ficha) {
+            $cupon->auto_canal = '';
+        }
         // Un regalo no respeta el Special Price: el artículo rebajado es justo el disparador (la
         // tarjeta de siempre va con su rebaja; la de «+ 3 kg gratis», al precio de siempre).
         $cupon->excluir_especial = $esPrecio ? 1 : ($esRegalo ? 0 : $v['excluir_especial']);
@@ -523,6 +541,37 @@ class KpcPantalla
         $codigo = mb_strtoupper(preg_replace('/\s+/', '', (string) Tools::getValue('codigo')) ?? '');
         $canales = array_values(array_intersect(KpcElegibles::CANALES, (array) Tools::getValue('canales')));
         $entra = in_array(Tools::getValue('entra'), ['no', 'todos', 'canal'], true) ? (string) Tools::getValue('entra') : 'no';
+        $verCanales = array_values(array_intersect(KpcElegibles::CANALES, (array) Tools::getValue('ver_canales')));
+        // Sin «ver» (un formulario abierto antes de la 3.1.0, con la casilla «se enseña», o un envío a mano):
+        // lo que diga la casilla; sin nada, oculto, como hasta la 3.0.0. Nunca «visible» por defecto.
+        $ver = in_array(Tools::getValue('ver'), ['todos', 'canal', 'nadie'], true)
+            ? (string) Tools::getValue('ver')
+            : (Tools::getValue('en_ficha') ? 'todos' : 'nadie');
+        // «Solo quien llega de» solo existe en el cupón (la 2ª unidad entra sola en la cesta, para cualquiera).
+        if ($tipo !== 'cupon' && $ver === 'canal') {
+            $ver = 'todos';
+        }
+        // Lo que solo ven unos no puede llegar ya puesto a todos, ni puesto desde un canal que no lo ve: el
+        // formulario enseña lo que se va a guardar (`guardar()` aplica la misma regla).
+        if ($tipo === 'cupon' && $ver === 'canal' && $verCanales !== []) {
+            if ($entra === 'todos') {
+                $entra = 'canal';
+                $canales = $verCanales;
+            } elseif ($entra === 'canal') {
+                $canales = array_values(array_intersect($canales, $verCanales));
+            }
+        }
+        // «En ningún sitio» + «ya puesto a todo el mundo»: el «para todos» manda (`guardar()`: `auto_web` →
+        // `en_ficha` = 1, lo ve cualquiera en la ficha de sus productos): el formulario enseña «en toda la tienda».
+        if ($tipo === 'cupon' && $ver === 'nadie' && $entra === 'todos') {
+            $ver = 'todos';
+        }
+        // «En ningún sitio» no lo ve nadie: tampoco llega puesto desde un canal (la misma regla, con el conjunto
+        // vacío); solo por enlace o código.
+        if ($tipo === 'cupon' && $ver === 'nadie' && $entra === 'canal') {
+            $entra = 'no';
+            $canales = [];
+        }
         $esRegalo = $tipo === 'regalo';
         $regaloPacks = (int) ($esRegalo && (bool) Tools::getValue('regalo_packs'));
 
@@ -570,7 +619,10 @@ class KpcPantalla
             'fecha_hasta' => $this->fechaLimpia(Tools::getValue('fecha_hasta')),
             'hora_hasta' => $this->horaLimpia(Tools::getValue('hora_hasta')),
             'activo' => (int) (bool) Tools::getValue('activo'),
-            'en_ficha' => (int) (bool) Tools::getValue('en_ficha'),
+            'en_ficha' => $ver !== 'nadie' ? 1 : 0,
+            // Con «solo quien llega de» sin ningún canal marcado no se guarda: lo dice `errores()`.
+            'ver' => $ver,
+            'ver_canales' => $verCanales,
             'entra' => $entra === 'canal' && $canales === [] ? 'no' : $entra,
             'canales' => $canales,
             'en_merchant' => (int) (bool) Tools::getValue('en_merchant'),
@@ -590,6 +642,7 @@ class KpcPantalla
         $ambitos = $existe ? $cupon->ambitos() : [];
         $porTipo = KpcElegibles::porTipo($ambitos);
         $canales = array_values(array_filter(explode(',', (string) $cupon->auto_canal)));
+        $verCanales = array_values(array_filter(explode(',', (string) $cupon->ver_canal)));
 
         // Una promoción cargada con SQL (desde el registro de catalog-ops) trae sus artículos sin
         // la lista escrita: se escribe como «producto-formato» (con su valor, si lo llevan), para
@@ -647,6 +700,8 @@ class KpcPantalla
             'hora_hasta' => $existe && !$duplicar ? $this->horaDe((string) $cupon->fecha_hasta, '23:59') : '',
             'activo' => $existe ? (int) $cupon->activo : 1,
             'en_ficha' => $existe ? (int) $cupon->en_ficha : 1,
+            'ver' => !$existe || (int) $cupon->en_ficha ? ($verCanales ? 'canal' : 'todos') : 'nadie',
+            'ver_canales' => $verCanales,
             'entra' => $cupon->auto_web ? 'todos' : ($canales ? 'canal' : 'no'),
             'canales' => $canales,
             'en_merchant' => $existe ? (int) $cupon->en_merchant : 1,
@@ -709,6 +764,9 @@ class KpcPantalla
         if ($v['fecha_desde'] !== '' && $v['fecha_hasta'] !== ''
             && $this->fechaHora($v['fecha_hasta'], $v['hora_hasta'], '23:59', true) < $this->fechaHora($v['fecha_desde'], $v['hora_desde'], '00:00')) {
             $errores[] = $this->t('La fecha de fin es anterior a la de inicio.');
+        }
+        if ($v['tipo'] === 'cupon' && $v['ver'] === 'canal' && $v['ver_canales'] === []) {
+            $errores[] = $this->t('Marca desde dónde se ve el cupón: Google, email o redes.');
         }
         if (!$alGuardar) {
             return $errores;
@@ -1393,6 +1451,7 @@ class KpcPantalla
                 'aviso' => (string) $f['aviso'],
                 'entra' => $f['auto_web'] ? ['web'] : $canales,
                 'en_ficha' => (int) $f['en_ficha'],
+                'ver' => array_values(array_filter(explode(',', (string) ($f['ver_canal'] ?? '')))),
                 'en_merchant' => (int) $f['en_merchant'],
                 // Cómo se llama un Special Price («Liquidación») y, con cupo, cómo va.
                 'etiqueta' => $this->t(KpcCupo::nombreEtiqueta((string) ($f['etiqueta'] ?? ''))),

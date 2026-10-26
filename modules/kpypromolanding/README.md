@@ -586,3 +586,21 @@ las 30 filas de kpycoupons con su campaña (13 solo Special Price → «Black Fr
 −10 %» según sea del módulo o del catálogo; 7 cupones → «Cupón Black −10 %»; 5 segundas unidades; 2
 regalos → «kg gratis · Black»; 1 liquidación y 2 outlets → solo las columnas del Special Price), y
 por páginas de 500 las mismas filas que el feed entero. 34 comprobaciones.
+
+### 1.5.1 (26/10/2026): lo que no se ve en la tienda, tampoco en la landing
+
+Con `kpycoupons` 3.1.0 un cupón puede verse **solo para quien llega de un canal** (Google, email,
+redes: `ver_canal` en la fila pública) o en ningún sitio (`en_ficha` = 0). Una sola regla,
+`KplPromociones::enLaLanding()` (`auto_web`, o `en_ficha` y sin `ver_canal`): `KplSincronizar::promociones()`
+deja fuera lo que no la cumple (sin clave, sin categoría, sin banner, sin bloque en la landing de marca;
+hasta ahora un cupón oculto salía en `/promociones` con su código, visto el 26/10 con la prueba del cupón
+solo para Google). Su fila de `kpy_promo_promo` (lo del paso 6: dirección, título, foto, orden, campañas)
+**se conserva** mientras la promoción exista en Kompy · Promociones, se vea o no (el borrado de
+`ejecutar()` se mide con todo lo que contesta el hook, no con lo filtrado), y sus campañas marcadas no
+cuentan para decidir quién entra en una campaña (`productosPromo`). Tampoco lleva la piel de campaña en la
+cesta (`hookActionKpyCouponsResumen` salta los vales con `ver_canal`: en la ficha y los listados no la
+lleva, y la cesta no puede ir de otra manera). La pantalla del módulo dice «fuera de la landing: solo la
+ve quien llega de Google» en vez de «aún sin sincronizar», con su cuenta aparte, y el paso 6 avisa (por
+CSS, según el radio del paso 4) de que lo escrito se guarda pero no sale. `KplPromociones::normalizar` lee
+`ver_canal` (vacío si la fila es anterior). Sin cambios en tablas ni hooks; solo versión. (Revisión
+adversaria del 26/10 por la tarde.)

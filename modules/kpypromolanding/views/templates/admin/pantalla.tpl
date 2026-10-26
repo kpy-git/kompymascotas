@@ -51,7 +51,7 @@
   {* 1 · Las promociones en la landing *}
   <div class="panel kpl-panel">
     <div class="panel-heading kpl-cabeza"><i class="icon-tags"></i> Las promociones en la landing
-      <span class="kpl-cuentas"><span class="kpl-chip kpl-chip--si">{$kpl.cuentas.viva} en marcha</span> <span class="kpl-chip kpl-chip--info">{$kpl.cuentas.programada} programadas</span> <span class="kpl-chip kpl-chip--gris">{$kpl.cuentas.terminada + $kpl.cuentas.apagada} terminadas o apagadas</span></span>
+      <span class="kpl-cuentas"><span class="kpl-chip kpl-chip--si">{$kpl.cuentas.viva} en marcha</span> <span class="kpl-chip kpl-chip--info">{$kpl.cuentas.programada} programadas</span> <span class="kpl-chip kpl-chip--gris">{$kpl.cuentas.terminada + $kpl.cuentas.apagada} terminadas o apagadas</span>{if $kpl.cuentas.fuera} <span class="kpl-chip kpl-chip--gris">{$kpl.cuentas.fuera} en marcha fuera de la landing</span>{/if}</span>
       <a class="btn btn-default btn-sm kpl-cabeza__nueva" href="{$kpl.url_promociones|escape:'html':'UTF-8'}">+ Nueva promoción (en Kompy · Promociones)</a>
     </div>
     <div class="kpl-cuerpo">
@@ -72,7 +72,9 @@
                 <small class="kpl-gris">{$pr.codigo|escape:'html':'UTF-8'} · {$pr.formatos} artículos</small>
               </td>
               <td class="kpl-banner-celda">
-                {if $pr.en_landing}
+                {if $pr.fuera}
+                  <small class="kpl-gris">fuera de la landing: {$pr.fuera|escape:'html':'UTF-8'}</small>
+                {elseif $pr.en_landing}
                   <span class="kpl-thumbs">{if $pr.logo}<img src="{$pr.logo|escape:'html':'UTF-8'}" alt="" class="kpl-thumb-logo">{/if}{foreach $pr.imagenes as $im}<img src="{$im|escape:'html':'UTF-8'}" alt="" class="kpl-thumb-saco">{/foreach}</span>
                   <small class="kpl-bloque">{$pr.titulo|escape:'html':'UTF-8'} · {$pr.n} productos</small>
                 {elseif $pr.estado == 'viva'}
@@ -84,7 +86,7 @@
                 {/if}
               </td>
               <td>
-                {if $pr.url}<a href="{$pr.url|escape:'html':'UTF-8'}" target="_blank" rel="noopener" class="kpl-bloque kpl-url">/promociones/{$pr.clave|escape:'html':'UTF-8'}</a>{else}<small class="kpl-gris">se decide al sincronizar</small>{/if}
+                {if $pr.fuera}<small class="kpl-gris">—</small>{elseif $pr.url}<a href="{$pr.url|escape:'html':'UTF-8'}" target="_blank" rel="noopener" class="kpl-bloque kpl-url">/promociones/{$pr.clave|escape:'html':'UTF-8'}</a>{else}<small class="kpl-gris">se decide al sincronizar</small>{/if}
                 {if $pr.id_category}<small class="kpl-gris">categoría #{$pr.id_category}</small>{/if}
               </td>
               <td>{if $pr.afinado}<span class="kpl-chip kpl-chip--ojo">a mano: {', '|implode:$pr.afinado|escape:'html':'UTF-8'}</span>{else}<span class="kpl-chip kpl-chip--gris">todo automático</span>{/if}</td>

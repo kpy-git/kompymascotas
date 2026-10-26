@@ -20,6 +20,9 @@
     {/if}
   </div>
 
+  {* Con «Solo quien llega de» o «En ningún sitio» (paso 4) no va a la landing: lo decide el CSS por el radio, al momento. *}
+  <p class="kpc-ayuda kpl6-fuera" data-kpc-solo="cupon segunda_unidad">Con lo elegido en «¿Dónde se ve?» (paso 4), esta promoción <b>no va a la landing</b>: ni categoría, ni banner, ni bloque en la landing de su marca. Lo de este paso se guarda igual y vale cuando vuelva a «En toda la tienda».</p>
+
   {if $k.id && ($k.logo || $k.imagenes)}
     <div class="kpl6-banner">
       <span class="kpl6-banner__t">Así sale hoy su banner</span>
@@ -128,6 +131,10 @@
 .kpc-admin .kpl6-subida:has(input:checked)::after{content:"✓";position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:999px;background:#25303B;color:#fff;font-size:13px;font-weight:700;line-height:22px;text-align:center}
 .kpc-admin .kpl6-subida:has(input:focus-visible){outline:2px solid #25303B;outline-offset:2px}
 .kpl6-campanas{display:flex;flex-wrap:wrap;gap:2px 0;margin:0 0 6px}
+/* El aviso de «no va a la landing», solo con «solo quien llega de» o «en ningún sitio» (y «en ningún sitio» + «a todo el mundo» sí va, solo en un cupón: en la 2ª unidad el radio escondido «entra» no cuenta) */
+.kpc-admin .kpl6-fuera{background:#FFF5D8;color:#6B5F43}
+.kpc-form:has(input[name="ver"][value="todos"]:checked) .kpl6-fuera,
+.kpc-form:has(input[name="tipo"][value="cupon"]:checked):has(input[name="ver"][value="nadie"]:checked):has(input[name="entra"][value="todos"]:checked) .kpl6-fuera{display:none}
 {/literal}</style>
 <script>{literal}
 (function () {

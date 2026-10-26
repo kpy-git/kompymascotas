@@ -98,6 +98,8 @@ class KpcResumen
                 'codigo' => (string) $datos['codigo'],
                 'id_kpy_coupon' => $id,
                 'pct' => (float) $datos['porcentaje'],
+                // Por canal (3.1.0): quien lo viste de campaña (kpypromolanding) lo deja como está.
+                'ver_canal' => (string) ($datos['ver_canal'] ?? ''),
             ];
             if (in_array((int) $datos['id_cart_rule'], $puestas, true)) {
                 $vales[(int) $datos['id_cart_rule']] = $vale;

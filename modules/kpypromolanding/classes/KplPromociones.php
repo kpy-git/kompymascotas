@@ -33,6 +33,35 @@ class KplPromociones
 
     public const ESTADOS = ['viva', 'programada', 'terminada', 'agotada', 'apagada'];
 
+    /** Los canales de `ver_canal` (kpycoupons 3.1.0) con su nombre para la pantalla. */
+    public const CANALES = ['shopping' => 'Google', 'email' => 'email', 'social' => 'redes'];
+
+    /**
+     * ¿Esta promoción va a la landing? Lo que no se enseña a todo el mundo, no (kpycoupons 3.1.0): un cupón
+     * oculto (solo por enlace, `en_ficha` = 0) o solo para quien llega de un canal (`ver_canal`). El «para
+     * todos» (`auto_web`) sí: lo ve cualquiera en la ficha de sus productos. Una sola regla para sincronizar
+     * y para la pantalla.
+     */
+    public static function enLaLanding(array $f): bool
+    {
+        return !empty($f['auto_web']) || (!empty($f['en_ficha']) && (string) ($f['ver_canal'] ?? '') === '');
+    }
+
+    /** Por qué no va a la landing, para decirlo en la pantalla ('' si va). */
+    public static function porQueFuera(array $f): string
+    {
+        if (self::enLaLanding($f)) {
+            return '';
+        }
+        if ((string) ($f['ver_canal'] ?? '') !== '') {
+            $nombres = array_map(static fn (string $c): string => self::CANALES[$c] ?? $c, array_filter(array_map('trim', explode(',', (string) $f['ver_canal']))));
+
+            return 'solo la ve quien llega de ' . implode(', ', $nombres);
+        }
+
+        return 'no se enseña (solo por enlace o código)';
+    }
+
     /** @var array<int, ?array<int, array>> por tienda, lo contestado en esta petición (null = nadie contestó) */
     private static array $cache = [];
 
@@ -161,6 +190,8 @@ class KplPromociones
             'regalo_clase' => (string) ($f['regalo_clase'] ?? ''),
             'auto_web' => !empty($f['auto_web']),
             'en_ficha' => !isset($f['en_ficha']) || !empty($f['en_ficha']),
+            // kpycoupons 3.1.0: desde qué canales se ve; vacío = en toda la tienda (o la fila es anterior).
+            'ver_canal' => (string) ($f['ver_canal'] ?? ''),
             'cupo' => (int) ($f['cupo'] ?? 0),
             'cupo_lista' => !empty($f['cupo_lista']),
             'cupo_agotado' => self::fecha($f['cupo_agotado'] ?? null),

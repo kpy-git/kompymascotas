@@ -330,6 +330,9 @@ class KpcFlags
         }
         $manda = null;
         foreach ($formatos as $promo) {
+            if (!empty($promo['solo_ficha'])) {
+                continue; // Un cupón por canal solo se anuncia en su ficha.
+            }
             if ($manda === null || (($manda['tipo'] ?? '') === 'regalo' && ($promo['tipo'] ?? '') !== 'regalo')) {
                 $manda = $promo;
             }
@@ -769,9 +772,16 @@ class KpcFlags
         if (!KpcCupon::hayTablaEspeciales()) {
             return self::$especiales;
         }
+        $p = _DB_PREFIX_;
+        // Sin los formatos apagados (`kpy_product_attribute.active = 0`, los que la ficha no enseña): el mismo
+        // filtro que `KpcMerchant::especiales()`, para que la tienda, Doofinder y Merchant cuenten los mismos
+        // formatos (un producto rebajado solo en un formato apagado salía «Precio especial», 26/10/2026).
+        $apagado = KpcAlcance::hayFormatosApagados()
+            ? " AND NOT EXISTS (SELECT 1 FROM {$p}kpy_product_attribute k WHERE k.id_product_attribute = sp.id_product_attribute AND k.active = 0)"
+            : '';
         $filas = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
-            'SELECT id_product, id_product_attribute AS ipa, old_discount FROM ' . _DB_PREFIX_ . 'kpy_special_price
-             WHERE id_shop = ' . (int) Context::getContext()->shop->id . ' AND NOW() BETWEEN date_from AND expire'
+            "SELECT sp.id_product, sp.id_product_attribute AS ipa, sp.old_discount FROM {$p}kpy_special_price sp
+             WHERE sp.id_shop = " . (int) Context::getContext()->shop->id . " AND NOW() BETWEEN sp.date_from AND sp.expire{$apagado}"
         ) ?: [];
         foreach ($filas as $f) {
             self::$especiales[(int) $f['id_product']][(int) $f['ipa']] = (float) $f['old_discount'];
@@ -831,12 +841,19 @@ class KpcFlags
         self::$porFormato = [];
         $idTienda = (int) Context::getContext()->shop->id;
         $reparto = KpcReparto::vigentes($idTienda);
+        // Un cupón que solo se ve desde un canal, solo para esa visita y solo en su ficha (en los listados, la
+        // portada y el feed de Doofinder, nunca: un bloque cacheado por Smarty, como el de la portada, se
+        // pintaría para todos con lo que viera el primer visitante). Y quien ya lo lleva puesto, lo ve.
+        $canal = Kpycoupons::canalDeLaVisita();
+        $puesto = mb_strtoupper(Kpycoupons::cuponPuesto());
         // `enVigor` las devuelve en orden de mando: la primera que toca un formato, manda.
         $cupones = [];
         $regalos = [];
         foreach (KpcCupon::enVigor($idTienda) as $c) {
-            if (!(int) ($c['en_ficha'] ?? 1) || KpcElegibles::esPrecio($c)) {
-                // Un cupón que no se enseña tampoco se anuncia; el Special Price lleva la suya.
+            $porCanal = (string) ($c['ver_canal'] ?? '') !== '';
+            if (KpcElegibles::esPrecio($c) || (!KpcElegibles::seVe($c, $canal) && !($porCanal && $puesto !== '' && mb_strtoupper((string) $c['codigo']) === $puesto))) {
+                // Un cupón que no se enseña (o solo a quien llega de un canal, y esta visita no) tampoco se
+                // anuncia; el Special Price lleva la suya.
                 continue;
             }
             $cupones[] = $c;
@@ -854,6 +871,8 @@ class KpcFlags
                 'codigo' => (string) $c['codigo'],
                 'hasta' => $hasta !== '' && strpos($hasta, '0000') !== 0 ? $hasta : null,
                 'id' => $id,
+                // Solo en su ficha (`elegir()`): el cupón por canal no se anuncia en ningún listado.
+                'solo_ficha' => (string) ($c['ver_canal'] ?? '') !== '',
             ];
             foreach ($reparto[$id] ?? [] as $clave => $idProducto) {
                 if ($promo['tipo'] === 'regalo') {

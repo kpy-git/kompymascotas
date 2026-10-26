@@ -149,6 +149,25 @@ class KpcCarrito
             }
         }
 
+        // Sin elegido ni regla base que adoptar, pero con los vales (`KPYCP-…`) de un cupón con cupo ya en
+        // esta cesta: ese cupón sigue puesto, igual que se adopta la regla base de uno sin cupo. Puesto es
+        // puesto hasta que el cliente lo quite con la papelera (`$adoptar` dice que no justo entonces). Es
+        // el caso de una petición sin la cookie del cliente (la notificación servidor a servidor de la
+        // pasarela: PrestaShop lanza `actionValidateOrderBefore` antes de comparar el total con lo pagado)
+        // y el de un canal que ya no se recuerda (caduca a las 24 h desde la 3.1.0): sin esto se quitaban
+        // los vales, subía el total y el pedido nacía en «Error de pago» (revisión del 26/10/2026).
+        if ($deseada <= 0 && $conCupo !== []) {
+            $promosConCupo = array_map('intval', array_values($conCupo));
+            foreach (KpcCupon::enVigor($idTienda) as $cupon) {
+                if (($cupon['tipo'] ?? 'cupon') === 'cupon' && (int) $cupon['id_cart_rule'] > 0
+                    && in_array((int) $cupon['id_kpy_coupon'], $promosConCupo, true)
+                    && ($adoptar === null || $adoptar((string) $cupon['codigo']))) {
+                    $deseada = (int) $cupon['id_cart_rule'];
+                    break;
+                }
+            }
+        }
+
         // Sin elegido: el que entra solo (web o canal), el que más descuenta de los que tienen
         // algo en esta cesta (algo que el cliente paga: un regalo no hace entrar un cupón).
         if ($deseada <= 0 && $entraSolo !== null) {

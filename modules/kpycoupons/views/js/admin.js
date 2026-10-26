@@ -596,7 +596,23 @@
     }
 
     /* ---------- Canales ---------- */
+    function segunVer() {
+      var caja = $('[data-kpc-ver-canales]');
+      if (!caja) { return; }
+      // «Solo quien llega de» es solo del cupón: en otro tipo, el radio (escondido) vuelve a «en toda la tienda».
+      if (tipo() !== 'cupon' && valor('ver') === 'canal') {
+        var todos = $('input[name="ver"][value="todos"]');
+        if (todos) { todos.checked = true; }
+      }
+      var porCanal = valor('ver') === 'canal';
+      caja.classList.toggle('is-apagado', !porCanal);
+      $$('input', caja).forEach(function (c) { c.disabled = !porCanal; });
+      if (porCanal && !$$('input:checked', caja).length) {
+        $('input', caja).checked = true;
+      }
+    }
     function segunEntra() {
+      segunVer();
       var caja = $('[data-kpc-canales]');
       if (!caja) { return; }
       var porCanal = valor('entra') === 'canal';
@@ -683,12 +699,19 @@
       if (fuera) { partes.push('menos ' + fuera); }
       if (t === 'cupon') {
         var entra = valor('entra');
-        if (entra === 'todos') { partes.push('puesto para todos'); }
+        var verCanal = valor('ver') === 'canal';
+        var vc = verCanal ? $$('input[name="ver_canales[]"]:checked').map(function (x) { return x.parentNode.textContent.trim().split(' ')[0]; }) : [];
+        // La misma regla que al guardar: lo que solo ven unos no llega puesto a todos, ni desde un canal que no lo ve.
+        if (entra === 'todos') { partes.push(verCanal ? 'puesto si llega de ' + (vc.join(', ') || '…') : 'puesto para todos'); }
         else if (entra === 'canal') {
           var c = $$('input[name="canales[]"]:checked').map(function (x) { return x.parentNode.textContent.trim().split(' ')[0]; });
-          partes.push('puesto si llega de ' + (c.join(', ') || '…'));
+          if (verCanal) { c = c.filter(function (x) { return vc.indexOf(x) !== -1; }); }
+          if (valor('ver') === 'nadie') { c = []; }
+          partes.push(c.length ? 'puesto si llega de ' + c.join(', ') : (verCanal ? 'no llega puesto (ningún canal marcado abajo lo ve)' : (valor('ver') === 'nadie' ? 'no llega puesto (no lo ve nadie)' : 'puesto si llega de …')));
         }
-      }
+        if (verCanal) { partes.push('solo la ve quien llega de ' + (vc.join(', ') || '…')); }
+        else if (valor('ver') === 'nadie') { partes.push(entra === 'todos' ? 'se ve en toda la tienda (lo manda «a todo el mundo»)' : 'sin enseñar'); }
+      } else if (t === 'segunda_unidad' && valor('ver') === 'nadie') { partes.push('sin enseñar'); }
       if (!valor('activo')) { partes.push('APAGADA'); }
       e.textContent = partes.join(' · ');
     }

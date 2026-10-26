@@ -225,9 +225,11 @@ class KplSincronizar
             }
         }
 
-        // Lo nuestro de promociones que ya no existen en Kompy · Promociones, fuera (las que
-        // existen son todas las que contesta el hook, encendidas o no).
-        $idsPromo = array_map('intval', array_keys($promos));
+        // Lo nuestro de promociones que ya no existen en Kompy · Promociones, fuera. Las que existen son
+        // todas las que contesta el hook, encendidas o no, se vean o no: un cupón oculto o solo por canal no
+        // está en `$promos` (no va a la landing) pero conserva lo suyo del paso 6 (título, foto, campañas…)
+        // para cuando vuelva a «en toda la tienda» (revisión del 26/10/2026).
+        $idsPromo = array_map('intval', array_keys((array) KplPromociones::todas($idTienda)));
         Db::getInstance()->execute(
             'DELETE FROM ' . _DB_PREFIX_ . 'kpy_promo_promo' . ($idsPromo !== [] ? ' WHERE id_kpy_coupon NOT IN (' . implode(',', $idsPromo) . ')' : '')
         );
@@ -262,6 +264,12 @@ class KplSincronizar
         $salida = [];
         foreach ($filas as $id => $f) {
             $f['estado'] = in_array($f['estado'], ['viva', 'programada'], true) ? $f['estado'] : 'terminada';
+            // Lo que no se enseña a todo el mundo no está en la landing (kpycoupons 3.1.0): un cupón
+            // oculto (solo por enlace) o solo para quien llega de un canal (Google, email, redes). El
+            // «para todos» (auto_web) sí: lo ve cualquiera en la ficha de sus productos.
+            if (!KplPromociones::enLaLanding($f)) {
+                continue;
+            }
             $f['desde'] = $f['fecha_desde'];
             $f['hasta'] = $f['fecha_hasta'];
             // El «regalo con la compra» entra en la landing por lo que regala (lo dice kpycoupons en
@@ -962,7 +970,9 @@ class KplSincronizar
         }
         $marcadas = [];
         foreach ($nuestras as $id => $f) {
-            if (trim((string) ($f['campanas'] ?? '')) !== '') {
+            // Solo las que están en la landing: la marca de campaña de un cupón oculto o por canal no decide
+            // quién entra en la campaña (`KplCampanas::entra()`: con alguna marcada, solo las marcadas).
+            if (isset($promos[(int) $id]) && trim((string) ($f['campanas'] ?? '')) !== '') {
                 $marcadas[(int) $id] = trim((string) $f['campanas']);
             }
         }

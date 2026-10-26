@@ -368,6 +368,10 @@ Hasta 2.000 filas con sus precios (1.300 precios tardan 1,1 s); las cuentas son 
 
 ## Special Price
 
+Desde el 26/10/2026 las etiquetas (`KpcFlags::especiales`), Doofinder y Merchant (`KpcMerchant::especiales`)
+dejan fuera los Special Price de **formatos apagados** (`kpy_product_attribute.active = 0`): un producto
+rebajado solo en un formato que la ficha no enseña no sale «Precio especial» en ningún sitio.
+
 Se guarda **igual que los carga Julián**, para que `kpyspecialprices`, la ficha, las etiquetas y el
 fichero de Google lo lean sin saber de dónde viene:
 
@@ -475,13 +479,43 @@ amarilla toma los colores de campaña. Lo que no se puede arreglar desde aquí e
     venga; nunca sale en productos que no entran), o por canal: **Google** (`gclid`, `srsltid`, `utm_source=google`,
     `utm_medium=cpc`), **email** (`utm_medium=email`, `utm_source=newsletter`, Connectif,
     Klaviyo…) o **redes** (`fbclid`, `utm_source=instagram`, `utm_medium=social`…). El canal **se
-    recuerda** (cookie `kpy_canal`) aunque aterrice en una categoría: el cupón entra en cuanto hay
-    algo suyo en la cesta. Si el cliente lo quita, no vuelve mientras navega; una visita nueva desde
+    recuerda 24 h** (cookies `kpy_canal` y `kpy_canal_t`, `CANAL_VIGENCIA`) aunque aterrice en una
+    categoría: el cupón entra en cuanto hay algo suyo en la cesta. Si el cliente lo quita, no vuelve mientras navega; una visita nueva desde
     ese canal lo vuelve a poner;
   - con el **enlace** `?kpc=CODIGO`;
   - **escrito en la cesta**: si es de Kompy pasa a ser el del cliente (hasta la 1.4 se quitaba al
     cambiar una cantidad).
 - **Apagar** un cupón apaga su regla de carrito (hasta la 1.4 el código seguía valiendo).
+- **Puesto es puesto** (26/10/2026): un cupón con cupo cuyos vales `KPYCP-…` ya están en la cesta sigue
+  puesto aunque la petición llegue sin la cookie del cliente (la notificación servidor a servidor de la
+  pasarela, que valida el pedido antes de comparar el total con lo pagado) o el canal ya no se recuerde;
+  solo la papelera lo quita (`KpcCarrito::cupon`, el mismo adoptar que la regla base de uno sin cupo).
+  Y un cupón «en ningún sitio» no llega puesto desde ningún canal (si lleva «a todo el mundo», se ve).
+- **Dónde se ve** (3.1.0, 26/10/2026; Rafa: el cupón de bienvenida de Natural Greatness «solo visible
+  para quien llega de Google»). Aparte de si llega puesto o no, el paso 4 pregunta **¿Dónde se ve?**:
+  **en toda la tienda** (lo de siempre), **solo quien llega de** Google, email o redes (`ver_canal`,
+  solo en el cupón: la 2ª unidad entra sola en la cesta de cualquiera, así que no se le ofrece), o
+  **en ningún sitio** (`en_ficha` = 0: solo por enlace o código). Con «solo quien llega de», el cupón
+  existe para esa visita **en su ficha** (bloque, chip en los formatos y etiqueta sobre la foto, con
+  `Kpycoupons::canalDeLaVisita()`: `gclid`/`utm_…` o la cookie `kpy_canal`, que vale 24 h desde el
+  último enlace con canal, `CANAL_VIGENCIA`) y para quien ya lo lleva puesto (llegó del canal y luego
+  vino de otro sitio, o entró por `?kpc=`: la cesta lo descuenta y la ficha no puede decir otra cosa).
+  Para el resto es como si no existiera, y **en los listados, la portada y el feed de Doofinder no sale
+  para nadie** (`solo_ficha` en `KpcFlags::elegir`: el bloque de la portada va cacheado por Smarty y se
+  pintaría para todos con lo que viera el primer visitante). La landing y el bloque de marca tampoco
+  (`kpypromolanding` ≥ 1.5.1 lo salta por `ver_canal` de la fila pública). Un robot nunca lo ve.
+  Google Merchant sí lo anuncia si «Anunciar en Google Shopping» está marcado: es justo el caso de uso.
+  Quien tenga el código puede escribirlo en la cesta (es un cupón de PrestaShop): la regla de Google
+  pide que el código funcione para cualquiera que llegue de Google, y funciona. «Para todos»
+  (`auto_web`) manda sobre esto (lo ve cualquiera); lo que solo ven unos no puede llegar ya puesto a
+  todos (al guardar pasa a «ya puesto si llega de» esos mismos canales) ni desde un canal que no lo ve
+  («ya puesto si llega de» se queda con los canales que también lo ven); el formulario enseña lo que se
+  va a guardar, y «solo quien llega de» sin ningún canal marcado no se guarda. De dónde llega la visita
+  (`KpcElegibles::canal`): Google por `gclid`, `gbraid`/`wbraid`, `gad_source`, `srsltid` o
+  `utm_source=google…`; email y redes por su fuente o medio (un anuncio de Meta con `utm_medium=paid`
+  es redes, no Google); `utm_medium=cpc` a secas sigue siendo Google. La regla es pura
+  (`KpcElegibles::seVe`, `tests/elegibles.php`, `tests/flags.php`); por HTTP, `scratchpad/canal-ver.php`
+  (26/10, revisado por un panel de cuatro lecturas y arreglado por la tarde).
 
 ## El reparto: calculado una vez y guardado
 
@@ -591,11 +625,12 @@ feed es la misma y actualizar Doofinder no lo borra):
 |---|---|---|
 | `kpy_especial` | «1» si algún formato tiene un Special Price que rebaja de verdad | la etiqueta «Precio especial» |
 | `kpy_precio_habitual` | «60,19 €», solo si el formato por defecto (el precio que enseña la tarjeta) es el del Special Price | tachado, con el precio en amarillo |
-| `kpy_promo` | «2ª ud. −30 %» o «Código −10 %» | su etiqueta |
-| `kpy_promo_tipo` | «segunda» o «cupon» | el color (verde o lila) |
+| `kpy_promo` | «2ª ud. −30 %», «Código −10 %», «+ 3 kg gratis», o el nombre de un Special Price («Liquidación», «Outlet», «Bajada de precio») | su etiqueta |
+| `kpy_promo_tipo` | `segunda`, `cupon`, `regalo`, `liquidacion`, `outlet` o `bajada` | el color (verde, lila, violeta, rojo oscuro, gris, rojo) |
 
 La plantilla y el CSS del buscador para pegar en Doofinder están en
-`C:\kompy-web\docs\doofinder\`. Hasta la 1.6 salían `kpy_flag`, `kpy_flag_color`, `kpy_flag_texto` y
+`C:\kompy-web\docs\doofinder\` (v5, 23/10/2026: los colores de regalo, liquidación, outlet y bajada;
+al lado de un Special Price con nombre no sale además «Precio especial»). Hasta la 1.6 salían `kpy_flag`, `kpy_flag_color`, `kpy_flag_texto` y
 `kpy_flag_tipo`, que no llegaron a usarse.
 
 Doofinder junta estas filas con las suyas por `id_product` (`arrayMergeByIdProduct`, en
@@ -996,6 +1031,8 @@ los precios vueltos a los de siempre):
      el SQL del paquete o `bin/limpiar-flags.php --borrar`); el reparto otra vez. `bin/flags-promos.php`
      desaparece. Va con `kpypromolanding` 1.4.0, `kpysupply` 1.1.0 y `kpycrosssell` 1.6.0;
      `kpyproductbuy` se desinstala. Se puede ejecutar más de una vez.
+   - `upgrade-3.1.0.php` (26/10/2026, «¿Dónde se ve?»): la columna `kpy_coupon.ver_canal` (vacía = en
+     toda la tienda, como hasta ahora). Nada más. Va con `kpypromolanding` 1.5.1.
 3. Comprobar los hooks (`Kpycoupons::HOOKS`): `actionCartSave`,
    `displayShoppingCartAfterDetailedTotals`, `actionFrontControllerSetMedia`,
    `actionFrontControllerInitAfter`, `actionProductFlagsModifier` (**después** de `kpygifts`,

@@ -267,11 +267,17 @@ class KpcMerchant
         $p = _DB_PREFIX_;
         $tienda = (int) $idTienda;
 
+        // Sin los formatos apagados (`kpy_product_attribute.active = 0`, los que la ficha no enseña): no se
+        // venden, y el feed de Julián tampoco los lleva (Merchant los daba por «la oferta no existe», 26/10/2026).
+        $apagado = KpcAlcance::hayFormatosApagados()
+            ? " AND NOT EXISTS (SELECT 1 FROM {$p}kpy_product_attribute k WHERE k.id_product_attribute = sp.id_product_attribute AND k.active = 0)"
+            : '';
+
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
             "SELECT sp.id_product, sp.id_product_attribute AS ipa, sp.old_discount, sp.date_from, sp.expire
              FROM {$p}kpy_special_price sp
              INNER JOIN {$p}product p ON p.id_product = sp.id_product AND p.active = 1
-             WHERE sp.id_shop = {$tienda} AND NOW() BETWEEN sp.date_from AND sp.expire
+             WHERE sp.id_shop = {$tienda} AND NOW() BETWEEN sp.date_from AND sp.expire{$apagado}
              ORDER BY sp.id_product, sp.id_product_attribute"
         ) ?: [];
     }

@@ -60,6 +60,12 @@ class Kpycoupons extends Module
     /** De dónde llegó la visita (shopping, email, social), para los cupones que entran solos. */
     public const COOKIE_CANAL = 'kpy_canal';
 
+    /** Cuándo se apuntó el canal (`time()`), para que caduque: ver `CANAL_VIGENCIA`. */
+    public const COOKIE_CANAL_T = 'kpy_canal_t';
+
+    /** Cuánto se recuerda de dónde llegó la visita: 24 h desde el último enlace con canal (revisión del 26/10/2026). */
+    public const CANAL_VIGENCIA = 86400;
+
     /** El parámetro de los enlaces que ponen un cupón: `https://kompymascotas.com/?kpc=EUKA10`. */
     public const PARAMETRO = 'kpc';
 
@@ -102,7 +108,7 @@ class Kpycoupons extends Module
     {
         $this->name = 'kpycoupons';
         $this->tab = 'pricing_promotion';
-        $this->version = '3.0.0';
+        $this->version = '3.1.0';
         $this->author = 'Kompy';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -228,6 +234,7 @@ class Kpycoupons extends Module
                 fecha_hasta DATETIME NULL,
                 auto_web TINYINT(1) NOT NULL DEFAULT 0,
                 auto_canal VARCHAR(64) NOT NULL DEFAULT '',
+                ver_canal VARCHAR(64) NOT NULL DEFAULT '',
                 en_ficha TINYINT(1) NOT NULL DEFAULT 1,
                 excluir_especial TINYINT(1) NOT NULL DEFAULT 1,
                 incluir_packs TINYINT(1) NOT NULL DEFAULT 1,
@@ -1199,6 +1206,46 @@ class Kpycoupons extends Module
         return $es ??= KpcFicha::esRobot((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''));
     }
 
+    /**
+     * De dónde llega esta visita (shopping, email, social), para los cupones que solo se ven desde un
+     * canal (3.1.0): lo que dice la dirección (`gclid`, `utm_…`) o, si no, lo que se recordó en la
+     * cookie al llegar. Un robot no llega de ningún sitio. Vacío = navega normal (o no es una visita:
+     * el feed de Doofinder, la consola).
+     */
+    public static function canalDeLaVisita(): string
+    {
+        static $canal = null;
+        if ($canal !== null) {
+            return $canal;
+        }
+        if (KpcFicha::esRobot((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''))) {
+            return $canal = '';
+        }
+        $canal = KpcElegibles::canal($_GET) ?: self::canalRecordado();
+
+        return $canal;
+    }
+
+    /**
+     * El canal apuntado en la cookie, si no ha caducado (`CANAL_VIGENCIA` desde el último enlace con
+     * canal). Vacío si no hay cookie, si es de antes de la 3.1.0 (sin fecha) o si ya pasó el plazo.
+     */
+    public static function canalRecordado(): string
+    {
+        $cookie = Context::getContext()->cookie ?? null;
+        if (!$cookie || !isset($cookie->{self::COOKIE_CANAL})) {
+            return '';
+        }
+
+        return self::canalVigente((string) $cookie->{self::COOKIE_CANAL}, isset($cookie->{self::COOKIE_CANAL_T}) ? (int) $cookie->{self::COOKIE_CANAL_T} : 0, time());
+    }
+
+    /** La regla, pura: el canal vale `CANAL_VIGENCIA` segundos desde que se apuntó (`$desde`); sin fecha, nada. */
+    public static function canalVigente(string $canal, int $desde, int $ahora): string
+    {
+        return $canal !== '' && $desde > 0 && $ahora - $desde <= self::CANAL_VIGENCIA ? $canal : '';
+    }
+
     /** Un estilo en línea que viene de otro módulo (hook `actionKpyCouponsResumen`): solo colores. */
     public static function estiloSeguro(string $estilo): string
     {
@@ -1307,7 +1354,14 @@ class Kpycoupons extends Module
     /** El cupón que el cliente lleva puesto (vacío si no lleva, o si lo ha quitado). */
     public function elegido(): string
     {
-        $valor = $this->valorCookie(self::COOKIE);
+        return self::cuponPuesto();
+    }
+
+    /** Lo mismo, sin instancia (para `KpcFlags`): el código de la cookie, o vacío si no hay o se quitó. */
+    public static function cuponPuesto(): string
+    {
+        $cookie = Context::getContext()->cookie ?? null;
+        $valor = $cookie && isset($cookie->{self::COOKIE}) ? (string) $cookie->{self::COOKIE} : '';
 
         return $valor !== '' && $valor[0] !== '!' ? $valor : '';
     }
@@ -1340,7 +1394,7 @@ class Kpycoupons extends Module
         if (mb_strtoupper($this->quitado()) === mb_strtoupper((string) ($cupon['codigo'] ?? ''))) {
             return false;
         }
-        $canal = KpcElegibles::canal($_GET) ?: $this->valorCookie(self::COOKIE_CANAL);
+        $canal = KpcElegibles::canal($_GET) ?: self::canalRecordado();
 
         return KpcElegibles::aplicadoDeEntrada($cupon, $canal);
     }
@@ -1370,6 +1424,8 @@ class Kpycoupons extends Module
         if ($this->valorCookie(self::COOKIE_CANAL) !== $canal) {
             $this->escribirCookie(self::COOKIE_CANAL, $canal);
         }
+        // Y desde cuándo: el plazo (`CANAL_VIGENCIA`) corre desde el último enlace con canal, aunque sea el mismo.
+        $this->escribirCookie(self::COOKIE_CANAL_T, (string) time());
         if ($this->quitado() !== '') {
             $this->escribirCookie(self::COOKIE, '');
         }

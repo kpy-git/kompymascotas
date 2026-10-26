@@ -369,10 +369,23 @@
         <h3 class="kpc-paso__titulo"><span class="kpc-num">4</span> Cómo llega al cliente</h3>
         <p class="kpc-ayuda" data-kpc-solo="special_price">Se ve solo: precio rebajado en la ficha y en los listados, el «Precio habitual» tachado, «hasta el…» y la etiqueta «Special Price», sola: ni el % ni ninguna otra. Al terminar, todo vuelve a como estaba. Nada que pulsar.</p>
         <p class="kpc-ayuda" data-kpc-solo="regalo">Nada que pulsar: en la ficha sale la tarjeta «12 kg + 3 kg gratis» (o «12 kg + Regalo») al lado de la de siempre, con el precio habitual y el €/kg de los dos sacos. Al elegirla y añadir, el regalo entra a 0 € en su propia línea («1 Gift»). Con un accesorio, unas latas o un snack, debajo del precio sale «Te llevas de regalo…» con su foto. En los listados, la etiqueta «+ 3 kg gratis» (o «+ regalo»); en la cesta, el vale «Regalo: 1 × …», con papelera para volver a la tarjeta de siempre. Si el regalo se agota, entra el de reserva; si no hay, la tarjeta de regalo no sale y la cesta avisa.</p>
-        <label class="kpc-check" data-kpc-solo="cupon segunda_unidad">
-          <input type="checkbox" name="en_ficha" value="1" {if $v.en_ficha}checked{/if}>
-          <span><strong>Se enseña en la ficha y en los listados</strong> — el bloque de la promo, la franja en los formatos y la etiqueta sobre la foto.</span>
-        </label>
+        <div data-kpc-solo="cupon segunda_unidad">
+          <p class="kpc-pregunta">¿Dónde se ve?</p>
+          <div class="kpc-radios">
+            <label class="kpc-check"><input type="radio" name="ver" value="todos" {if $v.ver === 'todos'}checked{/if}>
+              <span><strong>En toda la tienda</strong> — el bloque en la ficha, la franja en los formatos, la etiqueta sobre la foto, el buscador y la landing de promociones.</span></label>
+            <label class="kpc-check" data-kpc-solo="cupon"><input type="radio" name="ver" value="canal" {if $v.ver === 'canal'}checked{/if}>
+              <span><strong>Solo quien llega de:</strong> — el bloque, la franja de los formatos y la etiqueta de su ficha, solo para esa visita (y quien ya lo lleva puesto lo sigue viendo). Para el resto, y en los listados, el buscador y la landing, es como si no existiera. Google lo anuncia igual si está marcado en el paso 5.</span></label>
+            <label class="kpc-check"><input type="radio" name="ver" value="nadie" {if $v.ver === 'nadie'}checked{/if}>
+              <span><strong>En ningún sitio</strong> — <span data-kpc-solo="cupon">solo entra por el enlace o escribiendo el código en la cesta (no llega puesto desde ningún canal).</span><span data-kpc-solo="segunda_unidad">no se anuncia, pero en la cesta entra igual para cualquiera que lleve dos del mismo formato.</span></span></label>
+          </div>
+          <div class="kpc-canales" data-kpc-solo="cupon" data-kpc-ver-canales>
+            <label class="kpc-pastilla"><input type="checkbox" name="ver_canales[]" value="shopping" {if isset($v.ver_marcado.shopping)}checked{/if}><span>Google (Shopping y anuncios)</span></label>
+            <label class="kpc-pastilla"><input type="checkbox" name="ver_canales[]" value="email" {if isset($v.ver_marcado.email)}checked{/if}><span>Email</span></label>
+            <label class="kpc-pastilla"><input type="checkbox" name="ver_canales[]" value="social" {if isset($v.ver_marcado.social)}checked{/if}><span>Redes (Meta, Instagram, TikTok)</span></label>
+          </div>
+          <small class="kpc-nota" data-kpc-solo="cupon">De dónde llega se sabe por el enlace (<code>gclid</code>, <code>utm_source</code>…) y se recuerda 24 horas. Con «Solo quien llega de», un cupón «ya puesto a todo el mundo» (abajo) se guarda como «ya puesto si llega de» esos mismos canales, y «ya puesto si llega de» se queda con los canales que también lo ven: quien no lo ve no lo lleva puesto.</small>
+        </div>
 
         <div data-kpc-solo="cupon">
           <p class="kpc-pregunta">¿Le llega ya puesto?</p>
@@ -380,7 +393,7 @@
             <label class="kpc-check"><input type="radio" name="entra" value="no" {if $v.entra === 'no'}checked{/if}>
               <span><strong>No</strong> — lo pone el cliente: pulsándolo en la ficha o escribiendo el código.</span></label>
             <label class="kpc-check"><input type="radio" name="entra" value="todos" {if $v.entra === 'todos'}checked{/if}>
-              <span><strong>Sí, a todo el mundo</strong> — como un precio rebajado, pero en la cesta. En la ficha de sus productos lo ve cualquiera, venga de donde venga (y solo en los suyos).</span></label>
+              <span><strong>Sí, a todo el mundo</strong> — como un precio rebajado, pero en la cesta. En la ficha de sus productos lo ve cualquiera, venga de donde venga (y solo en los suyos). Con «Solo quien llega de» arriba, se guarda como «Solo si la visita llega de» esos canales; con «En ningún sitio», se ve igualmente en toda la tienda (manda esto).</span></label>
             <label class="kpc-check"><input type="radio" name="entra" value="canal" {if $v.entra === 'canal'}checked{/if}>
               <span><strong>Solo si la visita llega de:</strong></span></label>
           </div>
@@ -389,7 +402,7 @@
             <label class="kpc-pastilla"><input type="checkbox" name="canales[]" value="email" {if isset($v.canal_marcado.email)}checked{/if}><span>Email</span></label>
             <label class="kpc-pastilla"><input type="checkbox" name="canales[]" value="social" {if isset($v.canal_marcado.social)}checked{/if}><span>Redes (Meta, Instagram, TikTok)</span></label>
           </div>
-          <small class="kpc-nota">Se recuerda de dónde llegó aunque luego navegue. Si el cliente lo quita, no vuelve a entrar solo; una visita nueva desde ese canal lo vuelve a poner.</small>
+          <small class="kpc-nota">Se recuerda de dónde llegó durante 24 horas, aunque luego navegue. Si el cliente lo quita, no vuelve a entrar solo; una visita nueva desde ese canal lo vuelve a poner.</small>
           <div class="kpc-enlace">
             <span>Enlace que lo deja puesto (para emails, redes, influencers):</span>
             <code data-kpc-enlace data-kpc-tienda="{$kpc.tienda|escape:'html':'UTF-8'}" data-kpc-parametro="{$kpc.parametro|escape:'html':'UTF-8'}">{$kpc.tienda|escape:'html':'UTF-8'}?{$kpc.parametro|escape:'html':'UTF-8'}={$v.codigo|default:'CODIGO'|escape:'html':'UTF-8'}</code>

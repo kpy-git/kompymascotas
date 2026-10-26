@@ -328,6 +328,28 @@ class KpcElegibles
     }
 
     /**
+     * ¿Se enseña este cupón a esta visita? (3.1.0) «Para todos» (`auto_web`) lo ve cualquiera en la
+     * ficha de sus productos (Julián, 23/10/2026); si no, tiene que estar marcado «se enseña»
+     * (`en_ficha`) y, si solo se enseña a quien llega de un canal (`ver_canal`: shopping, email,
+     * social), la visita tiene que venir de uno de ellos. Lo que no se ve tampoco se anuncia: ni
+     * etiqueta en los listados, ni Doofinder, ni landing. Google Merchant va aparte (`en_merchant`).
+     *
+     * @param string $canal el de la visita (`Kpycoupons::canalDeLaVisita()`); vacío = navega normal, o robot
+     */
+    public static function seVe(array $cupon, string $canal): bool
+    {
+        if (!empty($cupon['auto_web'])) {
+            return true;
+        }
+        if (!(int) ($cupon['en_ficha'] ?? 1)) {
+            return false;
+        }
+        $canales = array_filter(array_map('trim', explode(',', (string) ($cupon['ver_canal'] ?? ''))));
+
+        return $canales === [] || ($canal !== '' && in_array($canal, $canales, true));
+    }
+
+    /**
      * El canal de la visita, a partir de los parámetros de la URL: lo que usa Kompy para decidir si
      * el cupón entra solo («viene de Shopping», «viene de un email», «viene de Instagram»).
      *
@@ -337,9 +359,10 @@ class KpcElegibles
     {
         $fuente = mb_strtolower(trim((string) ($parametros['utm_source'] ?? '')));
         $medio = mb_strtolower(trim((string) ($parametros['utm_medium'] ?? '')));
-        if (isset($parametros['gclid']) || isset($parametros['srsltid'])
-            || in_array($fuente, ['google', 'google_shopping', 'googleshopping', 'shopping'], true)
-            || in_array($medio, ['cpc', 'shopping', 'paid'], true)) {
+        // Google: el etiquetado automático de Ads (`gclid`; `gbraid`/`wbraid` desde iOS; `gad_source`) y el
+        // de las fichas gratuitas de Merchant (`srsltid`), o la fuente escrita en el enlace.
+        if (isset($parametros['gclid']) || isset($parametros['gbraid']) || isset($parametros['wbraid']) || isset($parametros['gad_source']) || isset($parametros['srsltid'])
+            || $fuente === 'shopping' || ($fuente !== '' && str_contains($fuente, 'google'))) {
             return 'shopping';
         }
         if (in_array($fuente, ['email', 'mail', 'newsletter', 'connectif', 'klaviyo', 'mailchimp', 'brevo', 'sendinblue'], true)
@@ -350,6 +373,12 @@ class KpcElegibles
             || in_array($fuente, ['facebook', 'instagram', 'meta', 'fb', 'ig', 'tiktok', 'pinterest'], true)
             || in_array($medio, ['social', 'paid_social', 'social_paid'], true)) {
             return 'social';
+        }
+        // Un enlace que solo dice el medio («cpc», «paid») sigue contando como Google, como hasta la 3.0.0;
+        // con otra fuente (bing, chatgpt…) no es ningún canal nuestro. La fuente manda sobre el medio: un
+        // anuncio de Meta con `utm_medium=paid` es «redes», no Google (revisión del 26/10/2026).
+        if ($fuente === '' && in_array($medio, ['cpc', 'shopping', 'paid'], true)) {
+            return 'shopping';
         }
 
         return '';

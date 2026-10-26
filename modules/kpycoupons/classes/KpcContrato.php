@@ -30,7 +30,7 @@ class KpcContrato
      *
      * @return array{id_kpy_coupon: int, codigo: string, nombre: string, tipo: string, porcentaje: float,
      *               activo: bool, fecha_desde: ?string, fecha_hasta: ?string, etiqueta: string, estado: string,
-     *               cajon: string, regalo_clase: string, auto_web: bool, en_ficha: bool, cupo: int, cupo_lista: bool,
+     *               cajon: string, regalo_clase: string, auto_web: bool, en_ficha: bool, ver_canal: string, cupo: int, cupo_lista: bool,
      *               cupo_agotado: ?string, id_manufacturer: int, ambitos: array<int, array{tipo: string, id: int, valor: string, unidades: ?int, agotado: ?string}>}
      */
     public static function promocion(array $c, ?array $ambitos = null): array
@@ -69,6 +69,8 @@ class KpcContrato
             'regalo_clase' => $tipo === 'regalo' ? self::claseRegalo($id, (int) ($c['id_shop'] ?? 0)) : '',
             'auto_web' => !empty($c['auto_web']),
             'en_ficha' => (int) ($c['en_ficha'] ?? 1) === 1,
+            // 3.1.0: desde qué canales se ve («shopping,email»); vacío = en toda la tienda, si en_ficha.
+            'ver_canal' => (string) ($c['ver_canal'] ?? ''),
             'cupo' => (int) ($c['cupo'] ?? 0),
             'cupo_lista' => (int) ($c['cupo_lista'] ?? 0) === 1,
             'cupo_agotado' => KpcCupon::fechaValida($c['cupo_agotado'] ?? null),
