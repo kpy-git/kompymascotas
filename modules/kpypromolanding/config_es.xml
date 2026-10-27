@@ -2,7 +2,7 @@
 <module>
     <name>kpypromolanding</name>
     <displayName><![CDATA[Kompy &middot; Landing de promociones]]></displayName>
-    <version><![CDATA[1.5.0]]></version>
+    <version><![CDATA[1.5.1]]></version>
     <description><![CDATA[/promociones, las categor&iacute;as autom&aacute;ticas de cada promoci&oacute;n, el bloque de promociones en la landing de cada marca y las campa&ntilde;as (Black Friday).]]></description>
     <author><![CDATA[Kompy]]></author>
     <tab><![CDATA[front_office_features]]></tab>

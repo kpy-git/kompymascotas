@@ -2,7 +2,7 @@
 <module>
     <name>kpycoupons</name>
     <displayName><![CDATA[Kompy &middot; Cupones]]></displayName>
-    <version><![CDATA[3.0.0]]></version>
+    <version><![CDATA[3.1.0]]></version>
     <description><![CDATA[Promociones de Kompy: cupones, 2&ordf; unidad, Special Price y regalo con la compra, por marca, categor&iacute;a, caracter&iacute;stica o lista de art&iacute;culos, con su regla de carrito.]]></description>
     <author><![CDATA[Kompy]]></author>
     <tab><![CDATA[pricing_promotion]]></tab>
