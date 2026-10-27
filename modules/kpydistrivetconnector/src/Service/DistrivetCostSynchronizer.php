@@ -23,9 +23,22 @@ class DistrivetCostSynchronizer
         $this->distrivetClient = new DistrivetClient();
     }
 
-    public function getProductsCost(int $limit): array
+    public function getAllProductsCost(int $limit): array
     {
-        $distrivetProducts = $this->stockRepository->findAllProductsByDistrivetId($limit);
+        $distrivetProducts = $this->stockRepository->findAllProductsIndexByDistrivet($limit);
+
+        return $this->getDistrivetCosts($distrivetProducts);
+    }
+
+    public function getProductsCostByManufacturer(int $manufacturerId, int $limit): array
+    {
+        $distrivetProducts = $this->stockRepository->findManufacturerProductsIndexByDistrivet($manufacturerId, $limit);
+
+        return $this->getDistrivetCosts($distrivetProducts);
+    }
+
+    private function getDistrivetCosts(array $distrivetProducts, bool $packsIncluded = true): array
+    {
 
         $productsCosts = [];
 
@@ -43,19 +56,20 @@ class DistrivetCostSynchronizer
 
             $this->countProducts++;
 
-            $productPacks = $this->productFinder->getMonoproductPacksByProduct($productId, $productAttributeId);
+            if ($packsIncluded) {
+                $productPacks = $this->productFinder->getMonoproductPacksByProduct($productId, $productAttributeId);
 
-            foreach ($productPacks as $pack) {
-                [$idPack, $attrPack] = explode('-', $pack['id_product_pack']);
+                foreach ($productPacks as $pack) {
+                    [$idPack, $attrPack] = explode('-', $pack['id_product_pack']);
 
-                $productsCosts[] = new DistrivetCostDTO(
-                    $idPack,
-                    $attrPack,
-                    '',
-                    round($costPrice * (int)$pack['quantity'], 6)
-                );
+                    $productsCosts[] = new DistrivetCostDTO(
+                        $idPack,
+                        $attrPack,
+                        '',
+                        round($costPrice * (int)$pack['quantity'], 6)
+                    );
+                }
             }
-
         }
 
         return $productsCosts;

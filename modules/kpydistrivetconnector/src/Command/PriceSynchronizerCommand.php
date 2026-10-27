@@ -9,6 +9,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -17,7 +18,8 @@ class PriceSynchronizerCommand extends Command
 {
     protected function configure()
     {
-        $this->addArgument('limit', InputArgument::OPTIONAL, 'Número máximo de productos para actualizar');
+        $this->addOption('limit', null, InputOption::VALUE_OPTIONAL, 'Número máximo de productos para actualizar');
+        $this->addOption('manufacturer', null, InputOption::VALUE_OPTIONAL, 'Actualiza los productos del fabricante indicado');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -26,7 +28,17 @@ class PriceSynchronizerCommand extends Command
 
         try {
             $costSynchronizer = new DistrivetCostSynchronizer();
-            $productsCost = $costSynchronizer->getProductsCost($input->getArgument('limit') ?? 0);
+
+            if ($input->getOption('manufacturer') && !is_numeric($input->getOption('manufacturer'))) {
+                $io->error('El fabricante debe ser un entero');
+                return Command::FAILURE;
+            }
+
+            $productsCost = $input->getOption('manufacturer')
+                ? $costSynchronizer->getProductsCostByManufacturer(
+                    (int)$input->getOption('manufacturer'),
+                    $input->getOption('limit') ?? 0)
+                : $costSynchronizer->getAllProductsCost($input->getOption('limit') ?? 0);
 
             $stockRepository = new StockRepository();
             $stockRepository->saveProductCostPrice($productsCost);
