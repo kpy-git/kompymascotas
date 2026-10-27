@@ -93,6 +93,9 @@
 !/modules/kpyordermaker/
 !/modules/kpyordermaker/**
 
+!/modules/kpyordermargin/
+!/modules/kpyordermargin/**
+
 !/modules/kpyorderdispatcher/
 !/modules/kpyorderdispatcher/**
 
