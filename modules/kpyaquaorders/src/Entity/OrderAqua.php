@@ -964,17 +964,17 @@ class OrderAqua
 
     public function getTotalConIva(): float
     {
-        return round($this->total_con_iva, 6);
+        return round($this->total_con_iva, 2);
     }
 
     public function getTotalSinIva(): float
     {
-        return round($this->total_sin_iva, 6);
+        return round($this->total_sin_iva, 2);
     }
 
     public function getTotalIva(): float
     {
-        return round($this->total_iva, 6);
+        return round($this->total_iva, 2);
     }
 
     public function getProductos(): array
