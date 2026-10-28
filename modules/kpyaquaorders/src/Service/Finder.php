@@ -97,7 +97,7 @@ class Finder
                     inner join " . _DB_PREFIX_ . "cart_rule_product_rule crpr
                         on crpr.id_product_rule_group = crg.id_product_rule_group
                     where ocr.id_order = $orderId 
-                        and crpr.`type` in ('products', 'manufacturers', 'skus', 'categories')"
+                        and crpr.`type` in ('products', 'manufacturers', 'skus', 'categories', 'combinations')"
         );
 
         return Discount::tryFrom($type) ?? Discount::NONE;

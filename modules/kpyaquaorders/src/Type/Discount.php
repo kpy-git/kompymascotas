@@ -8,11 +8,26 @@ enum Discount: string
     case MANUFACTURERS = 'manufacturers';
     case CATEGORIES = 'categories';
     case SKUS = 'skus';
+    case COMBINATIONS = 'combinations';
     case NONE = 'none';
 
     public function buildQuery(int $orderId, int $shopId): string
     {
         return match ($this) {
+            self::COMBINATIONS => sprintf(
+                "select t.rate
+                from " . _DB_PREFIX_ . "order_cart_rule ocr
+                inner join " . _DB_PREFIX_ . "cart_rule cr on cr.id_cart_rule = ocr.id_cart_rule
+                inner join " . _DB_PREFIX_ . "kpy_coupon kc on kc.codigo = cr.code
+                inner join " . _DB_PREFIX_ . "kpy_coupon_item kci on kci.id_kpy_coupon = kc.id_kpy_coupon
+                inner join " . _DB_PREFIX_ . "order_detail od on od.id_order = ocr.id_order
+                    and od.product_id = kci.id_product and od.product_attribute_id=kci.clave
+                inner join " . _DB_PREFIX_ . "product_shop ps on ps.id_product = od.product_id and ps.id_shop=1
+                inner join " . _DB_PREFIX_ . "tax_rule tr on tr.id_tax_rules_group = ps.id_tax_rules_group
+                    and tr.id_country = 6
+                inner join " . _DB_PREFIX_ . "tax t on t.id_tax = tr.id_tax
+                where ocr.id_order = %d", $orderId
+            ),
             self::SKUS => sprintf(
                 "SELECT trg.alias
                         FROM " . _DB_PREFIX_ . "order_cart_rule ocr

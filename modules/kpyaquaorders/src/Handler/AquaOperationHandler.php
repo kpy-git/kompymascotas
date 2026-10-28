@@ -403,7 +403,7 @@ class AquaOperationHandler
                     // si el cliente es exento de impuestos
                     if ($order->total_paid_tax_incl === $order->total_paid_tax_excl) {
                         // en la tabla de los descuentos, siempre el descuento va con iva...
-                        $orderAqua->insertaDescuentoSinProratear($discount['descuento'] / (1 + ((int)$ivaDescuento / 100)), 0);
+                        $orderAqua->insertaDescuentoSinProratear($discount['descuento'] / (1 + ((float)$ivaDescuento / 100)), 0);
                     } else {
                         $orderAqua->insertaDescuentoSinProratear($discount['descuento'], (int)$ivaDescuento);
                     }
