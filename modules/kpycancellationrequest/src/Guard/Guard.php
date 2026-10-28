@@ -10,9 +10,9 @@ class Guard
     {
         $currentState = (int)$order->getHistory()['current']['id_order_state'];
 
-        $restrictedStates = [4, 5, 6, 21, 30, (int)\Configuration::get(\KpyCancellationRequest::CANCELLATION_REQUEST)];
+        $restrictedStates = [4, 5, 6, 21, 30, 47, (int)\Configuration::get(\KpyCancellationRequest::CANCELLATION_REQUEST)];
 
-        return !in_array($currentState, $restrictedStates);
+        return !in_array($currentState, $restrictedStates, true);
     }
 
     public static function canBeCancelledCancellationRequest(OrderLazyArray $order): bool
