@@ -89,7 +89,7 @@ class Finder
 
     public function getDiscountType(int $orderId): Discount
     {
-        $type =  (int)$this->ps->getValue(
+        $type =  $this->ps->getValue(
             "SELECT DISTINCT crpr.`type`
                     FROM " . _DB_PREFIX_ . "order_cart_rule ocr
                     inner join " . _DB_PREFIX_ . "cart_rule_product_rule_group crg
