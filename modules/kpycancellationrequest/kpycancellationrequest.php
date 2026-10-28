@@ -73,7 +73,16 @@ class KpyCancellationRequest extends Module
     public function hookActionOrderStatusPostUpdate(array $params): void
     {
         if ((int)$params['newOrderStatus']->id === (int)\Configuration::get(self::CANCELLATION_REQUEST)) {
-            // todo - enviar un email ATC??
+            \Mail::send(
+                (int)\Configuration::get('PS_LANG_DEFAULT'),
+                'generic',
+                "Solicitud de cancelación pedido " . $params['id_order'],
+                array(
+                    '{message}' => "El cliente ha solicitado la cancelación desde su perfil",
+                    '{id_order}' => $params['id_order'],
+                ),
+                "hola@kompymascotas.com"
+            );
         }
 
     }
