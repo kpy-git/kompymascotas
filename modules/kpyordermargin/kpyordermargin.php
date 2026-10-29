@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use PrestaShop\Module\KpyAquaOrders\Db\DbMssql;
 use PrestaShop\Module\KpyOrderMargin\Exception\KpyOrderMarginException;
 use PrestaShop\Module\KpyOrderMargin\Install\Installer;
 use PrestaShop\Module\KpyOrderMargin\Service\Client;
@@ -80,23 +81,46 @@ class KpyOrderMargin extends Module
     {
         /** @var \Order $order */
         $order = $params['order'];
+        $this->calculateOrderMargin($order->id);
+    }
 
+    private function calculateOrderMargin(int $orderId): void
+    {
         $client = new Client();
 
         try {
-            $client->calculateMargin($order->id);
+            $client->calculateMargin($orderId);
 
         } catch (KpyOrderMarginException $e) {
             \Mail::Send(
                 (int)\Configuration::get('PS_LANG_DEFAULT'),
                 'generic',
-                'Error al calcular el margen del pedido ' . $order->id,
+                'Error al calcular el margen del pedido ' . $orderId,
                 array(
                     '{message}' => $e->getMessage(),
-                    '{id_order}' => $order->id,
+                    '{id_order}' => $orderId,
                 ),
                 'desarrollo@kompymascotas.com',
             );
         }
+    }
+
+    public function hookActionOrderStatusPostUpdate(array $params): void
+    {
+        $newOrderStatus = (int)$params['newOrderStatus']->id;
+
+        match ($newOrderStatus) {
+            6 => $this->deleteOrderMargin((int)$params['id_order']),
+            // AQUA Actualizar pedido completo y AQUA Actualizar productos
+            27, 29 => $this->calculateOrderMargin((int)$params['id_order']),
+            default => '',
+        };
+    }
+
+    private function deleteOrderMargin(int $orderId): void
+    {
+        DbMssql::getInstance()->execute(
+            "DELETE FROM DATKPYORDERMARGIN03 WHERE PEDIDO ='{$orderId}'"
+        );
     }
 }

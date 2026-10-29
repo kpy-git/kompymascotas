@@ -12,6 +12,7 @@ class Installer
 {
     private array $hooks = [
         'actionKpyOrderDispatched',
+        'actionOrderStatusPostUpdate',
     ];
 
     /**
