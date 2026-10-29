@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS `PREFIX_kpy_google_feed_custom_labels`;

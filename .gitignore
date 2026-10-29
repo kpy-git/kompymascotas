@@ -78,6 +78,9 @@
 !/modules/kpygoogletags/
 !/modules/kpygoogletags/**
 
+!/modules/kpygooglefeedmodifier/
+!/modules/kpygooglefeedmodifier/**
+
 !/modules/kpyhome/
 !/modules/kpyhome/**
 
