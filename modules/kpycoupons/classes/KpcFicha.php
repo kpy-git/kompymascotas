@@ -24,9 +24,15 @@
  * Lo que decide el precio presentado (ver `docs/plan-desacoplar-kpycoupons.md`, 3.4):
  *   - opción con regalo elegida (`kpy_regalo=1`): el precio habitual, sin su Special Price;
  *   - cupo agotado para esta cesta: el precio habitual (es lo que cobrará la cesta);
- *   - cupón puesto por el cliente (cookie), que no sea «para todos» (`auto_web`) ni un robot: el
- *     precio con el cupón.
+ *   - cupón puesto (la cookie del cliente, o uno que entra solo: «para todos» o por el canal de la
+ *     visita; nunca para un robot) en un formato sin Special Price: el precio con el cupón. Hasta la
+ *     3.1 un cupón «para todos» no cambiaba el precio grande; desde la 3.2.0 (Rafa, 1/11/2026) sí,
+ *     como el de canal: el robot de Merchant sigue viendo el precio del feed.
  *   Nunca se toca `price_amount`: el JSON-LD y `og:price` dicen el precio del feed (norma de Merchant).
+ *
+ * Y la capa de campaña (`KpcCampana`): nombres y colores de campaña en el cupón, la 2ª unidad y el
+ * Special Price (también en una ficha que solo tiene Special Price: la piel del precio y el chip de
+ * las tarjetas van con la campaña, como la etiqueta de la foto y los listados).
  */
 class KpcFicha
 {
@@ -52,8 +58,6 @@ class KpcFicha
     private bool $robot;
     /** @var array<int, array> `estado()` ya calculado, por formato */
     private array $estados = [];
-    /** @var array<string, ?array> la capa de campaña, por firma de tipos */
-    private array $campanas = [];
     private ?array $textos = null;
 
     private function __construct(Kpycoupons $modulo, int $idProducto)
@@ -87,7 +91,7 @@ class KpcFicha
     /** ¿Tiene este producto algo que decir en la ficha? */
     public function tienePromocion(): bool
     {
-        return $this->promo !== null || $this->regalo !== null || $this->precios !== [] || $this->modulo->elegido() !== '';
+        return $this->promo !== null || $this->regalo !== null || $this->precios !== [] || $this->modulo->puestos() !== [];
     }
 
     /** El formato de la petición: `group[]` del tema > `id_product_attribute` > el de por defecto. */
@@ -217,20 +221,38 @@ class KpcFicha
                 ];
             }
         }
+        if ($chip === null && $this->conEspecial($ipa) && KpcCampana::etiqueta($this->campana($ipa, null, ['special_price']), 'special_price') !== null) {
+            // Un formato con solo Special Price no lleva chip nuestro (el tema pinta «Precio especial»),
+            // salvo durante una campaña: entonces la tarjeta dice «Black Friday», como la foto y los listados.
+            $chip = [
+                'type' => 'kpc-especial',
+                'label' => $this->textos()['especial'],
+                'background' => KpcFlags::COLORES['kpc-especial'],
+                'color' => '#B8322A',
+            ];
+        }
         if ($chip === null) {
             return null;
         }
-        // Durante una campaña, el chip del cupón, de la 2ª unidad o del Special Price lleva su nombre.
+        // Durante una campaña, el chip del cupón, de la 2ª unidad o del Special Price lleva su nombre
+        // (corto: en la tarjeta no cabe «Cupón Black −10 %», sí «Cupón Black»).
         $tipo = self::tipoDeChip((string) $chip['type']);
-        $campana = $tipo !== '' ? $this->campana($ipa, null, [$tipo]) : null;
-        $e = $campana['tipos'][$tipo] ?? null;
-        if (is_array($e) && trim((string) ($e['label'] ?? '')) !== '') {
-            $chip['label'] = KpcFlags::corto(trim((string) $e['label']));
-            $chip['background'] = self::color($e['background'] ?? '', (string) $chip['background']);
-            $chip['color'] = self::color($e['color'] ?? '', (string) $chip['color']);
+        $e = $tipo !== '' ? KpcCampana::etiqueta($this->campana($ipa, null, [$tipo]), $tipo) : null;
+        if ($e !== null) {
+            $chip['label'] = KpcFlags::cortoCampana($e['label']);
+            $chip['background'] = $e['background'];
+            $chip['color'] = $e['color'];
         }
 
         return $chip;
+    }
+
+    /** ¿El formato tiene un Special Price que rebaja de verdad (el precio de hoy, por debajo del habitual)? */
+    private function conEspecial(int $ipa): bool
+    {
+        $f = $this->formatos[$ipa] ?? null;
+
+        return $f !== null && isset($f['habitual']) && $f['habitual'] !== null && round((float) $f['habitual'], 2) > round((float) $f['precio'], 2) + 0.01;
     }
 
     /**
@@ -345,6 +367,7 @@ class KpcFicha
         $claseEspecial = $precio !== null && $precio['clase'] !== '' ? (string) $precio['clase'] : 'especial';
         $quedanEspecial = $especial && $precio !== null && array_key_exists('quedan', $precio) && $precio['quedan'] !== null ? (int) $precio['quedan'] : null;
         $agotado = $especial && $quedanEspecial === 0;
+        $m['especial'] = $especial;
 
         // La unidad en la que se compara («4,27 €/kg», «0,95 €/lata»).
         $porUnidad = static function (float $importe) use ($kilos, $litros, $unidades, $envase, $euros): string {
@@ -490,20 +513,23 @@ class KpcFicha
                 $conCupon = round($p * (1 - $pct / 100), 2);
                 $quedan = $promo['quedan_por'][$ipa] ?? $promo['quedan'] ?? null;
                 if ($entra) {
-                    if ($aplicado && !$autoWeb && !$especial) {
-                        // El precio grande pasa al precio con cupón (solo con la cookie puesta por el cliente).
+                    if ($aplicado && !$especial) {
+                        // El precio grande pasa al precio con cupón (puesto por el cliente o entrado solo:
+                        // «para todos» o por canal; nunca para un robot).
                         $m['presentar'] = ['precio' => $conCupon, 'pvpr' => $pvpr, 'motivo' => 'cupon', 'kilos' => $kilos];
                         $m['estado'] = 'cupon';
                         if ($porUnidad($conCupon) !== '') {
                             $m['kg'] = $t('kg_cupon', ['%ud%' => $porUnidad($conCupon)]);
                         }
                     } elseif ($aplicado) {
-                        $m['estado'] = 'cupon-auto';
+                        // Sobre un Special Price (un cupón que no lo respeta): el precio grande sigue siendo
+                        // el del Special Price y el cupón se descuenta en la cesta; la caja lo dice.
+                        $m['estado'] = 'cupon-cesta';
                     } else {
                         $m['estado'] = $m['estado'] === '' || $m['estado'] === 'precio' ? 'cupon-sin' : $m['estado'];
                     }
                     $sub = $aplicado
-                        ? ($autoWeb || $especial
+                        ? ($especial
                             ? $t('cupon_auto', ['%precio%' => $euros($conCupon)])
                             : $t('cupon_ahorras', ['%ahorro%' => $euros(round($p - $conCupon, 2))]))
                         : $t('cupon_pagas', ['%precio%' => $euros($conCupon)]);
@@ -598,7 +624,9 @@ class KpcFicha
             'tipo' => '',
             'estado' => '',
             'presentar' => null,
+            'especial' => false,
             'especial_fuera' => false,
+            'solo_campana' => false,
             'kg' => '',
             'quedan' => ['texto' => '', 'pocas' => false, 'agotado' => false, 'etiqueta' => '', 'clase' => ''],
             'regalo' => null,
@@ -729,6 +757,12 @@ class KpcFicha
                 $m['quedan']['texto'] = str_replace($m['quedan']['etiqueta'], trim((string) $sp['label']), $m['quedan']['texto']);
                 $m['quedan']['etiqueta'] = trim((string) $sp['label']);
             }
+            if (!$m['hay'] && !empty($m['especial'])) {
+                // Una ficha con solo Special Price no tenía nada que pintar; con campaña, el bloque sale
+                // (vacío y escondido) para llevar los colores a la piel del precio del tema (`ficha.js`).
+                $m['hay'] = true;
+                $m['solo_campana'] = true;
+            }
         }
         foreach (['cupon' => 'cup', 'segunda_unidad' => 'seg'] as $tipo => $prefijo) {
             $e = $tipos[$tipo] ?? null;
@@ -845,10 +879,11 @@ class KpcFicha
     }
 
     /**
-     * La capa de campaña de este producto (hook de consulta `actionKpyCouponsCampana`, lo contesta
-     * `kpypromolanding` si hay una campaña viva que incluya el producto). Null sin campaña.
+     * La capa de campaña de este producto (`KpcCampana`: el hook de consulta `actionKpyCouponsCampana`,
+     * lo contesta `kpypromolanding` si hay una campaña viva que incluya el producto). Null sin campaña.
      *
-     * @param string[] $tipos los tipos de promoción que hay en pantalla; vacío = los del modelo
+     * @param string[] $tipos los tipos de promoción que hay en pantalla; vacío = los del modelo (el
+     *                        cupón, la 2ª unidad y el Special Price del formato, con o sin cupo)
      */
     private function campana(int $ipa, ?array $m, array $tipos = []): ?array
     {
@@ -859,36 +894,22 @@ class KpcFicha
             if ($m['segunda'] !== null) {
                 $tipos[] = 'segunda_unidad';
             }
-            if ($m['quedan']['texto'] !== '') {
+            if ($m['quedan']['texto'] !== '' || !empty($m['especial'])) {
                 $tipos[] = 'special_price';
             }
         }
         if ($tipos === []) {
             return null;
         }
-        sort($tipos);
-        $firma = implode(',', $tipos);
-        if (array_key_exists($firma, $this->campanas)) {
-            return $this->campanas[$firma];
-        }
-        $salida = null;
-        try {
-            $respuestas = Hook::exec('actionKpyCouponsCampana', [
-                'id_product' => $this->idProducto,
-                'id_product_attribute' => $ipa,
-                'tipos' => $tipos,
-            ], null, true);
-            foreach ((array) ($respuestas ?: []) as $r) {
-                if (is_array($r) && !empty($r['tipos']) && is_array($r['tipos'])) {
-                    $salida = $r;
-                    break;
-                }
-            }
-        } catch (Throwable $e) {
-            PrestaShopLogger::addLog('kpycoupons, al preguntar por la campaña (actionKpyCouponsCampana): ' . $e->getMessage(), 2, null, 'Product', $this->idProducto, true);
+        // El % que rebaja de verdad el Special Price del formato: para que la landing pueda nombrar
+        // («Black Friday −10 %») uno cargado por SQL, que no es promoción suya.
+        $pct = [];
+        $f = $this->formatos[$ipa] ?? null;
+        if (in_array('special_price', $tipos, true) && $f !== null && $this->conEspecial($ipa)) {
+            $pct['special_price'] = (float) KpcFlags::pct((float) $f['habitual'], (float) $f['precio']);
         }
 
-        return $this->campanas[$firma] = $salida;
+        return KpcCampana::de($this->idProducto, $ipa, $tipos, $pct);
     }
 
     /** Lee de la base de datos todo lo que la ficha necesita de este producto, una vez. */
@@ -1066,8 +1087,7 @@ class KpcFicha
             // Un cupón por canal que esta visita ya lleva puesto (llegó del canal y luego vino de otro sitio, o
             // entró por el enlace `?kpc=`) se le sigue enseñando: la cesta lo descuenta y la ficha no puede
             // decir otra cosa (revisión del 26/10/2026).
-            $puesto = !$this->robot && (string) ($cupon['ver_canal'] ?? '') !== ''
-                && mb_strtoupper($this->modulo->elegido()) === mb_strtoupper((string) $cupon['codigo']);
+            $puesto = !$this->robot && (string) ($cupon['ver_canal'] ?? '') !== '' && $this->modulo->estaPuesto((string) $cupon['codigo']);
             if ($ipas === [] || (!$puesto && !KpcElegibles::seVe($cupon, $this->robot ? '' : Kpycoupons::canalDeLaVisita()))) {
                 continue;
             }
@@ -1093,13 +1113,13 @@ class KpcFicha
                     'url' => '',
                 ];
             }
+            // Puesto si el cliente lo lleva puesto (la cookie, con los demás cupones que lleve: 3.2.0) o
+            // si entra solo («para todos» o por el canal) y no lo ha quitado; entonces se deja apuntado,
+            // para que la cesta lo recoja aunque el canal caduque. Un robot, nunca.
             $aplicado = false;
             if (!$this->robot) {
-                $elegido = $this->modulo->elegido();
-                $aplicado = $elegido !== ''
-                    ? mb_strtoupper($elegido) === mb_strtoupper((string) $cupon['codigo'])
-                    : $this->modulo->entraSolo($cupon);
-                if ($aplicado && $elegido === '') {
+                $aplicado = $this->modulo->estaPuesto((string) $cupon['codigo']) || $this->modulo->entraSolo($cupon);
+                if ($aplicado) {
                     $this->modulo->guardar((string) $cupon['codigo']);
                 }
             }

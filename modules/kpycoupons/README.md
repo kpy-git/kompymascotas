@@ -12,7 +12,11 @@ las unidades de cada EAN: lo de una liquidación), y el Special Price puede llam
 sin banner propio). **Desde la 3.0.0 (23/10/2026) la ficha la pinta este módulo** en los huecos del
 tema de Julián (ver «La ficha, en los huecos del tema») y **no depende de ningún otro módulo ni
 llama a ninguno**: lo que otros necesitan saber les llega por hooks propios con datos curados (ver
-«Contratos públicos»). `kpyproductbuy`, que pintaba la ficha hasta la 2.4, se retira.
+«Contratos públicos»). `kpyproductbuy`, que pintaba la ficha hasta la 2.4, se retira. **Desde la
+3.2.0 (1/11/2026) el cliente lleva varios cupones a la vez** (uno por marca en una campaña: Specific y
+Advance en la misma cesta, cada uno descontando lo suyo), el cupón «para todos» baja el precio grande
+de la ficha como el de canal, y la campaña (Black Friday) viste también la ficha con solo Special
+Price, los chips de las tarjetas y las filas de la cesta (ver «Cupón y 2ª unidad, en la ficha y en la cesta»).
 
 ## Los cuatro tipos
 
@@ -91,8 +95,9 @@ Price («Ahorras 7,10 € más · Precio habitual 70,99 €»), 2ª unidad («Te
 empujón «Añade 1 ud. más…» ya no cuenta las unidades regaladas. Probado con la ficha del Boske
 Clinical Diet Hypoallergenic y sus tres promociones de pruebas (Special Price, regalo y 2ª ud.
 −40 % en el 3 kg), el pedido #866298 (línea mezclada: dos vales) y el recorrido en Chrome (PC y
-móvil). Pendiente: durante una campaña (Black Friday), las píldoras de las filas van con sus colores
-de siempre (los vales del resumen sí toman los de la campaña).
+móvil). Desde la 3.2.0, durante una campaña (Black Friday) las píldoras de las filas van con el
+nombre y los colores de la campaña, como los vales del resumen (`KpcLineas::bloques` pregunta por
+`KpcCampana`).
 
 «Compras el saco de 12 kg y te llevas el de 3 kg». Es la promoción de Boske (12 + 3, 15 + 3, 10 +
 2,5 en gato, 8 + 2 en mini), y vale para cualquier marca y cualquier regalo que exista como producto:
@@ -419,7 +424,7 @@ es pura (`KpcFicha::modelo`, `tests/ficha.php`) y el detalle está en
 | Hook del tema | Qué pinta |
 |---|---|
 | `displayProductPriceBlock` (`type='weight'`, `hook_origin='product_sheet'`, solo `ProductController`; '' en el listado, la cesta y la ventana «Añadido», que llaman al mismo hook con otros `type`) | El bloque bajo el precio (`views/templates/hook/ficha.tpl`): el cupón (toda la caja es el botón: «Aplica tu cupón −10 %» / «Cupón −10 % aplicado · Quitar»), la 2ª unidad («Añade 1 ud. más: te ahorras…», pulsable mientras falte una), «Quedan N unidades en Liquidación», nuestro €/kg cuando el precio presentado no es el del core, la nota «El cupón −10 % es para: 3 kg, 12 kg», y con la tarjeta de regalo elegida la pastilla «Kilos gratis» (que `ficha.js` sube encima del precio), «Incluye 3 kg gratis (17,99 €), a 0 € en la cesta», «Promoción hasta…» y «quedan N regalos». Lleva el campo oculto `kpy_regalo` (0\|1) y los datos de las tarjetas de regalo (`data-kpc-datos`, `KpcFicha::tarjetas()`). |
-| `displayProductAttributeFlags` (por `id_attribute`) | El chip de la tarjeta de cada formato (`KpcFlags::deFormato` o el nombre propio del Special Price), una franja por tarjeta: con chip nuestro, `ficha.css` esconde el tag «Precio especial» del tema en esa tarjeta. |
+| `displayProductAttributeFlags` (por `id_attribute`) | El chip de la tarjeta de cada formato (`KpcFlags::deFormato` o el nombre propio del Special Price), una franja por tarjeta: con chip nuestro, `ficha.css` esconde el tag «Precio especial» del tema en esa tarjeta. Durante una campaña, el chip lleva el nombre de la campaña entero o sin el % si no cabe (`KpcFlags::cortoCampana`: «Cupón Black», no «Cupón Black −1»), y un formato con solo Special Price también recibe chip («Black Friday»), que sustituye al tag del tema (3.2.0). |
 | `actionPresentProduct` (detrás de `kpyspecialprices`) | El **precio presentado** cuando no es el del core: la opción con regalo elegida o el cupo agotado para esta cesta (el precio habitual, sin su Special Price: `kpy_special_price = false`, y con ello la piel amarilla y el bloque «Precio habitual» de `kpyspecialprices` no salen) o el cupón puesto por el cliente (el precio con el cupón). Pisa con `offsetSet` `price`, `regular_price`, `regular_price_amount`, `has_discount`, `discount_type`, `discount_percentage`, `discount_percentage_absolute`, `discount_amount`, `discount_amount_to_display`, `discount_to_display` y `kpy_special_price`; **nunca `price_amount`** (el JSON-LD y `og:price` dicen el precio del feed: norma de Merchant) ni la fila cruda de `Product::getProductProperties` (su caché estática la comparte la cesta). |
 | `actionProductFlagsModifier` | `KpcFlags::ajustar` y, en la ficha, fuera la «Special Price» de la foto cuando el precio presentado ya no lo es. |
 | `actionFrontControllerSetVariables` (solo la ficha) | `$modules.kpycoupons` = `{id_product_attribute, estado, formatos[id_attribute] => {tipo, texto, fondo, color, quedan}}`: una oferta a Julián, ninguna plantilla nuestra lo lee. |
@@ -427,11 +432,19 @@ es pura (`KpcFicha::modelo`, `tests/ficha.php`) y el detalle está en
 | `actionFrontControllerSetMedia` (solo la ficha) | `views/css/ficha.css` (prioridad 800, como las hojas de Julián) y `views/js/ficha.js` (`defer`), con la fecha del fichero como versión. |
 
 **Qué cambia el precio grande y qué no** (`KpcFicha::modelo`): la opción con regalo y el cupo
-agotado siempre; el cupón **solo con la cookie puesta por el cliente** (clic en la caja, `?kpc=`, el
-enlace del email, o el canal de la visita si no es un robot); nunca un cupón «para todos»
-(`auto_web`: la caja dice «En la cesta lo pagas a…») ni para un robot (Googlebot, Storebot, AdsBot,
-bingbot…, `KpcFicha::esRobot`), que tampoco reciben cookie. Así el robot de Merchant ve siempre el
-precio del feed.
+agotado siempre; el cupón cuando está **puesto** (la cookie del cliente: clic en la caja, `?kpc=`, el
+enlace del email; o porque entra solo: «para todos» o el canal de la visita) y el formato no lleva
+Special Price. Hasta la 3.1 un cupón «para todos» (`auto_web`) no bajaba el precio grande; desde la
+3.2.0 (Rafa, 1/11/2026) baja igual que el de canal. Sobre un Special Price (un cupón que no lo
+respeta) el precio grande sigue siendo el del Special Price y la caja dice «En la cesta lo pagas a…»
+(estado `cupon-cesta`). Nunca para un robot (Googlebot, Storebot, AdsBot, bingbot…,
+`KpcFicha::esRobot`), que tampoco recibe cookie. Así el robot de Merchant ve siempre el precio del
+feed, y el JSON-LD y `og:price` siguen diciendo el precio del feed para todos.
+
+**Con solo Special Price durante una campaña** (3.2.0): el bloque sale vacío y escondido
+(`is-solo-campana`) solo para llevar las variables de color de la campaña; `ficha.js` las copia a
+`.product__prices` y la piel amarilla del tema toma los colores de la campaña (negro y dorado en
+Black Friday), y las tarjetas de formato dicen «Black Friday» en vez de «Precio especial».
 
 **`ficha.js`** (sin librerías): **monta la tarjeta «12 kg + 3 kg gratis» en la fila de formatos del
 tema** (una copia de la tarjeta del formato disparador con las clases del tema, el mismo radio
@@ -473,7 +486,23 @@ amarilla toma los colores de campaña. Lo que no se puede arreglar desde aquí e
     `displayShoppingCartAfterDetailedTotals`, con el empujón «Añade 1 ud. más de… y te ahorras…»
     como botón, y el ahorro del Special Price («Special Price en 1 producto −20,40 €»).
   - La 2ª unidad no lleva papelera. Quitar un cupón con la papelera lo olvida (no vuelve solo).
-  - Un cupón que deja de descontar se quita solo. Solo un cupón de Kompy a la vez.
+  - Un cupón que deja de descontar se quita solo.
+  - **Varios cupones a la vez** (3.2.0, 1/11/2026; hasta entonces solo uno, y poner el de Advance
+    quitaba el de Specific de la misma cesta). La cookie `kpy_cupon` es una lista (`KpcCookie`):
+    los **puestos** y, con «!» delante, los **quitados** («SPECIFIC10,ADVANCE15,!BFBOEH10»; lo de
+    antes, un solo código, se lee igual; como mucho 10 de cada). En cada repaso de la cesta
+    (`KpcCarrito::cupones`) se quieren: los puestos que sigan en marcha; los que ya están en la cesta
+    (escritos en «¿Tienes un cupón?», o una petición sin cookie: puesto es puesto); los de cupo con
+    sus vales `KPYCP` ya dentro; y los que entran solos (para todos o por el canal) con algo suyo
+    pagado en la cesta, salvo los quitados. El resto de reglas de Kompy se quitan; cada deseado se
+    pone si descuenta algo. Dos cupones nunca descuentan lo mismo: el reparto da cada artículo a una
+    sola promoción y cada regla va por combinación exacta. «Quitar» en la ficha o la papelera de un
+    vale (también sin JavaScript: `olvidarPorRegla` en `actionFrontControllerInitAfter`) quitan solo
+    ese cupón, que no vuelve a entrar solo; una visita nueva desde un canal perdona a los quitados.
+    El repaso de antes del pedido (`actionValidateOrderBefore`, que puede llegar sin la cookie del
+    cliente) **no mete ningún cupón nuevo**: lo que el cliente quitó no puede volver a bajar el
+    total por debajo de lo pagado. Y en la ficha, ver un producto de otra marca ya no desmarca el
+    cupón de la primera.
 - **Cómo llega el cupón**:
   - ya puesto para todos (en la ficha de sus productos lo ve y lo lleva cualquiera, venga de donde
     venga; nunca sale en productos que no entran), o por canal: **Google** (`gclid`, `srsltid`, `utm_source=google`,
@@ -718,6 +747,7 @@ es idéntico.
 | `KpcVale`, `KpcPrecioCesta` | Los vales de una cesta (`KPY2U`, `KPYRG`, `KPYSP`, `KPYCP`) y los precios de una sola cesta (`specific_price.id_cart`) |
 | `KpcLimpieza`, `KpcPantalla` | El barrido de vales, reservas y precios de cestas muertas; la pantalla |
 | `KpcFicha`, `KpcEnvase` | La ficha en los huecos del tema (3.0.0): qué bloque se pinta y qué precio se presenta (regla pura), y el lector de nombres de formato («Saco de 12 Kg» → 12 kg, €/kg, €/lata) |
+| `KpcCookie`, `KpcCampana` | La cookie de los cupones del cliente (3.2.0: varios puestos y quitados; pura, `tests/cookie.php`) y la capa de campaña (el hook de consulta `actionKpyCouponsCampana`, una vez por producto y petición, con sus colores comprobados) |
 | `KpcContrato` | Lo que se cuenta a los demás módulos por los hooks: la fila pública de una promoción (claves fijas, versionadas), el alcance y el estado |
 
 ## Contratos públicos (3.0.0)
@@ -746,9 +776,12 @@ parámetros; los parámetros son datos curados (`KpcContrato`, `version` 1), no 
   `resumen` por referencia {vales[id_cart_rule]{tipo, texto, codigo, id_kpy_coupon, pct}, lineas[]{clase,
   tipo, n, texto, importe}, animos[]{texto, sube}}. El oyente puede añadir a un vale `fondo` y `color`
   (`#rrggbb`) y a una línea `estilo` y `estilo_icono` (solo `background`/`color`: se filtran).
-- `actionKpyCouponsCampana` (consulta, `array_return`) — al pintar la ficha. Params: `id_product`,
-  `id_product_attribute`, `tipos` (string[]). Respuesta: null o {nombre, clave, piel negra|clara,
-  tipos ⇒ {label, background, color}}; se usa la primera con `tipos`. La contesta `kpypromolanding`.
+- `actionKpyCouponsCampana` (consulta, `array_return`) — al pintar la ficha, las filas de la cesta y
+  la ventana «Añadido» (`KpcCampana`). Params: `id_product`, `id_product_attribute`, `tipos`
+  (string[]) y, desde la 3.2.0, `pct` (por tipo, el % que rebaja de verdad: con él la landing puede
+  nombrar un Special Price cargado por SQL, que no es promoción suya). Respuesta: null o {nombre,
+  clave, piel negra|clara, tipos ⇒ {label, background, color}}; se usa la primera con `tipos` y solo
+  colores `#rrggbb`. La contesta `kpypromolanding` (≥ 1.5.2 para `pct`).
 
 **Hooks que contesta este módulo** (los dispara quien pregunta, con `array_return`; sin este módulo no
 pasa nada): `actionKpyCouponsProductosConPromo` (`cart`, `id_shop`, `productos` int[] por referencia:
@@ -779,8 +812,9 @@ primero); `actionFrontControllerSetVariables` (`$modules.kpycoupons`); `actionDo
 `KPC_DOOFINDER = 0`).
 
 **Petición, cookie, URL, HTTP, pestaña**: el campo `kpy_regalo` (0|1) del formulario de la ficha
-(viaja en el refresco y al añadir); la cookie de PrestaShop `kpy_cupon` (`CODIGO` puesto, `!CODIGO`
-quitado a mano) y `kpy_canal` (shopping|email|social); el parámetro `?kpc=CODIGO`
+(viaja en el refresco y al añadir); la cookie de PrestaShop `kpy_cupon` (3.2.0: lista separada por
+comas de los cupones puestos y, con `!` delante, los quitados a mano; hasta la 3.1 un solo `CODIGO` o
+`!CODIGO`, que se sigue leyendo) y `kpy_canal` (shopping|email|social); el parámetro `?kpc=CODIGO`
 (`^[A-Za-z0-9_-]{2,32}$`) en cualquier URL; `POST /module/kpycoupons/aplicar` (`codigo`,
 `accion=poner|quitar` → `{ok, aplicado, codigo, pct, descuento}` o `{ok: false, motivo}`); la pestaña
 `AdminKpyPromociones` (`&editar=ID`, `&ver=ID#kpc-promo-ID`).
@@ -854,6 +888,7 @@ php tests/especial.php     # las cuentas del Special Price (encima de PriceShape
 php tests/flags.php        # las etiquetas: el %, qué sale en su ficha y en los listados, el chip de cada formato
 php tests/regalo.php       # el regalo: qué pequeño toca, las parejas y la cesta en todas las direcciones
 php tests/cupo.php         # el cupo: cuántas quedan, el reparto de lo que cabe, la 2ª unidad con tope, los nombres
+php tests/cookie.php       # la cookie de los cupones (3.2.0): varios puestos y quitados, lo de antes, el tope
 ```
 
 (`regalo.php` y `cupo.php` usan `mb_*`: con un PHP sin php.ini, `php -n -d extension_dir=… -d
@@ -864,8 +899,23 @@ del contenedor (`cat tests/servidor/cupo-pruebas.php | docker exec -i -u www-dat
 /var/www/html/kompy php85 php -- [--pedido]`): crean promociones y cestas del cliente de desarrollo,
 apagan las demás promociones mientras duran (y las vuelven a encender, pase lo que pase), y con
 `--pedido` hacen un pedido de verdad por transferencia, sin email. Nunca en producción.
-`cupo-pruebas.php` (el cupo, 96 comprobaciones), `regalo-pruebas.php` (el regalo, 113) y
-`mezcla-pruebas.php` (tres promociones en el mismo producto, 31).
+`cupo-pruebas.php` (el cupo, 96 comprobaciones), `regalo-pruebas.php` (el regalo, 113),
+`mezcla-pruebas.php` (tres promociones en el mismo producto, 31), `ficha-pruebas.php` (la ficha por
+HTTP, 61) y `cupones-pruebas.php` (3.2.0: varios cupones a la vez y la campaña en ficha y cesta, 63,
+con `--pedido` un pedido con dos cupones). Los que miran textos apagan la campaña de la landing
+mientras duran (la renombra todo) y la dejan como estaba.
+
+3.2.0, probado el 1/11/2026 en pruebas (`cupones-pruebas.php`, 63 comprobaciones, pedido #866304 con
+dos vales): cuatro cupones en cuatro marcas (dos «para todos», uno que pone el cliente, uno con cupo)
+y un Special Price de prueba; la ficha de la segunda marca no desmarca la primera; la cesta con dos y
+tres reglas, cada una con su importe; «Quitar», la papelera (sin JavaScript) y escribir el código;
+sin cookie antes del pedido, puesto es puesto y nada nuevo entra; robot sin nada; el cupón con cupo
+(vales `KPYCP`) al lado de otro; con la campaña encendida, los nombres y colores en el bloque, los
+chips enteros, la ficha con solo Special Price con la piel, las filas de la cesta y la ventana
+«Añadido» en colores de campaña, y el hook con `pct`. Regresión: ficha 61, cupo 82, regalo 115,
+acuerdos 102 (mezcla-pruebas no vale en pruebas desde que su regalo de muestra se quedó sin
+artículos). En el navegador (`bin/herramientas/cdp-cupones.mjs`, Chrome PC y móvil, y
+`pw-cupones.mjs`, Chrome, Firefox y WebKit/Safari, PC e iPhone): lo mismo visto y en capturas.
 
 2.4.0, probado el 19/10/2026 por la tarde en pruebas (`tests/servidor/cupo-pruebas.php`, sección J;
 126 comprobaciones en total, y otra vez con `--pedido`): un «Outlet» −30 % con las unidades en la
@@ -1033,6 +1083,11 @@ los precios vueltos a los de siempre):
      `kpyproductbuy` se desinstala. Se puede ejecutar más de una vez.
    - `upgrade-3.1.0.php` (26/10/2026, «¿Dónde se ve?»): la columna `kpy_coupon.ver_canal` (vacía = en
      toda la tienda, como hasta ahora). Nada más. Va con `kpypromolanding` 1.5.1.
+   - `upgrade-3.2.0.php` (1/11/2026, varios cupones a la vez y la campaña en toda la ficha y la
+     cesta): nada en la base de datos (la cookie pasa a ser una lista y lo de antes se lee igual; sin
+     tablas ni hooks nuevos); solo repasa las filas de los hooks propios. Va con `kpypromolanding`
+     1.5.2 (el hook de campaña con `pct`; con la 1.5.1 todo funciona igual salvo el nombre de campaña
+     de un Special Price cargado por SQL en la ficha). Se puede ejecutar más de una vez.
 3. Comprobar los hooks (`Kpycoupons::HOOKS`): `actionCartSave`,
    `displayShoppingCartAfterDetailedTotals`, `actionFrontControllerSetMedia`,
    `actionFrontControllerInitAfter`, `actionProductFlagsModifier` (**después** de `kpygifts`,

@@ -12,9 +12,12 @@
  *      línea); las unidades que sí llevan el Special Price lo recuperan en el paso 6.
  *   4. **2ª unidad**: solo con las unidades que paga el cliente (las regaladas no cuentan), y con
  *      cupo, solo las parejas que caben.
- *   5. **Cupón**: se decide cuál va puesto (el elegido, el escrito o el que entra solo) y se pone o
- *      se quita. El descuento lo calcula PrestaShop con su regla de carrito; con cupo, un vale de la
- *      cesta por producto con las unidades que caben (`KpcCupoCesta::cupon`).
+ *   5. **Cupones**: se decide cuáles van puestos (los que el cliente lleva puestos, los escritos, los
+ *      que entran solos) y se ponen o se quitan. Desde la 3.2.0 pueden ir **varios a la vez** (uno
+ *      por marca: cada uno descuenta solo sus artículos, porque su regla de carrito va por
+ *      combinación exacta y el reparto no da un artículo a dos cupones). El descuento lo calcula
+ *      PrestaShop con la regla de cada uno; con cupo, un vale de la cesta por producto con las
+ *      unidades que caben (`KpcCupoCesta::cupon`).
  *   6. **Los vales del regalo** (`KpcRegalo::regla`) y **del Special Price** de las unidades que
  *      lo conservan en una línea que va al precio habitual (`KpcRegalo::reglaEspecial`), los
  *      últimos: sobre lo que ya cuesta tras los pasos anteriores.
@@ -37,13 +40,15 @@ class KpcCarrito
     }
 
     /**
-     * @param string $codigo el cupón que el cliente lleva elegido (vacío si ninguno)
-     * @param callable|null $entraSolo fn(array $cupon): bool — si no hay elegido, ¿este entra solo
-     *                                 (web o canal de la visita)?
-     * @param callable|null $adoptar fn(string $codigo): bool — el cliente ha escrito otro código en
-     *                               la cesta: pasa a ser el elegido (false = no, que lo acaba de quitar)
+     * @param string[] $codigos los cupones que el cliente lleva puestos (vacío si ninguno)
+     * @param callable|null $entraSolo fn(array $cupon): bool — ¿este cupón entra solo (web o canal de
+     *                                 la visita)? Dice que no si el cliente lo quitó
+     * @param callable|null $adoptar fn(string $codigo): bool — la cesta trae la regla de un cupón que
+     *                               el cliente no lleva puesto (lo escribió en «¿Tienes un cupón?», o
+     *                               la petición viene sin cookie): pasa a ser suyo (false = no, que lo
+     *                               acaba de quitar)
      */
-    public static function sincronizar(Cart $cart, string $codigo, int $idTienda, ?callable $entraSolo = null, ?callable $adoptar = null): void
+    public static function sincronizar(Cart $cart, array $codigos, int $idTienda, ?callable $entraSolo = null, ?callable $adoptar = null): void
     {
         if (self::$dentro || !$cart->id) {
             return;
@@ -68,9 +73,9 @@ class KpcCarrito
                 $cart->getProducts(true);
             }
             self::segundasUnidades($cart, $idTienda, $regaladas);
-            $cuponPuesto = self::cupon($cart, $codigo, $idTienda, $regaladas, $entraSolo, $adoptar);
+            $cuponesPuestos = self::cupones($cart, $codigos, $idTienda, $regaladas, $entraSolo, $adoptar);
             self::valesMuertos($cart, $idTienda);
-            KpcRegalo::regla($cart, $idTienda, $regalos, $cuponPuesto);
+            KpcRegalo::regla($cart, $idTienda, $regalos, $cuponesPuestos);
             KpcRegalo::reglaEspecial($cart, $regalos, $cupoEspecial['con'] ?? []);
             if (!empty($regalos['cambiado'])) {
                 // Las líneas han cambiado dentro del guardado: que quien siga con esta cesta en la
@@ -115,119 +120,134 @@ class KpcCarrito
     }
 
     /**
-     * El cupón de Kompy que va puesto en esta cesta (solo puede haber uno). Devuelve su fila si al
-     * final queda puesto, o null.
+     * Los cupones de Kompy que van puestos en esta cesta (3.2.0: varios a la vez, uno por marca).
+     * Devuelve las filas de los que al final quedan puestos y descuentan algo.
      *
+     * Qué cupones se quieren en la cesta, por este orden (un cupón se quiere una vez; el que el
+     * cliente acaba de quitar con la papelera, `$adoptar` lo deja fuera):
+     *   1. los que el cliente lleva **puestos** (la cookie), si siguen en marcha;
+     *   2. los que **ya están en la cesta** y siguen en marcha: el cliente escribió el código en
+     *      «¿Tienes un cupón?» (PrestaShop lo mete sin avisar) o la petición llega sin su cookie (la
+     *      notificación servidor a servidor de la pasarela: PrestaShop lanza
+     *      `actionValidateOrderBefore` antes de comparar el total con lo pagado; o un canal que ya no
+     *      se recuerda, que caduca a las 24 h). Se adoptan: **puesto es puesto** hasta que el cliente
+     *      lo quite. Sin esto se quitaban vales, subía el total y el pedido nacía en «Error de pago»
+     *      (revisión del 26/10/2026);
+     *   3. los de cupo cuyos vales (`KPYCP-…`) ya están en la cesta, por lo mismo;
+     *   4. los que **entran solos** (para todos o por el canal de la visita) y tienen algo suyo en la
+     *      cesta que el cliente paga (un regalo no hace entrar un cupón).
+     * Las demás reglas de Kompy que hubiera en la cesta (un cupón terminado o apagado, uno que el
+     * cliente ha quitado) se quitan. Y cada uno de los que se quieren se pone si descuenta algo (su
+     * regla, o con cupo sus vales por producto) y se quita si ya no descuenta nada (regla de oro).
+     *
+     * Dos cupones nunca descuentan lo mismo: el reparto (`KpcReparto`) da cada artículo a una sola
+     * promoción y la regla de cada cupón va por combinación exacta (`KpcCupon::restringirRegla`), así
+     * que PrestaShop aplica a cada artículo como mucho una. Hasta la 3.1 aquí solo cabía un cupón:
+     * poner el de Advance quitaba el de Specific de la misma cesta.
+     *
+     * @param string[] $codigos los cupones que el cliente lleva puestos
      * @param array<int, int> $regaladas clave => unidades regaladas (no cuentan para que un cupón entre solo)
+     *
+     * @return array<int, array> las filas de los cupones puestos, por id de promoción
      */
-    private static function cupon(Cart $cart, string $codigo, int $idTienda, array $regaladas, ?callable $entraSolo, ?callable $adoptar): ?array
+    private static function cupones(Cart $cart, array $codigos, int $idTienda, array $regaladas, ?callable $entraSolo, ?callable $adoptar): array
     {
         $nuestras = self::reglasDeKompy($idTienda);
         $puestas = array_map('intval', array_column($cart->getCartRules(), 'id_cart_rule'));
         $conCupo = KpcCupoCesta::reglasCupon($cart);
-
-        $deseada = 0;
-        if ($codigo !== '') {
-            $cupon = KpcCupon::porCodigo($codigo, $idTienda);
-            $deseada = $cupon !== null ? (int) $cupon['id_cart_rule'] : 0;
-        }
-
-        // Aquí nunca se deja más de un cupón de Kompy; si hay otro puesto, lo ha escrito el
-        // cliente en «¿Tienes un cupón?» (PrestaShop lo mete sin avisar). Manda ese: es lo
-        // último que ha hecho. Antes se quitaba en cuanto cambiaba una cantidad.
-        foreach ($puestas as $id) {
-            if (!isset($nuestras[$id]) || $id === $deseada) {
-                continue;
-            }
-            // Solo si sigue en marcha: uno apagado o terminado se quita abajo.
-            $escrito = KpcCupon::porCodigo($nuestras[$id], $idTienda);
-            // `$adoptar` dice que no si es el que el cliente acaba de quitar con la papelera.
-            if ($escrito !== null && (int) $escrito['id_cart_rule'] === $id
-                && ($adoptar === null || $adoptar($nuestras[$id]))) {
-                $deseada = $id;
-                break;
+        $enVigor = [];
+        foreach (KpcCupon::enVigor($idTienda) as $cupon) {
+            if (($cupon['tipo'] ?? 'cupon') === 'cupon' && (int) $cupon['id_cart_rule'] > 0) {
+                $enVigor[(int) $cupon['id_kpy_coupon']] = $cupon;
             }
         }
-
-        // Sin elegido ni regla base que adoptar, pero con los vales (`KPYCP-…`) de un cupón con cupo ya en
-        // esta cesta: ese cupón sigue puesto, igual que se adopta la regla base de uno sin cupo. Puesto es
-        // puesto hasta que el cliente lo quite con la papelera (`$adoptar` dice que no justo entonces). Es
-        // el caso de una petición sin la cookie del cliente (la notificación servidor a servidor de la
-        // pasarela: PrestaShop lanza `actionValidateOrderBefore` antes de comparar el total con lo pagado)
-        // y el de un canal que ya no se recuerda (caduca a las 24 h desde la 3.1.0): sin esto se quitaban
-        // los vales, subía el total y el pedido nacía en «Error de pago» (revisión del 26/10/2026).
-        if ($deseada <= 0 && $conCupo !== []) {
-            $promosConCupo = array_map('intval', array_values($conCupo));
-            foreach (KpcCupon::enVigor($idTienda) as $cupon) {
-                if (($cupon['tipo'] ?? 'cupon') === 'cupon' && (int) $cupon['id_cart_rule'] > 0
-                    && in_array((int) $cupon['id_kpy_coupon'], $promosConCupo, true)
-                    && ($adoptar === null || $adoptar((string) $cupon['codigo']))) {
-                    $deseada = (int) $cupon['id_cart_rule'];
-                    break;
-                }
-            }
+        $porRegla = [];
+        $porCodigo = [];
+        foreach ($enVigor as $id => $cupon) {
+            $porRegla[(int) $cupon['id_cart_rule']] = $id;
+            $porCodigo[mb_strtoupper((string) $cupon['codigo'])] = $id;
         }
 
-        // Sin elegido: el que entra solo (web o canal), el que más descuenta de los que tienen
-        // algo en esta cesta (algo que el cliente paga: un regalo no hace entrar un cupón).
-        if ($deseada <= 0 && $entraSolo !== null) {
+        /** @var array<int, array> id de promoción => fila */
+        $deseados = [];
+        // 1. Los que el cliente lleva puestos.
+        foreach ($codigos as $codigo) {
+            $id = $porCodigo[mb_strtoupper(trim((string) $codigo))] ?? null;
+            if ($id !== null) {
+                $deseados[$id] = $enVigor[$id];
+            }
+        }
+        // 2. Los que ya están en la cesta (escritos, o sin cookie): se adoptan, salvo el recién quitado.
+        foreach ($puestas as $idRegla) {
+            $id = $porRegla[$idRegla] ?? null;
+            if ($id !== null && !isset($deseados[$id]) && isset($nuestras[$idRegla])
+                && ($adoptar === null || $adoptar((string) $enVigor[$id]['codigo']))) {
+                $deseados[$id] = $enVigor[$id];
+            }
+        }
+        // 3. Los de cupo con sus vales ya en la cesta.
+        foreach (array_unique(array_map('intval', array_values($conCupo))) as $id) {
+            if (isset($enVigor[$id]) && !isset($deseados[$id]) && KpcCupo::tieneCupo($enVigor[$id])
+                && ($adoptar === null || $adoptar((string) $enVigor[$id]['codigo']))) {
+                $deseados[$id] = $enVigor[$id];
+            }
+        }
+        // 4. Los que entran solos, con algo suyo pagado en la cesta.
+        if ($entraSolo !== null) {
             $enCesta = KpcReparto::deClaves($idTienda, self::clavesPagadas($cart, $regaladas));
-            foreach (KpcCupon::enVigor($idTienda) as $cupon) {
-                if (($cupon['tipo'] ?? 'cupon') === 'cupon' && (int) $cupon['id_cart_rule'] > 0
-                    && !empty($enCesta[(int) $cupon['id_kpy_coupon']]) && $entraSolo($cupon)) {
-                    $deseada = (int) $cupon['id_cart_rule'];
-                    break;
+            foreach ($enVigor as $id => $cupon) {
+                if (!isset($deseados[$id]) && !empty($enCesta[$id]) && $entraSolo($cupon)) {
+                    $deseados[$id] = $cupon;
                 }
             }
         }
 
-        // Solo puede haber un cupón de Kompy a la vez (también entre los vales de cupón con cupo).
-        foreach ($puestas as $id) {
-            if (isset($nuestras[$id]) && $id !== $deseada) {
-                $cart->removeCartRule($id);
-            }
+        // Fuera lo que no se quiere: las reglas de Kompy de la cesta que no son de un cupón deseado
+        // (también las de cupones terminados o apagados) y los vales de cupo de otras promociones.
+        $reglasDeseadas = [];
+        foreach ($deseados as $cupon) {
+            $reglasDeseadas[(int) $cupon['id_cart_rule']] = true;
         }
-        $promoDeseada = 0;
-        $cuponDeseado = null;
-        if ($deseada > 0) {
-            foreach (KpcCupon::enVigor($idTienda) as $cupon) {
-                if ((int) $cupon['id_cart_rule'] === $deseada) {
-                    $cuponDeseado = $cupon;
-                    $promoDeseada = (int) $cupon['id_kpy_coupon'];
-                    break;
-                }
+        foreach ($puestas as $idRegla) {
+            if (isset($nuestras[$idRegla]) && !isset($reglasDeseadas[$idRegla])) {
+                $cart->removeCartRule($idRegla);
             }
         }
         foreach ($conCupo as $idRegla => $idPromo) {
-            if ($idPromo !== $promoDeseada) {
+            if (!isset($deseados[(int) $idPromo])) {
                 KpcVale::quitar($cart, $idRegla);
             }
         }
 
-        if ($cuponDeseado === null) {
-            return null;
-        }
-        $regla = new CartRule($deseada);
-        if (!Validate::isLoadedObject($regla)) {
-            return null;
+        // Cada uno de los deseados: puesto si descuenta algo, fuera si no.
+        $salida = [];
+        $suyos = null;
+        foreach ($deseados as $id => $cupon) {
+            $idRegla = (int) $cupon['id_cart_rule'];
+            // Con cupo, nada de la regla del cupón: un vale por producto con las unidades que caben.
+            if (KpcCupo::tieneCupo($cupon)) {
+                $suyos ??= KpcReparto::deClaves($idTienda, KpcReparto::clavesDe($cart->getProducts()));
+                if (KpcCupoCesta::cupon($cart, $cupon, $idTienda, $suyos[$id] ?? [], $regaladas) > 0) {
+                    $salida[$id] = $cupon;
+                }
+                continue;
+            }
+            $regla = new CartRule($idRegla);
+            if (!Validate::isLoadedObject($regla)) {
+                continue;
+            }
+            $valor = self::descuento($regla, $cart);
+            if ($valor > 0 && !in_array($idRegla, $puestas, true)) {
+                $cart->addCartRule($idRegla);
+            } elseif ($valor <= 0 && in_array($idRegla, $puestas, true)) {
+                $cart->removeCartRule($idRegla);
+            }
+            if ($valor > 0) {
+                $salida[$id] = $cupon;
+            }
         }
 
-        // Con cupo, nada de la regla del cupón: un vale por producto con las unidades que caben.
-        if (KpcCupo::tieneCupo($cuponDeseado)) {
-            $suyos = KpcReparto::deClaves($idTienda, KpcReparto::clavesDe($cart->getProducts()))[$promoDeseada] ?? [];
-            $valor = KpcCupoCesta::cupon($cart, $cuponDeseado, $idTienda, $suyos, $regaladas);
-
-            return $valor > 0 ? $cuponDeseado : null;
-        }
-
-        $valor = self::descuento($regla, $cart);
-        if ($valor > 0 && !in_array($deseada, $puestas, true)) {
-            $cart->addCartRule($deseada);
-        } elseif ($valor <= 0 && in_array($deseada, $puestas, true)) {
-            $cart->removeCartRule($deseada);
-        }
-
-        return $valor > 0 ? $cuponDeseado : null;
+        return $salida;
     }
 
     /**

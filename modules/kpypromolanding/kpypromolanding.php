@@ -82,7 +82,7 @@ class Kpypromolanding extends Module
     {
         $this->name = 'kpypromolanding';
         $this->tab = 'front_office_features';
-        $this->version = '1.5.1';
+        $this->version = '1.5.2';
         $this->author = 'Kompy';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -782,7 +782,11 @@ class Kpypromolanding extends Module
      * precio. Null si no hay campaña o el producto no entra.
      *
      * Parámetros: `id_product`, `id_product_attribute` y `tipos` (los tipos que hay en pantalla:
-     * cupon, segunda_unidad, special_price); si llegan tipos, solo se contestan esos.
+     * cupon, segunda_unidad, special_price); si llegan tipos, solo se contestan esos. Y desde
+     * kpycoupons 3.2.0, `pct` (por tipo, el % que rebaja de verdad): con él, un Special Price del
+     * catálogo que no es promoción de Kompy · Promociones (cargado por SQL) se nombra como en los
+     * listados y en el feed («Black Friday −10 %», o «Black Friday» a secas sin %), cuando entra
+     * todo (ninguna promoción marcada en el paso 6). Sin `pct` (kpycoupons 3.0/3.1), como hasta ahora.
      *
      * @return ?array{nombre: string, clave: string, piel: string, tipos: array<string, array{label: string, background: string, color: string}>}
      */
@@ -794,12 +798,16 @@ class Kpypromolanding extends Module
         }
         $suyas = KplPromos::enCampana($c, (int) ($params['id_product'] ?? $params['product']['id_product'] ?? 0));
         $pedidos = array_values(array_filter(array_map('strval', (array) ($params['tipos'] ?? []))));
+        $pct = is_array($params['pct'] ?? null) ? $params['pct'] : null;
+        if ($pct !== null && !isset($suyas['special_price']) && in_array('special_price', $pedidos, true) && KplPromos::promoEntra($c, 0)) {
+            $suyas['special_price'] = (float) ($pct['special_price'] ?? 0);
+        }
         $tipos = [];
-        foreach ($suyas as $tipo => $pct) {
+        foreach ($suyas as $tipo => $p) {
             if ($pedidos !== [] && !in_array((string) $tipo, $pedidos, true)) {
                 continue;
             }
-            $e = KplCampanas::etiqueta($c, (string) $tipo, (float) $pct);
+            $e = $this->etiquetaDeCampana($c, (string) $tipo, (float) $p);
             if ($e !== null) {
                 $tipos[(string) $tipo] = $e;
             }

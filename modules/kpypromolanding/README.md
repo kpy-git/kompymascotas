@@ -271,11 +271,15 @@ sin `require` de ficheros ajenos.
   cuenta módulo a módulo; el nuestro suele ser el 6).
 - `actionKpyCouponsGuardar` (params `version`, `id`, `valores`, `promocion`): guarda lo del paso en
   `kpy_promo_promo`, solo si el formulario traía `kpl_paso6`.
-- `actionKpyCouponsCampana` (consulta: lo dispara kpycoupons al pintar la ficha y la cesta, con
-  `array_return`; params `id_product`, `id_product_attribute`, `tipos` (los tipos en pantalla: cupon,
-  segunda_unidad, special_price)): null, o `{nombre, clave, piel, tipos: {tipo: {label, background,
-  color}}}` solo con los tipos pedidos. Sustituye a `actionKpyProductBuyCapa` (el hook del módulo de
-  la ficha, retirado en la 1.4.0; `upgrade-1.4.0.php` registra el nuevo y quita el viejo).
+- `actionKpyCouponsCampana` (consulta: lo dispara kpycoupons al pintar la ficha, las filas de la
+  cesta y la ventana «Añadido», con `array_return`; params `id_product`, `id_product_attribute`,
+  `tipos` (los tipos en pantalla: cupon, segunda_unidad, special_price) y, desde kpycoupons 3.2.0,
+  `pct` (por tipo, el % que rebaja de verdad)): null, o `{nombre, clave, piel, tipos: {tipo: {label,
+  background, color}}}` solo con los tipos pedidos. Con `pct`, un Special Price del catálogo que no
+  es promoción de Kompy · Promociones (cargado por SQL) se nombra como en los listados y el feed
+  («Black Friday −10 %», o «Black Friday» sin %) cuando entra todo (1.5.2). Sustituye a
+  `actionKpyProductBuyCapa` (el hook del módulo de la ficha, retirado en la 1.4.0;
+  `upgrade-1.4.0.php` registra el nuevo y quita el viejo).
 - `actionKpyCouponsResumen` (param `resumen`, por referencia): los nombres y colores de campaña en
   la cesta («Cupón Black −10 % · EUKA10», «Black Friday en 2 productos»).
 - `actionProductFlagsModifier`: las etiquetas de campaña (solo con campaña viva), el último después de
@@ -310,7 +314,7 @@ sin `require` de ficheros ajenos.
 - `actionPresentProductListing`: la foto de las tarjetas (en las páginas de la landing; en toda la
   tienda si se marca).
 - `displayKpyPromoMarca`: el bloque de promociones vivas de una marca. Lo llaman dos plantillas de
-  `kpymanufacturer` (parche en `entregas/parche-promociones-menu-y-marcas-2026-10-14`): en la
+  `kpymanufacturer` (parche en `entregas/archivo/parche-promociones-menu-y-marcas-2026-10-14`): en la
   genérica sustituye al slider de banners fijos mientras haya promoción; en la de Boske, a la
   sección fija. Sin promoción devuelve vacío. Con campaña viva, su piel.
 - `displayBanner`: la cinta de campaña, el color del texto de las etiquetas de campaña y el estilo
@@ -604,3 +608,14 @@ ve quien llega de Google» en vez de «aún sin sincronizar», con su cuenta apa
 CSS, según el radio del paso 4) de que lo escrito se guarda pero no sale. `KplPromociones::normalizar` lee
 `ver_canal` (vacío si la fila es anterior). Sin cambios en tablas ni hooks; solo versión. (Revisión
 adversaria del 26/10 por la tarde.)
+
+### 1.5.2 (1/11/2026): el hook de campaña con `pct`
+
+Con `kpycoupons` 3.2.0 la ficha, las filas de la cesta y la ventana «Añadido» preguntan la capa de
+campaña (`actionKpyCouponsCampana`) también para un formato con **solo Special Price**, y mandan en
+`pct` el % que rebaja de verdad. `hookActionKpyCouponsCampana` lo usa para nombrar un Special Price
+del catálogo que no es promoción de Kompy · Promociones (cargado por SQL) igual que ya hacía en los
+listados (`hookActionProductFlagsModifier`) y en el feed de Doofinder: «Black Friday −10 %», o
+«Black Friday» a secas sin %, cuando entra todo (ninguna promoción marcada en el paso 6). Sin `pct`
+(kpycoupons 3.0/3.1), exactamente como antes. Sin cambios en tablas ni hooks; solo versión. Probado
+en pruebas el 1/11 (`kpycoupons/tests/servidor/cupones-pruebas.php`, apartado I).

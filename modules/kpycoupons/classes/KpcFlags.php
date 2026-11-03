@@ -496,6 +496,26 @@ class KpcFlags
     }
 
     /**
+     * El nombre de campaña de una etiqueta, para el chip de la tarjeta: entero si cabe («Reyes −10 %»)
+     * y, si no, sin el % («Cupón Black −10 %» → «Cupón Black», «Black Friday −25 %» → «Black Friday»):
+     * el % ya lo dicen la etiqueta de la foto y el precio. Hasta la 3.1 se cortaba a secas y salía
+     * «Cupón Black −1» (visto en producción el 1/11/2026).
+     */
+    public static function cortoCampana(string $texto, int $max = self::CHIP_MAX): string
+    {
+        $texto = trim($texto);
+        if (mb_strlen($texto) <= $max) {
+            return $texto;
+        }
+        $sin = trim((string) preg_replace('/\s*[−\-–]\s*\d+(?:[,.]\d+)?\s*%/u', '', $texto));
+        if ($sin !== '' && mb_strlen($sin) <= $max) {
+            return $sin;
+        }
+
+        return self::corto($sin !== '' ? $sin : $texto, $max);
+    }
+
+    /**
      * ¿Puede esta etiqueta ir junto a «Special Price»? Solo las que no hablan de precio: «Top
      * ventas», «Nuevo», las de popularidad y «agotado».
      *
@@ -845,13 +865,13 @@ class KpcFlags
         // portada y el feed de Doofinder, nunca: un bloque cacheado por Smarty, como el de la portada, se
         // pintaría para todos con lo que viera el primer visitante). Y quien ya lo lleva puesto, lo ve.
         $canal = Kpycoupons::canalDeLaVisita();
-        $puesto = mb_strtoupper(Kpycoupons::cuponPuesto());
+        $puestos = array_map('mb_strtoupper', Kpycoupons::cuponesPuestos());
         // `enVigor` las devuelve en orden de mando: la primera que toca un formato, manda.
         $cupones = [];
         $regalos = [];
         foreach (KpcCupon::enVigor($idTienda) as $c) {
             $porCanal = (string) ($c['ver_canal'] ?? '') !== '';
-            if (KpcElegibles::esPrecio($c) || (!KpcElegibles::seVe($c, $canal) && !($porCanal && $puesto !== '' && mb_strtoupper((string) $c['codigo']) === $puesto))) {
+            if (KpcElegibles::esPrecio($c) || (!KpcElegibles::seVe($c, $canal) && !($porCanal && in_array(mb_strtoupper((string) $c['codigo']), $puestos, true)))) {
                 // Un cupón que no se enseña (o solo a quien llega de un canal, y esta visita no) tampoco se
                 // anuncia; el Special Price lleva la suya.
                 continue;

@@ -895,11 +895,12 @@ class KpcRegalo
      * línea y el descuento. Las reglas de productos que ya no se regalan se quitan.
      *
      * @param array $plan lo que devuelve `aplicar()`
-     * @param array|null $cuponPuesto la fila del cupón de Kompy puesto en la cesta, si hay
+     * @param array<int, array> $cuponesPuestos las filas de los cupones de Kompy puestos en la cesta
+     *                                          (3.2.0: varios a la vez), si hay
      *
      * @return float lo que descuentan los regalos en esta cesta
      */
-    public static function regla(Cart $cart, int $idTienda, array $plan, ?array $cuponPuesto = null): float
+    public static function regla(Cart $cart, int $idTienda, array $plan, array $cuponesPuestos = []): float
     {
         $productos = $cart->getProducts(true);
         $puestas = array_map('intval', array_column($cart->getCartRules(), 'id_cart_rule'));
@@ -919,11 +920,16 @@ class KpcRegalo
             $porProducto[$idProducto]['nombres'][] = (int) $totales[$clave] . ' × ' . self::nombreCorto((string) ($linea['name'] ?? ''), (string) ($linea['attributes'] ?? ''));
         }
 
-        // El % del cupón de Kompy puesto, si le llega a algún regalo.
+        // El % del cupón de Kompy puesto que le llega a cada regalo, si hay (un artículo está como
+        // mucho en un cupón: el reparto no lo da a dos).
         $cubiertas = [];
-        if ($cuponPuesto !== null && (float) ($cuponPuesto['porcentaje'] ?? 0) > 0) {
-            $reparto = KpcReparto::deClaves($idTienda, array_keys($totales));
-            $cubiertas = array_fill_keys($reparto[(int) $cuponPuesto['id_kpy_coupon']] ?? [], (float) $cuponPuesto['porcentaje']);
+        $reparto = null;
+        foreach ($cuponesPuestos as $cuponPuesto) {
+            if (!is_array($cuponPuesto) || (float) ($cuponPuesto['porcentaje'] ?? 0) <= 0) {
+                continue;
+            }
+            $reparto ??= KpcReparto::deClaves($idTienda, array_keys($totales));
+            $cubiertas += array_fill_keys($reparto[(int) $cuponPuesto['id_kpy_coupon']] ?? [], (float) $cuponPuesto['porcentaje']);
         }
 
         // Hasta cuándo valen las reglas: hasta que acaba la promoción más larga de las que regalan.

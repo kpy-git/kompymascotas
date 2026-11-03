@@ -174,18 +174,59 @@ class KpcLineas
 
     /**
      * Lo que dice una fila de la cesta debajo de su nombre: un bloque por promoción, cada uno con su
-     * chip y su color. Vacío si no lleva ninguna.
+     * chip y su color. Vacío si no lleva ninguna. Durante una campaña (Black Friday), el chip y los
+     * colores de campaña en los bloques de cupón, 2ª unidad y Special Price (`KpcCampana`), como en la
+     * ficha, la etiqueta de la foto y los vales del resumen (3.2.0; hasta entonces iban con los de siempre).
      *
      * @param object|array $linea la fila presentada (con `kpy_parte` si es una parte de su línea)
      *
      * @return array<int, array{tipo: string, icono: string, chip: string, fuerte: string, texto: string,
-     *               precio: string, tachado: string, sub: string}>
+     *               precio: string, tachado: string, sub: string, estilo: string, estilo_chip: string, campana: bool}>
      */
     public static function bloques($linea, Cart $cart, int $idTienda, Kpycoupons $modulo): array
     {
+        $bloques = self::bloquesBase($linea, $cart, $idTienda, $modulo);
+        $tipos = [];
+        $pct = [];
+        foreach ($bloques as $b) {
+            $tipo = KpcCampana::tipoDe((string) $b['tipo']);
+            if ($tipo !== '') {
+                $tipos[$tipo] = true;
+                if (isset($b['pct']) && (float) $b['pct'] > 0) {
+                    $pct[$tipo] = (float) $b['pct'];
+                }
+            }
+        }
+        $campana = $tipos !== [] ? KpcCampana::de((int) $linea['id_product'], (int) $linea['id_product_attribute'], array_keys($tipos), $pct) : null;
+        foreach ($bloques as $i => $b) {
+            unset($bloques[$i]['pct']);
+            $tipo = KpcCampana::tipoDe((string) $b['tipo']);
+            $e = $tipo !== '' ? KpcCampana::etiqueta($campana, $tipo) : null;
+            if ($e === null) {
+                continue;
+            }
+            // El fondo de la campaña con su texto; el chip, al revés (como el icono de los vales del resumen).
+            $bloques[$i]['chip'] = $e['label'];
+            $bloques[$i]['estilo'] = 'background-color:' . $e['background'] . ';color:' . $e['color'];
+            $bloques[$i]['estilo_chip'] = 'background-color:' . $e['color'] . ';color:' . $e['background'];
+            $bloques[$i]['campana'] = true;
+        }
+
+        return array_values($bloques);
+    }
+
+    /**
+     * Los bloques de una fila con los nombres y colores de siempre (`bloques()` les pone encima la
+     * campaña). Cada uno trae `pct`, el % que anuncia, para la capa de campaña.
+     *
+     * @param object|array $linea la fila presentada
+     */
+    private static function bloquesBase($linea, Cart $cart, int $idTienda, Kpycoupons $modulo): array
+    {
         $t = static fn (string $s, array $r = []): string => $modulo->t($s, $r);
         $bloque = static fn (string $tipo, string $chip, array $resto = []): array => $resto
-            + ['tipo' => $tipo, 'icono' => '', 'chip' => $chip, 'fuerte' => '', 'texto' => '', 'precio' => '', 'tachado' => '', 'sub' => ''];
+            + ['tipo' => $tipo, 'icono' => '', 'chip' => $chip, 'fuerte' => '', 'texto' => '', 'precio' => '', 'tachado' => '', 'sub' => '',
+                'estilo' => '', 'estilo_chip' => '', 'campana' => false, 'pct' => 0.0];
         $clave = KpcAlcance::clave((int) $linea['id_product'], (int) $linea['id_product_attribute']);
         $n = (int) $linea['quantity'];
         $parte = (string) ($linea['kpy_parte'] ?? '');
@@ -218,6 +259,7 @@ class KpcLineas
 
             return [$bloque((string) ($d['etiqueta_clase'] ?: 'especial'), $etiqueta, [
                 'icono' => 'especial',
+                'pct' => (float) KpcFlags::pct((float) $d['precio'], (float) $d['hoy']),
                 'texto' => $t('Con su %promo%, %precio% la ud.', ['%promo%' => $etiqueta, '%precio%' => self::euros($d['hoy'])]),
                 'sub' => $n > 1
                     ? $t('La diferencia (%n% × %dif%) va en el vale «%promo%»', ['%n%' => $n, '%dif%' => self::euros($diferencia), '%promo%' => $etiqueta])
@@ -241,6 +283,7 @@ class KpcLineas
             $etiqueta = (string) ($promos['etiqueta'] ?? 'Special Price');
             $bloques[] = $bloque((string) ($promos['clase'] ?? 'especial'), $etiqueta, [
                 'icono' => 'especial',
+                'pct' => (float) KpcFlags::pct((float) $promos['habitual'], $precio),
                 'texto' => $t('Ahorras %ahorro% más', ['%ahorro%' => self::euros(round(($promos['habitual'] - $precio) * $n, 2))]),
                 'sub' => $n > 1
                     ? $t('Precio habitual %precio% la ud.', ['%precio%' => self::euros($promos['habitual'])])
@@ -253,25 +296,25 @@ class KpcLineas
             $tope = $promos['segunda']['n'] ?? null;
             if ($tope !== null && $tope < $pares) {
                 // Con cupo: solo las parejas que han cabido.
-                $bloques[] = $bloque('segunda', $t('2ª ud. −%pct% %', ['%pct%' => $pct]), $tope > 0 ? [
+                $bloques[] = $bloque('segunda', $t('2ª ud. −%pct% %', ['%pct%' => $pct]), ['pct' => (float) $promos['segunda']['pct']] + ($tope > 0 ? [
                     'texto' => $t('Te ahorras %ahorro% en %n% ud.', ['%ahorro%' => self::euros(round($tope * $precio * $promos['segunda']['pct'] / 100, 2)), '%n%' => $tope]),
                     'sub' => $t('Las demás van sin descuento: se ha agotado el cupo de la promoción'),
                 ] : [
                     'texto' => $t('Se ha agotado el cupo de la promoción: estas unidades van sin descuento'),
-                ]);
+                ]));
             } else {
-                $bloques[] = $bloque('segunda', $t('2ª ud. −%pct% %', ['%pct%' => $pct]), $pares > 0 ? [
+                $bloques[] = $bloque('segunda', $t('2ª ud. −%pct% %', ['%pct%' => $pct]), ['pct' => (float) $promos['segunda']['pct']] + ($pares > 0 ? [
                     'texto' => $t('Te ahorras %ahorro%', ['%ahorro%' => self::euros(round($pares * $precio * $promos['segunda']['pct'] / 100, 2))]),
                     'sub' => $t('Va en el vale «2ª unidad al −%pct% %»', ['%pct%' => $pct]),
                 ] : [
                     'texto' => $t('Con otra, la 2ª va al −%pct% %', ['%pct%' => $pct]),
-                ]);
+                ]));
             }
         }
         if (isset($promos['cupon'])) {
             $conCupon = $promos['cupon']['n'] ?? null;
             $uds = $conCupon !== null ? min($n, $conCupon) : $n;
-            $bloques[] = $bloque('cupon', $t('Cupón −%pct% %', ['%pct%' => KpcElegibles::pct($promos['cupon']['pct'])]), $uds < $n ? [
+            $bloques[] = $bloque('cupon', $t('Cupón −%pct% %', ['%pct%' => KpcElegibles::pct($promos['cupon']['pct'])]), ['pct' => (float) $promos['cupon']['pct']] + ($uds < $n ? [
                 'texto' => $uds > 0
                     ? $t('Te ahorras %ahorro% en %n% ud.', ['%ahorro%' => self::euros(round($precio * $uds * $promos['cupon']['pct'] / 100, 2)), '%n%' => $uds])
                     : $t('Se ha agotado el cupo del cupón: estas unidades van sin descuento'),
@@ -279,7 +322,7 @@ class KpcLineas
             ] : [
                 'texto' => $t('Te ahorras %ahorro%', ['%ahorro%' => self::euros(round($precio * $n * $promos['cupon']['pct'] / 100, 2))]),
                 'sub' => $t('Con el cupón %codigo%', ['%codigo%' => $promos['cupon']['codigo']]),
-            ]);
+            ]));
         }
 
         return $bloques;

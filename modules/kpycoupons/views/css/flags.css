@@ -81,6 +81,11 @@
 .kpc-lr__texto strong{font-weight:800}
 .kpc-lr__texto s{margin-left:2px;color:#6b7280;font-weight:400}
 .kpc-lr__sub{color:#4b5a61;font-size:12.5px}
+/* Durante una campaña el bloque lleva sus colores en línea (fondo negro, texto dorado…): el texto
+   pequeño y el tachado heredan el color en vez del gris de siempre. */
+.kpc-lr--campana .kpc-lr__sub{color:inherit;opacity:.82}
+.kpc-lr--campana .kpc-lr__texto s{color:inherit;opacity:.7}
+.kpc-lr--campana .kpc-lr__chip{padding-left:9px}
 
 /* La ventana «Añadido a tu carrito» (hook displayCartModalFooter del tema): la promoción de la línea que
    acaba de entrar, encima de los botones. Clases del tema que se tocan: `.blockcart-modal__cart-footer-extra`

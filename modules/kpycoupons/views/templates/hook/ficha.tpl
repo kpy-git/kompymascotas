@@ -8,7 +8,8 @@
  * la cesta (`KpcRegalo::antesDelCambio` lo lee). Lo que se dice con la tarjeta elegida (la pastilla
  * «Kilos gratis», «Incluye…», hasta cuándo) sale de aquí.
  *}
-<div class="kpc-ficha{if $kpc.tipo} kpc-ficha--{$kpc.tipo}{/if}" data-kpc-ficha data-kpc-estado="{$kpc.estado}" data-kpc-regalo="{$kpc.regalo_elegido}"{if $kpc.kg} data-kpc-kg="1"{/if}{if $kpc.campana} data-kpc-campana="{$kpc.campana.clave}" data-kpc-piel="{$kpc.campana.piel}"{if $kpc.campana.estilo} style="{$kpc.campana.estilo}"{/if}{/if}>
+{* Con solo Special Price durante una campaña, el bloque sale vacío y escondido (`is-solo-campana`): lleva los colores de la campaña a la piel del precio del tema. *}
+<div class="kpc-ficha{if $kpc.tipo} kpc-ficha--{$kpc.tipo}{/if}{if $kpc.solo_campana} is-solo-campana{/if}" data-kpc-ficha data-kpc-estado="{$kpc.estado}" data-kpc-regalo="{$kpc.regalo_elegido}"{if $kpc.kg} data-kpc-kg="1"{/if}{if $kpc.campana} data-kpc-campana="{$kpc.campana.clave}" data-kpc-piel="{$kpc.campana.piel}"{if $kpc.campana.estilo} style="{$kpc.campana.estilo}"{/if}{/if}>
   {if $kpc.kg}
     <p class="kpc-kg">{$kpc.kg}</p>
   {/if}

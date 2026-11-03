@@ -135,28 +135,38 @@
   }
 
   /**
-   * La capa de campaña: los colores que el bloque trae en línea (`--kpc-esp-bg`, `--kpc-esp-fg`) se
-   * copian al contenedor del precio del tema para que su piel amarilla tome los de la campaña.
+   * La capa de campaña: las variables de color que el bloque trae en línea (`--kpc-esp-bg`,
+   * `--kpc-cup-borde`…) se copian al contenedor del precio del tema, para que su piel amarilla y el
+   * badge del % tomen los de la campaña. Sin campaña se quitan. Se leen del atributo `style` tal
+   * cual (no recorriendo `element.style`: Safari no lista ahí las variables personalizadas).
    */
   function campana() {
     var precios = document.querySelector('.product__prices');
     if (!precios) {
       return;
     }
+    var puestas = (precios.getAttribute('data-kpc-vars') || '').split(' ');
+    for (var j = 0; j < puestas.length; j++) {
+      if (puestas[j]) {
+        precios.style.removeProperty(puestas[j]);
+      }
+    }
     var b = precios.querySelector('[data-kpc-ficha][data-kpc-campana]');
     if (!b) {
       precios.removeAttribute('data-kpc-campana');
-      precios.style.removeProperty('--kpc-esp-bg');
-      precios.style.removeProperty('--kpc-esp-fg');
+      precios.removeAttribute('data-kpc-vars');
       return;
     }
     precios.setAttribute('data-kpc-campana', b.getAttribute('data-kpc-campana') || '1');
-    ['--kpc-esp-bg', '--kpc-esp-fg'].forEach(function (v) {
-      var valor = b.style.getPropertyValue(v);
-      if (valor) {
-        precios.style.setProperty(v, valor);
-      }
-    });
+    var nombres = [];
+    var estilo = b.getAttribute('style') || '';
+    var re = /(--kpc-[a-z0-9-]+)\s*:\s*(#[0-9a-fA-F]{3,8})/g;
+    var m;
+    while ((m = re.exec(estilo)) !== null) {
+      precios.style.setProperty(m[1], m[2]);
+      nombres.push(m[1]);
+    }
+    precios.setAttribute('data-kpc-vars', nombres.join(' '));
   }
 
   function cupon(boton, ev) {

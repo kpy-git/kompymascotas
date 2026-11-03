@@ -27,7 +27,9 @@
  *
  * Reglas de Kompy: un producto con Special Price no lleva cupón encima (salvo que el cupón diga lo
  * contrario); hay cupones que llegan ya aplicados según de dónde venga la visita (Google Shopping,
- * email, redes) o con un enlace (`?kpc=CODIGO`).
+ * email, redes) o con un enlace (`?kpc=CODIGO`). Desde la 3.2.0 (1/11/2026) el cliente lleva
+ * **varios cupones a la vez** (uno por marca en una campaña: Specific y Advance en la misma cesta,
+ * cada uno descontando lo suyo); la cookie `kpy_cupon` los guarda como lista (`KpcCookie`).
  *
  * Crea sus tablas (`kpy_coupon`, `kpy_coupon_scope`, `kpy_coupon_item`, `kpy_coupon_precio`,
  * `kpy_coupon_regalo`, `kpy_coupon_regalo_cesta`, `kpy_coupon_regalo_eleccion`,
@@ -54,7 +56,10 @@ spl_autoload_register(static function (string $clase): void {
 
 class Kpycoupons extends Module
 {
-    /** Cupón elegido por el cliente, en su cookie. «!CODIGO» = lo ha quitado él. */
+    /**
+     * Los cupones del cliente, en su cookie (`KpcCookie`): los puestos y, con «!» delante, los que
+     * ha quitado él («SPECIFIC10,ADVANCE15,!BFBOEH10»). Hasta la 3.1, uno solo.
+     */
     public const COOKIE = 'kpy_cupon';
 
     /** De dónde llegó la visita (shopping, email, social), para los cupones que entran solos. */
@@ -108,7 +113,7 @@ class Kpycoupons extends Module
     {
         $this->name = 'kpycoupons';
         $this->tab = 'pricing_promotion';
-        $this->version = '3.1.0';
+        $this->version = '3.2.0';
         $this->author = 'Kompy';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -622,7 +627,9 @@ class Kpycoupons extends Module
     /**
      * Justo antes de crear el pedido: la cesta se repasa una vez más, con las reservas del cupo al
      * día. Si el cliente dejó la cesta abierta más de una hora y otros se llevaron las últimas
-     * unidades, el pedido se hace con los precios de ahora, no con los de cuando la vio.
+     * unidades, el pedido se hace con los precios de ahora, no con los de cuando la vio. Aquí no
+     * entra ningún cupón nuevo (3.2.0): la petición puede ser la de la pasarela, sin la cookie del
+     * cliente, y lo que él quitó no puede volver a bajar el total por debajo de lo pagado.
      */
     public function hookActionValidateOrderBefore(array $params): void
     {
@@ -631,7 +638,7 @@ class Kpycoupons extends Module
             return;
         }
         try {
-            $this->sincronizarCesta($cart);
+            $this->sincronizarCesta($cart, false);
             // PrestaShop guarda en estático la lista de paquetes y las opciones de envío de la cesta (las
             // calculó el módulo de pago antes de llamar aquí) y no las vacía al cambiar las líneas: si el
             // repaso ha tocado algo, que el pedido se monte con la cesta de verdad, no con la foto vieja.
@@ -842,22 +849,43 @@ class Kpycoupons extends Module
         }
     }
 
-    /** Pone en la cesta el cupón que toca: el elegido o, si no hay, el que entra solo. */
-    public function sincronizarCesta(Cart $cart): void
+    /**
+     * Pone en la cesta los cupones que tocan: los que el cliente lleva puestos, los que ya están en
+     * ella (escritos a mano, o una petición sin cookie) y los que entran solos; cada uno descuenta
+     * lo suyo (ver `KpcCarrito::cupones`).
+     *
+     * @param bool $entradas false = ninguno entra nuevo, solo se repasa lo que ya está puesto: el
+     *                       repaso de antes del pedido, que puede llegar sin la cookie del cliente
+     *                       (la notificación servidor a servidor de la pasarela); si ahí entrara
+     *                       solo un cupón que el cliente había quitado, el total bajaría por debajo
+     *                       de lo pagado y el pedido nacería en «Error de pago»
+     */
+    public function sincronizarCesta(Cart $cart, bool $entradas = true): void
     {
         KpcCarrito::sincronizar(
             $cart,
-            $this->elegido(),
+            $this->puestos(),
             (int) $this->context->shop->id,
-            fn (array $cupon): bool => $this->entraSolo($cupon),
+            $entradas ? fn (array $cupon): bool => $this->entraSolo($cupon) : null,
             fn (string $codigo): bool => $this->adoptar($codigo)
         );
     }
 
-    /** Si ese vale es de un cupón con cupo de esta cesta, el cupón queda quitado (como con su papelera). */
-    private function olvidarPorVale(Cart $cart, int $idRegla, int $idTienda): void
+    /**
+     * La papelera de un vale de la cesta es la papelera de su cupón: si la regla es la de un cupón
+     * de Kompy (o un vale `KPYCP-…` de un cupón con cupo de esta cesta), ese cupón queda quitado
+     * para el cliente y no vuelve a entrar solo mientras navega. Se hace aquí, en el servidor,
+     * aunque `cesta.js` también lo pida: así vale sin JavaScript.
+     */
+    private function olvidarPorRegla(Cart $cart, int $idRegla, int $idTienda): void
     {
         if ($idRegla <= 0) {
+            return;
+        }
+        $nuestras = KpcCarrito::reglasDeKompy($idTienda);
+        if (isset($nuestras[$idRegla])) {
+            $this->olvidar($nuestras[$idRegla]);
+
             return;
         }
         $regla = new CartRule($idRegla);
@@ -875,12 +903,13 @@ class Kpycoupons extends Module
     }
 
     /**
-     * El cliente ha escrito un código de Kompy en la cesta: pasa a ser el suyo. Salvo que sea el que
-     * acaba de quitar con la papelera (la regla aún puede estar puesta un instante).
+     * El cliente ha escrito un código de Kompy en la cesta (o la cesta trae su regla de antes): pasa
+     * a ser uno de los suyos. Salvo que sea el que acaba de quitar con la papelera (la regla aún
+     * puede estar puesta un instante).
      */
     private function adoptar(string $codigo): bool
     {
-        if (mb_strtoupper($this->quitado()) === mb_strtoupper($codigo)) {
+        if ($this->estaQuitado($codigo)) {
             return false;
         }
         $this->guardar($codigo);
@@ -911,9 +940,10 @@ class Kpycoupons extends Module
             if (KpcRegalo::quitarPorRegla($this->context->cart, (int) Tools::getValue('deleteDiscount'))) {
                 $this->sincronizarCesta($this->context->cart);
             }
-            // La papelera de un vale de cupón con cupo (`KPYCP-…`) es la papelera del cupón: se olvida,
-            // para que no vuelva a entrar solo, y el repaso de la cesta quita sus otros vales.
-            $this->olvidarPorVale($this->context->cart, (int) Tools::getValue('deleteDiscount'), $idTienda);
+            // La papelera de la regla de un cupón (o de un vale `KPYCP-…` de un cupón con cupo) es la
+            // papelera del cupón: se olvida, para que no vuelva a entrar solo, y el repaso de la cesta
+            // quita sus otros vales. Los demás cupones de la cesta no se tocan.
+            $this->olvidarPorRegla($this->context->cart, (int) Tools::getValue('deleteDiscount'), $idTienda);
         }
         if (Tools::getIsset('addDiscount')) {
             $escrito = KpcCupon::porCodigo(trim((string) Tools::getValue('discount_name')), $idTienda);
@@ -1351,38 +1381,53 @@ class Kpycoupons extends Module
         return $this->trans($texto, $reemplazos, 'Modules.Kpycoupons.Admin');
     }
 
-    /** El cupón que el cliente lleva puesto (vacío si no lleva, o si lo ha quitado). */
-    public function elegido(): string
+    /**
+     * Los cupones que el cliente lleva puestos (3.2.0: varios a la vez), en mayúsculas y en el orden
+     * en que los puso. Vacío si no lleva ninguno.
+     *
+     * @return string[]
+     */
+    public function puestos(): array
     {
-        return self::cuponPuesto();
+        return self::cuponesPuestos();
     }
 
-    /** Lo mismo, sin instancia (para `KpcFlags`): el código de la cookie, o vacío si no hay o se quitó. */
-    public static function cuponPuesto(): string
+    /** Lo mismo, sin instancia (para `KpcFlags`). @return string[] */
+    public static function cuponesPuestos(): array
     {
         $cookie = Context::getContext()->cookie ?? null;
-        $valor = $cookie && isset($cookie->{self::COOKIE}) ? (string) $cookie->{self::COOKIE} : '';
 
-        return $valor !== '' && $valor[0] !== '!' ? $valor : '';
+        return KpcCookie::leer($cookie && isset($cookie->{self::COOKIE}) ? (string) $cookie->{self::COOKIE} : '')['puestos'];
     }
 
-    /** El cupón que el cliente ha quitado a mano: ese no vuelve a entrar solo mientras navega. */
-    public function quitado(): string
+    /** ¿Lleva puesto este cupón? */
+    public function estaPuesto(string $codigo): bool
     {
-        $valor = $this->valorCookie(self::COOKIE);
-
-        return $valor !== '' && $valor[0] === '!' ? substr($valor, 1) : '';
+        return KpcCookie::estaPuesto($this->valorCookie(self::COOKIE), $codigo);
     }
 
+    /** Los cupones que el cliente ha quitado a mano: esos no vuelven a entrar solos mientras navega. @return string[] */
+    public function quitados(): array
+    {
+        return KpcCookie::leer($this->valorCookie(self::COOKIE))['quitados'];
+    }
+
+    /** ¿Ha quitado el cliente este cupón? */
+    public function estaQuitado(string $codigo): bool
+    {
+        return KpcCookie::estaQuitado($this->valorCookie(self::COOKIE), $codigo);
+    }
+
+    /** Poner un cupón: pasa a los puestos (y deja de estar quitado). Los demás se quedan como están. */
     public function guardar(string $codigo): void
     {
-        $this->escribirCookie(self::COOKIE, $codigo);
+        $this->escribirCookie(self::COOKIE, KpcCookie::poner($this->valorCookie(self::COOKIE), $codigo));
     }
 
-    /** Quitar el cupón: se apunta cuál, para que no vuelva a entrar solo. */
-    public function olvidar(string $codigo = ''): void
+    /** Quitar un cupón: se apunta cuál, para que no vuelva a entrar solo. Los demás se quedan como están. */
+    public function olvidar(string $codigo): void
     {
-        $this->escribirCookie(self::COOKIE, $codigo !== '' ? '!' . mb_strtoupper($codigo) : '');
+        $this->escribirCookie(self::COOKIE, KpcCookie::quitar($this->valorCookie(self::COOKIE), $codigo));
     }
 
     /**
@@ -1391,7 +1436,7 @@ class Kpycoupons extends Module
      */
     public function entraSolo(array $cupon): bool
     {
-        if (mb_strtoupper($this->quitado()) === mb_strtoupper((string) ($cupon['codigo'] ?? ''))) {
+        if ($this->estaQuitado((string) ($cupon['codigo'] ?? ''))) {
             return false;
         }
         $canal = KpcElegibles::canal($_GET) ?: self::canalRecordado();
@@ -1426,8 +1471,9 @@ class Kpycoupons extends Module
         }
         // Y desde cuándo: el plazo (`CANAL_VIGENCIA`) corre desde el último enlace con canal, aunque sea el mismo.
         $this->escribirCookie(self::COOKIE_CANAL_T, (string) time());
-        if ($this->quitado() !== '') {
-            $this->escribirCookie(self::COOKIE, '');
+        if ($this->quitados() !== []) {
+            // Los que había quitado vuelven a poder entrar solos; los que lleva puestos siguen puestos.
+            $this->escribirCookie(self::COOKIE, KpcCookie::sinQuitados($this->valorCookie(self::COOKIE)));
         }
     }
 
@@ -1458,8 +1504,8 @@ class Kpycoupons extends Module
     private function escribirCookie(string $nombre, string $valor): void
     {
         $cookie = $this->context->cookie;
-        if (!$cookie) {
-            return;
+        if (!$cookie || (isset($cookie->{$nombre}) ? (string) $cookie->{$nombre} : '') === $valor) {
+            return; // Lo mismo que ya hay: sin reescribir la cookie en cada ficha.
         }
         $cookie->{$nombre} = $valor;
         $cookie->write();
