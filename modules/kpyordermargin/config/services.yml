@@ -1,0 +1,6 @@
+services:
+  PrestaShop\Module\KpyOrderMargin\ConsoleCommand\CalculateOrderMarginConsoleCommand:
+    arguments:
+      $legacyContextLoader: '@prestashop.adapter.legacy_context_loader'
+    tags:
+      - {name: 'console.command'}

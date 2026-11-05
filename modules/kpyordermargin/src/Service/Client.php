@@ -2,7 +2,7 @@
 
 namespace PrestaShop\Module\KpyOrderMargin\Service;
 
-use KpyOrderMargin;
+use PrestaShop\Module\KpyOrderMargin\Config\KpyOrderMarginConfig;
 use PrestaShop\Module\KpyOrderMargin\Exception\KpyOrderMarginException;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -25,10 +25,10 @@ class Client
     public function calculateMargin(int $orderId): void
     {
         try {
-            $response = $this->client->request('GET', \Configuration::get(KpyOrderMargin::KPY_ORDER_MARGIN_URL) . '/' . $orderId, [
+            $response = $this->client->request('GET', \Configuration::get(KpyOrderMarginConfig::KPY_ORDER_MARGIN_URL) . '/' . $orderId, [
                 'auth_basic' => [
-                    \Configuration::get(KpyOrderMargin::KPY_ORDER_MARGIN_HTTP_CLIENT),
-                    \Configuration::get(KpyOrderMargin::KPY_ORDER_MARGIN_HTTP_PASSWORD)
+                    \Configuration::get(KpyOrderMarginConfig::KPY_ORDER_MARGIN_HTTP_CLIENT),
+                    \Configuration::get(KpyOrderMarginConfig::KPY_ORDER_MARGIN_HTTP_PASSWORD)
                 ],
             ]);
 
@@ -37,7 +37,7 @@ class Client
             }
 
         } catch (TransportExceptionInterface|ServerExceptionInterface|RedirectionExceptionInterface|ClientExceptionInterface $e) {
-            throw new KpyOrderMarginException($e->getMessage());
+            throw new KpyOrderMarginException($e->getResponse()->toArray(false)['message'] ?? $e->getMessage());
         }
     }
 }

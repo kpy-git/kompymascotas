@@ -6,6 +6,7 @@ namespace PrestaShop\Module\KpyOrderMargin\Install;
 use Db;
 use KpyOrderMargin;
 use Module;
+use PrestaShop\Module\KpyOrderMargin\Config\KpyOrderMarginConfig;
 use PrestaShopBundle\Install\SqlLoader;
 
 class Installer
@@ -39,16 +40,16 @@ class Installer
 
     private function createConfigurations(): void
     {
-        if (!\Configuration::get(KpyOrderMargin::KPY_ORDER_MARGIN_HTTP_CLIENT)) {
-            \Configuration::updateValue(KpyOrderMargin::KPY_ORDER_MARGIN_HTTP_CLIENT, '');
+        if (!\Configuration::get(KpyOrderMarginConfig::KPY_ORDER_MARGIN_HTTP_CLIENT)) {
+            \Configuration::updateValue(KpyOrderMarginConfig::KPY_ORDER_MARGIN_HTTP_CLIENT, '');
         }
 
-        if (!\Configuration::get(KpyOrderMargin::KPY_ORDER_MARGIN_HTTP_PASSWORD)) {
-            \Configuration::updateValue(KpyOrderMargin::KPY_ORDER_MARGIN_HTTP_PASSWORD, '');
+        if (!\Configuration::get(KpyOrderMarginConfig::KPY_ORDER_MARGIN_HTTP_PASSWORD)) {
+            \Configuration::updateValue(KpyOrderMarginConfig::KPY_ORDER_MARGIN_HTTP_PASSWORD, '');
         }
 
-        if (!\Configuration::get(KpyOrderMargin::KPY_ORDER_MARGIN_URL)) {
-            \Configuration::updateValue(KpyOrderMargin::KPY_ORDER_MARGIN_URL, '');
+        if (!\Configuration::get(KpyOrderMarginConfig::KPY_ORDER_MARGIN_URL)) {
+            \Configuration::updateValue(KpyOrderMarginConfig::KPY_ORDER_MARGIN_URL, '');
         }
     }
 
@@ -70,9 +71,9 @@ class Installer
 
     private function deleteConfigurations(): void
     {
-        \Configuration::deleteByName(KpyOrderMargin::KPY_ORDER_MARGIN_HTTP_CLIENT);
-        \Configuration::deleteByName(KpyOrderMargin::KPY_ORDER_MARGIN_HTTP_PASSWORD);
-        \Configuration::deleteByName(KpyOrderMargin::KPY_ORDER_MARGIN_URL);
+        \Configuration::deleteByName(KpyOrderMarginConfig::KPY_ORDER_MARGIN_HTTP_CLIENT);
+        \Configuration::deleteByName(KpyOrderMarginConfig::KPY_ORDER_MARGIN_HTTP_PASSWORD);
+        \Configuration::deleteByName(KpyOrderMarginConfig::KPY_ORDER_MARGIN_URL);
     }
 
     /**
