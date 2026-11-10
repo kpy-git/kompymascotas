@@ -18,6 +18,8 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
 {
     private WorkingDaysManager $workingDaysManager;
 
+    private ProductAvailabilityMessagesHandler $productAvailabilityMessageHandler;
+
     public function __construct()
     {
         $this->name = 'kpyproductavailabilitymessages';
@@ -39,6 +41,8 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
         $this->confirmUninstall = $this->trans('Are you sure you want to uninstall?', [], 'Modules.Kpyproductavailabilitymessages.Admin');
 
         $this->workingDaysManager = new WorkingDaysManager();
+
+        $this->productAvailabilityMessageHandler = new ProductAvailabilityMessagesHandler($this->workingDaysManager);
     }
 
     /**
@@ -91,15 +95,22 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
 
     public function hookDisplayCartExtraProductActions(array $params): string
     {
+        /** @var CartCore $cart */
+        $cart = $params['cart'];
+
+        // cuando hay más de un producto en el carrito se pone un único mensaje con la fecha
+        if (count($cart->getProducts()) > 1) {
+            return '';
+        }
+
         /** @var \PrestaShop\PrestaShop\Adapter\Presenter\Cart\CartProductLazyArray $product */
         $product = $params['product'];
-        $productAvailabilityMessageHandler = new ProductAvailabilityMessagesHandler($this->workingDaysManager);
 
         // en la clase CartProductLazyArray debería cargar correctamente el mensaje, pero no lo hace
         // getCombinationSpecificData sólo obtiene el nombre del atributo (manda webs)
         $availabilityMessage = $product['stock_quantity'] >= $product['quantity']
-            ? $productAvailabilityMessageHandler->getMessageInStock($product['id_manufacturer'])
-            : $productAvailabilityMessageHandler->getMessageOutStock($product['id_manufacturer'], $product['id_product'], $product['id_product_attribute']);
+            ? $this->productAvailabilityMessageHandler->getMessageInStock($product['id_manufacturer'])
+            : $this->productAvailabilityMessageHandler->getMessageOutStock($product['id_manufacturer'], $product['id_product'], $product['id_product_attribute']);
 
         $this->context->smarty->assign([
             'availability_message' => $availabilityMessage,
@@ -110,6 +121,21 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
 
     public function renderWidget($hookName, array $configuration): string
     {
+        if ($hookName === 'displayCart') {
+            /** @var \PrestaShop\PrestaShop\Adapter\Presenter\Cart\CartLazyArray $cart */
+            $cart = $configuration['cart'];
+
+            if (count($cart->products) <= 1) {
+                return '';
+            }
+
+            $this->context->smarty->assign([
+                'availability_message' => $this->productAvailabilityMessageHandler->getMessageByCart($this->context->cart->id, $cart->products),
+            ]);
+
+            return $this->fetch('module:' . $this->name . '/views/templates/front/cart-availability.tpl');
+        }
+
         //dump($configuration['product']);
         $this->context->smarty->assign($this->getWidgetVariables($hookName, $configuration));
 
@@ -120,12 +146,11 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
     {
         /** @var \PrestaShop\PrestaShop\Adapter\Presenter\Product\ProductLazyArray $product */
         $product = $configuration['product'];
-        $productAvailabilityMessageHandler = new ProductAvailabilityMessagesHandler($this->workingDaysManager);
 
         return [
             'kpyproductavailabilitymessage' => $product->quantity >= $product->cart_quantity + $product->quantity_wanted
-                ? $productAvailabilityMessageHandler->getMessageInStock($product->id_manufacturer)
-                : $productAvailabilityMessageHandler->getMessageOutStock($product->id_manufacturer, $product->id, $product->id_product_attribute),
+                ? $this->productAvailabilityMessageHandler->getMessageInStock($product->id_manufacturer)
+                : $this->productAvailabilityMessageHandler->getMessageOutStock($product->id_manufacturer, $product->id, $product->id_product_attribute),
             'stock_class' => !$product->getAddToCartUrl() ? 'out-of-stock' : 'in-stock',
 
         ];

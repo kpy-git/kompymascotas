@@ -6,8 +6,10 @@ namespace PrestaShop\Module\KpyProductAvailabilityMessages\Services;
 
 use Db;
 use PrestaShop\Module\KpyEvolutionPets\Config\Config;
+use PrestaShop\Module\KpyOrderDispatcher\Service\WarehouseFinder;
 use PrestaShop\Module\KpyProductAvailabilityMessages\Exception\KpyMessageStrategyNotFound;
 use PrestaShop\Module\KpyProductAvailabilityMessages\Strategy\MessageStrategyManager;
+use PrestaShop\PrestaShop\Adapter\Presenter\Cart\CartProductLazyArray;
 
 class ProductAvailabilityMessagesHandler
 {
@@ -56,13 +58,20 @@ class ProductAvailabilityMessagesHandler
 
     public function getMessageInStock(int $manufacturerId): string
     {
+        $timestamps = $this->getInStockTimestampsRangeByManufacturer($manufacturerId);
+
+        return $this->messageFormatter->convierteRangoTiempoADiasSemana($timestamps['start'], $timestamps['final']);
+    }
+
+    public function getInStockTimestampsRangeByManufacturer(int $manufacturerId): array
+    {
         $distrivetBrands = json_decode(\Configuration::get('KPY_DISTRIVET_MANUFACTURERS'), true);
         $evolutionBrands = json_decode(\Configuration::get(Config::KPY_EVOLUTION_BRANDS), true);
 
         $limit = match (true) {
-            in_array($manufacturerId, $evolutionBrands)  => 8,
-            in_array($manufacturerId, $distrivetBrands)  => 6,
-            default => 12,
+            in_array($manufacturerId, $evolutionBrands) => 8,
+            in_array($manufacturerId, $distrivetBrands) => 6,
+            default => 13,
         };
 
         $start = $this->workingDaysManager->isWorkingDay(time()) && (int)date('H') < $limit
@@ -70,9 +79,11 @@ class ProductAvailabilityMessagesHandler
             : $this->workingDaysManager->getNextWorkingDayTo(time()); // se prepara el día siguiente
 
         $start = $this->workingDaysManager->getNextWorkingDayTo($start);
-        $final = $this->workingDaysManager->getNextWorkingDayTo($start);
 
-        return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);
+        return [
+            'start' => $start,
+            'final' => $this->workingDaysManager->getNextWorkingDayTo($start)
+        ];
     }
 
     public function getMessageOutStock(int $manufacturerId, int $productId, int $productAttributeId, int $lang = 1): string
@@ -106,20 +117,27 @@ class ProductAvailabilityMessagesHandler
             return 'Disponible próximamente';
         }
 
+    }
 
-        // groupB
-        // si es lunes antes de la 10 se puede hacer el pedido hoy, si no el siguiente lunes
-        /*$start = (int)date('N') === 1 && (int)date('H') < 11 ? time() : strtotime('next Monday');
-
-        if (!$this->workingDaysManager->isWorkingDay($start)) {
-            $start = $this->workingDaysManager->getNextWorkingDayTo($start);
+    /**
+     * @throws KpyMessageStrategyNotFound
+     */
+    private function getOutStockTimestampByManufacturer(int $manufacturerId): int
+    {
+        // mientras el stock no esté sincronizado todos los productos de Evolutions tienen la misma fecha tengan stock o no
+        $evolutionBrands = json_decode(\Configuration::get(Config::KPY_EVOLUTION_BRANDS), true);
+        if (in_array($manufacturerId, $evolutionBrands)) {
+            return $this->getInStockTimestampsRangeByManufacturer($manufacturerId)['start'];
         }
 
-        // + 1 día en venir la mercancía + 1 día de envío
-        $start = $this->workingDaysManager->addWorkingDaysToTimestamp($start, 2);
-        $final = $this->workingDaysManager->getNextWorkingDayTo($start);
+        $messageStrategyManager = new MessageStrategyManager();
 
-        return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $final);*/
+        $deliveryRangeCalculator = new DeliveryRangeCalculator(
+            $this->workingDaysManager,
+            $messageStrategyManager->getAvailableStrategyByManufacturer($manufacturerId)
+        );
+
+        return $deliveryRangeCalculator->getFirstDeliveryDay();
 
     }
 
@@ -135,6 +153,34 @@ class ProductAvailabilityMessagesHandler
             return '';
         }
 
-        return "Recíbelo a partir de el " . $this->messageFormatter->getWeekdayAndMonthInText(\DateTimeImmutable::createFromFormat('Y-m-d', $date)->getTimestamp());
+        return "Recíbelo a partir del " . $this->messageFormatter->getWeekdayAndMonthInText(\DateTimeImmutable::createFromFormat('Y-m-d', $date)->getTimestamp());
+    }
+
+    public function getMessageByCart(int $cart, array $products): string
+    {
+        $warehouseFinder = new WarehouseFinder();
+        // si hay productos de más de un almacén siempre se prepara el pedido desde tienda, se añade una semana al día de hoy (hay que esperar a tener todos los productos en tienda)
+        if ($warehouseFinder->hasMultiWarehouse($cart, $products)) {
+            $start = $this->workingDaysManager->getNextWorkingDayTo(strtotime('+7 days'));
+
+        } else {
+            // si todos están en el mismo almacén se calcula la fecha más alta y se utiliza
+            $start = 0;
+            /** @var CartProductLazyArray $product */
+            foreach ($products as $product) {
+                try {
+                    $startProduct = $product->quantity >= $product->cart_quantity + $product->quantity_wanted
+                        ? $this->getInStockTimestampsRangeByManufacturer($product->id_manufacturer)['start']
+                        : $this->getOutStockTimestampByManufacturer($product->id_manufacturer);
+                } catch (KpyMessageStrategyNotFound $exception) {
+                    // nunca debería ocurrir que un producto sin stock no tenga forma de calcular el mensaje, pero por si las moscas...
+                    $startProduct = strtotime('+2 week');
+                }
+
+                $start = max($startProduct, $start);
+            }
+        }
+
+        return "Recíbelo a partir del " . $this->messageFormatter->getWeekdayAndMonthInText($start);
     }
 }

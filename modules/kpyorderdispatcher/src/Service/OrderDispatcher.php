@@ -2,34 +2,22 @@
 
 namespace PrestaShop\Module\KpyOrderDispatcher\Service;
 
-use Order;
-use PrestaShop\Module\KpyDistrivetConnector\Service\DistrivetOrderGuard;
-use PrestaShop\Module\KpyEvolutionPets\Service\EvolutionOrderGuard;
-use PrestaShop\Module\KpyStorePreparation\Guard\StorePriorityProductsGuard;
-use PrestaShop\Module\NeftysFarmaConnector\Guard\OrderGuard;
 
 class OrderDispatcher
 {
-    public function dispatch(int $id_order): void
+    public function dispatch(int $idOrder): void
     {
-        $order = new Order($id_order);
+        $order = new \Order($idOrder);
+        $warehouse = new WarehouseFinder()->getWarehouseByOrder($order);
 
-        $warehouse = match (true) {
-            StorePriorityProductsGuard::withStorePriority($order) => 'TIENDA',
-            OrderGuard::isNeftysFarmaOrder($order) => 'NEFTYS',
-            DistrivetOrderGuard::isDistrivetOrder($order) => 'DISTRIVET',
-            EvolutionOrderGuard::isEvolutionOrder($order) => 'EVOLUTION_PETS',
-            default => 'TIENDA',
-        };
-
-        \Db::getInstance()->delete('kpy_orders_pending_dispatch', 'id_order = ' . $id_order);
+        \Db::getInstance()->delete('kpy_orders_pending_dispatch', 'id_order = ' . $idOrder);
         \Db::getInstance()->insert('kpy_order_warehouse', [
-            'id_order' => $id_order,
+            'id_order' => $idOrder,
             'warehouse' => $warehouse,
         ]);
 
         \Hook::exec('actionKpyOrderWarehouseSelected', [
-            'id_order' => $id_order,
+            'id_order' => $idOrder,
             'warehouse' => $warehouse
         ]);
 

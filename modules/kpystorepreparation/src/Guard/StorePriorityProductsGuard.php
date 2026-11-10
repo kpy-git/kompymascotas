@@ -21,4 +21,21 @@ class StorePriorityProductsGuard
 
         return array_all($products, fn(array $product) => $product['stock_tienda'] >= $product['product_quantity']);
     }
+
+    public static function withStorePriorityByCartId(int $cartId): bool
+    {
+        $products = \Db::getInstance()->executeS(
+            "select cp.id_product, cp.id_product_attribute, cp.quantity, ifnull(spp.stock, 0) as stock_tienda
+                from " . _DB_PREFIX_ ."cart_product cp
+                left join " . _DB_PREFIX_ ."kpy_store_priority_product_stock spp
+                    on spp.id_product = cp.id_product and spp.id_product_attribute=cp.id_product_attribute
+                where cp.id_cart = {$cartId}"
+        );
+
+        if (!is_array($products)) {
+            return false;
+        }
+
+        return array_all($products, fn(array $product) => $product['stock_tienda'] >= $product['quantity']);
+    }
 }

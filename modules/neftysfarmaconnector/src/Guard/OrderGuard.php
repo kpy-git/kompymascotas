@@ -32,4 +32,14 @@ class OrderGuard
 
         return self::areAllProductsSupported($productsWithoutPacks);
     }
+
+    public static function isProductSupported(int $idProduct, int $idProductAttribute): bool
+    {
+        $sql = "SELECT EXISTS (SELECT 1 
+                FROM " . _DB_PREFIX_ . NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE . " 
+                WHERE id_product={$idProduct} 
+                    and id_product_attribute={$idProductAttribute})";
+
+        return (int)\Db::getInstance()->getValue($sql) === 1;
+    }
 }
