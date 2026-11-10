@@ -1230,6 +1230,8 @@ a.js-remove-from-cart:hover {
 
 .product-line__price {
     font-weight: bold;
+    min-width: 70px;
+    text-align: right;
 }
 
 .home-breadcrumb .material-icons {
