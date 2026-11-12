@@ -98,7 +98,7 @@ class KpyMenu extends Module implements WidgetInterface
 
         $cacheId = $this->name;
 
-        // $this->_clearCache($this->template, $this->getCacheId($cacheId));
+        //$this->_clearCache($this->template, $this->getCacheId($cacheId));
 
         if (!$this->isCached($this->template, $this->getCacheId($cacheId))) {
             $this->smarty->assign($cacheId, $this->getMenuElements());
@@ -133,7 +133,7 @@ class KpyMenu extends Module implements WidgetInterface
         $topCategories = [];
 
         $results = Db::getInstance()->executeS(
-            "select kc.id_category, kc.`position`, c.nleft, c.nright, c.level_depth, cl.name
+            "select kc.id_category, kc.`position`, c.nleft, c.nright, c.level_depth, cl.name, kc.icon
             from " . _DB_PREFIX_ . "kpymenu_categories kc
             inner join " . _DB_PREFIX_ . "category c
                 on c.id_category = kc.id_category and c.active = 1
@@ -142,12 +142,6 @@ class KpyMenu extends Module implements WidgetInterface
             order by kc.`position`"
         );
 
-        $templateIcon = [
-            1001 => 'svg-dog.tpl',
-            1170 => 'svg-cat.tpl',
-            1278 => 'svg-rabbit.tpl',
-        ];
-
         foreach ($results as $category) {
             $topCategories[] = [
                 'id' => (int)$category['id_category'],
@@ -155,9 +149,8 @@ class KpyMenu extends Module implements WidgetInterface
                 'nleft' => (int)$category['nleft'],
                 'nright' => (int)$category['nright'],
                 'depth' => (int)$category['level_depth'],
-                'template_icon' => $templateIcon[(int)$category['id_category']],
+                'template_icon' => $category['icon'],
                 'link' => $this->context->link->getCategoryLink((new Category((int)$category['id_category']))),
-
             ];
         }
 

@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS `PREFIX_kpymenu_categories` (
 	`id_category` INT UNSIGNED NOT NULL,
 	`position` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    `icon` VARCHAR(50) NOT NULL,
 	PRIMARY KEY (`id_category`)
 ) ENGINE = ENGINE_TYPE DEFAULT CHARSET = utf8;
