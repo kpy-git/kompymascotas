@@ -14,8 +14,8 @@ class NeftysFarmaConfig
     public const TOKEN = 'NEFTYS_FARMA_TOKEN';
 
     public const string NEFTYS_FARMA_ORDERS_TABLE = 'neftys_orders';
-
     public const string NEFTYS_FARMA_STOCK_TABLE = 'neftys_stock';
+    public const string NEFTYS_FARMA_EXCLUDE_PRODUCTS = 'neftys_exclude_products';
 
     public const string ORDERS_PATH = _PS_MODULE_DIR_ . 'neftysfarmaconnector/orders/';
 

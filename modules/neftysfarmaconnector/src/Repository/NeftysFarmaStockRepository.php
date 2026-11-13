@@ -73,7 +73,11 @@ class NeftysFarmaStockRepository
 	                AND p.active = 1 
 	                AND NOT EXISTS (SELECT 1 
 						FROM " . _DB_PREFIX_ . "kpy_packs kp 
-						WHERE kp.id_product_pack = CONCAT_WS('-', p.id_product, pa.id_product_attribute))"
+						WHERE kp.id_product_pack = CONCAT_WS('-', p.id_product, pa.id_product_attribute))
+					AND NOT EXISTS (SELECT 1 FROM " . _DB_PREFIX_ . "neftys_exclude_products ex 
+					    WHERE ex.id_product = p.id_product 
+					    and ex.id_product_attribute = IFNULL(pa.id_product_attribute, 0)
+					    AND (ex.date_to is null or now() < ex.date_to))"
         );
 
         $productsByEan = [];
