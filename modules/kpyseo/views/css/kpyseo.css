@@ -1,0 +1,8 @@
+/* kpyseo · el H1 de la portada */
+.kseo-portada { padding: 1rem 0 .25rem; }
+.kseo-portada__h1 { margin: 0; font-size: 1.35rem; font-weight: 600; line-height: 1.3; color: #2A5C68; text-wrap: balance; }
+.kseo-portada__sub { margin: .25rem 0 0; font-size: .95rem; color: #5A6A6E; }
+@media (max-width: 767.98px) {
+  .kseo-portada { padding: .75rem 0 0; }
+  .kseo-portada__h1 { font-size: 1.1rem; }
+}
