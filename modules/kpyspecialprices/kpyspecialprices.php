@@ -153,8 +153,8 @@ class KpySpecialPrices extends Module
         if ($this->context->controller instanceof ProductControllerCore
             || $this->context->controller instanceof CategoryControllerCore
             || $this->context->controller instanceof IndexControllerCore
-            || $this->context->controller->page_name === 'module-kpymanufacturer-landing'
-            || $this->context->controller->page_name === 'module-kpyproductreviews-display'
+            || $this->context->controller instanceof BestSalesControllerCore
+            || in_array($this->context->controller->page_name, ['module-kpymanufacturer-landing', 'module-kpyproductreviews-display'])
         ) {
             $this->context->controller->registerStylesheet(
                 $this->name . '-style',
