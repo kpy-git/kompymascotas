@@ -22,7 +22,7 @@
                 </div>
             </a>
             <!-- 3. Pago -->
-            <a href="#" class="trust-item-v6">
+            <a href="{$urls.base_url}soporte/formas-de-pago" class="trust-item-v6">
                 <div class="trust-icon-v6">
                     <img src="{$module_img}lock.svg" alt="lock">
                 </div>

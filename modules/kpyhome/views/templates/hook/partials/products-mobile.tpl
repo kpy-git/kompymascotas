@@ -1,7 +1,7 @@
 <div class="section-header">
   <h2 class="h2-mobile">
     <span class="icon"><img src="{$module_img}fire.svg" alt="fire"></span> Los que nunca fallan</h2>
-  <a href="#" class="see-all">{l s='View all' d='Modules.Kpyhome.Shop'}</a>
+  <a href="{url entity='category' id=1004}" class="see-all">{l s='View all' d='Modules.Kpyhome.Shop'}</a>
 </div>
 
 <div class="products-scroll">
@@ -16,7 +16,7 @@
   <h2 class="h2-mobile">
     <span class="icon"><img src="{$module_img}hospital.svg" alt="hospital"></span> Para casos especiales
   </h2>
-  <a href="#" class="see-all">{l s='View all' d='Modules.Kpyhome.Shop'}</a>
+  <a href="{url entity='category' id=1008}" class="see-all">{l s='View all' d='Modules.Kpyhome.Shop'}</a>
 </div>
 
 <div class="products-scroll">

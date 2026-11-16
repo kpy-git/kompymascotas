@@ -6,7 +6,7 @@
   subtitle="Alimentación natural con valoraciones que hablan solas."
   link_text="Ver comida natural"
   carousel_classes="pb-4"
-  link={url entity='category' id='1008'}
+  link={url entity='category' id='1004'}
 }
 
 {include file='components/products-carousel.tpl'

@@ -24,13 +24,13 @@
         </div>
 
         <div class="autoship-actions">
-          <a href="#" class="cta-primary cta-main">
+          <a href="{url entity='cms' id=9}" class="cta-primary cta-main">
             Empezar mi compra recurrente
             <span class="cta-sub">Sin permanencia. Cancela cuando quieras.</span>
           </a>
 
           <div class="secondary-links">
-            <a href="#" class="link-text">Ver solo compra única</a>
+            <a href="{url entity='category' id=1003}" class="link-text">Ver solo compra única</a>
             <span class="separator">•</span>
             <button class="btn-modal-trigger" onclick="document.getElementById('autoship-modal').style.display='flex'">¿Cómo funciona?</button>
           </div>

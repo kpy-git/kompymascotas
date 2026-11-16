@@ -3,7 +3,7 @@
     <div class="carousel-wrapper">
       <!-- Imagen fija izquierda -->
       <div class="carousel-hero-image">
-        <img src="{$fixed_img}" class="carousel-hero-image-fixed">
+        <img src="{$fixed_img}" class="carousel-hero-image-fixed" alt="">
         <h2 class="hero-title">{$title}</h2>
         <p class="hero-description">{$subtitle}</p>
         <a href="{$link}" class="hero-cta">{if isset($link_text)}{$link_text}{else}{l s='View all' d='Shop.Theme.Actions'}{/if} <span><i class="material-icons">chevron_right</i></span></a>
