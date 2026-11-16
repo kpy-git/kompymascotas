@@ -29,8 +29,9 @@ class KpyManufacturerLandingModuleFrontController extends ModuleFrontController
             // las que no tengan landing se mandan a su categoría relacionada
             $categoryRelated = new Category(Manufacturer::getCategoryRelatedByManufacturer($this->manufacturerId));
 
-            if (!$categoryRelated->active) {
-                Tools::redirect($this->context->link->getPageLink('index'));
+            // sin categoría relacionada (0 o borrada) o inactiva: al índice de marcas, nunca un 500
+            if (!Validate::isLoadedObject($categoryRelated) || !$categoryRelated->active) {
+                Tools::redirect($this->context->link->getModuleLink('kpymanufacturer', 'brands'));
             }
 
             $categoryRelatedLink = $this->context->link->getCategoryLink($categoryRelated);

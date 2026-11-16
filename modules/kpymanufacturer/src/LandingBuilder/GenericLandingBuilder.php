@@ -49,9 +49,13 @@ class GenericLandingBuilder extends AbstractLandingBuilder
         );
 
         $categoryRelated = Manufacturer::getCategoryRelatedByManufacturer($this->manufacturerId);
+        $categoryRelatedObject = new Category($categoryRelated);
 
         return [
-            'category_related_url' => $this->context->link->getCategoryLink((new Category($categoryRelated))),
+            // si la categoría relacionada no existe (0 o borrada), el enlace va al índice de marcas en vez de romper la página
+            'category_related_url' => \Validate::isLoadedObject($categoryRelatedObject)
+                ? $this->context->link->getCategoryLink($categoryRelatedObject)
+                : $this->context->link->getModuleLink('kpymanufacturer', 'brands'),
             'banners_path' => $this->module->getPathUri() . 'views/img/landing/' . $categoryRelated . '/',
             'brand_name' => $data['name'],
             'title' => $data['title'] ?? $data['name'],
