@@ -21,36 +21,36 @@
                 <h1>{l s='Contact us' d='Shop.Theme.Global'}</h1>
 
                 <div class="kpy-form-group">
-                    <select name="id_contact" class="form-select form-control">
+                    <select name="id_contact" id="contact-subject" class="form-select form-control">
                         {foreach from=$contact.contacts item=contact_elt}
                             <option value="{$contact_elt.id_contact}">{$contact_elt.name}</option>
                         {/foreach}
                     </select>
                     <div class="underline"></div>
-                    <label class="form-label kpy-form-label">{l s='Subject' d='Shop.Forms.Labels'}</label>
+                    <label class="form-label kpy-form-label" for="contact-subject">{l s='Subject' d='Shop.Forms.Labels'}</label>
                 </div>
 
                 <div class="kpy-form-group">
                     <input
                             class="form-control"
-                            name="from"
+                            name="from" id="contact-email"
                             type="email"
                             value="{$contact.email}"
                             placeholder=" "
                     >
-                    <label class="form-label kpy-form-label">{l s='Email address' d='Shop.Forms.Labels'}</label>
+                    <label class="form-label kpy-form-label" for="contact-email">{l s='Email address' d='Shop.Forms.Labels'}</label>
                     <div class="underline"></div>
                 </div>
 
                 {if $contact.orders}
                     <div class="kpy-form-group">
-                        <select name="id_order" class="form-select form-control">
+                        <select name="id_order" id="contact-order" class="form-select form-control">
                             <option value="">{l s='Select order' d='Shop.Forms.Help'}</option>
                             {foreach from=$contact.orders item=order}
                                 <option value="{$order.id_order}">{$order.id_order}</option>
                             {/foreach}
                         </select>
-                        <label class="form-label kpy-form-label">{l s='Order number' d='Shop.Forms.Labels'}</label>
+                        <label class="form-label kpy-form-label" for="contact-order">{l s='Order number' d='Shop.Forms.Labels'}</label>
                         <span class="form-text optional">
               {l s='optional' d='Shop.Forms.Help'}
             </span>
@@ -59,7 +59,7 @@
 
                 {if $contact.allow_file_upload}
                     <div class="kpy-form-group">
-                        <input type="file" name="fileUpload" class="form-control">
+                        <input type="file" name="fileUpload" id="fileUpload" class="form-control">
                         <label class="form-label kpy-form-label" for="fileUpload">{l s='Attachment' d='Shop.Forms.Labels'}</label>
                         <span class="form-text">
               {l s='optional' d='Shop.Forms.Help'}
@@ -68,10 +68,10 @@
                 {/if}
 
                 <div class="kpy-form-group">
-                    <label class="form-label kpy-form-label-textarea">{l s='Message' d='Shop.Forms.Labels'}</label>
+                    <label class="form-label kpy-form-label-textarea" for="contact-message">{l s='Message' d='Shop.Forms.Labels'}</label>
                     <textarea
                             class="form-control"
-                            name="message"
+                            name="message" id="contact-message"
                             rows="4"
                     >{if $contact.message}{$contact.message}{/if}</textarea>
 
