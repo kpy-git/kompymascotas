@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PrestaShop\Module\KpyStorePreparation\Install\Installer;
+use PrestaShop\Module\KpyStorePreparation\Repository\OrdersPendingConfirmationRepository;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -83,5 +84,7 @@ class KpyStorePreparation extends Module
             26, // Pendiente de preparación en tienda
             date('Y-m-d H:i:s')
         );
+
+        (new OrdersPendingConfirmationRepository())->addOrder((int)$params['id_order']);
     }
 }
