@@ -32,9 +32,7 @@
 
           <div class="logo">
             {if $shop.logo_details}
-              {if $page.page_name == 'index'}<h1 class="{$headerBottom}__h1 mb-0">{/if}
                 {renderLogo}
-              {if $page.page_name == 'index'}</h1>{/if}
             {/if}
           </div>
 
