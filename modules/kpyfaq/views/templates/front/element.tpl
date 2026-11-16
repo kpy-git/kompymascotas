@@ -6,7 +6,7 @@
 
 {block name='content_columns'}
     <div class="page-header element">
-        <h1 class="text-center">{l s='Support center' d='Modules.Kpyfaq.Shop'}</h1>
+        <p class="h1 text-center">{l s='Support center' d='Modules.Kpyfaq.Shop'}</p>
     </div>
 
     <div class="page-content">
