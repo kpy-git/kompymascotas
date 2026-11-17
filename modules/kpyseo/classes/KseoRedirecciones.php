@@ -33,7 +33,7 @@ final class KseoRedirecciones
         $rutaRel = self::rutaRelativa($ruta);
         $query = (string) ($_SERVER['QUERY_STRING'] ?? '');
         $get = $_GET;
-        $limpiada = true;
+        $limpiada = false;
 
         // 1. query string duplicada
         /*if (strpos($query, '?') !== false && KseoAjustes::activo('KPYSEO_REDIR_LIMPIAR_QS')) {
