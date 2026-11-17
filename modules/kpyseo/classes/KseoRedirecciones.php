@@ -33,13 +33,13 @@ final class KseoRedirecciones
         $rutaRel = self::rutaRelativa($ruta);
         $query = (string) ($_SERVER['QUERY_STRING'] ?? '');
         $get = $_GET;
-        $limpiada = false;
+        $limpiada = true;
 
         // 1. query string duplicada
-        if (strpos($query, '?') !== false && KseoAjustes::activo('KPYSEO_REDIR_LIMPIAR_QS')) {
+        /*if (strpos($query, '?') !== false && KseoAjustes::activo('KPYSEO_REDIR_LIMPIAR_QS')) {
             $get = self::parametrosLimpios($query);
             $limpiada = true;
-        }
+        }*/
 
         // 2. búsqueda de marca
         if (KseoAjustes::activo('KPYSEO_REDIR_BUSQUEDAS')) {
@@ -50,12 +50,12 @@ final class KseoRedirecciones
         }
 
         // 3. index.php no amigable
-        if (KseoAjustes::activo('KPYSEO_REDIR_INDEXPHP')) {
+        /*if (KseoAjustes::activo('KPYSEO_REDIR_INDEXPHP')) {
             $destino = self::destinoNoAmigable($rutaRel, $get, $ctx);
             if ($destino !== '' && self::sinQuery($destino) !== self::sinQuery($ctx->link->getBaseLink() . ltrim($rutaRel, '/'))) {
                 self::ir($destino);
             }
-        }
+        }*/
 
         // 4. lista configurable
         $regla = self::reglaConfigurada($rutaRel);
