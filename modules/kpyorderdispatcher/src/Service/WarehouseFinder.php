@@ -36,9 +36,9 @@ class WarehouseFinder
         /** @var CartProductLazyArray $product */
         foreach ($products as $product) {
             $warehouses[] = match (true) {
+                OrderGuard::isProductSupported($product->id_product, $product->id_product_attribute) => 'NEFTYS',
                 in_array($product->id_manufacturer, $distrivetBrands) => 'DISTRIVET',
                 in_array($product->id_manufacturer, $evolutionBrands) => 'EVOLUTION',
-                OrderGuard::isProductSupported($product->id_product, $product->id_product_attribute) => 'NEFTYS',
                 default => 'TIENDA',
             };
         }
