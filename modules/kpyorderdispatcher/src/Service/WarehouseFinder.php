@@ -28,17 +28,14 @@ class WarehouseFinder
             return ['TIENDA'];
         }
 
-        $distrivetBrands = json_decode(\Configuration::get('KPY_DISTRIVET_MANUFACTURERS'), true);
-        $evolutionBrands = json_decode(\Configuration::get(Config::KPY_EVOLUTION_BRANDS), true);
-
         $warehouses = [];
 
         /** @var CartProductLazyArray $product */
         foreach ($products as $product) {
             $warehouses[] = match (true) {
                 OrderGuard::isProductSupported($product->id_product, $product->id_product_attribute) => 'NEFTYS',
-                in_array($product->id_manufacturer, $distrivetBrands) => 'DISTRIVET',
-                in_array($product->id_manufacturer, $evolutionBrands) => 'EVOLUTION',
+                DistrivetOrderGuard::isDistrivetProduct($product->id_product, $product->id_product_attribute) => 'DISTRIVET',
+                EvolutionOrderGuard::isEvolutionProduct($product->id_manufacturer, $product->id_product) => 'EVOLUTION',
                 default => 'TIENDA',
             };
         }
@@ -48,6 +45,7 @@ class WarehouseFinder
 
     public function hasMultiWarehouse(int $idCart, array $products): bool
     {
+        // todo - si todos los productos del pedido superan el limite de gastos de envío se divide el envío, para el cliente no tiene efecto de multi-almacén
         return count($this->getWarehousesByCart($idCart, $products)) > 1;
     }
 }

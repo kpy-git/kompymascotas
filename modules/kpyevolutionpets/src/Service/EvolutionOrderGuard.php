@@ -33,4 +33,19 @@ class EvolutionOrderGuard
 
         return true;
     }
+
+    static public function isEvolutionProduct(int $manufacturer, int $productId): bool
+    {
+        $evolutionBrands = json_decode(\Configuration::get(Config::KPY_EVOLUTION_BRANDS), true);
+
+        if(\Db::getInstance()->getValue(
+            "SELECT exists(
+                    select 1 FROM " . _DB_PREFIX_ . "category_product 
+                    where id_category=5576 and id_product={$productId}) as `snacks`"
+        )) {
+            return false;
+        }
+
+        return in_array($manufacturer, $evolutionBrands);
+    }
 }
