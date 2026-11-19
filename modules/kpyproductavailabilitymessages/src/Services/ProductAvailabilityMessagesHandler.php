@@ -158,6 +158,8 @@ class ProductAvailabilityMessagesHandler
 
     public function getMessageByCart(array $products, bool $multiWarehouse): string
     {
+        $outstockMessage = false;
+
         // si hay productos de más de un almacén siempre se prepara el pedido desde tienda, se añade una semana al día de hoy (hay que esperar a tener todos los productos en tienda)
         if ($multiWarehouse) {
             $start = $this->workingDaysManager->getNextWorkingDayTo(strtotime('+7 days'));
@@ -168,6 +170,10 @@ class ProductAvailabilityMessagesHandler
             /** @var CartProductLazyArray $product */
             foreach ($products as $product) {
                 try {
+                    if (!$outstockMessage && $product->stock_quantity < $product->cart_quantity) {
+                        $outstockMessage = true;
+                    }
+
                     $startProduct = $product->stock_quantity >= $product->cart_quantity
                         ? $this->getInStockTimestampsRangeByManufacturer($product->id_manufacturer)['start']
                         : $this->getOutStockTimestampByManufacturer($product->id_manufacturer);
@@ -180,6 +186,10 @@ class ProductAvailabilityMessagesHandler
             }
         }
 
-        return "Recíbelo a partir del " . $this->messageFormatter->getWeekdayAndMonthInText($start);
+        if ($outstockMessage) {
+            return "Recíbelo a partir del " . $this->messageFormatter->getWeekdayAndMonthInText($start);
+        }
+
+        return $this->messageFormatter->convierteRangoTiempoADiasSemana($start, $this->workingDaysManager->getNextWorkingDayTo($start));
     }
 }
