@@ -169,7 +169,7 @@ class ProductAvailabilityMessagesHandler
             /** @var CartProductLazyArray $product */
             foreach ($products as $product) {
                 try {
-                    $startProduct = $product->quantity >= $product->cart_quantity + $product->quantity_wanted
+                    $startProduct = $product->stock_quantity >= $product->cart_quantity
                         ? $this->getInStockTimestampsRangeByManufacturer($product->id_manufacturer)['start']
                         : $this->getOutStockTimestampByManufacturer($product->id_manufacturer);
                 } catch (KpyMessageStrategyNotFound $exception) {
