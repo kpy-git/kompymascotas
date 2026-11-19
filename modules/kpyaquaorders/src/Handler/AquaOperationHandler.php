@@ -422,7 +422,7 @@ class AquaOperationHandler
                     }
                 }
             }
-        } else if ($order->module === 'free_order' || $order->total_paid === 0.0) {
+        } else if ($order->module === 'free_order' || (float)$order->total_paid === 0.0) {
             // si se crea pedido gratuito sin vales de descuento, creo descuentos con el total_discounts del pedido
 
             // si el pedido tiene portes, inserto descuento de portes
