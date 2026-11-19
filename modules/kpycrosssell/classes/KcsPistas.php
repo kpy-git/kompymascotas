@@ -30,6 +30,124 @@ class KcsPistas
     ];
 
     /**
+     * Para qué es un producto, por el nombre: un snack **dental**, un complemento para la **piel**, unas
+     * gotas para la **calma**… Es lo que distingue un snack de otro cuando la ficha no lo dice (un
+     * «Dentalife» sin «Problemas orales y dentales» en Necesidades: pasa). Se usa para que a un snack
+     * dental se le ofrezca antes otro snack dental, y nunca uno para adelgazar.
+     */
+    private const TEMAS = [
+        'dental' => '/\b(dental\w*|dentalife|dentastix|dentastick\w*|veggiedent|orozyme|oral\w*|bucal\w*|dientes|teeth|tooth|placa|sarro|aliento|breath|tartar|plaque)\b/u',
+        'piel' => '/\b(piel|skin|coat|derma\w*|pelaje)\b/u',
+        'articular' => '/\b(mobility|movilidad|articul\w*|joint\w*|condro\w*|chondro\w*|glucosamin\w*|artro\w*|arthro\w*)\b/u',
+        'calma' => '/\b(calm\w*|relax\w*|estr[ée]s|ansiedad|anxiety|anxious|zylkene|adaptil|feliway|tranquil\w*|serenit\w*)\b/u',
+        'peso' => '/\b(light|lite|low ?fat|baj[oa]s? en grasa|obesity|obesidad|weight|satiety|metabolic|slim)\b/u',
+        'esterilizado' => '/\b(steril\w*|esteril\w*|castrad\w*|neutered|spayed)\b/u',
+        'digestivo' => '/\b(digest\w*|gastro\w*|intestinal|probi[oó]tic\w*|prebi[oó]tic\w*)\b/u',
+        'urinario' => '/\b(urinar\w*|urinary)\b/u',
+        'bolas' => '/\b(bolas de pelo|hairball\w*|malt|malta|malt paste)\b/u',
+        'alergia' => '/\b(hipoaler\w*|hypoaller\w*|anallergenic|sensitiv\w*|sensible)\b/u',
+    ];
+
+    /** Lo mismo, cuando la ficha sí lo dice («Necesidades específicas» → tema). */
+    private const TEMAS_FICHA = [
+        'Problemas orales y dentales' => 'dental',
+        'Estrés y ansiedad' => 'calma',
+        'Esterilizados/Castrados' => 'esterilizado',
+        'Bolas de pelo' => 'bolas',
+        'Control del peso' => 'peso',
+        'Sobrepeso' => 'peso',
+        'Problemas de pelo y piel' => 'piel',
+        'Movilidad y articulaciones' => 'articular',
+        'Problemas gastrointestinales' => 'digestivo',
+        'Problemas urinarios' => 'urinario',
+        'Problemas alérgicos e intolerancias' => 'alergia',
+    ];
+
+    /**
+     * Los temas de un producto: por el nombre y por la ficha, ordenados, sin repetir. Vacío = genérico.
+     *
+     * @param string[] $necesidades nombres de «Necesidades específicas» de la ficha
+     *
+     * @return string[]
+     */
+    public static function temas(string $nombre, array $necesidades = []): array
+    {
+        $n = mb_strtolower($nombre);
+        $salida = [];
+        foreach (self::TEMAS as $tema => $patron) {
+            if (preg_match($patron, $n)) {
+                $salida[] = $tema;
+            }
+        }
+        foreach ($necesidades as $necesidad) {
+            if (isset(self::TEMAS_FICHA[$necesidad])) {
+                $salida[] = self::TEMAS_FICHA[$necesidad];
+            }
+        }
+        $salida = array_values(array_unique($salida));
+        sort($salida);
+
+        return $salida;
+    }
+
+    /** Lo que dice de la talla del perro un nombre o un formato («perros grandes», «L - Más de 30 kg», «Mini»). */
+    private const TALLAS = [
+        // Las letras sueltas (S, M, L) solo si no van detrás de un número («2 l» es una botella, no una
+        // talla) ni de un apóstrofo («Hill's» no es una talla S).
+        'pequeño' => '/(?<!\d)(?<!\d )(?<![\'’])\b(xs|s)\b|\b(small|mini|toy|pequeñ\w*|peque\w*)\b/u',
+        'mediano' => '/(?<!\d)(?<!\d )(?<![\'’])\b(m)\b|\b(medium|median\w*|medio\w*)\b/u',
+        'grande' => '/(?<!\d)(?<!\d )(?<![\'’])\b(l|xl|xxl)\b|\b(large|maxi|grand\w*|giant|gigante\w*)\b/u',
+    ];
+
+    /** La talla que corresponde a cada valor de «Tamaño» de la ficha. «Todos los tamaños» no dice nada. */
+    private const TALLAS_FICHA = ['Mini' => 'pequeño', 'Pequeño' => 'pequeño', 'Mediano' => 'mediano', 'Medium' => 'mediano', 'Grande' => 'grande', 'Maxi' => 'grande', 'Gigante' => 'grande'];
+
+    /**
+     * La talla del perro que dice un texto: 'pequeño', 'mediano', 'grande' o '' (no lo dice o dice varias).
+     * Primero la ficha («Tamaño»), si se da; si no, el nombre o el formato.
+     */
+    public static function talla(string $texto, string $tamanoFicha = ''): string
+    {
+        if ($tamanoFicha !== '' && isset(self::TALLAS_FICHA[$tamanoFicha])) {
+            return self::TALLAS_FICHA[$tamanoFicha];
+        }
+        $t = mb_strtolower($texto);
+        $salida = [];
+        foreach (self::TALLAS as $talla => $patron) {
+            if (preg_match($patron, $t)) {
+                $salida[] = $talla;
+            }
+        }
+
+        return count($salida) === 1 ? $salida[0] : '';
+    }
+
+    /**
+     * En qué orden va un candidato respecto a la línea, por tema.
+     *
+     * Si comparten tema (dental con dental), primero. Si el candidato no es para nada en concreto, después.
+     * Si es para otra cosa (a un dental, uno para adelgazar), el último: solo se verá si no hay nada mejor
+     * (Rafa, 18/11: mejor una alternativa que ninguna). Si la línea no es para nada en concreto, primero los
+     * genéricos y después los especializados.
+     *
+     * @param string[] $deLinea
+     * @param string[] $deCandidato
+     *
+     * @return int 0 = el que mejor encaja, 1 = vale pero después, 2 = solo si no hay otra cosa
+     */
+    public static function ordenPorTema(array $deLinea, array $deCandidato): int
+    {
+        if ($deLinea === []) {
+            return $deCandidato === [] ? 0 : 1;
+        }
+        if ($deCandidato === []) {
+            return 1;
+        }
+
+        return array_intersect($deLinea, $deCandidato) !== [] ? 0 : 2;
+    }
+
+    /**
      * @return array{animal: string, edad: string, enfermedades: string[]}
      *               `animal`: 'Perro', 'Gato', 'ambos' o '' (no lo dice)
      *               `edad`: 'joven', 'adulto', 'mayor' o '' (no lo dice)

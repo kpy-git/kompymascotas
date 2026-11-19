@@ -19,7 +19,10 @@ class KcsPantalla
 
     public function pintar(): string
     {
-        return $this->procesar() . $this->formulario() . $this->distribuidores() . $this->descuentos() . $this->probar() . $this->parejas();
+        require_once __DIR__ . '/KcsPantallaCesta.php';
+
+        return $this->procesar() . $this->formulario() . (new KcsPantallaCesta($this->modulo))->pintar()
+            . $this->distribuidores() . $this->descuentos() . $this->probar() . $this->parejas();
     }
 
     private function procesar(): string

@@ -3,6 +3,90 @@
 Se llama **«Kompy · Caprichitos»** desde la 1.5.0 (Rafa, 30/09/2026; antes «Llévalo junto»). El nombre
 técnico, `kpycrosssell`, no cambia: con él van sus tablas, su configuración y el enganche de la ficha.
 
+## Desde la 1.7.0: la cesta de un solo almacén
+
+Rafa, 16–18/11/2026: que el pedido no se retrase por mezclar almacenes. La regla de qué almacén implica
+cada producto es de Julián (`kpyorderdispatcher`), no nuestra, y así lo pidió en su correo del 17/11:
+**este módulo solo ofrece alternativas**, no calcula almacenes, ni fechas, ni stock.
+
+- **La puerta** es `WarehouseFinder::hasMultiWarehouse($products)` (desde el 19/11 sus funciones ya no
+  llevan el id del carrito, solo los productos): se le pasan los de la cesta presentada
+  (`CartProductLazyArray`, con unidades y `total_wt`; `KcsAlmacenes::productosDeCesta`), como hace su
+  `kpyproductavailabilitymessages`. Si dice que la cesta no implica más de un almacén (también cuando cada
+  almacén pasa del envío gratis, 39,90 €, y se parte el pedido), no se pinta nada. Si lo implica, el
+  **almacén de referencia** es el que cubre más euros de la cesta (a igual importe, el de la línea más
+  cara); las líneas que no salen de él **bloquean**. El almacén de cada producto se le pregunta a su
+  `getWarehousesByCart([$producto])` con ese solo producto (un objeto con `id_product`,
+  `id_product_attribute`, `id_manufacturer` y `quantity`, las unidades de la línea; a un candidato, las de
+  la línea que sustituiría: su prioridad de tienda depende de ellas).
+  Sus clases no cargan hasta que PrestaShop instancia sus módulos: `KcsAlmacenes` los instancia antes.
+  Si su módulo no está, o algo falla, el nuestro se calla (una línea en el registro) y la cesta sigue.
+- **En cada línea que bloquea**: la etiqueta «Sale de otro almacén y puede retrasar tu pedido» con su (i)
+  (`displayCartExtraProductInfo`) y el bloque «Cámbialo por…» (`displayCartExtraProductActions`, detrás de
+  `kpycoupons`): tres alternativas, «Ver más productos elegibles», «Dejarlo como está» (se recuerda en esa
+  cesta) y «Productos de estas marcas no retrasan tu pedido» con enlace a `/marcas/<marca>`. Al pie de la
+  lista, el aviso ámbar (`displayShoppingCartFooter`). En la ventana «Añadido a tu cesta», lo mismo para
+  el producto que acaba de entrar (`displayCartModalFooter`; la hoja lo pone encima de los botones).
+  **Una línea que bloquea sin alternativas no lleva nada** (ni etiqueta, ni aviso, ni en la ventana;
+  `KcsCesta::seEnsena`): la cesta se queda como si todo saliera del mismo almacén, porque la fecha y su
+  nota ya las pone el módulo de Julián y no hay que duplicar mensajes (Rafa, 18/11). Si el cliente pulsó
+  «Dejarlo como está», la etiqueta con la (i) se queda. **Nunca** se nombra el almacén ni se da una fecha.
+- **Las alternativas** (`KcsAlternativas`): mismo «Tipo de Producto», misma mascota (también por el
+  nombre), la misma patología **exacta** (en las dietas veterinarias, todas las necesidades salvo
+  Vitaminas, Alta actividad y Sabor, y «Problemas de pelo y piel» es etiqueta de síntoma: no iguala, pero
+  la dieta que coincide del todo va primero; sin patología, nada. Fuera de las dietas solo son exactas las
+  enfermedades de verdad —renal, hepático, cardiaco, diabetes, leishmania, recuperación, cerebral—: un
+  snack «para alérgicos» o un pienso «digestión sensible» son perfil), edad compatible, en pienso el mismo
+  tamaño de perro, con stock para la cantidad, de marca permitida, y **del almacén de referencia** según
+  Julián, menos lo que su reparto de **pedidos** no deja salir de ese almacén: los snacks de Natural
+  Greatness (categoría 5576) no salen de Evolution Pet (su `EvolutionOrderGuard`). Es el ajuste
+  «Categorías que nunca salen de un almacén» (`KCS_CESTA_NUNCA`, `EVOLUTION:5576`; Rafa, 18/11 a
+  mediodía, con Natural Greatness + sus galletas delante); desde el 19/11 su `isEvolutionProduct` ya los
+  excluye también en `getWarehousesByCart`, y el ajuste se queda como estaba. Nunca antiparasitarios ni
+  medicamentos. El **tema** (`KcsPistas::temas`, por el nombre y la
+  ficha: dental, piel, articular, calma, peso, esterilizado, digestivo, urinario, bolas de pelo, alergia)
+  ordena: a un snack dental otro dental antes que uno genérico, y uno para adelgazar el último (solo si
+  no hay otra cosa: Rafa prefiere una alternativa a ninguna).
+- **El precio es un orden, no un muro** (Rafa, 18/11: «veo pocas alternativas»): se compara **lo que se
+  paga** (con impuestos y promociones) con lo que vale la línea (sin su promoción de hoy). Primero los
+  formatos de **precio parecido** (70–130 %, y en comida nunca más caro por kilo que ese 130 %; en snacks,
+  complementos y accesorios el peso de la ficha no dice nada y no se mira); si no hay o son pocos, los más
+  cercanos en precio dentro de la banda **«como mucho»** (del 25 % al 400 %, o hasta 10 € más si es más
+  que el 400 %: a un snack de 1,55 € el 400 % son 6 €), marcados como no parecidos, y el texto del bloque
+  deja de prometer «precio parecido». Y en comida, el formato que cuesta lo mismo **por kilo** aunque sea
+  de otro tamaño (a una lata suelta de 4,70 €, un pack de seis tarrinas de 21 €) entra también como
+  lejano. Un snack dental de 3,29 € puede tener como alternativa un VeggieDent de 8,99 €: el precio lo ve
+  el cliente en la tarjeta.
+- **Orden** («que más o menos sea lo mismo»): marcas preferidas para dietas (Farmina); mismo tema antes
+  que genérico, y otro tema el último; precio parecido antes que lejano; la ficha clínica que coincide del
+  todo; cuantas más **categorías de la tienda** comparta con la línea (las de «Comprar por mascota» del
+  cuarto nivel en adelante, nunca las de marca; la principal cuenta doble: «Snacks dentales perros»,
+  «Pienso natural perros»…); misma **talla** de perro (ficha o nombre: «perros grandes»; entre los formatos
+  de un producto en tallas S/M/L, los de su talla primero); la misma opción nutricional, ingrediente
+  principal y textura de la ficha; precio más cercano; ventas. Y **variedad** en las tarjetas a la vista:
+  como mucho dos de la misma marca si hay otra igual de buena. Hasta 12.
+- **Los candidatos** se cogen del catálogo por cercanía de precio de tarifa (300, no los 120 más vendidos:
+  lo de Neftys vende poco y se quedaba fuera), y el almacén de cada formato se mira en la **memoria**
+  `kpy_cross_sell_almacen` (las respuestas del reparto de Julián de las últimas 6 horas, por producto y
+  formato; lo que no está se le pregunta y se apunta). Lo que se va a enseñar se confirma en vivo. En
+  pruebas: 80–130 ms por línea con la memoria caliente, ~500 ms la primera vez.
+- **Cambiar** (`controllers/front/cambiar.php`): entra la alternativa con la misma cantidad y, solo si
+  ha entrado, sale la línea; el candidato tiene que seguir siendo alternativa **en ese momento**. Con
+  JavaScript, sin recargar (se avisa a la tienda con `updateCart` y repinta la cesta; el aviso del pie se
+  pide al servidor, `accion=estado`); sin JavaScript, son formularios y la (i) y «Ver más» son `<details>`.
+- **Se cuenta** en `kpy_cross_sell_cesta` (vistas, cambios, «dejar», «ver más», (i), errores) y se ve en
+  la pantalla del módulo, que tiene también **«Probar una cesta»** por su número (con tema, precio parecido
+  o no y categorías compartidas de cada alternativa, y cuánto recuerda la memoria de almacenes) y los
+  ajustes (encendido, ventana, aviso, banda de precio parecido 70–130 %, banda «como mucho» 25–400 % o
+  10 € más, tarjetas, tope, marcas, marcas preferidas para dietas, categorías que nunca salen de un
+  almacén).
+- **Probado** el 18/11 en pruebas con `tests/cesta.php` (sin tienda), `bin/herramientas/pruebas-cesta-
+  alternativas.php` (en el contenedor) y `bin/herramientas/pw-cesta.mjs` (Chrome, Firefox, WebKit, iPhone;
+  ventana, cesta, cambiar, dejar, ver más, sin JavaScript, el snack dental con alternativa más cara, la
+  dieta hipoalergénica con tres dietas de Neftys, el snack natural de 1,55 € y la cesta sin alternativas,
+  Natural Greatness + Dentalife, donde no se enseña nada). Textos con `{l}` (se cambian desde el back
+  office), estilos por `actionFrontControllerSetMedia`, nada en el tema.
+
 ## Desde la 1.5.0
 
 - **La foto y el nombre de cada sugerencia llevan a su ficha**, en la misma pestaña (en un

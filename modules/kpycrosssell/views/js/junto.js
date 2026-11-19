@@ -345,32 +345,32 @@
     datos.append('articulos[]', boton.value);
 
     fetch(url, { method: 'POST', body: datos, credentials: 'same-origin', headers: { Accept: 'application/json' } })
-        .then(function (r) {
-          if (!r.ok) {
-            throw new Error('HTTP ' + r.status);
-          }
-          return r.json();
-        })
-        .then(function (d) {
-          tarjeta.classList.remove('is-cargando');
-          boton.removeAttribute('aria-busy');
-          if (!d || !d.ok) {
-            boton.disabled = false;
-            decir((d && d.mensaje) || T.error, true);
-            return;
-          }
-          tarjeta.classList.add('is-puesto');
-          boton.setAttribute('aria-pressed', 'true');
-          boton.setAttribute('aria-label', (T.en_cesta || '').split('%producto%').join(boton.getAttribute('data-kcs-nombre') || ''));
-          decir(T.puesto || d.mensaje);
-          avisarCesta(parseInt(partes[0], 10) || 0, parseInt(partes[1], 10) || 0, d);
-        })
-        .catch(function () {
-          tarjeta.classList.remove('is-cargando');
-          boton.removeAttribute('aria-busy');
+      .then(function (r) {
+        if (!r.ok) {
+          throw new Error('HTTP ' + r.status);
+        }
+        return r.json();
+      })
+      .then(function (d) {
+        tarjeta.classList.remove('is-cargando');
+        boton.removeAttribute('aria-busy');
+        if (!d || !d.ok) {
           boton.disabled = false;
-          decir(T.error, true);
-        });
+          decir((d && d.mensaje) || T.error, true);
+          return;
+        }
+        tarjeta.classList.add('is-puesto');
+        boton.setAttribute('aria-pressed', 'true');
+        boton.setAttribute('aria-label', (T.en_cesta || '').split('%producto%').join(boton.getAttribute('data-kcs-nombre') || ''));
+        decir(T.puesto || d.mensaje);
+        avisarCesta(parseInt(partes[0], 10) || 0, parseInt(partes[1], 10) || 0, d);
+      })
+      .catch(function () {
+        tarjeta.classList.remove('is-cargando');
+        boton.removeAttribute('aria-busy');
+        boton.disabled = false;
+        decir(T.error, true);
+      });
   }
 
   caja.addEventListener('click', function (e) {

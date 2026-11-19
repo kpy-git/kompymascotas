@@ -153,6 +153,7 @@ class KcsSugerencias
         'necesidad' => 'Necesidades específicas',
         'opcion' => 'Opción nutricional',
         'sabor' => 'Ingrediente principal',
+        'textura' => 'Textura de alimentos',
     ];
 
     /**
@@ -1004,7 +1005,7 @@ class KcsSugerencias
         }
         $p = _DB_PREFIX_;
         $idLang = (int) Context::getContext()->language->id;
-        $ids = ['tipo' => 0, 'mascota' => 0, 'edad' => 0, 'tamano' => 0, 'necesidad' => 0, 'opcion' => 0, 'sabor' => 0, 'valores' => []];
+        $ids = ['tipo' => 0, 'mascota' => 0, 'edad' => 0, 'tamano' => 0, 'necesidad' => 0, 'opcion' => 0, 'sabor' => 0, 'textura' => 0, 'valores' => []];
 
         foreach (self::CARACTERISTICAS as $clave => $nombre) {
             $ids[$clave] = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue(
@@ -1012,7 +1013,7 @@ class KcsSugerencias
             );
         }
 
-        $cuales = array_map('intval', [$ids['tipo'], $ids['mascota'], $ids['edad'], $ids['tamano'], $ids['necesidad'], $ids['opcion'], $ids['sabor']]);
+        $cuales = array_map('intval', [$ids['tipo'], $ids['mascota'], $ids['edad'], $ids['tamano'], $ids['necesidad'], $ids['opcion'], $ids['sabor'], $ids['textura']]);
         $filas = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
             "SELECT fvl.id_feature_value, fvl.value
              FROM {$p}feature_value_lang fvl

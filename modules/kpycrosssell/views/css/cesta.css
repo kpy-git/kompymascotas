@@ -1,0 +1,341 @@
+/* Kompy · La cesta de un solo almacén (kpycrosssell 1.7.0)
+ *
+ * La etiqueta de la línea que rompe el envío único, su (i), el bloque «Cámbialo por…» con sus tarjetas,
+ * el aviso al pie de la cesta y la ventana «Añadido a tu cesta». Es la maqueta que aprobó Rafa
+ * (`maquetas/cesta-un-solo-almacen.html`), con los colores de la tienda donde los hay (`--kpy-*`) y los
+ * botones del tema (`.btn-primary`, `.btn-outline-primary`), para que se lea como parte de la cesta.
+ *
+ * Ámbar para «puede retrasarse», verde para «sale completo». Sin nombres de almacén y sin fechas.
+ * La (i) y «Ver más» son <details>: funcionan sin JavaScript.
+ */
+.kcs-al, .kcs-al-estado, .kcs-al-resumen, .kcs-al-ventana {
+  --kcs-al-tinta: var(--kpy-text-dark, #2A5C68);
+  --kcs-al-texto: #4b5a61;
+  --kcs-al-gris: #5f6b72;
+  --kcs-al-linea: #e2ddd0;
+  --kcs-al-papel: #fff;
+  --kcs-al-verde: #1f8a4c;
+  --kcs-al-verde-suave: #e6f4ea;
+  --kcs-al-verde-linea: #bfe3cb;
+  --kcs-al-ambar: #b7651a;
+  --kcs-al-ambar-suave: #fff3e2;
+  --kcs-al-ambar-linea: #f0d2ad;
+  --kcs-al-rojo: #C23A2C;
+  --kcs-al-rojo-suave: #fdecea;
+  color: var(--kcs-al-texto);
+}
+
+.kcs-al *, .kcs-al-estado *, .kcs-al-resumen *, .kcs-al-ventana * { box-sizing: border-box; }
+
+/* -------------------------------------------------------------------------------------------- */
+/* La etiqueta de la línea y su (i)                                                               */
+.kcs-al-estado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 2px;
+}
+
+.kcs-al-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  line-height: 1.3;
+}
+
+.kcs-al-pill i { font-style: normal; font-weight: 800; }
+.kcs-al-pill--mal { background: var(--kcs-al-ambar-suave); color: var(--kcs-al-ambar); font-weight: 600; }
+.kcs-al-pill--ok { background: var(--kcs-al-verde-suave); color: var(--kcs-al-verde); font-weight: 600; }
+
+/* La (i): un <details> cuyo resumen son la etiqueta y el botón redondo; el panel se abre debajo, a todo
+   el ancho. (Sin `display: contents` en el <details>: Firefox enseñaba el panel cerrado.) */
+.kcs-al-info { display: block; width: 100%; }
+
+.kcs-al-info__resumen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kcs-al-info__resumen::-webkit-details-marker { display: none; }
+.kcs-al-info__resumen::marker { content: ""; }
+.kcs-al-info__resumen:focus-visible { outline: 2px solid var(--kcs-al-tinta); outline-offset: 2px; border-radius: 4px; }
+
+.kcs-al-info__boton {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid var(--kcs-al-gris);
+  border-radius: 50%;
+  background: var(--kcs-al-papel);
+  color: var(--kcs-al-gris);
+  font: 700 13px/1 Georgia, "Times New Roman", serif;
+}
+
+.kcs-al-info__resumen:hover .kcs-al-info__boton, .kcs-al-info[open] .kcs-al-info__boton { background: var(--kcs-al-gris); color: var(--kcs-al-papel); }
+
+.kcs-al-info__panel {
+  margin: 6px 0 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--kcs-al-linea);
+  border-left: 4px solid var(--kcs-al-gris);
+  border-radius: 8px;
+  background: var(--kcs-al-papel);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--kcs-al-tinta);
+}
+
+.kcs-al-info__panel p { margin: 0; }
+.kcs-al-info__panel p + p { margin-top: 6px; }
+
+/* -------------------------------------------------------------------------------------------- */
+/* El bloque «Cámbialo por…»                                                                      */
+.product-line__actions:has(.kcs-al) { flex-wrap: wrap; }
+
+.kcs-al {
+  flex: 1 1 100%;
+  width: 100%;
+  min-width: 0;
+  margin: 8px 0 4px;
+  padding: 12px 14px 14px;
+  border: 1px solid var(--kcs-al-ambar-linea);
+  border-radius: 10px;
+  background: var(--kcs-al-ambar-suave);
+  container-type: inline-size;
+}
+
+.kcs-al__titulo {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--kcs-al-tinta);
+  text-wrap: balance;
+}
+
+.kcs-al__sub { margin: 3px 0 0; font-size: 13px; line-height: 1.4; color: var(--kcs-al-gris); }
+
+.kcs-al__tarjetas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.kcs-al-tarjeta {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  min-width: 0;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--kcs-al-linea);
+  border-radius: 10px;
+  background: var(--kcs-al-papel);
+  transition: border-color .2s, opacity .2s;
+}
+
+.kcs-al-tarjeta__foto { display: block; width: 56px; height: 56px; }
+.kcs-al-tarjeta__foto img { width: 56px; height: 56px; object-fit: contain; border-radius: 8px; background: #fff; mix-blend-mode: multiply; }
+.kcs-al-tarjeta__texto { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+.kcs-al-tarjeta__nombre {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--kcs-al-tinta);
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.kcs-al-tarjeta__nombre:hover, .kcs-al-tarjeta__nombre:focus-visible { color: var(--kcs-al-tinta); text-decoration: underline; text-underline-offset: 2px; }
+.kcs-al-tarjeta__formato { font-size: 12px; line-height: 1.3; color: var(--kcs-al-gris); }
+
+.kcs-al-tarjeta__pie {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.kcs-al-tarjeta__precio { display: flex; flex-direction: column; line-height: 1.2; white-space: nowrap; }
+.kcs-al-tarjeta__precio b { font-size: 16px; font-weight: 700; color: var(--kcs-al-tinta); }
+.kcs-al-tarjeta__delta { font-size: 12px; font-weight: 500; color: var(--kcs-al-gris); }
+
+.kcs-al-tarjeta__boton { min-height: 40px; padding-inline: 14px; font-weight: 700; white-space: nowrap; }
+.kcs-al-tarjeta__boton[aria-busy="true"] { cursor: progress; }
+.is-cambiando .kcs-al-tarjeta { opacity: .7; }
+
+.kcs-al__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: 12px;
+}
+
+/* «Ver más»: el resumen del <details> es el botón; las tarjetas de más se abren debajo, a todo el ancho. */
+.kcs-al__mas { display: contents; }
+.kcs-al__vermas { list-style: none; cursor: pointer; min-height: 40px; font-weight: 700; }
+.kcs-al__vermas::-webkit-details-marker { display: none; }
+.kcs-al__vermas::marker { content: ""; }
+.kcs-al__vermas-menos { display: none; }
+.kcs-al__mas[open] > .kcs-al__vermas .kcs-al__vermas-mas { display: none; }
+.kcs-al__mas[open] > .kcs-al__vermas .kcs-al__vermas-menos { display: inline; }
+.kcs-al__tarjetas--mas { flex: 1 1 100%; width: 100%; margin-top: 0; order: 2; }
+
+.kcs-al__dejar-form { margin: 0; }
+
+.kcs-al__dejar {
+  margin: 0;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: var(--kcs-al-gris);
+  font: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.kcs-al__dejar:hover { color: var(--kcs-al-tinta); }
+
+.kcs-al__marcas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--kcs-al-gris);
+}
+
+.kcs-al__marcas a {
+  padding: 2px 9px;
+  border: 1px solid var(--kcs-al-linea);
+  border-radius: 999px;
+  background: var(--kcs-al-papel);
+  color: var(--kcs-al-tinta);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.kcs-al__marcas a:hover, .kcs-al__marcas a:focus-visible { border-color: var(--kcs-al-tinta); text-decoration: underline; }
+
+.kcs-al__aviso { margin: 8px 0 0; font-size: 14px; font-weight: 600; color: var(--kcs-al-verde); }
+.kcs-al__aviso:empty { display: none; }
+.kcs-al__aviso.is-mal { color: var(--kcs-al-rojo); }
+
+/* -------------------------------------------------------------------------------------------- */
+/* El aviso al pie de la cesta                                                                    */
+.kcs-al-resumen {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  width: 100%;
+  margin: 14px 0 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--kcs-al-ambar-linea);
+  border-radius: 10px;
+  background: var(--kcs-al-ambar-suave);
+}
+
+.kcs-al-resumen--verde { border-color: var(--kcs-al-verde-linea); background: var(--kcs-al-verde-suave); }
+.kcs-al-resumen--rojo { border-color: #f3c2bc; background: var(--kcs-al-rojo-suave); }
+
+.kcs-al-resumen__icono {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--kcs-al-ambar);
+  color: #fff;
+  font-weight: 800;
+}
+
+.kcs-al-resumen--verde .kcs-al-resumen__icono { background: var(--kcs-al-verde); }
+.kcs-al-resumen--rojo .kcs-al-resumen__icono { background: var(--kcs-al-rojo); }
+.kcs-al-resumen__titulo { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.3; color: var(--kcs-al-tinta); }
+.kcs-al-resumen__texto p { margin: 4px 0 0; font-size: 14px; line-height: 1.45; }
+.kcs-al-resumen a { color: inherit; font-weight: 600; }
+
+/* -------------------------------------------------------------------------------------------- */
+/* La ventana «Añadido a tu cesta»: lo nuestro encima de los botones, a todo el ancho              */
+.blockcart-modal__cart-footer-extra:has(.kcs-al-ventana) { order: -1; width: 100%; margin-bottom: 8px; }
+.kcs-al-ventana .kcs-al-estado { margin: 0 0 8px; }
+.kcs-al-ventana .kcs-al { margin: 0; }
+.kcs-al-ventana .kcs-al__tarjetas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.kcs-al-ventana__hecho {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--kcs-al-verde-linea);
+  border-radius: 10px;
+  background: var(--kcs-al-verde-suave);
+  color: var(--kcs-al-verde);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.kcs-al-ventana__hecho i { font-style: normal; }
+.kcs-al-ventana__hecho[hidden] { display: none; }
+
+/* -------------------------------------------------------------------------------------------- */
+/* Según el ancho del bloque: tres columnas con sitio, dos en la columna de la cesta, y en el móvil  */
+/* las tarjetas en fila deslizable, como en la maqueta.                                           */
+@container (max-width: 759px) {
+  .kcs-al__tarjetas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@container (max-width: 479px) {
+  .kcs-al__tarjetas {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-left: -14px;
+    margin-right: -14px;
+    padding: 0 14px 4px;
+  }
+
+  .kcs-al__tarjetas .kcs-al-tarjeta { flex: 0 0 78%; scroll-snap-align: start; }
+  .kcs-al__acciones .kcs-al__vermas { width: 100%; }
+
+  /* En la ventana «Añadido a tu cesta», apiladas (una debajo de otra), no en fila deslizable: en el PC la
+     ventana es estrecha y la segunda tarjeta quedaba cortada sin que se viera que se podía deslizar. */
+  .kcs-al--ventana .kcs-al__tarjetas { display: grid; grid-template-columns: 1fr; overflow: visible; margin: 0; padding: 0; scroll-snap-type: none; }
+  .kcs-al--ventana .kcs-al__tarjetas .kcs-al-tarjeta { flex: none; }
+}
+
+@media (max-width: 767.98px) {
+  .kcs-al { padding: 10px 12px 12px; }
+  .kcs-al__titulo { font-size: 14.5px; }
+  .kcs-al-resumen { padding: 12px 14px; }
+  .kcs-al-ventana .kcs-al__tarjetas { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kcs-al-tarjeta, .kcs-al-pill { transition: none; }
+}

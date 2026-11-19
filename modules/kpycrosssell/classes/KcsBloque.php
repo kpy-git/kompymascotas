@@ -301,8 +301,8 @@ class KcsBloque
         return $salida;
     }
 
-    /** El nombre del formato («Pack 12 x 400 g»), que es lo que decide si merece la pena. */
-    private static function formato(int $ipa, int $idLang): string
+    /** El nombre del formato («Pack 12 x 400 g»), que es lo que decide si merece la pena. Lo usa también la cesta (1.7.0). */
+    public static function formato(int $ipa, int $idLang): string
     {
         $p = _DB_PREFIX_;
         $filas = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
