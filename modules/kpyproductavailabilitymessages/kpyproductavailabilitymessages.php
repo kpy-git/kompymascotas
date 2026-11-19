@@ -130,7 +130,7 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
                 return '';
             }
 
-            $multiWarehouse = new WarehouseFinder()->hasMultiWarehouse($cart->products);
+            $multiWarehouse = (new WarehouseFinder())->hasMultiWarehouse($cart->products);
 
             $this->context->smarty->assign([
                 'availability_message' => $this->productAvailabilityMessageHandler->getMessageByCart($cart->products, $multiWarehouse),
