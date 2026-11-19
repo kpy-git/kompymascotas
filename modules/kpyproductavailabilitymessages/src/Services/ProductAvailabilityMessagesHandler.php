@@ -158,32 +158,30 @@ class ProductAvailabilityMessagesHandler
 
     public function getMessageByCart(array $products, bool $multiWarehouse): string
     {
-        $outstockMessage = false;
-
         // si hay productos de más de un almacén siempre se prepara el pedido desde tienda, se añade una semana al día de hoy (hay que esperar a tener todos los productos en tienda)
         if ($multiWarehouse) {
-            $start = $this->workingDaysManager->getNextWorkingDayTo(strtotime('+7 days'));
+            return "Recíbelo a partir del " . $this->messageFormatter->getWeekdayAndMonthInText($this->workingDaysManager->getNextWorkingDayTo(strtotime('+7 days')));
+        }
 
-        } else {
-            // si todos están en el mismo almacén se calcula la fecha más alta y se utiliza
-            $start = 0;
-            /** @var CartProductLazyArray $product */
-            foreach ($products as $product) {
-                try {
-                    if (!$outstockMessage && $product->stock_quantity < $product->cart_quantity) {
-                        $outstockMessage = true;
-                    }
-
-                    $startProduct = $product->stock_quantity >= $product->cart_quantity
-                        ? $this->getInStockTimestampsRangeByManufacturer($product->id_manufacturer)['start']
-                        : $this->getOutStockTimestampByManufacturer($product->id_manufacturer);
-                } catch (KpyMessageStrategyNotFound $exception) {
-                    // nunca debería ocurrir que un producto sin stock no tenga forma de calcular el mensaje, pero por si las moscas...
-                    $startProduct = strtotime('+2 week');
+        // si todos están en el mismo almacén se calcula la fecha más alta y se utiliza
+        $start = 0;
+        $outstockMessage = false;
+        /** @var CartProductLazyArray $product */
+        foreach ($products as $product) {
+            try {
+                if ($product->out_of_stock != 1 && !$outstockMessage && $product->stock_quantity < $product->cart_quantity) {
+                    $outstockMessage = true;
                 }
 
-                $start = max($startProduct, $start);
+                $startProduct = $product->stock_quantity >= $product->cart_quantity
+                    ? $this->getInStockTimestampsRangeByManufacturer($product->id_manufacturer)['start']
+                    : $this->getOutStockTimestampByManufacturer($product->id_manufacturer);
+            } catch (KpyMessageStrategyNotFound $exception) {
+                // nunca debería ocurrir que un producto sin stock no tenga forma de calcular el mensaje, pero por si las moscas...
+                $startProduct = strtotime('+2 week');
             }
+
+            $start = max($startProduct, $start);
         }
 
         if ($outstockMessage) {
