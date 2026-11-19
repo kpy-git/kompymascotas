@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use PrestaShop\Module\KpyOrderDispatcher\Service\WarehouseFinder;
 use PrestaShop\Module\KpyProductAvailabilityMessages\Install\Installer;
 use PrestaShop\Module\KpyProductAvailabilityMessages\Services\ProductAvailabilityMessageFormatter;
 use PrestaShop\Module\KpyProductAvailabilityMessages\Services\ProductAvailabilityMessagesHandler;
@@ -129,8 +130,11 @@ class KpyProductAvailabilityMessages extends Module implements WidgetInterface
                 return '';
             }
 
+            $multiWarehouse = new WarehouseFinder()->hasMultiWarehouse($cart->products);
+
             $this->context->smarty->assign([
-                'availability_message' => $this->productAvailabilityMessageHandler->getMessageByCart($this->context->cart->id, $cart->products),
+                'availability_message' => $this->productAvailabilityMessageHandler->getMessageByCart($cart->products, $multiWarehouse),
+                'multi_warehouse' => $multiWarehouse,
             ]);
 
             return $this->fetch('module:' . $this->name . '/views/templates/front/cart-availability.tpl');

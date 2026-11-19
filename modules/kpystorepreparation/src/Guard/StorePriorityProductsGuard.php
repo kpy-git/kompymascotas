@@ -38,4 +38,15 @@ class StorePriorityProductsGuard
 
         return array_all($products, fn(array $product) => $product['stock_tienda'] >= $product['quantity']);
     }
+
+    public static function withStorePriorityProduct(int $productId, int $productAttributeId, int $quantity): bool
+    {
+        $stockTienda = (int)\Db::getInstance()->getValue(
+            "SELECT ifnull(spp.stock, 0) as stock_tienda 
+                FROM " . _DB_PREFIX_ ."kpy_store_priority_product_stock spp 
+                WHERE spp.id_product = {$productId} and spp.id_product_attribute={$productAttributeId}"
+        );
+
+        return $stockTienda && $quantity >= $stockTienda;
+    }
 }

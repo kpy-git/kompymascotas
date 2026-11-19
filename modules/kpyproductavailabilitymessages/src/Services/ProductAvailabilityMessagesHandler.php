@@ -156,11 +156,10 @@ class ProductAvailabilityMessagesHandler
         return "Recíbelo a partir del " . $this->messageFormatter->getWeekdayAndMonthInText(\DateTimeImmutable::createFromFormat('Y-m-d', $date)->getTimestamp());
     }
 
-    public function getMessageByCart(int $cart, array $products): string
+    public function getMessageByCart(array $products, bool $multiWarehouse): string
     {
-        $warehouseFinder = new WarehouseFinder();
         // si hay productos de más de un almacén siempre se prepara el pedido desde tienda, se añade una semana al día de hoy (hay que esperar a tener todos los productos en tienda)
-        if ($warehouseFinder->hasMultiWarehouse($cart, $products)) {
+        if ($multiWarehouse) {
             $start = $this->workingDaysManager->getNextWorkingDayTo(strtotime('+7 days'));
 
         } else {
