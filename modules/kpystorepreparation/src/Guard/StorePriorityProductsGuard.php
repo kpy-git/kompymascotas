@@ -47,6 +47,6 @@ class StorePriorityProductsGuard
                 WHERE spp.id_product = {$productId} and spp.id_product_attribute={$productAttributeId}"
         );
 
-        return $stockTienda && $quantity >= $stockTienda;
+        return $stockTienda && $stockTienda >= $quantity;
     }
 }
