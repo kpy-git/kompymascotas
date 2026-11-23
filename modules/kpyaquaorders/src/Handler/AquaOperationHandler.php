@@ -381,7 +381,7 @@ class AquaOperationHandler
 
         $orderDiscounts = $this->finder->getOrderDiscounts($order->id);
 
-        if (!empty($orderDiscounts) && $order->module !== 'free_order') {
+        if (!empty($orderDiscounts) && $order->module !== 'free_order' && $order->total_paid > 0) {
             foreach ($orderDiscounts as $discount) {
                 if ($discount['free_shipping'] === 1 && $order->total_shipping > 0) { // descuento portes
                     $orderAqua->insertaDescuentoPortes($discount['descuento']);
@@ -422,7 +422,7 @@ class AquaOperationHandler
                     }
                 }
             }
-        } else if ($order->module === 'free_order') {
+        } else if ($order->module === 'free_order' || (float)$order->total_paid === 0.0) {
             // si se crea pedido gratuito sin vales de descuento, creo descuentos con el total_discounts del pedido
 
             // si el pedido tiene portes, inserto descuento de portes
