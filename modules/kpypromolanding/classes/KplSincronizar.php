@@ -240,6 +240,8 @@ class KplSincronizar
         self::guardarDato(self::DATO_RESUMEN, $resumen);
         // Y lo que necesitan las etiquetas de campaña: de cada producto, sus promociones vivas por tipo.
         self::guardarDato(self::DATO_PRODUCTOS, $this->productosPromo($promos, $porClave, $nuestras));
+        // Las ventas de 90 días de esos productos, para el orden de la portada (1.6.0).
+        KplPromos::calcularVentas90();
         KplCategorias::limpiarCache();
 
         return ['claves' => count($tocadas), 'productos' => $nProductos, 'imagenes' => $nImagenes, 'avisos' => array_values($this->avisos)];

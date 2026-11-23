@@ -61,13 +61,15 @@ class AdminKpyPromoLandingController extends ModuleAdminController
         $campana = $campanas[$idCampana] ?? ($idCampana === -1 ? null : (reset($campanas) ?: null));
         if ($campana === null) {
             // Una nueva, con los valores por defecto.
-            $campana = ['id_kpy_promo_campana' => 0, 'clave' => '', 'nombre' => '', 'activa' => 1, 'desde' => '', 'hasta' => '', 'piel' => 'negra', 'titulo' => '', 'texto' => '', 'lema' => 'Stock limitado · hasta agotar existencias', 'texto_antes' => '', 'texto_despues' => '', 'cinta' => 1, 'cinta_texto' => '', 'redirigir' => 1, 'sin_carrusel' => 1, 'etiquetas' => KplCampanas::etiquetasPorDefecto(), 'colores' => KplCampanas::paletaLimpia([], 'negra'), 'orden_marcas' => '', 'estado' => 'nueva', 'fechas' => '', 'quedan_texto' => '', 'faltan_texto' => ''];
+            $campana = ['id_kpy_promo_campana' => 0, 'clave' => '', 'nombre' => '', 'activa' => 1, 'desde' => '', 'hasta' => '', 'piel' => 'negra', 'titulo' => '', 'texto' => '', 'lema' => 'Stock limitado · hasta agotar existencias', 'texto_antes' => '', 'texto_despues' => '', 'cinta' => 1, 'cinta_texto' => '', 'redirigir' => 1, 'sin_carrusel' => 1, 'etiquetas' => KplCampanas::etiquetasPorDefecto(), 'colores' => KplCampanas::paletaLimpia([], 'negra'), 'orden_marcas' => '', 'productos_elegidos' => '', 'estado' => 'nueva', 'fechas' => '', 'quedan_texto' => '', 'faltan_texto' => ''];
         }
         $campana['colores'] = KplCampanas::coloresDe($campana);
         $campana['desde_fecha'] = $campana['desde'] ? substr((string) $campana['desde'], 0, 10) : '';
         $campana['desde_hora'] = $campana['desde'] ? substr((string) $campana['desde'], 11, 5) : '';
         $campana['hasta_fecha'] = $campana['hasta'] ? substr((string) $campana['hasta'], 0, 10) : '';
         $campana['hasta_hora'] = $campana['hasta'] ? substr((string) $campana['hasta'], 11, 5) : '';
+        // Cada producto elegido con su nombre y si sale (o por qué no), para verlo al guardar.
+        $campana['elegidos_estado'] = KplPromos::estadoElegidos($campana);
 
         $contestadas = KplPromociones::todas($idTienda);
         $promos = $this->promociones($contestadas ?? [], $resumen, $categorias);
@@ -255,6 +257,7 @@ class AdminKpyPromoLandingController extends ModuleAdminController
                 'etiquetas' => $etiquetas,
                 'colores' => ['fondo' => (string) Tools::getValue('color_fondo'), 'acento' => (string) Tools::getValue('color_acento'), 'acento2' => (string) Tools::getValue('color_acento2')],
                 'orden_marcas' => (string) Tools::getValue('orden_marcas'),
+                'productos_elegidos' => (string) Tools::getValue('productos_elegidos'),
             ]);
             if ($id <= 0) {
                 $volver('La dirección de la campaña no vale: letras y números, sin espacios, y que no sea una dirección de la landing (todas, cupones, perros…).', true, '&campana=-1');

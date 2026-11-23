@@ -180,7 +180,13 @@ que parar, nada que limpiar después):
 - qué promociones entran: las marcadas con la campaña en el paso 6 (`kpy_promo_promo.campanas`); si
   ninguna lo está, todas las vivas;
 - el orden de las marcas en su portada y en el bloque de la portada de la tienda: nombres separados
-  por comas (las demás detrás, por rebaja).
+  por comas (las demás detrás, por rebaja);
+- los **productos elegidos** (1.6.0, Rafa 19/11: «para poner los más llamativos, más vendidos»): ids
+  de producto en orden, separados por comas (como mucho 30). Van primero en el bloque de la portada de
+  la tienda y en «Lo más rebajado» de la página de la campaña (sin filtro de perro o gato). Cada uno
+  sale solo si está activo, con stock y en una promoción que entra en la campaña; si faltan, se
+  completa con lo automático. Vacío, todo automático. Debajo del campo, la pantalla dice de cada uno
+  si sale o por qué no.
 
 **Las tres predefinidas** se crean al instalar y al actualizar (las que falten, por clave; también
 con el botón de la pantalla), con sus fechas de cada año, sus textos y su **paleta**
@@ -216,10 +222,16 @@ secundario en cupón y 2ª unidad, blanco en outlet), el banner destacado con un
 
 **La portada de la tienda** durante una campaña (`displayContentWrapperTop`): el bloque de la
 campaña con el ancho del carrusel (1140 px, el contenedor de la tienda), y debajo sus **productos
-con más descuento** (`KplPromos::portada()`): los que entran en la campaña, con las marcas
-prioritarias primero (el orden de marcas de la propia campaña y después las «marcas primero» de la
-pantalla, por defecto Boske, el buque de la web), dentro de cada marca por rebaja, y cada marca pone
-como mucho la mitad para que no salga todo de la misma; cuántos, en la pantalla (por defecto 8;
+de la campaña** (`KplPromos::portada()`): primero los elegidos a mano; después, los que entran en la
+campaña, activos y con stock, con las marcas prioritarias primero (el orden de marcas de la propia
+campaña y después las «marcas primero» de la pantalla, por defecto Boske, el buque de la web), dentro
+de cada marca por unidades vendidas en los últimos 90 días (1.6.0; antes por rebaja y, entre iguales,
+por id, y salían productos que no se venden o agotados), y cada marca pone como mucho la mitad para
+que no salga todo de la misma; las ventas (solo de los productos en promoción) se calculan al
+sincronizar, al guardar una campaña y al actualizar, nunca en una visita, y se guardan en
+`kpy_promo_dato` (`ventas_90`). «Con stock» incluye lo que se vende sin stock (`out_of_stock`) y todo
+si la tienda no gestiona stock; «Lo más rebajado» tampoco enseña agotados; cuántos, en la pantalla
+(por defecto 8;
 0 = ninguno). Con la foto de las tarjetas. En el móvil, los accesos por tipo y los logos van en una
 fila que se desliza, y la fecha de la píldora no sale (el lema ya dice cuánto queda). Con la cinta
 puesta no sale la banda de siempre de arriba («Envíos gratis…»): una sola banda, no dos.

@@ -79,7 +79,16 @@ class KpypromolandingLandingModuleFrontController extends ModuleFrontController
             $tipos[$tipo]['imagen'] = $imagen;
             $tipos[$tipo]['codigo'] = $tipo === 'cupon' && $claveImagen !== '' ? (string) ($resumen['claves'][$claveImagen]['codigo'] ?? '') : '';
         }
-        $top = KplPresentador::productos(KplPromos::top($this->mascota), 8);
+        // «Lo más rebajado»: en la página de una campaña viva (sin filtro de mascota), primero los
+        // productos elegidos de la campaña; el resto, como siempre.
+        $idsTop = KplPromos::top($this->mascota);
+        if ($this->campana !== null && $this->campana['estado'] === 'viva' && $this->mascota === '') {
+            $idsTop = array_merge(KplPromos::elegidos($this->campana), $idsTop);
+        }
+        // Sin agotados ni apagados (antes «Lo más rebajado» podía traerlos).
+        $vendibles = KplPromos::vendibles($idsTop);
+        $idsTop = array_values(array_filter($idsTop, static fn ($id): bool => isset($vendibles[(int) $id])));
+        $top = KplPresentador::productos($idsTop, 8);
         $enTotal = count(KplPromos::vivas());
         $this->context->smarty->assign([
             'kpl' => [

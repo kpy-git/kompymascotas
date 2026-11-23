@@ -82,7 +82,7 @@ class Kpypromolanding extends Module
     {
         $this->name = 'kpypromolanding';
         $this->tab = 'front_office_features';
-        $this->version = '1.5.2';
+        $this->version = '1.6.0';
         $this->author = 'Kompy';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -261,6 +261,7 @@ class Kpypromolanding extends Module
                 etiquetas TEXT NULL,
                 colores TEXT NULL,
                 orden_marcas VARCHAR(255) NOT NULL DEFAULT '',
+                productos_elegidos VARCHAR(255) NOT NULL DEFAULT '',
                 date_add DATETIME NULL,
                 date_upd DATETIME NULL,
                 PRIMARY KEY (id_kpy_promo_campana),
@@ -286,6 +287,8 @@ class Kpypromolanding extends Module
             'kpy_promo_campana' => [
                 'sin_carrusel' => 'TINYINT(1) NOT NULL DEFAULT 1 AFTER redirigir',
                 'colores' => 'TEXT NULL AFTER etiquetas',
+                // 1.6.0: los productos elegidos a mano para la portada y «Lo más rebajado» (Rafa, 19/11).
+                'productos_elegidos' => "VARCHAR(255) NOT NULL DEFAULT '' AFTER orden_marcas",
             ],
             // 1.4.0: el % de cada categoría (el mayor de sus promociones vivas), para ordenar los
             // listados sin cruzar las tablas de kpycoupons en cada visita.
@@ -620,11 +623,16 @@ class Kpypromolanding extends Module
         if (!$controlador || (string) ($controlador->php_self ?? '') !== 'index') {
             return '';
         }
-        $c = null;
-        foreach (KplCampanas::todas() as $x) {
-            if ($x['estado'] === 'viva' || ($x['estado'] === 'programada' && KplCampanas::textos($x)['faltan'] <= 15)) {
-                $c = $x;
-                break;
+        // La campaña viva manda; si no hay, la próxima que empiece en 15 días o menos (el aviso).
+        // Antes ganaba la primera de la lista (la de inicio más tardío): con Cyber Monday activo y
+        // programado, la portada enseñaba su aviso en pleno Black Friday (visto en pruebas, 23/11).
+        $c = KplCampanas::viva();
+        if ($c === null) {
+            foreach (KplCampanas::todas() as $x) {
+                if ($x['estado'] === 'programada' && KplCampanas::textos($x)['faltan'] <= 15) {
+                    $c = $x;
+                    break;
+                }
             }
         }
         if ($c === null) {
@@ -636,7 +644,8 @@ class Kpypromolanding extends Module
             foreach (KplPromos::tiposConCampana(KplPromos::tipos(), $c) as $t) {
                 $tipos[] = ['nombre' => $t['nombre'], 'n' => $t['n'], 'url' => $t['url'], 'tipo' => $t['tipo']];
             }
-            // Los productos de la campaña, con las marcas prioritarias (Boske…) primero.
+            // Los productos de la campaña: primero los elegidos a mano; después, las marcas
+            // prioritarias (Boske…) y, dentro de cada una, los más vendidos.
             $n = (int) Configuration::getGlobalValue(self::CONF_PORTADA_N);
             if ($n > 0) {
                 try {

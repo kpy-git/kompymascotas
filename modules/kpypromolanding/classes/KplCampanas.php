@@ -252,6 +252,8 @@ class KplCampanas
             'sin_carrusel' => (int) !empty($d['sin_carrusel']),
             'etiquetas' => pSQL(json_encode(self::etiquetasLimpias($etiquetas), JSON_UNESCAPED_UNICODE), true),
             'orden_marcas' => pSQL(mb_substr(trim((string) ($d['orden_marcas'] ?? '')), 0, 255)),
+            // Como mucho 30 ids: caben en la columna (255) sin cortar ninguno.
+            'productos_elegidos' => pSQL(implode(', ', array_slice(self::elegidos(['productos_elegidos' => (string) ($d['productos_elegidos'] ?? '')]), 0, 30))),
             'date_upd' => date('Y-m-d H:i:s'),
         ];
         $db = Db::getInstance();
@@ -265,6 +267,11 @@ class KplCampanas
         }
         self::olvidar();
         self::apuntarClaves();
+        try {
+            KplPromos::calcularVentas90();
+        } catch (Throwable $e) {
+            // Sin ventas al día, la portada ordena por rebaja: no impide guardar.
+        }
 
         return $id;
     }
@@ -533,6 +540,25 @@ class KplCampanas
             $s = KplClaves::slug(trim($nombre));
             if ($s !== '') {
                 $salida[] = $s;
+            }
+        }
+
+        return $salida;
+    }
+
+    /**
+     * Los «productos elegidos» de la campaña: ids de producto en el orden escrito, sin repetir
+     * (vale cualquier separador). Si sale o no cada uno lo decide `KplPromos::elegidos()`.
+     *
+     * @return int[]
+     */
+    public static function elegidos(array $c): array
+    {
+        $salida = [];
+        foreach (preg_split('/[^0-9]+/', (string) ($c['productos_elegidos'] ?? '')) ?: [] as $x) {
+            $id = (int) $x;
+            if ($id > 0 && !in_array($id, $salida, true)) {
+                $salida[] = $id;
             }
         }
 

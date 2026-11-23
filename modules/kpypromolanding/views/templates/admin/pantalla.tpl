@@ -299,6 +299,19 @@
           <small class="kpl-nota">Nombres separados por comas: esas marcas van primero en la landing de la campaña y en la portada de la tienda, en ese orden; las demás, detrás, por rebaja. Vacío: todas por rebaja.</small>
         </section>
 
+        <section class="kpl-paso">
+          <h3 class="kpl-paso__titulo"><span class="kpl-num">5</span> {l s='Productos elegidos' d='Modules.Kpypromolanding.Admin'} <span class="kpl-opcional">{l s='(opcional)' d='Modules.Kpypromolanding.Admin'}</span></h3>
+          <input type="text" class="form-control" name="productos_elegidos" value="{$c.productos_elegidos|default:''|escape:'html':'UTF-8'}" placeholder="3312, 8844, 7214" maxlength="255">
+          <small class="kpl-nota">{l s='Ids de producto separados por comas (como mucho 30), en el orden en que se quieren: van primero en el bloque de la portada de la tienda y en «Lo más rebajado» de la página de la campaña. Cada uno sale solo si está activo, con stock y en una promoción que entra en la campaña; si faltan, se completa con lo automático (por marcas y, dentro de cada una, por ventas de los últimos 90 días, sin agotados). Vacío: todo automático.' d='Modules.Kpypromolanding.Admin'}</small>
+          {if !empty($c.elegidos_estado)}
+            <ul class="kpl-nota" style="margin:6px 0 0;padding-left:18px">
+              {foreach $c.elegidos_estado as $e}
+                <li>{$e.id|intval} · {$e.nombre|escape:'html':'UTF-8'} — {if $e.motivo == ''}<strong>{l s='sale' d='Modules.Kpypromolanding.Admin'}</strong>{elseif $e.motivo == 'no_existe'}{l s='no existe' d='Modules.Kpypromolanding.Admin'}{elseif $e.motivo == 'fuera'}{l s='no sale: no está en ninguna promoción de la campaña' d='Modules.Kpypromolanding.Admin'}{else}{l s='no sale: apagado o sin stock' d='Modules.Kpypromolanding.Admin'}{/if}</li>
+              {/foreach}
+            </ul>
+          {/if}
+        </section>
+
         <div class="kpl-barra">
           <p class="kpl-barra__resumen">{if $c.id_kpy_promo_campana}{if $c.estado == 'viva'}En marcha ahora{if $c.quedan_texto}: {$c.quedan_texto|lower}{/if}.{elseif $c.estado == 'programada'}Programada{if $c.faltan_texto}: {$c.faltan_texto|lower}{/if}.{elseif $c.estado == 'terminada'}Terminada.{else}Apagada.{/if} Se aplica sola entre sus fechas.{else}Se aplica sola entre sus fechas. Nada que arrancar ni que parar.{/if}</p>
           <div class="kpl-barra__botones">

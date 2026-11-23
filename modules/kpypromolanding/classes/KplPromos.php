@@ -224,10 +224,12 @@ class KplPromos
     }
 
     /**
-     * Los productos de la campaña para la portada de la tienda: los que entran en ella, con las
-     * marcas prioritarias primero (el orden de marcas de la campaña y, detrás, las marcas
-     * prioritarias de la pantalla: Boske, el buque de la web…) y dentro de cada marca por rebaja.
-     * Para que no sean todos de la misma marca, cada una pone como mucho la mitad.
+     * Los productos de la campaña para la portada de la tienda. Primero los **elegidos** a mano en la
+     * campaña (`elegidos()`), en su orden. Si faltan, lo automático: los que entran en la campaña,
+     * activos y con stock, con las marcas prioritarias primero (el orden de marcas de la campaña y,
+     * detrás, las marcas prioritarias de la pantalla: Boske, el buque de la web…) y dentro de cada
+     * marca por **ventas de los últimos 90 días** (después por rebaja). Para que no sean todos de la
+     * misma marca, cada una pone como mucho la mitad (contando los elegidos).
      *
      * @param string[] $prioridad claves de marca (`boske`), en orden
      *
@@ -251,6 +253,19 @@ class KplPromos
         if ($rebaja === []) {
             return [];
         }
+        $elegidos = self::elegidos($campana);
+        if (count($elegidos) >= $n) {
+            return array_slice($elegidos, 0, $n);
+        }
+        // Lo automático, sin agotados ni apagados (antes salían por id, aunque no se vendieran).
+        $vendibles = self::vendibles(array_keys($rebaja));
+        $ids = array_values(array_filter(
+            array_keys($rebaja),
+            static fn (int $id): bool => isset($vendibles[$id]) && !in_array($id, $elegidos, true)
+        ));
+        if ($ids === []) {
+            return $elegidos;
+        }
         $orden = [];
         foreach (array_merge(KplCampanas::ordenMarcas($campana), $prioridad) as $slug) {
             if ($slug !== '' && !isset($orden[$slug])) {
@@ -260,19 +275,24 @@ class KplPromos
         $marca = [];
         $filas = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
             'SELECT p.id_product, m.name FROM ' . _DB_PREFIX_ . 'product p LEFT JOIN ' . _DB_PREFIX_ . 'manufacturer m ON m.id_manufacturer = p.id_manufacturer'
-            . ' WHERE p.id_product IN (' . implode(',', array_keys($rebaja)) . ')'
+            . ' WHERE p.id_product IN (' . implode(',', array_merge($ids, $elegidos)) . ')'
         ) ?: [];
         foreach ($filas as $f) {
             $marca[(int) $f['id_product']] = KplClaves::slug((string) $f['name']);
         }
-        $ids = array_keys($rebaja);
-        usort($ids, static function (int $a, int $b) use ($rebaja, $marca, $orden): int {
-            return [$orden[$marca[$a] ?? ''] ?? 9999, -$rebaja[$a], $a] <=> [$orden[$marca[$b] ?? ''] ?? 9999, -$rebaja[$b], $b];
+        $ventas = self::ventas90();
+        usort($ids, static function (int $a, int $b) use ($rebaja, $marca, $orden, $ventas): int {
+            return [$orden[$marca[$a] ?? ''] ?? 9999, -($ventas[$a] ?? 0), -$rebaja[$a], $a] <=> [$orden[$marca[$b] ?? ''] ?? 9999, -($ventas[$b] ?? 0), -$rebaja[$b], $b];
         });
         $maximoPorMarca = max(2, (int) ceil($n / 2));
         $salida = [];
         $porMarca = [];
+        foreach ($elegidos as $id) {
+            $m = $marca[$id] ?? '';
+            $porMarca[$m] = ($porMarca[$m] ?? 0) + 1;
+        }
         $sobrantes = [];
+        $faltan = $n - count($elegidos);
         foreach ($ids as $id) {
             $m = $marca[$id] ?? '';
             if (($porMarca[$m] ?? 0) < $maximoPorMarca) {
@@ -281,12 +301,152 @@ class KplPromos
             } else {
                 $sobrantes[] = $id;
             }
-            if (count($salida) >= $n) {
+            if (count($salida) >= $faltan) {
                 break;
             }
         }
 
-        return array_slice(array_merge($salida, $sobrantes), 0, $n);
+        return array_slice(array_merge($elegidos, $salida, $sobrantes), 0, $n);
+    }
+
+    /**
+     * Los «productos elegidos» de una campaña (Rafa, 19/11) que se pueden enseñar, en su orden:
+     * activos, visibles, con stock y con una promoción que entra en la campaña.
+     *
+     * @return int[]
+     */
+    public static function elegidos(array $campana): array
+    {
+        $ids = array_values(array_filter(KplCampanas::elegidos($campana), static fn (int $id): bool => self::enCampana($campana, $id) !== []));
+        if ($ids === []) {
+            return [];
+        }
+        $vendibles = self::vendibles($ids);
+
+        return array_values(array_filter($ids, static fn (int $id): bool => isset($vendibles[$id])));
+    }
+
+    /**
+     * Para la pantalla: cada producto elegido con su nombre y, si no sale, por qué
+     * (`no_existe`, `fuera` de la campaña, `sin_stock`: apagado o agotado).
+     *
+     * @return array<int, array{id: int, nombre: string, motivo: string}>
+     */
+    public static function estadoElegidos(array $campana): array
+    {
+        $ids = KplCampanas::elegidos($campana);
+        if ($ids === []) {
+            return [];
+        }
+        $contexto = Context::getContext();
+        $nombres = [];
+        foreach (Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
+            'SELECT id_product, name FROM ' . _DB_PREFIX_ . 'product_lang WHERE id_lang = ' . (int) $contexto->language->id
+            . ' AND id_shop = ' . (int) $contexto->shop->id . ' AND id_product IN (' . implode(',', $ids) . ')'
+        ) ?: [] as $f) {
+            $nombres[(int) $f['id_product']] = (string) $f['name'];
+        }
+        $vendibles = self::vendibles($ids);
+        $salida = [];
+        foreach ($ids as $id) {
+            if (!isset($nombres[$id])) {
+                $motivo = 'no_existe';
+            } elseif (self::enCampana($campana, $id) === []) {
+                $motivo = 'fuera';
+            } elseif (!isset($vendibles[$id])) {
+                $motivo = 'sin_stock';
+            } else {
+                $motivo = '';
+            }
+            $salida[] = ['id' => $id, 'nombre' => $nombres[$id] ?? '', 'motivo' => $motivo];
+        }
+
+        return $salida;
+    }
+
+    /**
+     * De una lista de productos, los que se pueden enseñar ahora: activos, visibles en el catálogo y
+     * que se pueden comprar: con stock (el total del producto, `id_product_attribute = 0`), o que se
+     * venden sin stock (`out_of_stock` = 1, o 2 con «pedidos sin stock» en la tienda), o todos si la
+     * tienda no gestiona stock.
+     *
+     * @param int[] $ids
+     *
+     * @return array<int, true>
+     */
+    public static function vendibles(array $ids): array
+    {
+        $ids = array_values(array_unique(array_filter(array_map('intval', $ids))));
+        if ($ids === []) {
+            return [];
+        }
+        $tienda = Context::getContext()->shop;
+        $idTienda = (int) $tienda->id;
+        $p = _DB_PREFIX_;
+        if (!(int) Configuration::get('PS_STOCK_MANAGEMENT')) {
+            $stock = '1';
+        } else {
+            $stock = 'sa.quantity > 0 OR sa.out_of_stock = 1'
+                . ((int) Configuration::get('PS_ORDER_OUT_OF_STOCK') ? ' OR sa.out_of_stock = 2' : '');
+        }
+        $salida = [];
+        foreach (Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
+            "SELECT ps.id_product FROM {$p}product_shop ps
+             LEFT JOIN {$p}stock_available sa ON sa.id_product = ps.id_product AND sa.id_product_attribute = 0
+                AND (sa.id_shop = {$idTienda} OR (sa.id_shop = 0 AND sa.id_shop_group = " . (int) $tienda->id_shop_group . "))
+             WHERE ps.id_shop = {$idTienda} AND ps.active = 1 AND ps.visibility IN ('both', 'catalog') AND ({$stock})
+               AND ps.id_product IN (" . implode(',', $ids) . ')'
+        ) ?: [] as $f) {
+            $salida[(int) $f['id_product']] = true;
+        }
+
+        return $salida;
+    }
+
+    public const DATO_VENTAS = 'ventas_90';
+
+    private static ?array $ventas = null;
+
+    /**
+     * Unidades vendidas de cada producto en promoción en los últimos 90 días, para ordenar lo
+     * automático de la portada. Solo se lee: lo calcula `calcularVentas90()` al sincronizar, al guardar
+     * una campaña y al actualizar el módulo, nunca en una visita. Sin datos, vacío (se ordena por rebaja).
+     *
+     * @return array<int, int>
+     */
+    public static function ventas90(): array
+    {
+        if (self::$ventas === null) {
+            $guardado = KplSincronizar::dato(self::DATO_VENTAS);
+            self::$ventas = is_array($guardado['v'] ?? null) ? array_map('intval', $guardado['v']) : [];
+        }
+
+        return self::$ventas;
+    }
+
+    /**
+     * Suma las ventas de 90 días (pedidos válidos) de los productos que están en alguna promoción y
+     * las guarda en `kpy_promo_dato` (`ventas_90`). Para la sincronización, la pantalla y el upgrade.
+     */
+    public static function calcularVentas90(): void
+    {
+        $d = KplSincronizar::dato(KplSincronizar::DATO_PRODUCTOS);
+        $ids = array_values(array_filter(array_map('intval', array_keys((array) ($d['productos'] ?? [])))));
+        $v = [];
+        if ($ids !== []) {
+            $p = _DB_PREFIX_;
+            foreach (Db::getInstance()->executeS(
+                "SELECT od.product_id, SUM(od.product_quantity) AS n FROM {$p}order_detail od
+                 INNER JOIN {$p}orders o ON o.id_order = od.id_order
+                 WHERE o.valid = 1 AND o.date_add >= DATE_SUB(NOW(), INTERVAL 90 DAY)
+                   AND od.product_id IN (" . implode(',', $ids) . ')
+                 GROUP BY od.product_id'
+            ) ?: [] as $f) {
+                $v[(int) $f['product_id']] = (int) $f['n'];
+            }
+        }
+        KplSincronizar::guardarDato(self::DATO_VENTAS, ['t' => time(), 'v' => $v]);
+        self::$ventas = $v;
     }
 
     /** Las marcas prioritarias de la pantalla (nombres separados por comas), como claves de marca. @return string[] */
