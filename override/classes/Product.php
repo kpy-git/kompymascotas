@@ -130,4 +130,14 @@ class Product extends ProductCore
 
         return  \Db::getInstance()->executeS($sql);
     }
+
+    public static function getArrayChangeProductsService(): array
+    {
+        return [4606, 4607, 8288, 8287];
+    }
+
+    public static function isChangeProductService(int $productId): bool
+    {
+        return in_array($productId, self::getArrayChangeProductsService());
+    }
 }
