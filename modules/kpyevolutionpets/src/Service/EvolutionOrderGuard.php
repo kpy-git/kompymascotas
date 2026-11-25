@@ -12,6 +12,10 @@ class EvolutionOrderGuard
         $evolutionBrands = json_decode(\Configuration::get(Config::KPY_EVOLUTION_BRANDS), true);
 
         foreach ($products as $product) {
+            if (\Product::isChangeProductService((int)$product['id_product'])) {
+                continue;
+            }
+
             if (!in_array($product['id_manufacturer'], $evolutionBrands)) {
                 return false;
             }
