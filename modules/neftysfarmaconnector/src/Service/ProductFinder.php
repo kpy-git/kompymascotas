@@ -13,7 +13,7 @@ class ProductFinder
         foreach ($order->getProducts() as $productOrder) {
             // echo print_r($productOrder, true);
             $sku = $productOrder['id_product'] . '-' . $productOrder['product_attribute_id'];
-            if (\Product::isPack($sku)) {
+            if (\Product::isPack($sku) || \Product::isChangeProductService((int)$productOrder['id_product'])) {
                 foreach (\Product::getProductsInPack($sku) as $productInPack) {
                     if ($productInPack['is_gift']) {
                         continue;
