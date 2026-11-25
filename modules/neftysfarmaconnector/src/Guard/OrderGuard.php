@@ -13,11 +13,14 @@ class OrderGuard
     {
         /** @var NeftysProduct $product */
         foreach ($products as $product) {
+            if (\Product::isChangeProductService($product->getProductId())) {
+                continue;
+            }
+
             $sql = "SELECT EXISTS (SELECT 1 
                 FROM " . _DB_PREFIX_ . NeftysFarmaConfig::NEFTYS_FARMA_STOCK_TABLE . " 
                 WHERE id_product={$product->getProductId()} 
-                    and id_product_attribute={$product->getProductAttributeId()}) 
-                    and id_product not in (" . implode(',', \Product::getArrayChangeProductsService()) . ")";
+                    and id_product_attribute={$product->getProductAttributeId()})";
 
             if ((int)\Db::getInstance()->getValue($sql) === 0) {
                 return false;
